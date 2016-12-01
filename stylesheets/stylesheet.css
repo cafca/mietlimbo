@@ -490,7 +490,7 @@ header h2 {
 
 #main-content {
   float: left;
-  width: 690px;
+  width: 640px;
 }
 
 #main-content img {
@@ -499,10 +499,10 @@ header h2 {
 
 aside#sidebar {
   float: right;
-  width: 200px;
+  width: 250px;
   min-height: 504px;
   padding-left: 20px;
-  font-size: 12px;
+  font-size: 18px;
   line-height: 1.3;
   background: transparent url(../images/sidebar-bg.jpg) 0 0 no-repeat;
 }
