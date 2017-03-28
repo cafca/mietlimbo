@@ -9,6 +9,12 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
+    capistrano (2.15.9)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -70,6 +76,7 @@ GEM
       octokit (~> 4.0)
       public_suffix (~> 2.0)
       typhoeus (~> 0.7)
+    highline (1.7.8)
     html-pipeline (2.5.0)
       activesupport (>= 2)
       nokogiri (>= 1.4)
@@ -172,6 +179,13 @@ GEM
     minitest (5.10.1)
     multipart-post (2.0.0)
     net-dns (0.8.0)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-sftp (2.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (4.1.0)
+    net-ssh-gateway (2.0.0)
+      net-ssh (>= 4.0.0)
     nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
     octokit (4.6.2)
@@ -201,11 +215,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  capistrano (~> 2.15.4)
   github-pages (= 130)
   jekyll (= 3.4.3)
   jekyll-feed (~> 0.6)
   jekyll-whiteglass
-  json
   tzinfo-data
 
 RUBY VERSION
