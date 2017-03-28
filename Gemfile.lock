@@ -220,6 +220,7 @@ DEPENDENCIES
   jekyll (= 3.4.3)
   jekyll-feed (~> 0.6)
   jekyll-whiteglass
+  json
   tzinfo-data
 
 RUBY VERSION
