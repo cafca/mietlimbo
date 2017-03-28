@@ -1,10 +1,6 @@
 set :application, "mietlimbo-blog"
 set :repo_url, "git@github.com:ciex/mietlimbo.git"
 
-# Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-set :branch, "blog"
-
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/pv/mietlimbo-blog"
 set :scm, :none
@@ -32,6 +28,6 @@ namespace :deploy do
     # clear existing _site
     # build site using jekyll
     # remove Capistrano stuff from build
-    %x(rm -rf _site/* && jekyll build && rm _site/Capfile && rm -rf _site/config)
+    %x(rm -rf _site/* && bundle exec jekyll build && rm _site/Capfile && rm -rf _site/config)
   end
 end
