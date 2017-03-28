@@ -1,0 +1,40 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+@import "whiteglass";
+
+body {
+	font-family: "Open Sans", sans-serif;
+}
+
+p, a, h1, h2, h3 {
+	letter-spacing: 0 !important;
+}
+
+.site-header {
+	padding-top: 26px;
+	min-height: 82px
+}
+
+.site-title, .page-heading {
+	font-size: 52px;
+	font-family: "OSPDINDIN";
+}
+
+h1, h2, h3 {
+	font-family: "OSPDINDIN";
+	text-transform: uppercase;
+}
+
+.post-content h2 {
+	font-size: 52px;
+}
+
+.post-title {
+	font-size: 72px;
+}
+
+.site-footer {
+	font-size: 12px
+}

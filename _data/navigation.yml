@@ -1,0 +1,7 @@
+main:
+  - title: "Über"
+    url: /ueber-mietlimbo/
+  - title: "Archiv"
+    url: /archives/
+  - title: "OpenSource"
+    url: https://github.com/ciex/mietlimbo
