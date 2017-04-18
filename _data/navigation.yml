@@ -1,4 +1,6 @@
 main:
+  - title: "Community"
+    url: https://community.mietlimbo.de/
   - title: "Über"
     url: /ueber-mietlimbo/
   - title: "Archiv"
