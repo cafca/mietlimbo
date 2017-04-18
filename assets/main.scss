@@ -41,6 +41,14 @@ h1, h2, h3 {
 	text-transform: uppercase;
 }
 
+figcaption {
+	color: #aaa;
+}
+
+figcaption a:link, figcaption a:visited {
+	color: #999
+}
+
 .post-link, .post-link:visited { color: $mietlimbo-background; text-decoration: none;}
 .post-link:hover { color: $mietlimbo-sec; }
 
