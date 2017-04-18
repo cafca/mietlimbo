@@ -4,7 +4,7 @@ title:	Was ist mietlimbo?
 date:   2016-12-01 15:21:43 +0200
 ---
 
-Die Mietpreisbreme (MPB) soll in Berlin dafür sorgen, dass die Preise für Wohnraum nicht weiterhin mit atemberaubendem Tempo steigen (ca 45% in 10 Jahren). In der Praxis wird dieses rechtliche Instrument allerdings kaum genutzt, wie auch in den Medien berichtet wird. Obwohl es Informationsangebote der Stadt Berlin gibt, kostet eine Mietsenkung den Mieter weiterhin viel Zeit, Wissen und Initiative. 
+Die Mietpreisbremse (MPB) soll in Berlin dafür sorgen, dass die Preise für Wohnraum nicht weiterhin mit atemberaubendem Tempo steigen (ca 45% in 10 Jahren). In der Praxis wird dieses rechtliche Instrument allerdings kaum genutzt, wie auch in den Medien berichtet wird. Obwohl es Informationsangebote der Stadt Berlin gibt, kostet eine Mietsenkung den Mieter weiterhin viel Zeit, Wissen und Initiative. 
 
 Momentan versuche ich selbst, meine überhöhte Miete durch Durchsetzung der MPB zu verringern, und habe nun schon viele Stunden damit verbracht, die rechtliche Grundlage zu verstehen. Ich möchte nun mein neues Wissen weitergeben und eine Webapp entwickeln, die es leichter macht, selbst eine Mietsenkung durchzusetzen. Die Mietpreisbremse braucht endlich den Eindruck von Machbarkeit.
 
