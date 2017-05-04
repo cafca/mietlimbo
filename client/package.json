@@ -1,14 +1,19 @@
 {
   "name": "mietlimbo",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "dependencies": {
     "react": "^15.5.4",
     "react-autobind": "^1.0.6",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-intl": "^2.2.3"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-react-intl": "^2.3.1",
+    "babel-preset-react-app": "^2.2.0",
     "flow-bin": "^0.45.0",
+    "iflow-react-intl": "^1.2.0",
     "react-scripts": "0.9.5"
   },
   "scripts": {
@@ -16,6 +21,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "flow": "flow"
+    "flow": "flow",
+    "translate": "NODE_ENV=production babel ./src >/dev/null"
   }
 }
