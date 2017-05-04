@@ -5,7 +5,7 @@ class BasicData extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			leaseCreated: ""
+			leaseCreated: new Date()
 		}
 		autoBind(this);
 	}
@@ -26,6 +26,7 @@ class BasicData extends React.Component {
 			Vertragsabschluss:
 			<input 
 				name="leaseCreated"
+				type="date"
 				value={this.state.leaseCreated} 
 				onChange={this.handleChange} 
 			/>
