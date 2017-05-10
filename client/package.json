@@ -6,6 +6,7 @@
     "react": "^15.5.4",
     "react-autobind": "^1.0.6",
     "react-dom": "^15.5.4",
+    "react-google-autocomplete": "^1.0.13",
     "react-intl": "^2.2.3"
   },
   "devDependencies": {
