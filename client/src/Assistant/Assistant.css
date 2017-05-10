@@ -1,0 +1,12 @@
+input {
+	width: 90%;
+	margin-top: 5px;
+}
+
+.mapEmbed {
+	margin-left: 20px;
+}
+
+.errorDesc {
+	color: red;
+}
