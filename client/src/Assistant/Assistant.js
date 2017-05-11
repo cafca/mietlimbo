@@ -3,12 +3,14 @@
 import React from 'react';
 import autoBind from 'react-autobind';
 
-import BasicData from './1_BasicData';
+import LeaseCreatedInput from '../InputComponents/LeaseCreatedInput';
+import RentInput from '../InputComponents/RentInput';
+import AddressInput from '../InputComponents/AddressInput';
 
 import NewBuildingInput from '../InputComponents/NewBuildingInput';
 import ConstructionDateInput from '../InputComponents/ConstructionDateInput';
 import SquareMetersInput from '../InputComponents/SquareMetersInput';
-import SpecialFeaturesInput from '../InputComponents/SpecialFeaturesInput';
+import BaseFeaturesInput from '../InputComponents/BaseFeaturesInput';
 
 import Introduction from './Introduction';
 import { FormattedMessage, FormattedDate } from 'react-intl';
@@ -31,16 +33,9 @@ const Header = (props) => {
   </section>;
 }
 
-export const ErrorList = (props: {errors: Array<string>}) => {
-	const el = props.errors.map(
-		(e, i) => <p key={i} className="errorDesc">{e}</p>
-	);
-	return <span>{el}</span>;
-}
-
 class Assistant extends React.Component {
 	state = {
-		stage: 2,
+		stage: 1,
 		serialNumber: "03",
 		formValid: true
 	}
@@ -78,10 +73,11 @@ class Assistant extends React.Component {
 
 		switch(this.state.stage) {
 			case 1:
-				content = <BasicData 
-					formValid={this.handleFormValid} 
-					continue={this.handleContinue}
-					save={this.handleSave} />;
+        content = <div>
+          <LeaseCreatedInput valid={valid} changed={changed} />
+          <RentInput valid={valid} changed={changed} />
+          <AddressInput valid={valid} changed={changed} />
+        </div>;
 				break;
 
 			case 2:
@@ -89,7 +85,7 @@ class Assistant extends React.Component {
 					<NewBuildingInput valid={valid} changed={changed} />
 					<ConstructionDateInput valid={valid} changed={changed} />
 					<SquareMetersInput valid={valid} changed={changed} />
-          <SpecialFeaturesInput valid={valid} changed={changed} />
+          <BaseFeaturesInput valid={valid} changed={changed} />
 				</div>;
 				break;
 
