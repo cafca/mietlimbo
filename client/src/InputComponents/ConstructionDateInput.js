@@ -4,81 +4,10 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import {ErrorList} from './Assistant';
+import {ErrorList} from '../Assistant/Assistant';
+import {AssistantInputProps} from './Tools';
 
-// NewBuildingInput, 
-// ConstructionDateInput, 
-// SquareMeterInput, 
-// SpecialFeaturesInput
-
-type Props = {
-	changed: (string, string) => mixed, 
-	valid: (string, boolean) => mixed
-};
-
-export class NewBuildingInput extends React.Component {
-	state: {
-		value: boolean
-	};
-
-	inputName: string = "newBuilding";
-
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			value: false,
-		}
-		autoBind(this);
-	}
-
-	handleChange(e: SyntheticInputEvent) {
-		const value = e.target.value === "newBuildingTrue";
-		this.props.changed(this.inputName, value);
-		this.setState({value});
-	}
-
-	componentDidMount() {
-		this.props.valid(this.inputName, true);
-	}
-
-	render() {
-		return <div>
-			<p><label htmlFor={this.inputName}>
-				<FormattedMessage 
-					id="Spanneneinordnung.newBuilding"
-					defaultMessage="Wohnst du in einem Neubau und bist Erstmieter?" />
-			</label></p>
-
-			<div>
-				<input
-				id="newBuildingTrue"
-				name={this.inputName}
-				type="radio"
-				value="newBuildingTrue"
-				checked={this.state.value === true}
-				onChange={this.handleChange} /> 
-				<FormattedMessage
-					id="Spanneneinordnung.newBuildingTrue" 
-					defaultMessage="Ja, das Haus wurde nach 1.10.2014 zuerst vermietet." />
-			</div>
-
-			<div>
-				<input
-					id="newBuildingFalse"
-					name={this.inputName}
-					type="radio"
-					value="newBuildingFalse"
-					checked={this.state.value === false}
-					onChange={this.handleChange} /> 
-				<FormattedMessage
-					id="Spanneneinordnung.newBuildingFalse"
-					defaultMessage="Nein, das Haus ist entweder älter oder es gab schon vor mir Mieter." />
-			</div>
-		</div>;
-	}
-}
-
-export class ConstructionDateInput extends React.Component {
+class ConstructionDateInput extends React.Component {
 	state: {
 		exactValue: string,
 		guessedValue: string,
@@ -128,7 +57,7 @@ export class ConstructionDateInput extends React.Component {
 		} 
 	});
 
-	constructor(props: Props) {
+	constructor(props: AssistantInputProps) {
 		super(props);
 		autoBind(this);
 		this.state = {
@@ -154,7 +83,7 @@ export class ConstructionDateInput extends React.Component {
 			default:
 				// direct input
 
-				const intValue = parseInt(e.target.value);
+				const intValue = parseInt(e.target.value, 10);
 
 				if (isNaN(intValue)) {
 					errors.push(<FormattedMessage 
@@ -176,19 +105,19 @@ export class ConstructionDateInput extends React.Component {
 	}
 
 	render() {
-		const radioControls = this.radioOptions.map((rangeName, i) => <div key={"radioControl-" + i}>
+		const radioControls = this.radioOptions.map((rangeName, i) => <div key={"constructionDateOption-" + i}>
 				<input
-					id={"constructionDateGuessed" + rangeName[0]}
+					id={"constructionDateGuessed" + rangeName}
 					name="constructionDateGuessed"
 					type="radio"
-					value={rangeName[0]}
-					checked={this.state.guessedValue === rangeName[0]}
+					value={rangeName}
+					checked={this.state.guessedValue === rangeName}
 					onChange={this.handleChange} />
 				<FormattedMessage
 					{...this.radioDescriptions[rangeName]} />
 			</div>)
 
-		return <div>
+		return <div className="assistantInput">
 			<label htmlFor={this.inputName}>
 				<FormattedMessage 
 					id="Spanneneinordnung.constructionDate"
@@ -213,3 +142,5 @@ export class ConstructionDateInput extends React.Component {
 		</div>;
 	}
 }
+
+export default ConstructionDateInput;

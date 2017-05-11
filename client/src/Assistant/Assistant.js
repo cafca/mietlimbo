@@ -5,12 +5,10 @@ import autoBind from 'react-autobind';
 
 import BasicData from './1_BasicData';
 
-import {
-	NewBuildingInput, 
-	ConstructionDateInput, 
-	SquareMeterInput, 
-	SpecialFeaturesInput
-} from './2_Spanne.js'
+import NewBuildingInput from '../InputComponents/NewBuildingInput';
+import ConstructionDateInput from '../InputComponents/ConstructionDateInput';
+import SquareMetersInput from '../InputComponents/SquareMetersInput';
+import SpecialFeaturesInput from '../InputComponents/SpecialFeaturesInput';
 
 import Introduction from './Introduction';
 import { FormattedMessage, FormattedDate } from 'react-intl';
@@ -65,7 +63,7 @@ class Assistant extends React.Component {
 	}
 
 	handleInputValid(name: string, valid: boolean) {
-		console.log(name, valid);
+		console.log(name, "valid", valid);
 	}
 
 	handleInputChanged(name: string, data: Object) {
@@ -90,6 +88,8 @@ class Assistant extends React.Component {
 				content = <div>
 					<NewBuildingInput valid={valid} changed={changed} />
 					<ConstructionDateInput valid={valid} changed={changed} />
+					<SquareMetersInput valid={valid} changed={changed} />
+          <SpecialFeaturesInput valid={valid} changed={changed} />
 				</div>;
 				break;
 
