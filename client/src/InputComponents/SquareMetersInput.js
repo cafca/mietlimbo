@@ -117,11 +117,14 @@ class SquareMetersInput extends React.Component {
 			<ErrorList errors={this.state.errors} />
 
 			<div>
-				<p><label htmlFor="squareMetersGuessed"><FormattedMessage
-					id="Spanneneinordnung.squareMetersGuessed"
-					defaultMessage="Weiß ich nicht, aber ich glaube:" /></label></p>
-
-				{radioControls}
+				<p>
+          <label htmlFor="squareMetersGuessed">
+            <FormattedMessage
+					   id="Spanneneinordnung.squareMetersGuessed"
+					   defaultMessage="Weiß ich nicht, aber ich glaube:" />
+          </label>
+				  {radioControls}
+        </p>
 			</div>
 		</div>;
 	}

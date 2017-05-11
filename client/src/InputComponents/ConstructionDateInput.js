@@ -132,11 +132,14 @@ class ConstructionDateInput extends React.Component {
 			<ErrorList errors={this.state.errors} />
 
 			<div>
-				<p><label htmlFor="constructionDateGuessed"><FormattedMessage
-					id="Spanneneinordnung.constructionDateGuessed"
-					defaultMessage="Nein, aber ich würde schätzen:" /></label></p>
-
-				{radioControls}
+				<p>
+          <label htmlFor="constructionDateGuessed">
+            <FormattedMessage
+  					id="Spanneneinordnung.constructionDateGuessed"
+  					defaultMessage="Nein, aber ich würde schätzen:" />
+          </label>
+				  {radioControls}
+        </p>
 			</div>
 		</div>;
 	}

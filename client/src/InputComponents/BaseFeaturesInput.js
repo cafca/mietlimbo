@@ -64,12 +64,14 @@ class BaseFeaturesInput extends React.Component {
 		</div>);
 
 		return <div className="assistantInput">
-			<p><label hmtlFor={this.inputName}>
-        <FormattedMessage
-          id="BaseFeaturesInput.label"
-          defaultMessage="Gibt es noch was außergewöhnliches?" />
-			</label></p>
-			{radioControls}
+			<p>
+        <label hmtlFor={this.inputName}>
+          <FormattedMessage
+            id="BaseFeaturesInput.label"
+            defaultMessage="Gibt es noch was außergewöhnliches?" />
+			 </label>
+			 {radioControls}
+      </p>
 		</div>;
 	}
 }
