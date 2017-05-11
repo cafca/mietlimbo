@@ -15,6 +15,7 @@ import {
 import Introduction from './Introduction';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 
+
 import './Assistant.css';
 
 const Header = (props) => {
@@ -30,6 +31,13 @@ const Header = (props) => {
     <span style={style.items}>#{props.serialNumber}</span>
     <span style={style.items}><FormattedDate value={new Date()} /></span>
   </section>;
+}
+
+export const ErrorList = (props: {errors: Array<string>}) => {
+	const el = props.errors.map(
+		(e, i) => <p key={i} className="errorDesc">{e}</p>
+	);
+	return <span>{el}</span>;
 }
 
 class Assistant extends React.Component {
