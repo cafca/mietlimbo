@@ -6,12 +6,12 @@ import {FormattedMessage, defineMessages} from 'react-intl';
 
 import {AssistantInputProps} from './Tools';
 
-class SpecialFeaturesInput extends React.Component {
+class BaseFeaturesInput extends React.Component {
 	state: {
 		value: string
 	};
 
-	inputName: string = "specialFeatures";
+	inputName: string = "BaseFeatures";
 
 	options = ["nobath", "noheating", "both", "default"];
 	optionDescriptions = defineMessages({
@@ -51,21 +51,22 @@ class SpecialFeaturesInput extends React.Component {
 	}
 
 	render() {
-		const radioControls = this.options.map((name, i) => <div key={"specialFeaturesOptions-" + i}>
+		const radioControls = this.options.map((name, i) => <div key={"BaseFeaturesOptions-" + i}>
       <input
-        id={"specialFeaturesOptions" + i}
+        id={"BaseFeaturesOptions" + i}
         name={this.inputName}
         type="radio"
         value={name}
         checked={this.state.value === name} 
         onChange={this.handleChange} />
       <FormattedMessage
-        {...this.optionDescriptions[name]} />}
+        {...this.optionDescriptions[name]} />
 		</div>);
+
 		return <div className="assistantInput">
 			<p><label hmtlFor={this.inputName}>
         <FormattedMessage
-          id="SpecialFeaturesInput.label"
+          id="BaseFeaturesInput.label"
           defaultMessage="Gibt es noch was außergewöhnliches?" />
 			</label></p>
 			{radioControls}
@@ -73,4 +74,4 @@ class SpecialFeaturesInput extends React.Component {
 	}
 }
 
-export default SpecialFeaturesInput;
+export default BaseFeaturesInput;

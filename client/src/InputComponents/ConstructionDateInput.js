@@ -4,8 +4,7 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import {ErrorList} from '../Assistant/Assistant';
-import {AssistantInputProps} from './Tools';
+import {AssistantInputProps, ErrorList} from './Tools';
 
 class ConstructionDateInput extends React.Component {
 	state: {
