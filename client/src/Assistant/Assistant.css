@@ -1,5 +1,4 @@
 input {
-	width: 90%;
 	margin-top: 5px;
 }
 
@@ -9,4 +8,8 @@ input {
 
 .errorDesc {
 	color: red;
+}
+
+.textInput {
+	width: 90%;
 }
