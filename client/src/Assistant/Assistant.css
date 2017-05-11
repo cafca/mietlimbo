@@ -13,3 +13,7 @@ input {
 .textInput {
 	width: 90%;
 }
+
+.assistantInput {
+	margin-bottom: 1em;
+}
