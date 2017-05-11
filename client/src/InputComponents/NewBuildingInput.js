@@ -33,37 +33,39 @@ class NewBuildingInput extends React.Component {
 
 	render() {
 		return <div className="assistantInput">
-			<p><label htmlFor={this.inputName}>
-				<FormattedMessage 
-					id="Spanneneinordnung.newBuilding"
-					defaultMessage="Wohnst du in einem Neubau und bist Erstmieter?" />
-			</label></p>
+			<p>
+        <label htmlFor={this.inputName}>
+  				<FormattedMessage 
+  					id="Spanneneinordnung.newBuilding"
+  					defaultMessage="Wohnst du in einem Neubau und bist Erstmieter?" />
+  			</label>
 
-			<div>
-				<input
-				id="newBuildingTrue"
-				name={this.inputName}
-				type="radio"
-				value="newBuildingTrue"
-				checked={this.state.value === true}
-				onChange={this.handleChange} /> 
-				<FormattedMessage
-					id="Spanneneinordnung.newBuildingTrue" 
-					defaultMessage="Ja, das Haus wurde nach 1.10.2014 zuerst vermietet." />
-			</div>
+  			<div>
+  				<input
+  				id="newBuildingTrue"
+  				name={this.inputName}
+  				type="radio"
+  				value="newBuildingTrue"
+  				checked={this.state.value === true}
+  				onChange={this.handleChange} /> 
+  				<FormattedMessage
+  					id="Spanneneinordnung.newBuildingTrue" 
+  					defaultMessage="Ja, das Haus wurde nach 1.10.2014 zuerst vermietet." />
+  			</div>
 
-			<div>
-				<input
-					id="newBuildingFalse"
-					name={this.inputName}
-					type="radio"
-					value="newBuildingFalse"
-					checked={this.state.value === false}
-					onChange={this.handleChange} /> 
-				<FormattedMessage
-					id="Spanneneinordnung.newBuildingFalse"
-					defaultMessage="Nein, das Haus ist entweder älter oder es gab schon vor mir Mieter." />
-			</div>
+  			<div>
+  				<input
+  					id="newBuildingFalse"
+  					name={this.inputName}
+  					type="radio"
+  					value="newBuildingFalse"
+  					checked={this.state.value === false}
+  					onChange={this.handleChange} /> 
+  				<FormattedMessage
+  					id="Spanneneinordnung.newBuildingFalse"
+  					defaultMessage="Nein, das Haus ist entweder älter oder es gab schon vor mir Mieter." />
+  			</div>
+      </p>
 		</div>;
 	}
 }
