@@ -3,13 +3,7 @@ import autoBind from 'react-autobind';
 import Autocomplete from 'react-google-autocomplete';
 import {FormattedMessage} from 'react-intl';
 
-const ErrorList = (props: {errors: [string]}) => {
-	const el = props.errors.map(
-		(e, i) => <p key={i} className="errorDesc">{e}</p>
-	);
-	return <span>{el}</span>;
-}
-
+import {ErrorList} from './Assistant';
 
 class BasicData extends React.Component {
 	constructor(props: Object) {
@@ -153,6 +147,7 @@ class BasicData extends React.Component {
 			<input 
 				id="leaseCreated"
 				name="leaseCreated"
+				className="textInput"
 				type="date"
 				value={this.state.leaseCreated} 
 				onChange={this.handleChange} />
@@ -168,6 +163,7 @@ class BasicData extends React.Component {
 				id="rent"
 				name="rent"
 				type="text"
+				className="textInput"
 				value={this.state.rent}
 				onChange={this.handleChange} />
 			<ErrorList errors={this.state.rentErrors} />
@@ -181,6 +177,7 @@ class BasicData extends React.Component {
 			<Autocomplete
 				id="address"
 		    onPlaceSelected={this.handleAdressChange}
+		    className="textInput"
 		    types={['address']}
 		    componentRestrictions={{country: "de"}} />
 			{this.mapEmbedGen()}

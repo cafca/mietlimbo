@@ -3,7 +3,15 @@
 import React from 'react';
 import autoBind from 'react-autobind';
 
-import BasicData from './BasicData';
+import BasicData from './1_BasicData';
+
+import {
+	NewBuildingInput, 
+	ConstructionDateInput, 
+	SquareMeterInput, 
+	SpecialFeaturesInput
+} from './2_Spanne.js'
+
 import Introduction from './Introduction';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 
@@ -26,7 +34,7 @@ const Header = (props) => {
 
 class Assistant extends React.Component {
 	state = {
-		stage: 0,
+		stage: 2,
 		serialNumber: "03",
 		formValid: true
 	}
@@ -48,15 +56,33 @@ class Assistant extends React.Component {
 		console.log("Saved", data);
 	}
 
+	handleInputValid(name: string, valid: boolean) {
+		console.log(name, valid);
+	}
+
+	handleInputChanged(name: string, data: Object) {
+		console.log(name, data);
+	}
+
 	render() {
 		let content;
+
+		const valid = this.handleInputValid;
+		const changed = this.handleInputChanged;
+
 		switch(this.state.stage) {
 			case 1:
 				content = <BasicData 
 					formValid={this.handleFormValid} 
 					continue={this.handleContinue}
-					save={this.handleSave}
-				/>;
+					save={this.handleSave} />;
+				break;
+
+			case 2:
+				content = <div>
+					<NewBuildingInput valid={valid} changed={changed} />
+					<ConstructionDateInput valid={valid} changed={changed} />
+				</div>;
 				break;
 
 			case 0:
