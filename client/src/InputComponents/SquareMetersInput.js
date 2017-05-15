@@ -4,7 +4,8 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import {AssistantInputProps, ErrorList} from './Tools';
+import {ErrorList} from './Tools';
+import type {AssistantInputProps} from './Tools';
 
 class SquareMetersInput extends React.Component {
 	state: {

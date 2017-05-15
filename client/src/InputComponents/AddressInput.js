@@ -5,7 +5,9 @@ import autoBind from 'react-autobind';
 import {FormattedMessage} from 'react-intl';
 import Autocomplete from 'react-google-autocomplete';
 
-import {AssistantInputProps, ErrorList} from './Tools';
+import {ErrorList} from './Tools';
+
+import type {AssistantInputProps} from './Tools';
 
 class AddressInput extends React.Component {
   state: {
