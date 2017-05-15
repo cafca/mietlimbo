@@ -12,6 +12,8 @@ import ConstructionDateInput from '../InputComponents/ConstructionDateInput';
 import SquareMetersInput from '../InputComponents/SquareMetersInput';
 import BaseFeaturesInput from '../InputComponents/BaseFeaturesInput';
 
+import SpecialFeaturesInput from '../InputComponents/SpecialFeaturesInput';
+
 import Introduction from './Introduction';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 
@@ -37,7 +39,8 @@ class Assistant extends React.Component {
 	state = {
 		stage: 1,
 		serialNumber: "03",
-		formValid: true
+    inputValid: {},
+    inputData: {}
 	}
 
 	constructor(props: {}) {
@@ -49,27 +52,28 @@ class Assistant extends React.Component {
 		this.setState({stage: (this.state.stage + 1)});
 	}
 
-	handleFormValid(formValid: boolean) {
-		if (this.state.formValid !== formValid) this.setState({formValid});
-	}
-
-	handleSave(data: Object) {
-		console.log("Saved", data);
-	}
-
 	handleInputValid(name: string, valid: boolean) {
-		console.log(name, "valid", valid);
+    const newInputValid = Object.assign(this.state.inputValid, {[name]: valid});
+    this.setState({inputValid: newInputValid});
 	}
 
-	handleInputChanged(name: string, data: Object) {
-		console.log(name, data);
+	handleInputChanged(newData: Object) {
+    this.setState({inputData: Object.assign({}, this.state.inputData, newData)});
+    Object.keys(newData).map(k => console.log(k, newData[k]));
 	}
+
+  stageValid(fieldNames: Array<string>) {
+    return fieldNames.map(k => this.state.inputValid[k] === true).every(v => v === true);
+  }
 
 	render() {
 		let content;
+    let conditions: Array<string> = [];
 
 		const valid = this.handleInputValid;
 		const changed = this.handleInputChanged;
+
+    const data = JSON.stringify(this.state.inputData, null, 2);
 
 		switch(this.state.stage) {
 			case 1:
@@ -78,6 +82,7 @@ class Assistant extends React.Component {
           <RentInput valid={valid} changed={changed} />
           <AddressInput valid={valid} changed={changed} />
         </div>;
+        conditions = ["leaseCreated", "rent", "address"];
 				break;
 
 			case 2:
@@ -87,7 +92,22 @@ class Assistant extends React.Component {
 					<SquareMetersInput valid={valid} changed={changed} />
           <BaseFeaturesInput valid={valid} changed={changed} />
 				</div>;
+        conditions = ["newBuilding", "constructionDate", "squareMeters", "baseFeatures"];
 				break;
+
+      case 3:
+        // Mietspiegelabfrage, ob genug Daten vorhanden sind
+        break;
+
+      case 4:
+        // Let component add to validity conditions of current stage
+        const addCondition = name => conditions.push(name);
+
+        content = <SpecialFeaturesInput 
+          constructionDate={this.state.data["2"].constructionData.value} 
+          addCondition={addCondition}
+          valid={valid} changed={changed} />;
+        break;
 
 			case 0:
 			default:
@@ -95,14 +115,15 @@ class Assistant extends React.Component {
 		}
 
 		return <div className="assistant">
-          <Header serialNumber={this.state.serialNumber} stage={this.state.stage} />
-          {content}
-          <button onClick={this.handleContinue} disabled={!this.state.formValid}>
-          	<FormattedMessage
-          		id="Assistant.continue"
-          		defaultMessage="Continue"
-          	/>
-          </button>
+      <Header serialNumber={this.state.serialNumber} stage={this.state.stage} />
+      {content}
+      <button onClick={this.handleContinue} disabled={!this.stageValid(conditions)}>
+      	<FormattedMessage
+      		id="Assistant.continue"
+      		defaultMessage="Weiter"
+      	/>
+      </button>
+      <div><pre>{data}</pre></div>
 		</div>;
 	}
 }

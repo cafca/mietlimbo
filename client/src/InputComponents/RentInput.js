@@ -8,7 +8,7 @@ import {AssistantInputProps, ErrorList} from './Tools';
 
 class RentInput extends React.Component {
   state: {
-    value: number,
+    value: string,
     errors: Array<any>
   }
 
@@ -24,24 +24,29 @@ class RentInput extends React.Component {
   }
 
   handleChange(e: SyntheticInputEvent) {
-    const value = parseFloat(e.target.value);
+    const fValue = parseFloat(e.target.value);
     const errors = [];
 
-    if(isNaN(value)) {
+    if(isNaN(fValue)) {
       errors.push(<FormattedMessage 
         id="RentInput.errorNotANumber" 
-        defaultMessage="Bitte gib deine Kaltmiete als Zahl an, z.B. 460.80." />)
-    } else if (value < 1) {
+        defaultMessage="Bitte gib deine Kaltmiete als Zahl an, z.B. '460.80'." />);
+    } else if (fValue < 1) {
       errors.push(<FormattedMessage 
         id="RentInput.errorRentTooLow" 
-        defaultMessage="Das ist zu wenig. Bitte gib deine Kaltmiete an." />)
+        defaultMessage="Das ist zu wenig. Bitte gib deine Kaltmiete an." />);
+    } else if (e.target.value.indexOf(",") > -1) {
+      errors.push(<FormattedMessage
+        id="RentInput.errorDecSeparator"
+        defaultMessage="Bitte benutze einen Punkt, um Nachkommastellen zu trennen. Also z.B. '460.80'."
+        />);
     } else {
-      this.props.changed(this.inputName, value);
+      this.props.changed({[this.inputName]: fValue});
     }
 
     // input is valid if no errors encountered
     this.props.valid(this.inputName, errors.length === 0);
-    this.setState({value, errors});
+    this.setState({value: e.target.value, errors});
   }
 
   render() {

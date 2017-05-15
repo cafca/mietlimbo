@@ -47,14 +47,17 @@ class AddressInput extends React.Component {
     if(!this.placeInBerlin(place)) {
       errors.push(<FormattedMessage 
         id='BasicData.errorNotBerlin' 
-        defaultMessage="Bitte wähle einen Ort in Berlin" />)
+        defaultMessage="Bitte wähle einen Ort in Berlin" />);
+      this.props.valid(this.inputName, false);
     } else if(!this.placeHasHouseNumber(place)) {
       errors.push(<FormattedMessage 
         id='BasicData.errorNoNumber' 
-        defaultMessage="Bitte gib eine Hausnummer ein." />)
+        defaultMessage="Bitte gib eine Hausnummer ein." />);
+      this.props.valid(this.inputName, false);
     } else {
-      this.props.changed(this.inputName, value);
-      this.props.changed("addressPlace", place);
+      this.props.changed({[this.inputName]: value});
+      this.props.changed({"addressPlace": place.place_id});
+      this.props.valid(this.inputName, true);
     }
     this.setState({value, place, errors});
   }

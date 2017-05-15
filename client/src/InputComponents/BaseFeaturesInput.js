@@ -8,10 +8,10 @@ import {AssistantInputProps} from './Tools';
 
 class BaseFeaturesInput extends React.Component {
 	state: {
-		value: string
+		value: ?string
 	};
 
-	inputName: string = "BaseFeatures";
+	inputName: string = "baseFeatures";
 
 	options = ["nobath", "noheating", "both", "default"];
 	optionDescriptions = defineMessages({
@@ -37,17 +37,14 @@ class BaseFeaturesInput extends React.Component {
 		super(props);
 		autoBind(this);
 		this.state = {
-			value: "default"
+			value: undefined
 		}
 	}
 
-  componentDidMount() {
-    this.props.valid(this.inputName, true);
-  }
-
 	handleChange(e: SyntheticInputEvent) {
     this.setState({value: e.target.value});
-    this.props.changed(this.inputName, e.target.value);
+    this.props.changed({[this.inputName]: e.target.value});
+    this.props.valid(this.inputName, true);
 	}
 
 	render() {
@@ -65,7 +62,7 @@ class BaseFeaturesInput extends React.Component {
 
 		return <div className="assistantInput">
 			<p>
-        <label hmtlFor={this.inputName}>
+        <label htmlFor={this.inputName}>
           <FormattedMessage
             id="BaseFeaturesInput.label"
             defaultMessage="Gibt es noch was außergewöhnliches?" />

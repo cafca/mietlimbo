@@ -14,6 +14,7 @@ class SquareMetersInput extends React.Component {
 	}
 
 	inputName: string = "squareMeters";
+  inputNameAlt: string = "squareMetersGuessed";
 
 	radioOptions: Array<string> = [
 		"lt40",
@@ -54,13 +55,16 @@ class SquareMetersInput extends React.Component {
 	handleChange(e: SyntheticInputEvent) {
 		const errors = [];
 		switch (e.target.name) {
-			case "squareMetersGuessed":
+			case this.inputNameAlt:
 				this.setState({
 					exactValue: "",
 					guessedValue: e.target.value,
 					errors
 				})
-				this.props.changed("squareMetersGuessed", e.target.value);
+        this.props.changed({
+          [this.inputName]: null,
+          [this.inputNameAlt]: e.target.value
+        });
 				this.props.valid(this.inputName, true);
 				break;
 
@@ -75,7 +79,10 @@ class SquareMetersInput extends React.Component {
 						defaultMessage="Bitte gib hier eine Quadratmeterzahl ein oder schätze die Grundfläche der Wohnung unten." />);
 					this.props.valid(this.inputName, false);
 				} else {
-					this.props.changed(this.inputName, intValue);
+					this.props.changed({
+            [this.inputName]: intValue,
+            [this.inputNameAlt]: null
+          });
 					// don't save date while user is typing
 					if (intValue > 10) this.props.valid(this.inputName, true);
 				}
@@ -91,8 +98,8 @@ class SquareMetersInput extends React.Component {
 	render() {
 		const radioControls = this.radioOptions.map((rangeName, i) => <div key={"squareMetersOption-" + i}>
 				<input
-					id={"squareMetersGuessed" + rangeName}
-					name="squareMetersGuessed"
+					id={this.inputNameAlt + rangeName}
+					name={this.inputNameAlt}
 					type="radio"
 					value={rangeName}
 					checked={this.state.guessedValue === rangeName}
@@ -118,7 +125,7 @@ class SquareMetersInput extends React.Component {
 
 			<div>
 				<p>
-          <label htmlFor="squareMetersGuessed">
+          <label htmlFor={this.inputNameAlt}>
             <FormattedMessage
 					   id="Spanneneinordnung.squareMetersGuessed"
 					   defaultMessage="Weiß ich nicht, aber ich glaube:" />

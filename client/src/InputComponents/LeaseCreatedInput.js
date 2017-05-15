@@ -31,7 +31,7 @@ class LeaseCreatedInput extends React.Component {
         id="LeaseCreatedInput.error" 
         defaultMessage="Bitte gib hier ein Datum im Format dd.mm.yyy an, also z.B. 15.01.2016." />)
     } else {
-      this.props.changed(this.inputName, value);
+      this.props.changed({[this.inputName]: value});
     }
     this.setState({errors, value});
     this.props.valid(this.inputName, errors.length === 0);

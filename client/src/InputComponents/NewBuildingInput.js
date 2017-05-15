@@ -8,7 +8,7 @@ import {AssistantInputProps} from './Tools';
 
 class NewBuildingInput extends React.Component {
 	state: {
-		value: boolean
+		value: ?boolean
 	};
 
 	inputName: string = "newBuilding";
@@ -16,19 +16,16 @@ class NewBuildingInput extends React.Component {
 	constructor(props: AssistantInputProps) {
 		super(props);
 		this.state = {
-			value: false,
+			value: undefined,
 		}
 		autoBind(this);
 	}
 
 	handleChange(e: SyntheticInputEvent) {
 		const value = e.target.value === "newBuildingTrue";
-		this.props.changed(this.inputName, value);
+		this.props.changed({[this.inputName]: value});
+    this.props.valid(this.inputName, true);
 		this.setState({value});
-	}
-
-	componentDidMount() {
-		this.props.valid(this.inputName, true);
 	}
 
 	render() {
