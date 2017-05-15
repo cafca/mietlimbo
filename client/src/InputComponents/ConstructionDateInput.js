@@ -14,6 +14,7 @@ class ConstructionDateInput extends React.Component {
 	}
 
 	inputName: string = "constructionDate";
+  inputNameAlt: string = "constructionDateGuessed";
 
 	radioOptions: Array<string> = [
 		"Pre1918",
@@ -75,7 +76,10 @@ class ConstructionDateInput extends React.Component {
 					guessedValue: e.target.value,
 					errors
 				})
-				this.props.changed("constructionDateGuessed", e.target.value);
+        this.props.changed({
+          [this.inputName]: null,
+          [this.inputNameAlt]: e.target.value
+        });
 				this.props.valid("constructionDate", true);
 				break;
 
@@ -90,7 +94,10 @@ class ConstructionDateInput extends React.Component {
 						defaultMessage="Bitte gib hier eine Jahreszahl ein oder schätze das Baudatum unten." />);
 					this.props.valid("constructionDate", false);
 				} else {
-					this.props.changed(this.inputName, intValue);
+					this.props.changed({
+            [this.inputName]: intValue,
+            [this.inputNameAlt]: null
+          });
 					// don't save date while user is typing
 					if (intValue > 1000) this.props.valid("constructionDate", true);
 				}
