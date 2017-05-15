@@ -4,7 +4,12 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import {AssistantInputProps, ErrorList} from './Tools';
+import {
+  constructionDateRange, 
+  ErrorList
+} from './Tools';
+
+import type {AssistantInputProps} from './Tools';
 
 class ConstructionDateInput extends React.Component {
 	state: {
@@ -17,14 +22,14 @@ class ConstructionDateInput extends React.Component {
   inputNameAlt: string = "constructionDateGuessed";
 
 	radioOptions: Array<string> = [
-		"Pre1918",
-		"Pre1949", 
-		"Pre1964", 
-		"Pre1972", 
-		"Pre1990", 
-		"Pre2002", 
-		"Pre2013", 
-	];
+    "Pre1918",
+    "Pre1949", 
+    "Pre1964", 
+    "Pre1972", 
+    "Pre1990", 
+    "Pre2002", 
+    "Pre2013"
+  ];
 
 	radioDescriptions = defineMessages({
 		Pre1918: {

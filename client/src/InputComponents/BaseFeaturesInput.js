@@ -4,7 +4,7 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import {AssistantInputProps} from './Tools';
+import type {AssistantInputProps} from './Tools';
 
 class BaseFeaturesInput extends React.Component {
 	state: {
