@@ -5,7 +5,6 @@ import autoBind from 'react-autobind';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
 import {
-  constructionDateRange, 
   ErrorList
 } from './Tools';
 

@@ -37,10 +37,13 @@ const Header = (props) => {
 
 class Assistant extends React.Component {
 	state = {
-		stage: 1,
+		stage: 4,
 		serialNumber: "03",
     inputValid: {},
-    inputData: {}
+    inputData: {
+      "constructionDate": 1800,
+      "constructionDateGuessed": null
+    }
 	}
 
 	constructor(props: {}) {
@@ -97,16 +100,18 @@ class Assistant extends React.Component {
 
       case 3:
         // Mietspiegelabfrage, ob genug Daten vorhanden sind
+        conditions = [];
         break;
 
       case 4:
         // Let component add to validity conditions of current stage
-        const addCondition = name => conditions.push(name);
+        conditions = ["specialFeatures"];
 
         content = <SpecialFeaturesInput 
-          constructionDate={this.state.data["2"].constructionData.value} 
-          addCondition={addCondition}
-          valid={valid} changed={changed} />;
+          constructionDate={this.state.inputData.constructionDate} 
+          constructionDateGuessed={this.state.inputData.constructionDateGuessed} 
+          valid={valid} 
+          changed={changed} />;
         break;
 
 			case 0:
