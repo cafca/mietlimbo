@@ -91,6 +91,9 @@ class SpecialFeaturesInput extends React.Component {
   inputName: string = "specialFeatures";
 
   // If user has set an exact construction date, assign a date range for that
+  // Linter complains about '!=', but it is necessary to compare against both
+  // null and undefined as possible values
+  // eslint-disable-next-line
   constructionDateRange = this.props.constructionDateGuessed != undefined ? 
         this.props.constructionDateGuessed : constructionDateRange(this.props.constructionDate)
 
@@ -113,7 +116,7 @@ class SpecialFeaturesInput extends React.Component {
     // this.state.data.
 
     // This method should always be called after setState
-    
+
     const isValid = this.listFeatures().reduce((acc, cur) => {
       return this.state.data[cur] === undefined ? false : acc;
     }, true);
