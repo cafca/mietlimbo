@@ -46,11 +46,11 @@ const specialFeatureValuation = {
 const featureDescriptions = defineMessages({
   "true": {
     id: "Generic.True",
-    defaultMessage: "Yes"
+    defaultMessage: "Ja"
   },
   "false": {
     id: "Generic.False",
-    defaultMessage: "No"
+    defaultMessage: "Nein"
   },
   "Floor": {
     id: "SpecialFeatures.Floor",
@@ -91,6 +91,7 @@ class SpecialFeaturesInput extends React.Component {
   inputName: string = "specialFeatures";
 
   // If user has set an exact construction date, assign a date range for that
+
   // Linter complains about '!=', but it is necessary to compare against both
   // null and undefined as possible values
   // eslint-disable-next-line

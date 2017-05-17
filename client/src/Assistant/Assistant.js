@@ -2,6 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
+import { FormattedMessage, FormattedDate } from 'react-intl';
 
 import LeaseCreatedInput from '../InputComponents/LeaseCreatedInput';
 import RentInput from '../InputComponents/RentInput';
@@ -13,9 +14,9 @@ import SquareMetersInput from '../InputComponents/SquareMetersInput';
 import BaseFeaturesInput from '../InputComponents/BaseFeaturesInput';
 
 import SpecialFeaturesInput from '../InputComponents/SpecialFeaturesInput';
+import IntermediateResult from './IntermediateResult';
 
 import Introduction from './Introduction';
-import { FormattedMessage, FormattedDate } from 'react-intl';
 
 
 import './Assistant.css';
@@ -37,7 +38,7 @@ const Header = (props) => {
 
 class Assistant extends React.Component {
 	state = {
-		stage: 4,
+		stage: 3,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
@@ -100,7 +101,12 @@ class Assistant extends React.Component {
 
       case 3:
         // Mietspiegelabfrage, ob genug Daten vorhanden sind
-        conditions = [];
+        conditions = ["intermediateResult"];
+        content = <IntermediateResult 
+          valid={valid}
+          changed={changed}
+          {...this.state.inputData}
+        />;
         break;
 
       case 4:
