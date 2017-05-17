@@ -26,8 +26,8 @@ class IntermediateResult extends React.Component {
   }
 
   componentDidMount() {
-    this.props.changed({IntermediateResult: this.state});
-    this.props.valid("IntermediateResult", true);
+    this.props.changed({intermediateResult: this.state});
+    this.props.valid("intermediateResult", true);
   }
 
   render() {
@@ -44,7 +44,7 @@ class IntermediateResult extends React.Component {
         Dadurch kann der normale Mietpreis für eine Wohnung wie deine zwischen 
         {lowerBound} Euro und {upperBound} Euro pro Quadratmeter liegen." 
         values={this.state} /></p>
-        
+
       <p><FormattedMessage
         id="IntermediateResult.encouragement"
         defaultMessage="Lass uns das rausfinden! Hierfür frage ich dich 82 Fragen. 

@@ -38,11 +38,11 @@ const Header = (props) => {
 
 class Assistant extends React.Component {
 	state = {
-		stage: 3,
+		stage: 4,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
-      "constructionDate": 1800,
+      "constructionDate": 2005,
       "constructionDateGuessed": null
     }
 	}
@@ -112,7 +112,6 @@ class Assistant extends React.Component {
       case 4:
         // Let component add to validity conditions of current stage
         conditions = ["specialFeatures"];
-
         content = <SpecialFeaturesInput 
           constructionDate={this.state.inputData.constructionDate} 
           constructionDateGuessed={this.state.inputData.constructionDateGuessed} 
