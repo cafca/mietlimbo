@@ -9,39 +9,74 @@ import {constructionDateRange} from './Tools';
 
 const specialFeatureValuation = {
   "Floor": {
-    "pre1918": 0.56,
-    "pre1949": 0.83,
-    "pre1964": 1.10,
-    "pre1990": 0.46, // only for west germany
-    "pre2002": 0.79 
+    "Pre1918": 0.56,
+    "Pre1949": 0.83,
+    "Pre1964": 1.10,
+    "Pre1990": 0.46, // only for west germany
+    "Pre2002": 0.79 
   },
   "Kitchen": {
-    "pre1918": 1.37,
-    "pre1964": 1.04,
-    "pre1972": 0.50,
-    "pre1990": 0.40, // only for west germany
-    "pre2002": 0.42
+    "Pre1918": 1.37,
+    "Pre1964": 1.04,
+    "Pre1972": 0.50,
+    "Pre1990": 0.40, // only for west germany
+    "Pre2002": 0.42
   },
   "Shower": {
-    "pre1918": 0.63
+    "Pre1918": 0.63
   },
   "SmallBath": {
-    "pre2002": -0.32
+    "Pre2002": -0.32
   },
   "ModernBath": {
-    "pre1918": 0.34,
-    "pre1949": 0.40,
-    "pre1964": 0.28,
-    "pre1972": 0.12,
-    "pre1990": 0.16, // only for east germany
+    "Pre1918": 0.34,
+    "Pre1949": 0.40,
+    "Pre1964": 0.28,
+    "Pre1972": 0.12,
+    "Pre1990": 0.16, // only for east germany
   },
   "Windows": {
-    "pre1918": 0.28
+    "Pre1918": 0.28
   },
   "Lift": {
-    "pre1918": 0.64
+    "Pre1918": 0.64
   }
 }
+
+const titleText = defineMessages({
+  "Pre1918": {
+    "id": "SpecialFeatures.TitlePre1918",
+    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr bis 1918"
+  },
+  "Pre1949": {
+    "id": "SpecialFeatures.TitlePre1949",
+    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr 1919 bis 1949"
+  },
+  "Pre1964": {
+    "id": "SpecialFeatures.TitlePre1964",
+    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr 1959 bis 1964"
+  },
+  "Pre1972": {
+    "id": "SpecialFeatures.TitlePre1972",
+    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr 1965 bis 1972"
+  },
+  "Pre1990": {
+    "id": "SpecialFeatures.TitlePre1990",
+    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr 1973 bis 1990"
+  },
+  "Pre2002": {
+    "id": "SpecialFeatures.TitlePre2002",
+    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr 1991 bis 2002"
+  },
+  "Pre2013": {
+    "id": "SpecialFeatures.TitlePre2013",
+    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr 2003 bis 2013"
+  },
+  "newBuilding": {
+    "id": "SpecialFeatures.TitleNewBuilding",
+    "defaultMessage": "Sondermerkmale für Neubauten"
+  }
+});
 
 const featureDescriptions = defineMessages({
   "true": {
@@ -121,7 +156,11 @@ class SpecialFeaturesInput extends React.Component {
     const isValid = this.listFeatures().reduce((acc, cur) => {
       return this.state.data[cur] === undefined ? false : acc;
     }, true);
-    this.props.valid(this.inputName, isValid);
+
+    if (this.constructionDateRange === "Pre1990" && this.state.eastWest === undefined)
+      this.props.valid(this.inputName, false)
+    else
+      this.props.valid(this.inputName, isValid);
   }
 
   handleChange(feat: string, val: any) {
@@ -136,7 +175,11 @@ class SpecialFeaturesInput extends React.Component {
 
   handleEastWest(checked: boolean) {
     this.props.changed({"eastWest": checked});
-    this.setState({"eastWest": checked}, this.valid);
+    this.props.changed({[this.inputName]: []});
+    this.setState({
+      "eastWest": checked,
+      "data": {}
+    }, this.valid);
   }
 
   listFeatures() {
@@ -147,10 +190,10 @@ class SpecialFeaturesInput extends React.Component {
         || (this.state.eastWest === true && feat === "Kitchen")
         || (this.state.eastWest === false && feat === "ModernBath");
     };
-
+    const cdr = this.constructionDateRange;
     return Object.keys(specialFeatureValuation)
       .reduce((acc: Array<string>, cur: string) => {
-        return (specialFeatureValuation[cur][this.constructionDateRange] === undefined || featureUnavailable(cur))
+        return (specialFeatureValuation[cur][cdr] === undefined || featureUnavailable(cur))
           ? acc : acc.concat(cur);
       }, []);
   }
@@ -158,7 +201,7 @@ class SpecialFeaturesInput extends React.Component {
   render() {
     var selectors = [];
 
-    if (this.constructionDateRange === "pre1990") {
+    if (this.constructionDateRange === "Pre1990") {
       selectors.push(<EastWest 
         key="eastWest" 
         change={this.handleEastWest} 
@@ -175,7 +218,15 @@ class SpecialFeaturesInput extends React.Component {
       })
     );
 
+    if(selectors.length === 0) selectors = <FormattedMessage
+      id="SpecialFeatures.NoSelectors"
+      defaultMessage="Für andere Baujahre können Sondermerkmale, wie zum Beispiel ein modernes Bad 
+      oder ein Personenlift, das Mietlevel pauschal erhöhen oder verringern. Für das von Ihnen 
+      angegebene Baujahr gilt diese Regelung nicht."
+    />;
+
     return <div>
+      <h1><FormattedMessage {...titleText[this.constructionDateRange]} /></h1>
       {selectors}
     </div>;
   }
