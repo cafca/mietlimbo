@@ -46,31 +46,31 @@ const specialFeatureValuation = {
 const titleText = defineMessages({
   "Pre1918": {
     "id": "SpecialFeatures.TitlePre1918",
-    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr bis 1918"
+    "defaultMessage": "Sondermerkmale für die Baujahre bis 1918"
   },
   "Pre1949": {
     "id": "SpecialFeatures.TitlePre1949",
-    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr 1919 bis 1949"
+    "defaultMessage": "Sondermerkmale für die Baujahre 1919 bis 1949"
   },
   "Pre1964": {
     "id": "SpecialFeatures.TitlePre1964",
-    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr 1959 bis 1964"
+    "defaultMessage": "Sondermerkmale für die Baujahre 1959 bis 1964"
   },
   "Pre1972": {
     "id": "SpecialFeatures.TitlePre1972",
-    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr 1965 bis 1972"
+    "defaultMessage": "Sondermerkmale für die Baujahre 1965 bis 1972"
   },
   "Pre1990": {
     "id": "SpecialFeatures.TitlePre1990",
-    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr 1973 bis 1990"
+    "defaultMessage": "Sondermerkmale für die Baujahre 1973 bis 1990"
   },
   "Pre2002": {
     "id": "SpecialFeatures.TitlePre2002",
-    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr 1991 bis 2002"
+    "defaultMessage": "Sondermerkmale für die Baujahre 1991 bis 2002"
   },
   "Pre2013": {
     "id": "SpecialFeatures.TitlePre2013",
-    "defaultMessage": "Sondermerkmale für Gebäude mit Baujahr 2003 bis 2013"
+    "defaultMessage": "Sondermerkmale für die Baujahre 2003 bis 2013"
   },
   "newBuilding": {
     "id": "SpecialFeatures.TitleNewBuilding",

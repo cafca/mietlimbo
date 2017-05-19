@@ -1,12 +1,15 @@
 // @flow
 
 import React, { Component } from 'react';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider, addLocaleData } from 'react-intl';
+import de from 'react-intl/locale-data/de';
 
 import logo from './logo.svg';
 import './App.css';
 
 import Assistant from './Assistant/Assistant';
+
+addLocaleData([...de]);
 
 class App extends Component {
   render() {
@@ -24,9 +27,19 @@ class App extends Component {
   }
 }
 
+const formats = {
+  number: {currency: {
+    style: 'currency',
+    currency: 'EUR'
+  }}
+};
+
 const AppIntl = () => {
   return <IntlProvider 
-    locale={"en"}
+    formats={formats}
+    defaultFormats={formats}
+    locale={"de"}
+    defaultLocale={"de"}
   >
     <App />
   </IntlProvider>;
