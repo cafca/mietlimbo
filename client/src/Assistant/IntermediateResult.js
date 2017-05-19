@@ -2,7 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, FormattedNumber} from 'react-intl';
 
 import type {AssistantInputProps} from '../InputComponents/Tools';
 
@@ -39,10 +39,11 @@ class IntermediateResult extends React.Component {
 
       <p><FormattedMessage 
         id="IntermediateResult.info"
-        defaultMessage="Die ortsübliche Vergleichsmiete beträgt demnach {rentLevel} Euro. Je nachdem, wie gut deine 
+        defaultMessage="Die ortsübliche Vergleichsmiete beträgt demnach {rentLevel, number, currency}. 
+        Je nachdem, wie gut deine 
         Wohnung ausgestattet ist, wird von diesem Wert noch etwas abgezogen oder dazugerechnet. 
         Dadurch kann der normale Mietpreis für eine Wohnung wie deine zwischen 
-        {lowerBound} Euro und {upperBound} Euro pro Quadratmeter liegen." 
+        {lowerBound, number, currency} und {upperBound, number, currency} pro Quadratmeter liegen." 
         values={this.state} /></p>
 
       <p><FormattedMessage
