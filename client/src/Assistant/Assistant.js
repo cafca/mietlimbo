@@ -4,19 +4,17 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 
+import Introduction from './Introduction';
+import IntermediateResult from './IntermediateResult';
+
 import LeaseCreatedInput from '../InputComponents/LeaseCreatedInput';
 import RentInput from '../InputComponents/RentInput';
 import AddressInput from '../InputComponents/AddressInput';
-
 import NewBuildingInput from '../InputComponents/NewBuildingInput';
 import ConstructionDateInput from '../InputComponents/ConstructionDateInput';
 import SquareMetersInput from '../InputComponents/SquareMetersInput';
 import BaseFeaturesInput from '../InputComponents/BaseFeaturesInput';
-
 import SpecialFeaturesInput from '../InputComponents/SpecialFeaturesInput';
-import IntermediateResult from './IntermediateResult';
-
-import Introduction from './Introduction';
 
 
 import './Assistant.css';
@@ -32,18 +30,33 @@ const Header = (props) => {
   }
   return <section style={style.main}>
     <span style={style.items}>#{props.serialNumber}</span>
+    <span style={style.items}>Step {props.stage + 1}/11</span>
     <span style={style.items}><FormattedDate value={new Date()} /></span>
   </section>;
 }
 
 class Assistant extends React.Component {
 	state = {
-		stage: 4,
+		stage: 5,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
-      "constructionDate": 2005,
-      "constructionDateGuessed": null
+      "leaseCreated": "2006-05-12",
+      "rent": 1000,
+      "address": "Wittelsbacherstraße 5, 10707 Berlin, Deutschland",
+      "addressPlace": "ChIJ2waGHO5QqEcR_LHKINnI5z0",
+      "newBuilding": false,
+      "constructionDate": null,
+      "constructionDateGuessed": "Pre1949",
+      "squareMeters": null,
+      "squareMetersGuessed": "lt90",
+      "baseFeatures": "default",
+      "intermediateResult": {
+        "sufficientData": true,
+        "rentLevel": 5.43,
+        "lowerBound": 4.13,
+        "upperBound": 7.42
+      }
     }
 	}
 
