@@ -2,7 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage, FormattedNumber} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 
 import type {AssistantInputProps} from '../InputComponents/Tools';
 
