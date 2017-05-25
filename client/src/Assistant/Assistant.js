@@ -16,6 +16,7 @@ import SquareMetersInput from '../InputComponents/SquareMetersInput';
 import BaseFeaturesInput from '../InputComponents/BaseFeaturesInput';
 import SpecialFeaturesInput from '../InputComponents/SpecialFeaturesInput';
 
+import * as BathFeatures from '../RangeInputComponents/BathFeatures';
 
 import './Assistant.css';
 
@@ -130,6 +131,19 @@ class Assistant extends React.Component {
           constructionDateGuessed={this.state.inputData.constructionDateGuessed} 
           valid={valid} 
           changed={changed} />;
+        break;
+
+      case 5:
+        const bathInputs = Object.keys(BathFeatures).map(
+          k => React.createElement(BathFeatures[k], {changed: changed, key: k}, null));
+        content = <div>
+            <h1>
+              <FormattedMessage
+                id="BathFeatures.Header"
+                defaultMessage="Badezimmer und WC" />
+            </h1>
+            {bathInputs}
+          </div>;
         break;
 
 			case 0:
