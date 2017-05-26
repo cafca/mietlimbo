@@ -16,6 +16,7 @@ import SquareMetersInput from '../InputComponents/SquareMetersInput';
 import BaseFeaturesInput from '../InputComponents/BaseFeaturesInput';
 import SpecialFeaturesInput from '../InputComponents/SpecialFeaturesInput';
 
+import RangeSelectionGroup from '../RangeInputComponents/RangeSelectionGroup';
 import * as BathFeatures from '../RangeInputComponents/BathFeatures';
 
 import './Assistant.css';
@@ -134,16 +135,18 @@ class Assistant extends React.Component {
         break;
 
       case 5:
-        const bathInputs = Object.keys(BathFeatures).map(
-          k => React.createElement(BathFeatures[k], {changed: changed, key: k}, null));
         content = <div>
-            <h1>
-              <FormattedMessage
-                id="BathFeatures.Header"
-                defaultMessage="Badezimmer und WC" />
-            </h1>
-            {bathInputs}
-          </div>;
+          <h1>
+            <FormattedMessage
+              id="BathFeatures.Header"
+              defaultMessage="Badezimmer und WC" />
+          </h1>
+          <RangeSelectionGroup 
+            changed={changed} 
+            inputComponents={BathFeatures}
+            domain="BathGroup"
+            />
+        </div>;
         break;
 
 			case 0:
