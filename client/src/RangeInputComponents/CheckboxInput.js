@@ -4,19 +4,22 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
+import './CheckboxInput.css';
+
 type CheckboxInputProps = {
   changed: (string, string) => mixed, 
   name: string,
+  positive: boolean,
   message: ?string
 };
 
 const messages = defineMessages({
-  "default": {
-    id: "Rangeinput.FeatureChecked",
+  "applies": {
+    id: "Rangeinput.FeatureApplies",
     defaultMessage: "Trifft zu"
   },
   "atLeastOne": {
-    id: "Rangeinput.AtleastOneFeatureChecked",
+    id: "Rangeinput.AtleastOneFeatureApplies",
     defaultMessage: "Mindestens eins trifft zu"
   }
 })
@@ -36,35 +39,35 @@ class CheckboxInput extends React.Component {
 
   handleChange(ev: SyntheticInputEvent) {
     this.setState({value: ev.target.checked})
-    this.props.changed({[this.props.name]: ev.target.checked});
+    this.props.changed(this.props.name, this.props.positive, ev.target.checked);
   }
 
   render() {
-    const message = this.props.message === undefined 
-      ? messages["default"] : messages[this.props.message];
+    let message;
+    switch (this.props.message) {
+      case "applies":
+        message = <FormattedMessage {...messages["applies"]} />;
+        break;
 
-    return <div>
+      case "atLeastOne":
+        message = <FormattedMessage {...messages["atLeastOne"]} />;
+        break
+
+      default:
+        message = "";
+    }
+
+    return <span>
       <input
         id={this.props.name}
         name={this.props.name}
+        className="rangeCheckbox"
         type="checkbox"
         value={this.props.name}
         checked={this.state.value === true}
         onChange={this.handleChange} /> 
-      <FormattedMessage {...message} />
-    </div>;
-  }
-}
-
-export class BathCheckboxInput extends CheckboxInput {
-  constructor(props: CheckboxInputProps) {
-    super(props);
-  }
-
-  handleChange(ev: SyntheticInputEvent) {
-    const fieldName = "Bath-" + this.props.name;
-    this.setState({value: ev.target.checked});
-    this.props.changed({[fieldName]: ev.target.checked});
+      {message}
+    </span>;
   }
 }
 
