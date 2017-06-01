@@ -138,13 +138,13 @@ class Assistant extends React.Component {
         content = <div>
           <h1>
             <FormattedMessage
-              id="BathFeatures.Header"
+              id="Bath.Header"
               defaultMessage="Badezimmer und WC" />
           </h1>
           <RangeSelectionGroup 
-            changed={changed} 
-            inputComponents={BathFeatures}
             domain="BathGroup"
+            inputComponents={BathFeatures}
+            changed={changed} 
             />
         </div>;
         break;
