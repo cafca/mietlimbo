@@ -1,0 +1,19 @@
+input {
+	margin-top: 5px;
+}
+
+.mapEmbed {
+	margin: 5px 20px;
+}
+
+.errorDesc {
+	color: red;
+}
+
+.textInput {
+	width: 90%;
+}
+
+.assistantInput {
+	margin-bottom: 1em;
+}
