@@ -2,7 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import { FormattedMessage, FormattedDate } from 'react-intl';
+import { FormattedMessage, FormattedDate, injectIntl } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import Introduction from './Introduction';
@@ -158,15 +158,17 @@ class Assistant extends React.Component {
 		return <div className="assistant">
       <Header serialNumber={this.state.serialNumber} stage={this.state.stage} />
       {content}
-      <RaisedButton primary={true} onClick={this.handleContinue} disabled={!this.stageValid(conditions)}>
-      	<FormattedMessage
-      		id="Assistant.continue"
-      		defaultMessage="Weiter"
-      	/>
-      </RaisedButton>
+      <RaisedButton 
+        primary={true} 
+        onClick={this.handleContinue} 
+        disabled={!this.stageValid(conditions)}
+        label={this.props.intl.formatMessage({
+          id: "Assistant.continue",
+          defaultMessage: "Weiter"
+        })} />
       <div><pre>{data}</pre></div>
 		</div>;
 	}
 }
 
-export default Assistant;
+export default injectIntl(Assistant);
