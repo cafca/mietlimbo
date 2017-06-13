@@ -2,11 +2,12 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
 import Autocomplete from 'react-google-autocomplete';
 
-import {ErrorList} from './Tools';
+import { Card, CardTitle, CardText, CardMedia } from 'material-ui/Card';
 
+import { ErrorList } from './Tools';
 import type {AssistantInputProps} from './Tools';
 
 class AddressInput extends React.Component {
@@ -65,21 +66,28 @@ class AddressInput extends React.Component {
   }
 
   render() {
-    return <div className="assistantInput">
-      <p><label htmlFor={this.inputName}>
-        <FormattedMessage 
-          id="AddressInput.label" 
-          defaultMessage="Wie lautet deine Adresse?" />
-      </label></p>
-      <Autocomplete
-        id={this.inputName}
-        onPlaceSelected={this.handleChange}
-        className="textInput"
-        types={['address']}
-        componentRestrictions={{country: "de"}} />
-      <ErrorList errors={this.state.errors} />
-      <MapEmbed place={this.state.place} />
-    </div>;
+    const messages = defineMessages({
+      title: {
+        id: "AddressInput.title",
+        defaultMessage: "Wie lautet deine Adresse?"
+      }
+    });
+
+    return <Card className="assistantInput">
+      <CardTitle title={this.props.intl.formatMessage(messages.title)} />
+      <CardText>
+        <Autocomplete
+          id={this.inputName}
+          onPlaceSelected={this.handleChange}
+          className="textInput"
+          types={['address']}
+          componentRestrictions={{country: "de"}} />
+        <ErrorList errors={this.state.errors} />
+      </CardText>
+      <CardMedia>
+        <MapEmbed place={this.state.place} />
+      </CardMedia>
+    </Card>;
   }
 }
 
@@ -94,7 +102,7 @@ const MapEmbed = (props: MapEmbedProps) => {
       + apiKey + "&q=place_id:" + props.place.place_id;
     return <div className="mapEmbed">
       <iframe
-        width="95%"
+        width="100%"
         height="300"
         frameBorder="0" style={{border: 0}}
         src={srcUrl}>
@@ -105,4 +113,4 @@ const MapEmbed = (props: MapEmbedProps) => {
   }
 }
 
-export default AddressInput;
+export default injectIntl(AddressInput);
