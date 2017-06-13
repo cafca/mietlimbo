@@ -3,6 +3,7 @@
 import React from 'react';
 import autoBind from 'react-autobind';
 import { FormattedMessage, FormattedDate } from 'react-intl';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import Introduction from './Introduction';
 import IntermediateResult from './IntermediateResult';
@@ -39,7 +40,7 @@ const Header = (props) => {
 
 class Assistant extends React.Component {
 	state = {
-		stage: 5,
+		stage: 1,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
@@ -157,12 +158,12 @@ class Assistant extends React.Component {
 		return <div className="assistant">
       <Header serialNumber={this.state.serialNumber} stage={this.state.stage} />
       {content}
-      <button onClick={this.handleContinue} disabled={!this.stageValid(conditions)}>
+      <RaisedButton primary={true} onClick={this.handleContinue} disabled={!this.stageValid(conditions)}>
       	<FormattedMessage
       		id="Assistant.continue"
       		defaultMessage="Weiter"
       	/>
-      </button>
+      </RaisedButton>
       <div><pre>{data}</pre></div>
 		</div>;
 	}
