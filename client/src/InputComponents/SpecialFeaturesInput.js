@@ -2,7 +2,10 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import { FormattedMessage, defineMessages } from 'react-intl';
+import { FormattedMessage, injectIntl, defineMessages} from 'react-intl';
+import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import Toggle from 'material-ui/Toggle';
 
 import type {AssistantInputProps} from './Tools';
 import {constructionDateRange} from './Tools';
@@ -78,7 +81,7 @@ const titleText = defineMessages({
   }
 });
 
-const featureDescriptions = defineMessages({
+const featureMessages = defineMessages({
   "true": {
     id: "Generic.True",
     defaultMessage: "Ja"
@@ -87,33 +90,61 @@ const featureDescriptions = defineMessages({
     id: "Generic.False",
     defaultMessage: "Nein"
   },
+  "FloorTitle": {
+    id: "SpecialFeatures.FloorTitle",
+    defaultMessage: "Hochwertiger Bodenbelag"
+  },
   "Floor": {
     id: "SpecialFeatures.Floor",
     defaultMessage: "Gibt es in mindestens der Hälfte der Wohnräume hochwertiges Parkett, Natur oder Kunststeinboden, Fliesen oder gleichwertigen Bodenbelag?"
   },
+  "KitchenTitle": {
+    id: "SpecialFeatures.KitchenTitle",
+    defaultMessage: "Wurde vom Vermieter eine moderne Küchenausstattung gestellt?"
+  },
   "Kitchen": {
     id: "SpecialFeatures.Kitchen",
-    defaultMessage: "Wurde vom Vermieter eine moderne Küchenausstattung gestellt? Dies beinhaltet mindestens: Küchenschränke, Einbauspüle, Dunstabzugshaube, Herd mit Ceran- oder Induktionskochfeld, Backofen, Wandfliesen im Arbeitsbereich und einen Kühlschrank."
+    defaultMessage: "Dies beinhaltet mindestens: Küchenschränke, Einbauspüle, Dunstabzugshaube, Herd mit Ceran- oder Induktionskochfeld, Backofen, Wandfliesen im Arbeitsbereich und einen Kühlschrank."
+  },
+  "ShowerTitle": {
+    id: "SpecialFeatures.ShowerTitle",
+    defaultMessage: "Gibt es eine Badewanne und eine davon getrennte Dusche?"
   },
   "Shower": {
     id: "SpecialFeatures.Shower",
-    defaultMessage: "Gibt es eine Badewanne und eine davon getrennte Dusche?"
+    defaultMessage: ""
+  },
+  "SmallBathTitle": {
+    id: "SpecialFeatures.SmallBathTitle",
+    defaultMessage: "Ist das Bad sehr klein?"
   },
   "SmallBath": {
     id: "SpecialFeatures.SmallBath",
-    defaultMessage: "Ist das Bad kleiner als 4qm?"
+    defaultMessage: "Dies ist der Fall, wenn es weniger als 4 Quadratmeter groß ist."
+  },
+  "ModernBathTitle": {
+    id: "SpecialFeatures.ModernBathTitle",
+    defaultMessage: "Befindet sich in der Wohnung ein modernes Bad? "
   },
   "ModernBath": {
     id: "SpecialFeatures.ModernBath",
-    defaultMessage: "Befindet sich in der Wohnung ein modernes Bad? Dazu gehört: Wände ausreichend im Spritzwasserbereich von Waschbecken, Badewanne und/oder Dusche gefliest, Bodenfliesen, Einbauwanne und/oder Dusche, Einhebelmischbatterie und Strukturheizkörper als Handtuchwärmer."
+    defaultMessage: "Dazu gehört: Wände ausreichend im Spritzwasserbereich von Waschbecken, Badewanne und/oder Dusche gefliest, Bodenfliesen, Einbauwanne und/oder Dusche, Einhebelmischbatterie und Strukturheizkörper als Handtuchwärmer."
+  },
+  "WindowsTitle": {
+    id: "SpecialFeatures.WindowsTitle",
+    defaultMessage: "Hochwertige Fenster"
   },
   "Windows": {
     id: "SpecialFeatures.Windows",
     defaultMessage: "Sind mindestens die Hälfte der Fenster mit Isolierverglasung (ab 1987 eingebaut) oder Schallschutzfenstern ausgestattet?"
   },
+  "LiftTitle": {
+    id: "SpecialFeatures.LiftTitle",
+    defaultMessage: "Gibt es einen Aufzug im Haus?"
+  },
   "Lift": {
     id: "SpecialFeatures.Lift",
-    defaultMessage: "Gibt es einen Aufzug im Haus?"
+    defaultMessage: ""
   }
 })
 
@@ -232,78 +263,63 @@ class SpecialFeaturesInput extends React.Component {
   }
 }
 
-const EastWest = (props) => <div className="assistantInput">
-  <p>
-    <label htmlFor="eastWest">
-      <FormattedMessage 
-        id="SpecialFeatures.eastWest"
-        defaultMessage="Liegt die Wohnung im Gebiet der ehemaligen DDR?" />
-    </label>
+const EastWest = injectIntl((props) => {
+  const messages = defineMessages({
+    title: {
+      id: "SpecialFeatures.eastWestTitle",
+      defaultMessage: "Wohnung in der ehemaligen DDR"
+    },
+    label: {
+      id: "SpecialFeatures.eastWest",
+      defaultMessage: "Die Wohnung liegt im Gebiet der ehemaligen DDR"
+    },
+    yes: {
+      id: "SpecialFeatures.eastWestTrue",
+      defaultMessage: "Ja"
+    },
+    no: {
+      id: "SpecialFeatures.eastWestFalse",
+      defaultMessage: "Nein"
+    }
+  });
 
-    <div>
-      <input
-      id="eastWestTrue"
-      name="eastWest"
-      type="radio"
-      value="eastWestTrue"
-      checked={props.value === true}
-      onChange={e => {props.change(e.target.checked === true);}} /> 
-      <FormattedMessage
-        id="SpecialFeatures.eastWestTrue" 
-        defaultMessage="Ja" />
-    </div>
+  return <Card className="assistantInput">
+    <CardTitle title={props.intl.formatMessage(messages.title)} />
+    <CardText>
+      <Toggle
+        label={props.intl.formatMessage(messages.label)}
+        labelPosition={"right"}
+        onToggle={(e, toggled) => props.change(toggled)} /> 
+    </CardText>
+  </Card>;
+});
 
-    <div>
-      <input
-        id="eastWestFalse"
-        name="eastWest"
-        type="radio"
-        value="eastWestFalse"
-        checked={props.value === false}
-        onChange={e => {props.change(e.target.checked === false);}} /> 
-      <FormattedMessage
-        id="SpecialFeatures.eastWestFalse"
-        defaultMessage="Nein" />
-    </div>
-  </p>
-</div>;
-
-const SpecialFeatureOption = (props) =>
-  <div className="assistantInput">
-    <p>
-      <label htmlFor={props.featName}>
-        <FormattedMessage
-          {...featureDescriptions[props.featName]} />
-      </label>
-
-      <div>
-        <input
+const SpecialFeatureOption = injectIntl((props) =>
+  <Card className="assistantInput">
+    <CardTitle title={props.intl.formatMessage(featureMessages[(props.featName + "Title")])} />
+    <CardText>
+      <p>
+        <FormattedMessage {...featureMessages[props.featName]} />
+      </p>
+    </CardText>
+    <CardActions>
+      <RadioButtonGroup 
+        name={props.featName} 
+        onChange={(e, value) => {
+          props.change(props.featName, value);
+        }} >
+        <RadioButton
           id={props.featName + "True"}
-          name={props.featName}
-          type="radio"
-          value={props.featName + "True"}
-          checked={props.value === true}
-          onChange={e => {
-            props.change(props.featName, e.target.checked === true);
-          }} /> 
-        <FormattedMessage
-          {...featureDescriptions["true"]} />
-      </div>
-
-      <div>
-        <input
+          label={props.intl.formatMessage(featureMessages["true"])}
+          value={true} 
+          style={{display: "inline-block", width: ""}} />
+        <RadioButton
           id={props.featName + "False"}
-          name={props.featName}
-          type="radio"
-          value={props.featName + "False"}
-          checked={props.value === false}
-          onChange={e => {
-            props.change(props.featName, e.target.checked === false);
-          }} /> 
-        <FormattedMessage
-          {...featureDescriptions["false"]} />
-      </div>
-    </p>
-  </div>;
+          label={props.intl.formatMessage(featureMessages["false"])}
+          value={false} 
+          style={{display: "inline-block", width: "", marginLeft: "1em"}} />
+      </RadioButtonGroup>
+    </CardActions>
+  </Card>);
 
 export default SpecialFeaturesInput;

@@ -40,7 +40,7 @@ const Header = (props) => {
 
 class Assistant extends React.Component {
 	state = {
-		stage: 1,
+		stage: 4,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
@@ -50,7 +50,7 @@ class Assistant extends React.Component {
       "addressPlace": "ChIJ2waGHO5QqEcR_LHKINnI5z0",
       "newBuilding": false,
       "constructionDate": null,
-      "constructionDateGuessed": "Pre1949",
+      "constructionDateGuessed": "Pre1990",
       "squareMeters": null,
       "squareMetersGuessed": "lt90",
       "baseFeatures": "default",
