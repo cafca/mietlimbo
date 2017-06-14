@@ -1,384 +1,438 @@
 // @flow
 
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, injectIntl, intlShape, defineMessages} from 'react-intl';
+import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card';
+
 import CheckboxInput from './CheckboxInput';
 
 type RangeInputProps = {
-  changed: (string, string) => any
+  changed: (string, string) => any,
+  intl: intlShape 
 };
 
 // 
 // Negative Features
 // 
 
-export const TinySink = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>Was für ein Handwaschbecken gibt es?</p>
-    <ul>
-      <li><FormattedMessage 
-        id="Bath.NoSink1" 
-        defaultMessage="Es gibt kein Handwaschbecken." 
-      /></li>
-      <li><FormattedMessage 
-        id="Bath.NoSink2" 
-        defaultMessage="Es gibt nur ein kleines Handwaschbecken (Außenmaß 50 x 25 cm oder kleiner)." 
-      /></li>
-    </ul>
-    <CheckboxInput
-      changed={props.changed}
-      name="tinySink"
-      positive={false}
-      message="atLeastOne"
-    />
-  </div>;
-}
+export const TinySink = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.TinySinkTitle",
+      defaultMessage: "Was für ein Handwaschbecken gibt es?"
+    }
+  });
 
-export const ToiletNoVentilation = (props: RangeInputProps) => {
-  // WC ohne Lüftungsmöglichkeit oder Entlüftung
-  return <div className="assistantInput">
-    <p>
+  return <Card className="assistantInput">
+    <CardTitle title={props.intl.formatMessage(messages.title)} />
+    <CardText>
+      <ul>
+        <li><FormattedMessage 
+          id="Bath.TinySink1" 
+          defaultMessage="Es gibt kein Handwaschbecken." 
+        /></li>
+        <li><FormattedMessage 
+          id="Bath.TinySink2" 
+          defaultMessage="Es gibt nur ein kleines Handwaschbecken (Außenmaß 50 x 25 cm oder kleiner)." 
+        /></li>
+      </ul>
+    </CardText>
+    <CardActions>
       <CheckboxInput
+        changed={props.changed}
+        name="tinySink"
+        positive={false}
+        message="atLeastOne"
+      />
+    </CardActions>
+  </Card>;
+});
+
+export const ToiletNoVentilation = injectIntl((props: RangeInputProps) => {
+  // WC ohne Lüftungsmöglichkeit oder Entlüftung
+  const messages = defineMessages({
+    title: {
+      id: "Bath.ToiletNoVentilation",
+      defaultMessage: "Das WC hat keine Lüftungsmöglichkeit oder Entlüftung."
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="toiletNoVentilation"
         positive={false}
-      />
-      <FormattedMessage 
-        id="Bath.ToiletNoVentilation" 
-        defaultMessage="Das WC hat keine Lüftungsmöglichkeit oder Entlüftung." 
-      />
-    </p>
-    
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
-export const BoardFlooring = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+export const BoardFlooring = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.BoardFlooring",
+      defaultMessage: "Es gibt Dielenfußboden im Bad." 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="boardFlooring"
         positive={false}
-      />
-      <FormattedMessage 
-        id="Bath.BoardFlooring" 
-        defaultMessage="Es gibt Dielenfußboden im Bad." 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
-export const NoHeating = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p><FormattedMessage
-      id="Bath.NoHeatingIntro"
-      defaultMessage="Heizung im Bad:"
-    /></p>
-    <ul>
-      <li><FormattedMessage 
-        id="Bath.NoHeating1" 
-        defaultMessage="Garnicht beheizbar" 
-      /></li>
-      <li><FormattedMessage 
-        id="Bath.NoHeating2" 
-        defaultMessage="Holz/Kohleheizung" 
-      /></li>
-      <li><FormattedMessage 
-        id="Bath.NoHeating3" 
-        defaultMessage="Elektroheizstrahler" 
-      /></li>
-    </ul>
-    <CheckboxInput
-      changed={props.changed}
-      name="noHeating"
-      positive={false}
-      message="atLeastOne"
-    />
-  </div>;
-}
+export const NoHeating = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.NoHeating",
+      defaultMessage: "Heizung im Bad"
+    }
+  });
 
-export const WarmWater = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
+  return <Card className="assistantInput">
+    <CardTitle title={props.intl.formatMessage(messages.title)} />
+    <CardText>
+      <ul>
+        <li><FormattedMessage 
+          id="Bath.NoHeating1" 
+          defaultMessage="Garnicht beheizbar" 
+        /></li>
+        <li><FormattedMessage 
+          id="Bath.NoHeating2" 
+          defaultMessage="Holz/Kohleheizung" 
+        /></li>
+        <li><FormattedMessage 
+          id="Bath.NoHeating3" 
+          defaultMessage="Elektroheizstrahler" 
+        /></li>
+      </ul>
+    </CardText>
+    <CardActions>
       <CheckboxInput
+        changed={props.changed}
+        name="noHeating"
+        positive={false}
+        message="atLeastOne"
+      />
+    </CardActions>
+  </Card>;
+});
+
+export const WarmWater = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.WarmWater" ,
+      defaultMessage: "Keine ausreichende Warmwasserversorgung." 
+    }
+  });
+
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="warmWater"
         positive={false}
-      />
-      <FormattedMessage 
-        id="Bath.WarmWater" 
-        defaultMessage="Keine ausreichende Warmwasserversorgung." 
-      />
-    </p>
-    <p><em>
-      <FormattedMessage 
-        id="Bath.WarmWaterExamples" 
-        defaultMessage="(z.B. keine zentrale Warmwasserversorgung, kein Durchlauferhitzer, kein Boiler > 60 Liter)" 
-      />
-    </em></p>
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+    <CardText>
+      <p>
+        <FormattedMessage 
+          id="Bath.WarmWaterExamples" 
+          defaultMessage="Zum Beispiel: keine zentrale Warmwasserversorgung, kein Durchlauferhitzer, kein Boiler > 60 Liter)" 
+        />
+      </p>
+    </CardText>
+  </Card>;
+});
 
-  </div>;
-}
-
-export const FixedBathtub = (props: RangeInputProps) => {
+export const FixedBathtub = injectIntl((props: RangeInputProps) => {
   // Bad ohne separate Dusche mit frei stehender Badewanne mit oder ohne Verblendung in nicht modernisiertem Bad
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+  const messages = defineMessages({
+    title: {
+      id: "Bath.FixedBathtub",
+      defaultMessage: "Es gibt weder eine fest eingebaute Badewanne noch eine separate Dusche. Das Bad ist nicht modernisiert." 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="fixedBathtub"
         positive={false}
-      />
-      <FormattedMessage 
-        id="Bath.FixedBathtub" 
-        defaultMessage="Es gibt weder eine fest eingebaute Badewanne noch eine separate Dusche. Das Bad ist nicht modernisiert." 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
-export const InsufficientTiling = (props: RangeInputProps) => {
+export const InsufficientTiling = injectIntl((props: RangeInputProps) => {
   // Wände nicht ausreichend im Spritzwasserbereich von Waschbecken, Badewanne und/oder Dusche gefliest.
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+  const messages = defineMessages({
+    title: {
+      id: "Bath.InsufficientTiling" ,
+      defaultMessage: "Die Wände sind im Spritzwasserbereich von Waschbecken, Badewanne und/oder Dusche nicht ausreichend gefliest." 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="insufficientTiling"
         positive={false}
-      />
-      <FormattedMessage 
-        id="Bath.InsufficientTiling" 
-        defaultMessage="Die Wände sind im Spritzwasserbereich von Waschbecken, Badewanne und/oder Dusche nicht ausreichend gefliest." 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
-export const NoWindows = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+export const NoWindows = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.NoWindows" ,
+      defaultMessage: "Bad mit WC ohne Fenster"
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="noWindows"
         positive={false}
-      />
-      <FormattedMessage 
-        id="Bath.NoWindows" 
-        defaultMessage="Bad mit WC ohne Fenster" 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
-export const NoShower = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+export const NoShower = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.NoShower" ,
+      defaultMessage: "Keine Duschmöglichkeit" 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="noShower"
         positive={false}
-      />
-      <FormattedMessage 
-        id="Bath.NoShower" 
-        defaultMessage="Keine Duschmöglichkeit" 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
-export const TinyBath = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+export const TinyBath = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.TinyBath" ,
+      defaultMessage: "Es gibt nur ein sehr kleines Bad (kleiner als 4 m²)." 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="tinyBath"
         positive={false}
-      />
-      <FormattedMessage 
-        id="Bath.TinyBath" 
-        defaultMessage="Es gibt nur ein sehr kleines Bad (kleiner als 4 m²)." 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
 // 
 // Positive Features
 // 
 
-export const LargeSink = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <ul>
-      <li><FormattedMessage 
-        id="Bath.LargeSink1" 
-        defaultMessage="Sehr großes Waschbecken (Außenmaß mindestens 80cm breit)" 
-      /></li>
-      <li><FormattedMessage 
-        id="Bath.LargeSink2" 
-        defaultMessage="Doppelhandwaschbecken" 
-      /></li>
-      <li><FormattedMessage 
-        id="Bath.LargeSink3" 
-        defaultMessage="Zwei getrennte Waschbecken" 
-      /></li>
-    </ul>
-    <CheckboxInput
-      changed={props.changed}
-      name="largeSink"
-      positive={true}
-      message="atLeastOne"
-    />
-  </div>;
-}
-
-export const HighClassFeatures = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
+export const LargeSink = injectIntl((props: RangeInputProps) => {
+  return <Card className="assistantInput">
+    <CardText>
+      <ul>
+        <li><FormattedMessage 
+          id="Bath.LargeSink1" 
+          defaultMessage="Sehr großes Waschbecken (Außenmaß mindestens 80cm breit)" 
+        /></li>
+        <li><FormattedMessage 
+          id="Bath.LargeSink2" 
+          defaultMessage="Doppelhandwaschbecken" 
+        /></li>
+        <li><FormattedMessage 
+          id="Bath.LargeSink3" 
+          defaultMessage="Zwei getrennte Waschbecken" 
+        /></li>
+      </ul>
+    </CardText>
+    <CardActions>
       <CheckboxInput
+        changed={props.changed}
+        name="largeSink"
+        positive={true}
+        message="atLeastOne"
+      />
+    </CardActions>
+  </Card>;
+});
+
+export const HighClassFeatures = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.HighClassFeatures" ,
+      defaultMessage: "Besondere und hochwertige Ausstattung" 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="highClassFeatures"
         positive={true}
-      />
-      <FormattedMessage 
-        id="Bath.HighClassFeatures" 
-        defaultMessage="Besondere und hochwertige Ausstattung" 
-      />
-    </p>
-    <p><em>
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+    <CardText>
+      <p><em>
       <FormattedMessage 
         id="Bath.HighClassFeaturesExamples" 
         defaultMessage="(z.B. hochwertige Sanitärausstattung, hochwertige Badmöbel, Eckwanne, Rundwanne)" 
       />
     </em></p>
-    
-  </div>;
-}
+    </CardText>
+  </Card>;
+});
 
-export const ElectronicVentilation = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+export const ElectronicVentilation = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.ElectronicVentilation" ,
+      defaultMessage: "Innen liegendes Badezimmer mit moderner, gesteuerter Entlüftung" 
+    },
+    description: {
+      id: "Bath.ElectronicVentilationDescription",
+      defaultMessage: "Gesteuert zum Beispiel über einen Feuchtigkeitssensor. Innen liegend bedeutet, dass das Bad keine Fenster nach außen hat.."
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="electronicVentilation"
         positive={true}
-      />
-      <FormattedMessage 
-        id="Bath.ElectronicVentilation" 
-        defaultMessage="Innen liegendes Badezimmer mit moderner, gesteuerter Entlüftung (z.B. mittels Feuchtigkeitssensor)." 
-      />
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+    <CardText>
+      <p>
+       <FormattedMessage {...messages.description} />
     </p>
-  </div>;
-}
+    </CardText>
+  </Card>;
+});
 
-export const AdditionalWC = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+export const AdditionalWC = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.AdditionalWC" ,
+      defaultMessage: "Zweites WC in der Wohnung oder Bad und WC getrennt" 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="additionalWC"
         positive={true}
-      />
-      <FormattedMessage 
-        id="Bath.AdditionalWC" 
-        defaultMessage="Zweites WC in der Wohnung oder Bad und WC getrennt" 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
-export const LargeBath = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+export const LargeBath = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.LargeBath" ,
+      defaultMessage: "Mindestens ein Bad ist größer als 8 m²." 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="largeBath"
         positive={true}
-      />
-      <FormattedMessage 
-        id="Bath.LargeBath" 
-        defaultMessage="Mindestens ein Bad ist größer als 8 m²." 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
-export const FloorHeating = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+export const FloorHeating = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.FloorHeating" ,
+      defaultMessage: "Fußbodenheizung" 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="floorHeating"
         positive={true}
-      />
-      <FormattedMessage 
-        id="Bath.FloorHeating" 
-        defaultMessage="Fußbodenheizung" 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
-export const HighClassTiling = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+export const HighClassTiling = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.HighClassTiling" ,
+      defaultMessage: "Wandbekleidung und Bodenbelag hochwertig" 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="highClassTiling"
         positive={true}
-      />
-      <FormattedMessage 
-        id="Bath.HighClassTiling" 
-        defaultMessage="Wandbekleidung und Bodenbelag hochwertig" 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
-export const WallMountedWC = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+export const WallMountedWC = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.WallMountedWC" ,
+      defaultMessage: "Wandhängendes WC mit in der Wand eingelassenem Spülkasten" 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="wallMountedWC"
         positive={true}
-      />
-      <FormattedMessage 
-        id="Bath.WallMountedWC" 
-        defaultMessage="Wandhängendes WC mit in der Wand eingelassenem Spülkasten" 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
-export const TowelHeating = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+export const TowelHeating = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.TowelHeating" ,
+      defaultMessage: "Strukturheizkörper als Handtuchwärmer" 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="towelHeating"
         positive={true}
-      />
-      <FormattedMessage 
-        id="Bath.TowelHeating" 
-        defaultMessage="Strukturheizkörper als Handtuchwärmer" 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
-export const AdditionalShower = (props: RangeInputProps) => {
-  return <div className="assistantInput">
-    <p>
-      <CheckboxInput
+export const AdditionalShower = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.AdditionalShower" ,
+      defaultMessage: "Von der Badewanne getrennte zusätzliche Duschtasse oder -kabine" 
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="additionalShower"
         positive={true}
-      /> 
-      <FormattedMessage 
-        id="Bath.AdditionalShower" 
-        defaultMessage="Von der Badewanne getrennte zusätzliche Duschtasse oder -kabine" 
-      />
-    </p>
-  </div>;
-}
+        message={props.intl.formatMessage(messages.title)}
+      />} />
+  </Card>;
+});
 
