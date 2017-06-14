@@ -17,11 +17,11 @@ class BaseFeaturesInput extends React.Component {
 	options = ["nobath", "noheating", "both", "default"];
 	optionDescriptions = defineMessages({
 		"nobath": {
-			id: "either",
+			id: "nobath",
 			defaultMessage: "Ich habe eine Toilette, aber weder Bad noch Dusche in der Wohnung."
 		},
 		"noheating": {
-			id: "either",
+			id: "noheating",
 			defaultMessage: "Es gibt bei mir keine Sammelheizung, die alle Wohnräume gleichzeitig heizen kann."
 		},
 		"both": {

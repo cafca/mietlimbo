@@ -112,7 +112,7 @@ const featureMessages = defineMessages({
   },
   "Shower": {
     id: "SpecialFeatures.Shower",
-    defaultMessage: ""
+    defaultMessage: "[TODO: REMOVE]"
   },
   "SmallBathTitle": {
     id: "SpecialFeatures.SmallBathTitle",
@@ -144,7 +144,7 @@ const featureMessages = defineMessages({
   },
   "Lift": {
     id: "SpecialFeatures.Lift",
-    defaultMessage: ""
+    defaultMessage: "[TODO: REMOVE]"
   }
 })
 
