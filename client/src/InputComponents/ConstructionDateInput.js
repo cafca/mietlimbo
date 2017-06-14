@@ -2,7 +2,8 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {FormattedMessage, injectIntl, defineMessages} from 'react-intl';
+import {Card, CardTitle, CardText} from 'material-ui/Card';
 
 import {
   ErrorList
@@ -115,6 +116,13 @@ class ConstructionDateInput extends React.Component {
 	}
 
 	render() {
+    const messages = defineMessages({
+      title: {
+        id: "Spanneneinordnung.constructionDate",
+        defaultMessage: "Wann wurde das Haus gebaut?"
+      }
+    });
+
 		const radioControls = this.radioOptions.map((rangeName, i) => <div key={"constructionDateOption-" + i}>
 				<input
 					id={"constructionDateGuessed" + rangeName}
@@ -127,33 +135,31 @@ class ConstructionDateInput extends React.Component {
 					{...this.radioDescriptions[rangeName]} />
 			</div>)
 
-		return <div className="assistantInput">
-			<label htmlFor={this.inputName}>
-				<FormattedMessage 
-					id="Spanneneinordnung.constructionDate"
-					defaultMessage="Weißt du, in welchem Jahr das Haus gebaut wurde?" />
-			</label>
-			<input 
-				id={this.inputName}
-				name={this.inputName}
-				className="textInput"
-				type="text"
-				value={this.state.exactValue} 
-				onChange={this.handleChange} />
-			<ErrorList errors={this.state.errors} />
+		return <Card className="assistantInput">
+      <CardTitle title={this.props.intl.formatMessage(messages.title)} />
+      <CardText>
+  			<input 
+  				id={this.inputName}
+  				name={this.inputName}
+  				className="textInput"
+  				type="text"
+  				value={this.state.exactValue} 
+  				onChange={this.handleChange} />
+  			<ErrorList errors={this.state.errors} />
 
-			<div>
-				<p>
-          <label htmlFor="constructionDateGuessed">
-            <FormattedMessage
-  					id="Spanneneinordnung.constructionDateGuessed"
-  					defaultMessage="Nein, aber ich würde schätzen:" />
-          </label>
-				  {radioControls}
-        </p>
-			</div>
-		</div>;
+  			<div>
+  				<p>
+            <label htmlFor="constructionDateGuessed">
+              <FormattedMessage
+    					id="Spanneneinordnung.constructionDateGuessed"
+    					defaultMessage="Das weiß ich nicht, aber ich würde schätzen:" />
+            </label>
+  				  {radioControls}
+          </p>
+  			</div>
+      </CardText>
+		</Card>;
 	}
 }
 
-export default ConstructionDateInput;
+export default injectIntl(ConstructionDateInput);

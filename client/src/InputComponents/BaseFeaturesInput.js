@@ -2,7 +2,8 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {FormattedMessage, injectIntl, defineMessages} from 'react-intl';
+import {Card, CardTitle, CardText} from 'material-ui/Card';
 
 import type {AssistantInputProps} from './Tools';
 
@@ -60,17 +61,20 @@ class BaseFeaturesInput extends React.Component {
         {...this.optionDescriptions[name]} />
 		</div>);
 
-		return <div className="assistantInput">
-			<p>
-        <label htmlFor={this.inputName}>
-          <FormattedMessage
-            id="BaseFeaturesInput.label"
-            defaultMessage="Gibt es noch was außergewöhnliches?" />
-			 </label>
+    const messages = defineMessages({
+      title: {
+        id: "BaseFeaturesInput.label",
+        defaultMessage: "Gibt es noch was außergewöhnliches?"
+      }
+    })
+
+		return <Card className="assistantInput">
+      <CardTitle title={this.props.intl.formatMessage(messages.title)} />
+      <CardText>
 			 {radioControls}
-      </p>
-		</div>;
+      </CardText>
+		</Card>;
 	}
 }
 
-export default BaseFeaturesInput;
+export default injectIntl(BaseFeaturesInput);

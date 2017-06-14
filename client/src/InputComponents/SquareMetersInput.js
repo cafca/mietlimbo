@@ -2,7 +2,8 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {FormattedMessage, injectIntl, defineMessages} from 'react-intl';
+import {Card, CardTitle, CardText} from 'material-ui/Card';
 
 import {ErrorList} from './Tools';
 import type {AssistantInputProps} from './Tools';
@@ -109,33 +110,38 @@ class SquareMetersInput extends React.Component {
 					{...this.radioDescriptions[rangeName]} />
 			</div>)
 
-		return <div className="assistantInput">
-			<label htmlFor={this.inputName}>
-				<FormattedMessage 
-					id="Spanneneinordnung.squareMeters"
-					defaultMessage="Wieviele Quadratmeter hat die Wohnung?" />
-			</label>
-			<input 
-				id={this.inputName}
-				name={this.inputName}
-				className="textInput"
-				type="text"
-				value={this.state.exactValue} 
-				onChange={this.handleChange} />
-			<ErrorList errors={this.state.errors} />
+    const messages = defineMessages({
+      title: {
+        id: "Spanneneinordnung.squareMeters",
+        defaultMessage: "Wieviele Quadratmeter hat die Wohnung?"
+      }
+    });
 
-			<div>
-				<p>
-          <label htmlFor={this.inputNameAlt}>
-            <FormattedMessage
-					   id="Spanneneinordnung.squareMetersGuessed"
-					   defaultMessage="Weiß ich nicht, aber ich glaube:" />
-          </label>
-				  {radioControls}
-        </p>
-			</div>
-		</div>;
+		return <Card className="assistantInput">
+      <CardTitle title={this.props.intl.formatMessage(messages.title)} />
+      <CardText>
+  			<input 
+  				id={this.inputName}
+  				name={this.inputName}
+  				className="textInput"
+  				type="text"
+  				value={this.state.exactValue} 
+  				onChange={this.handleChange} />
+  			<ErrorList errors={this.state.errors} />
+
+  			<div>
+  				<p>
+            <label htmlFor={this.inputNameAlt}>
+              <FormattedMessage
+  					   id="Spanneneinordnung.squareMetersGuessed"
+  					   defaultMessage="Weiß ich nicht, aber ich glaube:" />
+            </label>
+  				  {radioControls}
+          </p>
+  			</div>
+      </CardText>
+		</Card>;
 	}
 }
 
-export default SquareMetersInput;
+export default injectIntl(SquareMetersInput);

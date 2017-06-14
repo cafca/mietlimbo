@@ -2,7 +2,8 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, injectIntl, defineMessages} from 'react-intl';
+import {Card, CardTitle, CardText} from 'material-ui/Card';
 
 import type {AssistantInputProps} from './Tools';
 
@@ -29,14 +30,16 @@ class NewBuildingInput extends React.Component {
 	}
 
 	render() {
-		return <div className="assistantInput">
-			<p>
-        <label htmlFor={this.inputName}>
-  				<FormattedMessage 
-  					id="Spanneneinordnung.newBuilding"
-  					defaultMessage="Wohnst du in einem Neubau und bist Erstmieter?" />
-  			</label>
+    const messages = defineMessages({
+      title: {
+        id: "Spanneneinordnung.newBuilding",
+        defaultMessage: "Wohnst du in einem Neubau und bist Erstmieter?"
+      }
+    });
 
+		return <Card className="assistantInput">
+			<CardTitle title={this.props.intl.formatMessage(messages.title)} />
+      <CardText>
   			<div>
   				<input
   				id="newBuildingTrue"
@@ -62,9 +65,9 @@ class NewBuildingInput extends React.Component {
   					id="Spanneneinordnung.newBuildingFalse"
   					defaultMessage="Nein, das Haus ist entweder älter oder es gab schon vor mir Mieter." />
   			</div>
-      </p>
-		</div>;
+      </CardText>
+		</Card>;
 	}
 }
 
-export default NewBuildingInput;
+export default injectIntl(NewBuildingInput);
