@@ -19,6 +19,11 @@ import SpecialFeaturesInput from '../InputComponents/SpecialFeaturesInput';
 
 import RangeSelectionGroup from '../RangeInputComponents/RangeSelectionGroup';
 import * as BathFeatures from '../RangeInputComponents/BathFeatures';
+import * as KitchenFeatures from '../RangeInputComponents/KitchenFeatures';
+import * as ApartmentFeatures from '../RangeInputComponents/ApartmentFeatures';
+import * as BuildingFeatures from '../RangeInputComponents/BuildingFeatures';
+import * as EnergyFeatures from '../RangeInputComponents/EnergyFeatures';
+import * as EnvironmentFeatures from '../RangeInputComponents/EnvironmentFeatures';
 
 import './Assistant.css';
 
@@ -40,7 +45,7 @@ const Header = (props) => {
 
 class Assistant extends React.Component {
 	state = {
-		stage: 5,
+		stage: 10,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
@@ -145,6 +150,81 @@ class Assistant extends React.Component {
           <RangeSelectionGroup 
             domain="BathGroup"
             inputComponents={BathFeatures}
+            changed={changed} 
+            />
+        </div>;
+        break;
+
+      case 6:
+        content = <div>
+          <h1>
+            <FormattedMessage
+              id="Kitchen.Header"
+              defaultMessage="Küche" />
+          </h1>
+          <RangeSelectionGroup 
+            domain="KitchenGroup"
+            inputComponents={KitchenFeatures}
+            changed={changed} 
+            />
+        </div>;
+        break;
+
+      case 7:
+        content = <div>
+          <h1>
+            <FormattedMessage
+              id="Apartment.Header"
+              defaultMessage="Wohnung" />
+          </h1>
+          <RangeSelectionGroup 
+            domain="ApartmentGroup"
+            inputComponents={ApartmentFeatures}
+            changed={changed} 
+            />
+        </div>;
+        break;
+
+      case 8:
+        content = <div>
+          <h1>
+            <FormattedMessage
+              id="Building.Header"
+              defaultMessage="Gebäude" />
+          </h1>
+          <RangeSelectionGroup 
+            domain="BuildingGroup"
+            inputComponents={BuildingFeatures}
+            changed={changed} 
+            />
+        </div>;
+        break;
+
+      case 9:
+        content = <div>
+          <h1>
+            <FormattedMessage
+              id="Energy.Header"
+              defaultMessage="Energie" />
+          </h1>
+          <RangeSelectionGroup 
+            domain="EnergyGroup"
+            inputComponents={EnergyFeatures}
+            changed={changed} 
+            />
+        </div>;
+        break;
+
+      case 10:
+        content = <div>
+          <h1>
+            <FormattedMessage
+              id="Environment.Header"
+              defaultMessage="Wohnumfeld" />
+          </h1>
+          <RangeSelectionGroup 
+            domain="EnvironmentGroup"
+            inputComponents={EnvironmentFeatures}
             changed={changed} 
             />
         </div>;

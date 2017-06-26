@@ -129,12 +129,7 @@ export const WarmWater = injectIntl((props: RangeInputProps) => {
   });
 
   return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="warmWater"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-      />} />
+    <CardTitle title={props.intl.formatMessage(messages.title)} />
     <CardText>
       <p>
         <FormattedMessage 
@@ -143,6 +138,14 @@ export const WarmWater = injectIntl((props: RangeInputProps) => {
         />
       </p>
     </CardText>
+    <CardActions>
+      <CheckboxInput
+        changed={props.changed}
+        name="warmWater"
+        positive={false}
+        message={"applies"}
+      />
+    </CardActions>
   </Card>;
 });
 
@@ -274,20 +277,23 @@ export const HighClassFeatures = injectIntl((props: RangeInputProps) => {
     }
   })
   return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
+    <CardTitle title={props.intl.formatMessage(messages.title)} />
+    <CardText>
+      <p>
+      <FormattedMessage 
+        id="Bath.HighClassFeaturesExamples" 
+        defaultMessage="Zum Beispiel hochwertige Sanitärausstattung, hochwertige Badmöbel, Eckwanne, Rundwanne" 
+      />
+    </p>
+    </CardText>
+    <CardActions>
+      <CheckboxInput
         changed={props.changed}
         name="highClassFeatures"
         positive={true}
-        message={props.intl.formatMessage(messages.title)}
-      />} />
-    <CardText>
-      <p><em>
-      <FormattedMessage 
-        id="Bath.HighClassFeaturesExamples" 
-        defaultMessage="(z.B. hochwertige Sanitärausstattung, hochwertige Badmöbel, Eckwanne, Rundwanne)" 
+        message={"applies"}
       />
-    </em></p>
-    </CardText>
+    </CardActions>
   </Card>;
 });
 
@@ -303,17 +309,20 @@ export const ElectronicVentilation = injectIntl((props: RangeInputProps) => {
     }
   })
   return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="electronicVentilation"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-      />} />
+    <CardTitle title={props.intl.formatMessage(messages.title)} />
     <CardText>
       <p>
        <FormattedMessage {...messages.description} />
     </p>
     </CardText>
+    <CardActions>
+      <CheckboxInput
+        changed={props.changed}
+        name="electronicVentilation"
+        positive={true}
+        message={"applies"}
+      />
+    </CardActions>
   </Card>;
 });
 
