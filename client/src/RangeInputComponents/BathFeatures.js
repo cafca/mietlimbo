@@ -241,7 +241,14 @@ export const TinyBath = injectIntl((props: RangeInputProps) => {
 // 
 
 export const LargeSink = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Bath.LargeSinkTitle",
+      defaultMessage: "Waschbecken"
+    }
+  })
   return <Card className="assistantInput">
+    <CardTitle title={props.intl.formatMessage(messages.title)} />
     <CardText>
       <ul>
         <li><FormattedMessage 

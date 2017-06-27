@@ -26,9 +26,6 @@ export const QuietStreet = injectIntl((props: RangeInputProps) => {
         positive={true}
         message={props.intl.formatMessage(messages.title)}
       />} />
-    <CardText>
-      <p>(nahe repräsentativen, überregional ausstrahlenden Einkaufs-, Dienstleistungs- und Wohnstandorten)</p>
-    </CardText>
   </Card>;
 });
 
@@ -97,7 +94,7 @@ export const PrimeDowntown = injectIntl((props: RangeInputProps) => {
         message={props.intl.formatMessage(messages.title)}
       />} />
     <CardText>
-      <p>(nahe repräsentativen, überregional ausstrahlenden Einkaufs-, Dienstleistungs- und Wohnstandorten)</p>
+      <p>Nahe repräsentativen, überregional ausstrahlenden Einkaufs-, Dienstleistungs- und Wohnstandorten.</p>
     </CardText>
   </Card>;
 });
