@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import Introduction from './Introduction';
 import IntermediateResult from './IntermediateResult';
+import Progress from './Progress';
 
 import LeaseCreatedInput from '../InputComponents/LeaseCreatedInput';
 import RentInput from '../InputComponents/RentInput';
@@ -27,25 +28,9 @@ import * as EnvironmentFeatures from '../RangeInputComponents/EnvironmentFeature
 
 import './Assistant.css';
 
-const Header = (props) => {
-  const style = {
-    main: {
-      marginBottom: "2em"
-    },
-    items: {
-      marginRight: 5
-    }
-  }
-  return <section style={style.main}>
-    <span style={style.items}>#{props.serialNumber}</span>
-    <span style={style.items}>Step {props.stage + 1}/11</span>
-    <span style={style.items}><FormattedDate value={new Date()} /></span>
-  </section>;
-}
-
 class Assistant extends React.Component {
 	state = {
-		stage: 10,
+		stage: 2,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
@@ -68,10 +53,34 @@ class Assistant extends React.Component {
     }
 	}
 
+  stageNames = [
+    "Start",
+    "Eckdaten",
+    "Mietspiegelabfrage",
+    "Sondermerkmale",
+    "Bad",
+    "Küche",
+    "Wohnung",
+    "Gebäude",
+    "Energie",
+    "Umfeld"
+  ];
+
+  style = {
+    container: {
+      paddingLeft: 180
+    }
+  }
+
 	constructor(props: {}) {
 		super(props);
 		autoBind(this);
 	}
+
+  advanceStage(steps: number) {
+    const newStage = (this.state.stage + steps) % this.stageNames.length
+    this.setState({stage: (this.state.stage + steps)});
+  }
 
 	handleContinue(e: Event) {
 		this.setState({stage: (this.state.stage + 1)});
@@ -235,12 +244,16 @@ class Assistant extends React.Component {
 				content = <Introduction serialNumber={this.state.serialNumber} />;
 		}
 
-		return <div className="assistant">
-      <Header serialNumber={this.state.serialNumber} stage={this.state.stage} />
+		return <div className="assistant" style={this.style.container} >
+      <Progress 
+        serialNumber={this.state.serialNumber} 
+        stage={this.state.stage} 
+        stageNames={this.stageNames}
+        advance={this.advanceStage} />
       {content}
       <RaisedButton 
         primary={true} 
-        onClick={this.handleContinue} 
+        onClick={() => this.advanceStage(1)} 
         disabled={!this.stageValid(conditions)}
         label={this.props.intl.formatMessage({
           id: "Assistant.continue",
