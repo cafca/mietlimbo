@@ -4,6 +4,7 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import {FormattedMessage, injectIntl, defineMessages} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 import type {AssistantInputProps} from './Tools';
 
@@ -38,28 +39,21 @@ class BaseFeaturesInput extends React.Component {
 		super(props);
 		autoBind(this);
 		this.state = {
-			value: undefined
+			value: null
 		}
 	}
 
-	handleChange(e: SyntheticInputEvent) {
-    this.setState({value: e.target.value});
-    this.props.changed({[this.inputName]: e.target.value});
+	handleChange(e: SyntheticInputEvent, value: string) {
+    this.setState({value});
+    this.props.changed({[this.inputName]: value});
     this.props.valid(this.inputName, true);
 	}
 
 	render() {
-		const radioControls = this.options.map((name, i) => <div key={"BaseFeaturesOptions-" + i}>
-      <input
-        id={"BaseFeaturesOptions" + i}
-        name={this.inputName}
-        type="radio"
-        value={name}
-        checked={this.state.value === name} 
-        onChange={this.handleChange} />
-      <FormattedMessage
-        {...this.optionDescriptions[name]} />
-		</div>);
+		const radioControls = this.options.map((name, i) => <RadioButton
+      key={"BaseFeaturesOptions-" + i}
+      value={name}
+      label={this.props.intl.formatMessage(this.optionDescriptions[name])} />);
 
     const messages = defineMessages({
       title: {
@@ -71,7 +65,12 @@ class BaseFeaturesInput extends React.Component {
 		return <Card className="assistantInput">
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
-			 {radioControls}
+        <RadioButtonGroup
+          name={this.inputName}
+          value={this.state.value}
+          onChange={this.handleChange} >
+          {radioControls}
+        </RadioButtonGroup>
       </CardText>
 		</Card>;
 	}

@@ -4,6 +4,8 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import {FormattedMessage, injectIntl, defineMessages} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import TextField from 'material-ui/TextField';
 
 import {ErrorList} from './Tools';
 import type {AssistantInputProps} from './Tools';
@@ -11,8 +13,8 @@ import type {AssistantInputProps} from './Tools';
 class SquareMetersInput extends React.Component {
 	state: {
 		exactValue: string,
-		guessedValue: string,
-		errors: Array<any>
+		guessedValue: ?string,
+		errors: ?Array<any>
 	}
 
 	inputName: string = "squareMeters";
@@ -49,31 +51,30 @@ class SquareMetersInput extends React.Component {
 		autoBind(this);
 		this.state = {
 			exactValue: "",
-			guessedValue: "",
-			errors: []
+			guessedValue: null,
+			errors: null
 		};
 	}
 
-	handleChange(e: SyntheticInputEvent) {
+	handleChange(e: SyntheticInputEvent, value:string) {
 		const errors = [];
 		switch (e.target.name) {
 			case this.inputNameAlt:
 				this.setState({
 					exactValue: "",
-					guessedValue: e.target.value,
-					errors
+					guessedValue: value,
+					errors: null
 				})
         this.props.changed({
           [this.inputName]: null,
-          [this.inputNameAlt]: e.target.value
+          [this.inputNameAlt]: value
         });
 				this.props.valid(this.inputName, true);
 				break;
 
 			default:
 				// direct input
-
-				const intValue = parseInt(e.target.value, 10);
+				const intValue = parseInt(value, 10);
 
 				if (isNaN(intValue)) {
 					errors.push(<FormattedMessage 
@@ -90,25 +91,19 @@ class SquareMetersInput extends React.Component {
 				}
 
 				this.setState({
-					exactValue: e.target.value,
-					guessedValue: "",
-					errors
+					exactValue: value,
+					guessedValue: null,
+					errors: (errors.length > 0 ? errors : null)
 				})
 		}
 	}
 
 	render() {
-		const radioControls = this.radioOptions.map((rangeName, i) => <div key={"squareMetersOption-" + i}>
-				<input
-					id={this.inputNameAlt + rangeName}
-					name={this.inputNameAlt}
-					type="radio"
-					value={rangeName}
-					checked={this.state.guessedValue === rangeName}
-					onChange={this.handleChange} />
-				<FormattedMessage
-					{...this.radioDescriptions[rangeName]} />
-			</div>)
+		const radioControls = this.radioOptions.map((rangeName, i) => 
+			<RadioButton
+        key={"squareMetersOption-" + i}
+				value={rangeName}
+				label={this.props.intl.formatMessage(this.radioDescriptions[rangeName])} />);
 
     const messages = defineMessages({
       title: {
@@ -120,24 +115,24 @@ class SquareMetersInput extends React.Component {
 		return <Card className="assistantInput">
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
-  			<input 
-  				id={this.inputName}
-  				name={this.inputName}
-  				className="textInput"
-  				type="text"
-  				value={this.state.exactValue} 
-  				onChange={this.handleChange} />
-  			<ErrorList errors={this.state.errors} />
+        <TextField
+          name={this.inputName}
+          value={this.state.exactValue}
+          onChange={this.handleChange}
+          errorText={this.state.errors} />
 
   			<div>
-  				<p>
             <label htmlFor={this.inputNameAlt}>
               <FormattedMessage
   					   id="Spanneneinordnung.squareMetersGuessed"
   					   defaultMessage="Weiß ich nicht, aber ich glaube:" />
             </label>
-  				  {radioControls}
-          </p>
+            <RadioButtonGroup
+              name={this.inputNameAlt}
+              onChange={this.handleChange}
+              value={this.state.guessedValue} >
+  				    {radioControls}
+            </RadioButtonGroup>
   			</div>
       </CardText>
 		</Card>;
