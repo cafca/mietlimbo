@@ -2,7 +2,10 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
+
+import {Card, CardTitle, CardText} from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
 
 import {ErrorList} from './Tools';
 import type {AssistantInputProps} from './Tools';
@@ -51,22 +54,32 @@ class RentInput extends React.Component {
   }
 
   render() {
-    return <div className="assistantInput">
-      <p><label htmlFor="rent">
-        <FormattedMessage 
-          id="BasicData.rent" 
-          defaultMessage="Wieviel Kaltmiete bezahlst du jetzt (in Euro, z.B. 480.20)?" />
-      </label></p>
-      <input
-        id={this.inputName}
-        name={this.inputName}
-        type="text"
-        className="textInput"
-        value={this.state.value}
-        onChange={this.handleChange} />
-      <ErrorList errors={this.state.errors} />
-    </div>;
+    const messages = defineMessages({
+      title: {
+        id: "RentInput.title",
+        defaultMessage: "Wieviel Kaltmiete bezahlst du jetzt?"
+      }
+    });
+
+    const errors = this.state.errors.length === 0 ? null : <ErrorList errors={this.state.errors} />;
+
+    return <Card className="assistantInput">
+      <CardTitle title={this.props.intl.formatMessage(messages.title)} />
+      <CardText>
+        <p><FormattedMessage
+          id="RentInput.description"
+          defaultMessage="Bitte gib die Miete in Euro an (z.B. 480.20)" />
+        </p>
+        <TextField 
+          id={this.inputName}
+          name={this.inputName}
+          errorText={errors}
+          className="textInput"
+          value={this.state.value}
+          onChange={this.handleChange} />
+      </CardText>
+    </Card>;
   }
 }
 
-export default RentInput;
+export default injectIntl(RentInput);
