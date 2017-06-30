@@ -2,7 +2,10 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage, defineMessages} from 'react-intl';
+import {FormattedMessage, injectIntl, defineMessages} from 'react-intl';
+import {Card, CardTitle, CardText} from 'material-ui/Card';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import TextField from 'material-ui/TextField';
 
 import {
   ErrorList
@@ -13,9 +16,15 @@ import type {AssistantInputProps} from './Tools';
 class ConstructionDateInput extends React.Component {
 	state: {
 		exactValue: string,
-		guessedValue: string,
-		errors: Array<any>
+		guessedValue: ?string,
+		errors: ?Array<any>
 	}
+
+  style = {
+    guessedContainer: {
+      marginTop: "1em"
+    }
+  };
 
 	inputName: string = "constructionDate";
   inputNameAlt: string = "constructionDateGuessed";
@@ -66,94 +75,99 @@ class ConstructionDateInput extends React.Component {
 		autoBind(this);
 		this.state = {
 			exactValue: "",
-			guessedValue: "",
-			errors: []
+			guessedValue: null,
+			errors: null
 		};
 	}
 
-	handleChange(e: SyntheticInputEvent) {
+	handleChange(e: SyntheticInputEvent, value: string) {
 		const errors = [];
 		switch (e.target.name) {
 			case "constructionDateGuessed":
 				this.setState({
 					exactValue: "",
-					guessedValue: e.target.value,
-					errors
+					guessedValue: value,
+					errors: null
 				})
         this.props.changed({
           [this.inputName]: null,
-          [this.inputNameAlt]: e.target.value
+          [this.inputNameAlt]: value
         });
 				this.props.valid("constructionDate", true);
 				break;
 
 			default:
 				// direct input
-
-				const intValue = parseInt(e.target.value, 10);
+				const intValue = parseInt(value, 10);
 
 				if (isNaN(intValue)) {
 					errors.push(<FormattedMessage 
 						id="Spanneneinordnung.constructionDateError"
+            key="Spanneneinordnung.constructionDateError"
 						defaultMessage="Bitte gib hier eine Jahreszahl ein oder schätze das Baudatum unten." />);
 					this.props.valid("constructionDate", false);
+        } else if (intValue > 21 && intValue < 100) {
+          errors.push(<FormattedMessage 
+            id="Spanneneinordnung.constructionDateFormatError"
+            key="Spanneneinordnung.constructionDateFormatError"
+            defaultMessage="Bitte gib die vollständige Jahreszahl an (zum Beispiel 1950)." />);
+          this.props.valid("constructionDate", false);
 				} else {
 					this.props.changed({
             [this.inputName]: intValue,
             [this.inputNameAlt]: null
           });
 					// don't save date while user is typing
-					if (intValue > 1000) this.props.valid("constructionDate", true);
+					if (intValue > 500) this.props.valid("constructionDate", true);
 				}
 
+        // TODO: This should set the RadioButtonGroup value to null, but doesn't.
 				this.setState({
-					exactValue: e.target.value,
-					guessedValue: "",
-					errors
+					exactValue: value,
+					guessedValue: null,
+					errors: (errors.length > 0 ? errors : null)
 				})
 		}
 	}
 
 	render() {
-		const radioControls = this.radioOptions.map((rangeName, i) => <div key={"constructionDateOption-" + i}>
-				<input
-					id={"constructionDateGuessed" + rangeName}
-					name="constructionDateGuessed"
-					type="radio"
-					value={rangeName}
-					checked={this.state.guessedValue === rangeName}
-					onChange={this.handleChange} />
-				<FormattedMessage
-					{...this.radioDescriptions[rangeName]} />
-			</div>)
+    const messages = defineMessages({
+      title: {
+        id: "Spanneneinordnung.constructionDate",
+        defaultMessage: "Wann wurde das Haus gebaut?"
+      }
+    });
 
-		return <div className="assistantInput">
-			<label htmlFor={this.inputName}>
-				<FormattedMessage 
-					id="Spanneneinordnung.constructionDate"
-					defaultMessage="Weißt du, in welchem Jahr das Haus gebaut wurde?" />
-			</label>
-			<input 
-				id={this.inputName}
-				name={this.inputName}
-				className="textInput"
-				type="text"
-				value={this.state.exactValue} 
-				onChange={this.handleChange} />
-			<ErrorList errors={this.state.errors} />
+		const radioControls = this.radioOptions.map((rangeName, i) => <RadioButton
+      key={"constructionDateOption-" + i}
+			value={rangeName}
+      label={this.props.intl.formatMessage(this.radioDescriptions[rangeName])} />)
 
-			<div>
-				<p>
-          <label htmlFor="constructionDateGuessed">
+		return <Card className="assistantInput">
+      <CardTitle title={this.props.intl.formatMessage(messages.title)} />
+      <CardText>
+        <TextField
+          name={this.inputName}
+          value={this.state.exactValue}
+          onChange={this.handleChange} 
+          errorText={this.state.errors} />
+
+  			<div style={this.style.guessedContainer}>
+          <label htmlFor={this.inputNameAlt} >
             <FormattedMessage
   					id="Spanneneinordnung.constructionDateGuessed"
-  					defaultMessage="Nein, aber ich würde schätzen:" />
+  					defaultMessage="Das weiß ich nicht, aber ich würde schätzen:" />
           </label>
-				  {radioControls}
-        </p>
-			</div>
-		</div>;
+          <RadioButtonGroup 
+            name={this.inputNameAlt}
+            onChange={this.handleChange}
+            valueSelected={this.state.guessedValue} >
+            {radioControls}
+          </RadioButtonGroup>
+  			</div>
+      </CardText>
+		</Card>;
 	}
 }
 
-export default ConstructionDateInput;
+export default injectIntl(ConstructionDateInput);

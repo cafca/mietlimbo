@@ -2,7 +2,8 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import { FormattedMessage, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
+import Checkbox from 'material-ui/Checkbox';
 
 import './CheckboxInput.css';
 
@@ -37,38 +38,35 @@ class CheckboxInput extends React.Component {
     };
   }
 
-  handleChange(ev: SyntheticInputEvent) {
-    this.setState({value: ev.target.checked})
-    this.props.changed(this.props.name, this.props.positive, ev.target.checked);
+  handleChange(ev: SyntheticInputEvent, checked: boolean) {
+    this.setState({value: checked})
+    this.props.changed(this.props.name, this.props.positive, checked);
   }
 
   render() {
     let message;
     switch (this.props.message) {
       case "applies":
-        message = <FormattedMessage {...messages["applies"]} />;
+        message = this.props.intl.formatMessage(messages["applies"]);
         break;
 
       case "atLeastOne":
-        message = <FormattedMessage {...messages["atLeastOne"]} />;
+        message = this.props.intl.formatMessage(messages["atLeastOne"]);
         break
 
       default:
-        message = "";
+        message = this.props.message;
     }
 
-    return <span>
-      <input
-        id={this.props.name}
-        name={this.props.name}
-        className="rangeCheckbox"
-        type="checkbox"
-        value={this.props.name}
-        checked={this.state.value === true}
-        onChange={this.handleChange} /> 
-      {message}
-    </span>;
+    return <Checkbox
+      id={this.props.name}
+      name={this.props.name}
+      label={message}
+      className="rangeCheckbox"
+      value={this.props.name}
+      checked={this.state.value === true}
+      onCheck={this.handleChange} />;
   }
 }
 
-export default CheckboxInput;
+export default injectIntl(CheckboxInput);
