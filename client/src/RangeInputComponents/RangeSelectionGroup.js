@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage} from 'react-intl';
 
 type RangeSelectionGroupProps = {
   changed: Object => any,
