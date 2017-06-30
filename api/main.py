@@ -24,7 +24,7 @@ def create_app(config=None):
         rv = {}
 
         street_name = request.args.get("name")
-        if len(street_name) < 4:
+        if street_name is None or len(street_name) < 4:
             rv["errors"] = ["Street query too short"]
         else:
             ps = MietspiegelParser()
