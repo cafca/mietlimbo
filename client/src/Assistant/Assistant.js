@@ -39,7 +39,7 @@ const Header = (props) => {
 
 class Assistant extends React.Component {
 	state = {
-		stage: 5,
+		stage: 1,
 		serialNumber: "03",
     inputValid: {},
     inputData: {

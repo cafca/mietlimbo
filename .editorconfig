@@ -2,3 +2,8 @@
 indent_style = space
 indent_size = 2
 charset = utf-8
+
+[server/**.py]
+indent_style = space
+intent_size = 2
+charset = utf-8
