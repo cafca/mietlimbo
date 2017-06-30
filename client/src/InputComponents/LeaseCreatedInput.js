@@ -2,7 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage, injectIntl, defineMessages} from 'react-intl';
+import {injectIntl, defineMessages} from 'react-intl';
 import areIntlLocalesSupported from 'intl-locales-supported';
 
 import {Card, CardTitle, CardText} from 'material-ui/Card';

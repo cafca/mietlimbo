@@ -7,7 +7,6 @@ import {Card, CardTitle, CardText} from 'material-ui/Card';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import TextField from 'material-ui/TextField';
 
-import {ErrorList} from './Tools';
 import type {AssistantInputProps} from './Tools';
 
 class SquareMetersInput extends React.Component {

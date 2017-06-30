@@ -102,6 +102,7 @@ const MapEmbed = (props: MapEmbedProps) => {
       + apiKey + "&q=place_id:" + props.place.place_id;
     return <div className="mapEmbed">
       <iframe
+        title="Google Maps iFrame"
         width="100%"
         height="300"
         frameBorder="0" style={{border: 0}}

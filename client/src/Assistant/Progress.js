@@ -2,15 +2,13 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import { FormattedMessage, FormattedDate, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import {
   Step,
   Stepper,
   StepLabel,
 } from 'material-ui/Stepper';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 
 class Progress extends React.Component {
   style = {

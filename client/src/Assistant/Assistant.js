@@ -2,7 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import { FormattedMessage, FormattedDate, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import Introduction from './Introduction';
@@ -78,8 +78,8 @@ class Assistant extends React.Component {
 	}
 
   advanceStage(steps: number) {
-    const newStage = (this.state.stage + steps) % this.stageNames.length
-    this.setState({stage: (this.state.stage + steps)});
+    const stage = (this.state.stage + steps) % this.stageNames.length
+    this.setState({stage});
   }
 
 	handleContinue(e: Event) {
