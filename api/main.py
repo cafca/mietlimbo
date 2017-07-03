@@ -6,6 +6,7 @@ Mietspiegel API
 import os
 
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from logger import setup_logger
 from parser import MietspiegelParser
 
@@ -17,6 +18,8 @@ def create_app(config=None):
     # See http://flask.pocoo.org/docs/0.12/config/
     app.config.update(dict(DEBUG=True, SECRET_KEY="development key"))
     app.config.update(config or {})
+
+    CORS(app)
 
     @app.route("/api/v1/street", methods=["GET"])
     def find_street():
