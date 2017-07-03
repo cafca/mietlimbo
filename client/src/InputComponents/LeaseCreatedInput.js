@@ -25,7 +25,7 @@ if (areIntlLocalesSupported(['de'])) {
 
 class LeaseCreatedInput extends React.Component {
   state: {
-    value: string,
+    value: ?{},
     errors: Array<any>
   };
 
@@ -35,7 +35,7 @@ class LeaseCreatedInput extends React.Component {
     super(props);
     autoBind(this);
     this.state = {
-      value: "",
+      value: undefined,
       errors: []
     }
   }
