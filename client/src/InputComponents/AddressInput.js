@@ -8,16 +8,23 @@ import { Card, CardTitle, CardText } from 'material-ui/Card';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import ErrorIcon from 'material-ui/svg-icons/alert/error';
+import ClearIcon from 'material-ui/svg-icons/content/clear';
 import TextField from 'material-ui/TextField';
+import IconButton from 'material-ui/IconButton';
 
 import type {AssistantInputProps} from './Tools';
+
+type Address = {
+  id: string,
+  streetname: string,
+  range: string
+}
 
 class AddressInput extends React.Component {
   state: {
     query: string,
-    streetname: ?string,
-    houseNumber: ?string,
-    placeID: ?string
+    address: ?Address
   }
 
   inputName: string = "address";
@@ -27,9 +34,7 @@ class AddressInput extends React.Component {
     autoBind(this);
     this.state = {
       query: "",
-      streetname: null,
-      houseNumber: null,
-      placeID: null
+      address: null
     }
   }
 
@@ -37,19 +42,17 @@ class AddressInput extends React.Component {
     this.setState({query: value});
   }
 
-  handleSelection(value: ?{id: string, street: string, range: string}) {
+  handleSelection(value: ?Address) {
     if (value != undefined) {
       this.setState({
-        streetname: value.street,
-        houseNumber: value.range,
-        placeID: value.id
+        address: value
       });
       this.props.valid(this.inputName, true);
-      this.props.changed({placeID: value.id, street: value.street, houseNumber: value.range});
+      this.props.changed({address: value});
     } else {
-      this.setState({query: "", placeID: null});
+      this.setState({query: "", address: null});
       this.props.valid(this.inputName, false);
-      this.props.changed({placeID: null, street: null, houseNumber: null});
+      this.props.changed({address: null});
     }
   }
 
@@ -61,15 +64,19 @@ class AddressInput extends React.Component {
       }
     });
 
+    const inputField = this.state.address !== null ? undefined : <TextField 
+          id="addressInput"
+          value={this.state.query} 
+          onChange={this.handleChange} />;
+
     return <Card className="assistantInput">
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
-        <TextField 
-          id={"addressInput"} 
-          value={this.state.query} 
-          onChange={this.handleChange} 
-          disabled={this.state.placeID !== null} />
-        <MietspiegelPlace query={this.state.query} handleSelection={this.handleSelection} />
+        {inputField}
+        <MietspiegelPlace 
+          query={this.state.query} 
+          handleSelection={this.handleSelection} 
+          selected={this.state.address} />
       </CardText>
     </Card>;
   }
@@ -77,7 +84,7 @@ class AddressInput extends React.Component {
 
 type MietspiegelPlaceProps = {
   query: string,
-  selected: {id: string, street: string, range: string}
+  selected: ?Address
 };
 
 class MietspiegelPlace extends React.Component {
@@ -87,14 +94,15 @@ class MietspiegelPlace extends React.Component {
     query: string,
     state: string,
     places: Array<{name: string, ranges: Array<{name: string, id: string}>}>,
-    selected: {id: string, street: string, range: string}
+    selected: Address
   }
 
   states = {
     WAITING: "Waiting for query prop",
     REQUESTED: "Waiting for API response",
     SELECTING: "Waiting for user selection",
-    FINISHED: "Finished"
+    FINISHED: "Finished",
+    ERROR: "Error retrieving results."
   }
 
   constructor(props: MietspiegelPlaceProps) {
@@ -103,7 +111,6 @@ class MietspiegelPlace extends React.Component {
       query: props.query,
       state: this.states.WAITING,
       places: [],
-      errors: null,
       selected: props.selected
     };
     autoBind(this);
@@ -129,9 +136,13 @@ class MietspiegelPlace extends React.Component {
           state: this.states.SELECTING
         });
       })
+      .catch(error => {
+        console.error("Error handling address query.", error);
+        this.setState({state: this.states.ERROR});
+      })
   }
 
-  handleSelection(ev: SyntheticInputEvent, value: {id: string, street: string, range: string}) {
+  handleSelection(ev: SyntheticInputEvent, value: Address) {
     this.setState({state: this.states.FINISHED, selected: value});
     this.props.handleSelection(value);
   }
@@ -148,7 +159,7 @@ class MietspiegelPlace extends React.Component {
         menuItems = <span className="MietspiegelPlace">
             <FormattedMessage 
               id={"AddressInput.placesLoading"} 
-              defaultMessage={"Lade Straßennamen"} />
+              defaultMessage={"Lade Straßennamen..."} />
           </span>;
           break;
 
@@ -158,7 +169,8 @@ class MietspiegelPlace extends React.Component {
             <MenuItem 
               primaryText={rangeData.name} 
               key={rangeData.id} 
-              onTouchTap={ev => {this.handleSelection(ev, {id: rangeData.id, street: placeData.name, range: rangeData.name})}}
+              onTouchTap={ev => {this.handleSelection(ev, 
+                {id: rangeData.id, streetname: placeData.name, range: rangeData.name})}}
               value={{id: rangeData.id, street: placeData.name, range: rangeData.name}} />
           );
 
@@ -172,17 +184,28 @@ class MietspiegelPlace extends React.Component {
             return <MenuItem
               primaryText={placeData.name} 
               key={placeData.name} 
-              value={{id: placeData.ranges[0].id, street: placeData.name, range: placeData.ranges[0].name}} />;
+              onTouchTap={ev => {this.handleSelection(ev, 
+                {id: placeData.ranges[0].id, streetname: placeData.name, range: placeData.ranges[0].name})}} />;
           }
         })
         break;
 
       case this.states.FINISHED:
         menuItems = <MenuItem
-          checked={true}
-          primaryText={this.state.selected.street}
+          leftIcon={<ClearIcon />}
+          primaryText={this.state.selected.streetname}
           secondaryText={this.state.selected.range}
           onTouchTap={this.handleReset}
+          />;
+        break;
+
+      case this.states.ERROR:
+        menuItems = <MenuItem
+          children={<FormattedMessage 
+            id={"AddressInput.errorMessage"}
+            defaultMessage={"Es gab leider einen Fehler beim Laden der Adressen. Bitte klicke hier um es nochmal zu versuchen."} />}
+          leftIcon={<ErrorIcon />}
+          onTouchTap={ev => this.handleQuery(this.state.query)}
           />;
         break;
 
@@ -193,8 +216,7 @@ class MietspiegelPlace extends React.Component {
       disableAutoFocus={true} 
       desktop={true} 
       style={{width: "60%"}}
-      value={this.state.selected}
-      onChange={this.handleSelection} >
+      value={this.state.selected}>
         {menuItems}
     </Menu>;
   }
