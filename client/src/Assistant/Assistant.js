@@ -36,11 +36,14 @@ class Assistant extends React.Component {
     inputData: {
       "leaseCreated": "2006-05-12",
       "rent": 1000,
-      "address": "Wittelsbacherstraße 5, 10707 Berlin, Deutschland",
-      "addressPlace": "ChIJ2waGHO5QqEcR_LHKINnI5z0",
+      "address": {
+        "id": 36347,
+        "streetname": "Voltastraße (Mitte)",
+        "range": "alle Hausnummern von 1 A bis 35"
+      },
       "newBuilding": false,
       "constructionDate": null,
-      "constructionDateGuessed": "Pre1990",
+      "constructionDateGuessed": "Pre1949",
       "squareMeters": null,
       "squareMetersGuessed": "lt90",
       "baseFeatures": "default",

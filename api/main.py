@@ -35,17 +35,19 @@ def create_app(config=None):
 
         return jsonify(rv)
 
-    @app.route("/api/v1/range", methods=["GET"])
+    @app.route("/api/v1/range", methods=["POST"])
     def get_range():
         logger.info("range api")
         rv = {}
 
-        street_id = int(request.args.get("street_id"))
-        year_range = int(request.args.get("year_range"))
-        real_size = request.args.get("real_size")
+        data = request.get_json()
+
+        street_id = int(data.get("street_id"))
+        year_range = data.get("year_range")
+        real_size = data.get("real_size")
 
         if real_size is None:
-            guessed_size = int(request.args.get("guessed_size"))
+            guessed_size = data.get("guessed_size")
         else:
             guessed_size = None
 
