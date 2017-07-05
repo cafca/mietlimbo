@@ -13,6 +13,10 @@ url_search = "http://www.stadtentwicklung.berlin.de/wohnen/mietspiegel/de/strass
 url_save = "http://www.stadtentwicklung.berlin.de/wohnen/mietspiegel/skript/save.php?sid=12"
 
 class MietspiegelParser(object):
+    year_ranges = {
+
+    }
+
     def __init__(self):
         self.cookies = self.get_cookies()
 
@@ -62,10 +66,31 @@ class MietspiegelParser(object):
         return streets
 
 
-    def get_range(self, street_id, year_range, real_size=None, guessed_size=None, cookies=None):
+    def get_range(self, street_id, year_range_name, real_size=None, guessed_size_name=None, cookies=None):
+        year_ranges = {    
+            "Pre1918": 1,
+            "Pre1949": 2, 
+            "Pre1964": 3,
+            "Pre1972": 4,
+            "Pre1990": 5,
+            "Pre2002": 6,
+            "Pre2013": 7
+        }
+
+        size_ranges = {
+            "lt40": 1,
+            "lt60": 2, 
+            "lt90": 3, 
+            "gt90": 4,
+        }
+
         assert type(street_id) == int
-        assert year_range in range(1, 9)
-        assert real_size is not None or guessed_size in range(1, 5)
+
+        assert year_range_name in year_ranges.keys()
+        year_range = year_ranges.get(year_range_name)
+
+        assert real_size is not None or guessed_size_name in size_ranges.keys()
+        guessed_size = size_ranges.get(guessed_size_name, None)
 
         if cookies is None:
             cookies = self.cookies
