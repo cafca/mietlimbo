@@ -50,6 +50,17 @@ class IntermediateResult extends React.Component {
     this.loadRentData();
   }
 
+  currentRentLevel() {
+    return this.state.state === this.states.SUCCESS && this.props.squareMeters != undefined 
+      ? {
+        rent: this.props.rent,
+        rentLevel: (this.props.rent / this.props.squareMeters),
+        squareMeters: this.props.squareMeters,
+        minApplied: this.props.squareMeters * this.state.data.min,
+        maxApplied: this.props.squareMeters * this.state.data.max
+      } : null;
+  }
+
   loadRentData() {
     this.setState({state: this.states.LOADING});
 
@@ -104,6 +115,19 @@ class IntermediateResult extends React.Component {
         </p>;
 
       case this.states.SUCCESS:
+        const currentLevel = this.currentRentLevel() != undefined ? <div>
+          <p><FormattedMessage
+            id="IntermediateResult.rangeApplied"
+            defaultMessage="Bei {squareMeters, number} Quadratmeter Grundfläche entspricht dies einer Kaltmiete
+            zwischen {minApplied, number, currency} und {maxApplied, number, currency}." 
+            values={this.currentRentLevel()} /></p>
+          <p><FormattedMessage
+            id="IntermediateResult.currentRentLevel"
+            defaultMessage="Momentan entspricht deine Kaltmiete von {rent, number, currency} einem Quadratmeterpreis 
+            von {rentLevel, number, currency}." 
+            values={this.currentRentLevel()} /></p>
+        </div> : null;
+
         return <div>
           <p><FormattedMessage
             id="IntermediateResult.success"
@@ -115,9 +139,11 @@ class IntermediateResult extends React.Component {
             defaultMessage="Die ortsübliche Vergleichsmiete beträgt demnach {mid, number, currency}. 
             Je nachdem, wie gut deine 
             Wohnung ausgestattet ist, wird von diesem Wert noch etwas abgezogen oder dazugerechnet. 
-            Dadurch kann der normale Mietpreis für eine Wohnung wie deine zwischen 
+            Dadurch kann der angemessene Mietpreis für eine Wohnung wie deine zwischen 
             {min, number, currency} und {max, number, currency} pro Quadratmeter liegen." 
             values={this.state.data} /></p>
+
+          {currentLevel}
 
           <p><FormattedMessage
             id="IntermediateResult.encouragement"

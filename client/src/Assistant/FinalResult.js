@@ -1,0 +1,147 @@
+// @flow
+
+import React from 'react';
+import autoBind from 'react-autobind';
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
+
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+
+const groupNameTranslations = defineMessages({
+  BathGroup: {
+    id: "groupNames.BathGroup",
+    defaultMessage: "Bad und WC"
+  },
+  KitchenGroup: {
+    id: "groupNames.KitchenGroup",
+    defaultMessage: "Küche"
+  },
+  ApartmentGroup: {
+    id: "groupNames.ApartmentGroup",
+    defaultMessage: "Wohnung"
+  },
+  BuildingGroup: {
+    id: "groupNames.BuildingGroup",
+    defaultMessage: "Gebäude"
+  },
+  EnvironmentGroup: {
+    id: "groupNames.EnvironmentGroup",
+    defaultMessage: "Umgebung"
+  },
+});
+
+type FinalResultProps = {
+  [string]: {
+    balance: number,
+    negative: Array<string>,
+    positive: Array<string>
+  }
+};
+
+class FinalResult extends React.Component {
+  constructor(props: FinalResultProps) {
+    super(props);
+    autoBind(this);
+  }
+
+  render() {
+    const groups = ["ApartmentGroup", "BathGroup", "BuildingGroup", "EnvironmentGroup", "EnvironmentGroup", "KitchenGroup"];
+    const rangeFeatures = groups.map(group => {
+      const groupName = group.slice(0, -5);
+      return <TableRow key={group}>
+        <TableRowColumn><FormattedMessage {...groupNameTranslations[group]} /></TableRowColumn>
+        <TableRowColumn>{this.props.data[group].positive.map(n => <p key={n}>{n}</p>)}</TableRowColumn>
+        <TableRowColumn>{this.props.data[group].negative.map(n => <p key={n}>{n}</p>)}</TableRowColumn>
+        <TableRowColumn style={{color: (this.props.data[group].balance < 0 ? "green" : this.props.data[group].balance > 0 ? "red" : "black")}}>
+           {(this.props.data[group].balance < 0 ? "Mietsenkend" : (this.props.data[group].balance === 0 ? "Neutral" : "Mietsteigernd"))} ({this.props.data[group].balance})
+        </TableRowColumn>
+      </TableRow>;
+    });
+
+    // To calculate balance, for every group with predominantyl positive features 1 is added,
+    // for predominantyl negative groups 1 is subtracted
+    const balance = groups
+      .map(group => this.props.data[group].balance < 0 ? -1 : this.props.data[group].balance === 0 ? 0 : 1)
+      .reduce((a, b) => (a + b), 0);
+
+    const localRentLevel = balance >= 0 
+      ? this.props.data.intermediateResult.mid + (parseFloat(balance) / 10) * (this.props.data.intermediateResult.max - this.props.data.intermediateResult.mid)
+      : this.props.data.intermediateResult.mid + (parseFloat(balance) / 10) * (this.props.data.intermediateResult.mid - this.props.data.intermediateResult.min);
+
+    return <div>
+      <p>Mit den erfassten Merkmalen kann jetzt die ortsübliche Vergleichsmiete für deine Wohnung ermittelt werden:</p>
+      <p>Grundlage hierfür bildet die Spanneneinordnung in Schritt 3.</p>
+      <p>Je nachdem, wieviele von den 5 Merkmalsgruppen positiv oder negativ ausfallen, liegt die ortsübliche Vergleichsmiete 
+      zwischen der dort ermittelten Ober- und Untergrenze</p>
+      <Table selectable={false} style={{border: "1px solid #eee"}}>
+        <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+          <TableRow>
+            <TableHeaderColumn>Merkmalgruppe</TableHeaderColumn>
+            <TableHeaderColumn>Pos. Merkmale</TableHeaderColumn>
+            <TableHeaderColumn>Neg. Merkmale</TableHeaderColumn>
+            <TableHeaderColumn>Balance</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false}>
+          {rangeFeatures}
+          <TableRow style={{backgroundColor: "#f3f3f3"}}>
+            <TableRowColumn>
+              <FormattedMessage id="FinalResult.SummaryTotal" defaultMessage="Zusammen" />
+            </TableRowColumn>
+            <TableRowColumn></TableRowColumn>
+            <TableRowColumn></TableRowColumn>
+            <TableRowColumn>{(balance < 0 ? balance + " negative Gruppen" : (balance > 0 ? balance + "positive Gruppen" : "neutral"))}</TableRowColumn>
+          </TableRow>
+        </TableBody>
+      </Table>
+
+      <p>
+        <FormattedMessage
+          id="FinalResult.calculation"
+          defaultMessage="Insgesamt überwiegen Gruppen mit {balanceDirection} Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
+            Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Minimalwert abgezogen. Hierdurch ergibt sich
+            die ortsübliche Vergleichsmiete {localRentLevel, number} €."
+          values={{
+            balance: balance,
+            balanceDirection: balance >= 0 ? "positiven" : "negativen",
+            balanceAbs: Math.abs(balance),
+            correctionPercentage: Math.abs(balance) * 20,
+            localRentLevel: localRentLevel
+          }} />
+      </p>
+
+      <p>
+        <FormattedMessage 
+          id="FinalResult.prediction"
+          defaultMessage="Nach einem Zuschlag von 10% auf die örtliche Vergleichsmiete ergibt sich
+            für die beschriebene Wohnung ein maximal zulässiger Quadratmeterpreis von {mpbRentLevel, number} €, was bei einer Wohnungsgröße
+            von {squareMeters, number} Quadrametern eine Kaltmiete von {mpbRent, number, currency} Euro ergibt."
+          values={{
+            mpbRentLevel: localRentLevel * 1.1,
+            mpbRent: this.props.data.squareMeters * (localRentLevel * 1.1),
+            squareMeters: this.props.data.squareMeters
+          }} />
+      </p>
+
+      <p>
+        <FormattedMessage
+          id="FinalResult.comparison"
+          defaultMessage="Das sind jeden Monat {diff, number, currency} {diffDir} als du jetzt zahlst."
+          values={{
+            mpbRent: this.props.data.squareMeters * (localRentLevel * 1.1),
+            currentRent: this.props.data.rent,
+            diff: this.props.data.rent - (this.props.data.squareMeters * (localRentLevel * 1.1)),
+            diffDir: this.props.data.rent - (this.props.data.squareMeters * (localRentLevel * 1.1)) < 0 ? 'mehr' : 'weniger'
+          }} />
+      </p>
+    </div>;
+  }
+}
+
+export default injectIntl(FinalResult);

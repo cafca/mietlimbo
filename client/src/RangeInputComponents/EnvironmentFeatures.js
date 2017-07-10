@@ -5,11 +5,7 @@ import {injectIntl, intlShape, defineMessages} from 'react-intl';
 import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card';
 
 import CheckboxInput from './CheckboxInput';
-
-type RangeInputProps = {
-  changed: (string, string) => any,
-  intl: intlShape 
-};
+import type {RangeInputProps} from './RangeSelectionGroup';
 
 export const QuietStreet = injectIntl((props: RangeInputProps) => {
   // WC ohne Lüftungsmöglichkeit oder Entlüftung
@@ -25,6 +21,7 @@ export const QuietStreet = injectIntl((props: RangeInputProps) => {
         name="QuietStreet"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -49,6 +46,7 @@ export const TrafficNoise = injectIntl((props: RangeInputProps) => {
         name="TrafficNoise"
         positive={false}
         message="applies"
+        value={props.value}
       />
     </CardActions>
   </Card>;
@@ -73,6 +71,7 @@ export const CommercialNoise = injectIntl((props: RangeInputProps) => {
         name="CommercialNoise"
         positive={false}
         message="applies"
+        value={props.value}
       />
     </CardActions>
   </Card>;
@@ -92,6 +91,7 @@ export const PrimeDowntown = injectIntl((props: RangeInputProps) => {
         name="PrimeDowntown"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
     <CardText>
       <p>Nahe repräsentativen, überregional ausstrahlenden Einkaufs-, Dienstleistungs- und Wohnstandorten.</p>
@@ -113,6 +113,7 @@ export const NeglectedArea = injectIntl((props: RangeInputProps) => {
         name="NeglectedArea"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -131,6 +132,7 @@ export const NeatoTrash = injectIntl((props: RangeInputProps) => {
         name="NeatoTrash"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -149,6 +151,7 @@ export const NeglectedTrash = injectIntl((props: RangeInputProps) => {
         name="NeglectedTrash"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -167,6 +170,7 @@ export const NeatoBackyard = injectIntl((props: RangeInputProps) => {
         name="NeatoBackyard"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
     <CardText>
       <p>Zum Beispiel Sitzbänke oder Ruhezonen, neu angelegte Wegebefestigung mit Grünflächen.</p>
@@ -197,6 +201,7 @@ export const PrivateBackyard = injectIntl((props: RangeInputProps) => {
         name="PrivateBackyard"
         positive={true}
         message="atLeastOne"
+        value={props.value}
       />
     </CardActions>
   </Card>;
@@ -216,6 +221,7 @@ export const MansionStyle = injectIntl((props: RangeInputProps) => {
         name="MansionStyle"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
