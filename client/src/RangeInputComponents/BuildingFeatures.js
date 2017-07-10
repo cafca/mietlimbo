@@ -5,11 +5,7 @@ import {injectIntl, intlShape, defineMessages} from 'react-intl';
 import {Card, CardTitle} from 'material-ui/Card';
 
 import CheckboxInput from './CheckboxInput';
-
-type RangeInputProps = {
-  changed: (string, string) => any,
-  intl: intlShape 
-};
+import type {RangeInputProps} from './RangeSelectionGroup';
 
 export const EntranceCondition = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
@@ -24,6 +20,7 @@ export const EntranceCondition = injectIntl((props: RangeInputProps) => {
         name="EntranceCondition"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -41,6 +38,7 @@ export const DoorLock = injectIntl((props: RangeInputProps) => {
         name="DoorLock"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -58,6 +56,7 @@ export const RepresentativeEntrance = injectIntl((props: RangeInputProps) => {
         name="RepresentativeEntrance"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -75,6 +74,7 @@ export const WellMaintained = injectIntl((props: RangeInputProps) => {
         name="WellMaintained"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -92,6 +92,7 @@ export const NoStorageRoom = injectIntl((props: RangeInputProps) => {
         name="NoStorageRoom"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -109,6 +110,7 @@ export const BicycleRoom = injectIntl((props: RangeInputProps) => {
         name="BicycleRoom"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -126,6 +128,7 @@ export const BicycleParking = injectIntl((props: RangeInputProps) => {
         name="BicycleParking"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -143,6 +146,7 @@ export const CommunalSpace = injectIntl((props: RangeInputProps) => {
         name="CommunalSpace"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -160,6 +164,7 @@ export const Parking = injectIntl((props: RangeInputProps) => {
         name="Parking"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -177,6 +182,7 @@ export const LowMaintenance = injectIntl((props: RangeInputProps) => {
         name="LowMaintenance"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -194,6 +200,7 @@ export const SideWing = injectIntl((props: RangeInputProps) => {
         name="SideWing"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -211,6 +218,7 @@ export const NoLift = injectIntl((props: RangeInputProps) => {
         name="NoLift"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -228,6 +236,7 @@ export const Lift = injectIntl((props: RangeInputProps) => {
         name="Lift"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -245,6 +254,7 @@ export const NoIntercom = injectIntl((props: RangeInputProps) => {
         name="NoIntercom"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -262,6 +272,7 @@ export const IntercomVideo = injectIntl((props: RangeInputProps) => {
         name="IntercomVideo"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -279,6 +290,7 @@ export const AntiBurglary = injectIntl((props: RangeInputProps) => {
         name="AntiBurglary"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });

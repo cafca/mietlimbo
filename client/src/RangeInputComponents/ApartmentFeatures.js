@@ -5,11 +5,7 @@ import {injectIntl, intlShape, defineMessages} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 
 import CheckboxInput from './CheckboxInput';
-
-type RangeInputProps = {
-  changed: (string, string) => any,
-  intl: intlShape 
-};
+import type {RangeInputProps} from './RangeSelectionGroup';
 
 export const WindowStyle = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
@@ -34,12 +30,14 @@ export const WindowStyle = injectIntl((props: RangeInputProps) => {
         name="WindowStyleSingle"
         positive={false}
         message={props.intl.formatMessage(messages.singlePane)}
+        value={props.value}
       />
       <CheckboxInput
         changed={props.changed}
         name="WindowStyleInsulating"
         positive={true}
         message={props.intl.formatMessage(messages.insulating)}
+        value={props.value}
       />
     </CardText>
   </Card>;
@@ -58,6 +56,7 @@ export const HighGradeFlooring = injectIntl((props: RangeInputProps) => {
         name="HighGradeFlooring"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -75,6 +74,7 @@ export const InsufficientPower = injectIntl((props: RangeInputProps) => {
         name="InsufficientPower"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -106,18 +106,21 @@ export const WallInstallation = injectIntl((props: RangeInputProps) => {
         name="WallInstallationElectrical"
         positive={false}
         message={props.intl.formatMessage(messages.electrical)}
+        value={props.value}
       />
       <CheckboxInput
         changed={props.changed}
         name="WallInstallationDrainage"
         positive={false}
         message={props.intl.formatMessage(messages.drainage)}
+        value={props.value}
       />
       <CheckboxInput
         changed={props.changed}
         name="WallInstallationHeating"
         positive={true}
         message={props.intl.formatMessage(messages.heating)}
+        value={props.value}
       />
     </CardText>
   </Card>;
@@ -136,6 +139,7 @@ export const ColdWaterMetering = injectIntl((props: RangeInputProps) => {
         name="ColdWaterMetering"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -153,6 +157,7 @@ export const BadFlatDesign = injectIntl((props: RangeInputProps) => {
         name="BadFlatDesign"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -170,6 +175,7 @@ export const StorageCabinet = injectIntl((props: RangeInputProps) => {
         name="StorageCabinet"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -187,6 +193,7 @@ export const NoSpaceForWashing = injectIntl((props: RangeInputProps) => {
         name="NoSpaceForWashing"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -204,6 +211,7 @@ export const LargeLiving = injectIntl((props: RangeInputProps) => {
         name="LargeLiving"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -221,6 +229,7 @@ export const AccessibleDesign = injectIntl((props: RangeInputProps) => {
         name="AccessibleDesign"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -238,6 +247,7 @@ export const NoBalcony = injectIntl((props: RangeInputProps) => {
         name="NoBalcony"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -255,6 +265,7 @@ export const SpaciousBalcony = injectIntl((props: RangeInputProps) => {
         name="SpaciousBalcony"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -272,6 +283,7 @@ export const RollingShutters = injectIntl((props: RangeInputProps) => {
         name="RollingShutters"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -289,6 +301,7 @@ export const FloorHeating = injectIntl((props: RangeInputProps) => {
         name="FloorHeating"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -306,6 +319,7 @@ export const CeilingDecoration = injectIntl((props: RangeInputProps) => {
         name="CeilingDecoration"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -323,6 +337,7 @@ export const NoBroadband = injectIntl((props: RangeInputProps) => {
         name="NoBroadband"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -340,6 +355,7 @@ export const BidirectionalBroadband = injectIntl((props: RangeInputProps) => {
         name="BidirectionalBroadband"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });

@@ -34,7 +34,7 @@ class CheckboxInput extends React.Component {
     super(props);
     autoBind(this);
     this.state = {
-      value: null
+      value: this.props.value
     };
   }
 

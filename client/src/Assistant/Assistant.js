@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import Introduction from './Introduction';
 import IntermediateResult from './IntermediateResult';
+import FinalResult from './FinalResult';
 import Progress from './Progress';
 
 import LeaseCreatedInput from '../InputComponents/LeaseCreatedInput';
@@ -30,28 +31,73 @@ import './Assistant.css';
 
 class Assistant extends React.Component {
 	state = {
-		stage: 1,
+		stage: 11,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
-      "leaseCreated": "2006-05-12",
-      "rent": 1000,
+      "leaseCreated": "2017-06-30T22:00:00.000Z",
+      "rent": 1200,
       "address": {
-        "id": 36347,
-        "streetname": "Voltastraße (Mitte)",
-        "range": "alle Hausnummern von 1 A bis 35"
+        "id": 38536,
+        "streetname": "Wittstocker Straße (Mitte)",
+        "range": "alle Hausnummern von 2 bis 26"
       },
       "newBuilding": false,
       "constructionDate": null,
       "constructionDateGuessed": "Pre1949",
-      "squareMeters": null,
-      "squareMetersGuessed": "lt90",
+      "squareMeters": 128,
+      "squareMetersGuessed": null,
       "baseFeatures": "default",
       "intermediateResult": {
-        "sufficientData": true,
-        "rentLevel": 5.43,
-        "lowerBound": 4.13,
-        "upperBound": 7.42
+        "max": 7.51,
+        "mid": 5.8,
+        "min": 4.29
+      },
+      "BathGroup": {
+        "positive": [],
+        "negative": [
+          "FixedBathtub",
+          "InsufficientTiling",
+          "NoWindows"
+        ],
+        "balance": -3
+      },
+      "KitchenGroup": {
+        "positive": [],
+        "negative": [],
+        "balance": 0
+      },
+      "ApartmentGroup": {
+        "positive": [
+          "BidirectionalBroadband",
+          "StorageCabinet"
+        ],
+        "negative": [
+          "NoBalcony",
+          "WindowStyleSingle"
+        ],
+        "balance": 0
+      },
+      "BuildingGroup": {
+        "positive": [],
+        "negative": [
+          "NoStorageRoom"
+        ],
+        "balance": -1
+      },
+      "EnergyGroup": {
+        "positive": [],
+        "negative": [],
+        "balance": 0
+      },
+      "EnvironmentGroup": {
+        "positive": [
+          "NeatoTrash"
+        ],
+        "negative": [
+          "CommercialNoise"
+        ],
+        "balance": 0
       }
     }
 	}
@@ -66,7 +112,8 @@ class Assistant extends React.Component {
     "Wohnung",
     "Gebäude",
     "Energie",
-    "Umfeld"
+    "Umfeld",
+    "Ergebnis"
   ];
 
   style = {
@@ -80,14 +127,26 @@ class Assistant extends React.Component {
 		autoBind(this);
 	}
 
-  advanceStage(steps: number) {
-    const stage = (this.state.stage + steps) % this.stageNames.length
-    this.setState({stage});
+  componentWillMount() {
+    // Fill state with empty data sets
+    const inputData = Object.assign({}, this.state.inputData);
+    const rangeData = ["KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnergyGroup", "EnvironmentGroup"].map(name => {
+      if (inputData[name] === undefined) {
+        inputData[name] = {
+          positive: [],
+          negative: [],
+          balance: 0
+        }
+      }
+    });
+    this.setState({inputData});
   }
 
-	handleContinue(e: Event) {
-		this.setState({stage: (this.state.stage + 1)});
-	}
+  advanceStage(steps: number) {
+    const stage = (this.state.stage + steps) % (this.stageNames.length + 1)
+    this.setState({stage});
+    window.scrollTo(0, 0);
+  }
 
 	handleInputValid(name: string, valid: boolean) {
     const newInputValid = Object.assign(this.state.inputValid, {[name]: valid});
@@ -95,6 +154,7 @@ class Assistant extends React.Component {
 	}
 
 	handleInputChanged(newData: Object) {
+    // This method is called from input components when their internal data is updated
     this.setState({inputData: Object.assign({}, this.state.inputData, newData)});
     Object.keys(newData).map(k => console.log(k, newData[k]));
 	}
@@ -161,7 +221,9 @@ class Assistant extends React.Component {
           </h1>
           <RangeSelectionGroup 
             domain="BathGroup"
+            key="BathGroup"
             inputComponents={BathFeatures}
+            inputData={this.state.inputData.BathGroup}
             changed={changed} 
             />
         </div>;
@@ -176,7 +238,9 @@ class Assistant extends React.Component {
           </h1>
           <RangeSelectionGroup 
             domain="KitchenGroup"
+            key="KitchenGroup"
             inputComponents={KitchenFeatures}
+            inputData={this.state.inputData.KitchenGroup}
             changed={changed} 
             />
         </div>;
@@ -191,7 +255,9 @@ class Assistant extends React.Component {
           </h1>
           <RangeSelectionGroup 
             domain="ApartmentGroup"
+            key="ApartmentGroup"
             inputComponents={ApartmentFeatures}
+            inputData={this.state.inputData.ApartmentGroup}
             changed={changed} 
             />
         </div>;
@@ -206,7 +272,9 @@ class Assistant extends React.Component {
           </h1>
           <RangeSelectionGroup 
             domain="BuildingGroup"
+            key="BuildingGroup"
             inputComponents={BuildingFeatures}
+            inputData={this.state.inputData.BuildingGroup}
             changed={changed} 
             />
         </div>;
@@ -221,7 +289,9 @@ class Assistant extends React.Component {
           </h1>
           <RangeSelectionGroup 
             domain="EnergyGroup"
+            key="EnergyGroup"
             inputComponents={EnergyFeatures}
+            inputData={this.state.inputData.EnergyGroup}
             changed={changed} 
             />
         </div>;
@@ -236,9 +306,17 @@ class Assistant extends React.Component {
           </h1>
           <RangeSelectionGroup 
             domain="EnvironmentGroup"
+            key="EnvironmentGroup"
             inputComponents={EnvironmentFeatures}
+            inputData={this.state.inputData.EnvironmentGroup}
             changed={changed} 
             />
+        </div>;
+        break;
+
+      case 11:
+        content = <div>
+          <FinalResult data={this.state.inputData} />
         </div>;
         break;
 
@@ -256,6 +334,7 @@ class Assistant extends React.Component {
       {content}
       <RaisedButton 
         primary={true} 
+        style={{display: (this.state.stage == this.stageNames.length ? "none" : "initial")}}
         onClick={() => this.advanceStage(1)} 
         disabled={!this.stageValid(conditions)}
         label={this.props.intl.formatMessage({

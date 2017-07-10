@@ -5,11 +5,7 @@ import {injectIntl, intlShape, defineMessages} from 'react-intl';
 import {Card, CardTitle} from 'material-ui/Card';
 
 import CheckboxInput from './CheckboxInput';
-
-type RangeInputProps = {
-  changed: (string, string) => any,
-  intl: intlShape 
-};
+import type {RangeInputProps} from './RangeSelectionGroup';
 
 export const NoVentilation = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
@@ -21,9 +17,10 @@ export const NoVentilation = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="noVentilation"
+        name="NoVentilation"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -38,9 +35,10 @@ export const ExtractorHood = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="extractorHood"
+        name="ExtractorHood"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -55,9 +53,10 @@ export const NoHeating = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="noHeating"
+        name="NoHeating"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -72,9 +71,10 @@ export const HighGradeFloor = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="highGradeFloor"
+        name="HighGradeFloor"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -89,9 +89,10 @@ export const FittedKitchen = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="fittedKitchen"
+        name="FittedKitchen"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -106,9 +107,10 @@ export const KitchenLiving = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="kitchenLiving"
+        name="KitchenLiving"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -123,9 +125,10 @@ export const NoStove = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="noStove"
+        name="NoStove"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -140,9 +143,10 @@ export const NoOven = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="noOven"
+        name="NoOven"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -157,9 +161,10 @@ export const HighGradeStove = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="highGradeStove"
+        name="HighGradeStove"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -174,9 +179,10 @@ export const NoSink = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="noSink"
+        name="NoSink"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -191,9 +197,10 @@ export const NoDishwasherSpace = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="noDishwasherSpace"
+        name="NoDishwasherSpace"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -208,9 +215,10 @@ export const FreezerProvided = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="freezerProvided"
+        name="FreezerProvided"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
@@ -225,9 +233,10 @@ export const InsufficientWarmWater = injectIntl((props: RangeInputProps) => {
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="insufficientWarmWater"
+        name="InsufficientWarmWater"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
+        value={props.value}
       />} />
   </Card>;
 });
