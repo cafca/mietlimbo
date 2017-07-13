@@ -17,10 +17,9 @@ class NewBuildingInput extends React.Component {
 
 	constructor(props: AssistantInputProps) {
 		super(props);
-		this.state = {
-			value: null,
-		}
-		autoBind(this);
+		this.state = {value: props.value};
+    if(props.value !== undefined) props.valid(this.inputName, true);
+ 		autoBind(this);
 	}
 
 	handleChange(e: SyntheticInputEvent, value: boolean) {

@@ -27,14 +27,14 @@ export const WindowStyle = injectIntl((props: RangeInputProps) => {
     <CardText>
       <CheckboxInput
         changed={props.changed}
-        name="WindowStyleSingle"
+        name="WindowStyle"
         positive={false}
         message={props.intl.formatMessage(messages.singlePane)}
         value={props.value}
       />
       <CheckboxInput
         changed={props.changed}
-        name="WindowStyleInsulating"
+        name="WindowStyle"
         positive={true}
         message={props.intl.formatMessage(messages.insulating)}
         value={props.value}

@@ -106,7 +106,7 @@ class FinalResult extends React.Component {
           id="FinalResult.calculation"
           defaultMessage="Insgesamt überwiegen Gruppen mit {balanceDirection} Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
             Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Minimalwert abgezogen. Hierdurch ergibt sich
-            die ortsübliche Vergleichsmiete {localRentLevel, number} €."
+            die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
           values={{
             balance: balance,
             balanceDirection: balance >= 0 ? "positiven" : "negativen",

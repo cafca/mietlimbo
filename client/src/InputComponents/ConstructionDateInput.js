@@ -70,10 +70,12 @@ class ConstructionDateInput extends React.Component {
 		super(props);
 		autoBind(this);
 		this.state = {
-			exactValue: "",
-			guessedValue: null,
+			exactValue: props.exact || "",
+			guessedValue: props.guessed,
 			errors: null
 		};
+
+    if (props.value !== undefined) this.props.valid(this.inputName, true);
 	}
 
 	handleChange(e: SyntheticInputEvent, value: string) {

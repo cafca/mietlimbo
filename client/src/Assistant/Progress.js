@@ -34,17 +34,13 @@ class Progress extends React.Component {
     autoBind(this);
   }
 
-  handleNext() {
-    this.props.advance(1);
-  }
-
-  handlePrev() {
-    this.props.advance(-1);
+  handleClick(i: number) {
+    this.props.advance(i - this.props.stage + 1);
   }
 
   render() { 
-    const steps = this.props.stageNames.map(l => <Step style={this.style.step} key={l}>
-          <StepLabel style={this.style.stepLabel}>{l}</StepLabel>
+    const steps = this.props.stageNames.map((l, i) => <Step style={this.style.step} key={l} className="progressBarStep">
+          <StepLabel onClick={() => this.handleClick(i)} style={this.style.stepLabel}>{l}</StepLabel>
         </Step>);
 
     return <section style={this.style.main}>

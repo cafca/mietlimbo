@@ -39,8 +39,9 @@ class BaseFeaturesInput extends React.Component {
 		super(props);
 		autoBind(this);
 		this.state = {
-			value: null
+			value: props.value
 		}
+    if (props.value !== undefined) this.props.valid(this.inputName, true);
 	}
 
 	handleChange(e: SyntheticInputEvent, value: string) {
@@ -53,7 +54,8 @@ class BaseFeaturesInput extends React.Component {
 		const radioControls = this.options.map((name, i) => <RadioButton
       key={"BaseFeaturesOptions-" + i}
       value={name}
-      label={this.props.intl.formatMessage(this.optionDescriptions[name])} />);
+      label={this.props.intl.formatMessage(this.optionDescriptions[name])} />
+    );
 
     const messages = defineMessages({
       title: {
@@ -67,8 +69,8 @@ class BaseFeaturesInput extends React.Component {
       <CardText>
         <RadioButtonGroup
           name={this.inputName}
-          value={this.state.value}
-          onChange={this.handleChange} >
+          onChange={this.handleChange} 
+          valueSelected={this.state.value} >
           {radioControls}
         </RadioButtonGroup>
       </CardText>
