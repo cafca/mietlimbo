@@ -21,6 +21,10 @@ type Address = {
   range: string
 }
 
+type AddressProps = AssistantInputProps & {
+  value: ?Address
+}
+
 class AddressInput extends React.Component {
   state: {
     query: string,
@@ -34,8 +38,9 @@ class AddressInput extends React.Component {
     autoBind(this);
     this.state = {
       query: "",
-      address: null
+      address: props.value
     }
+    if (props.value !== undefined) this.props.valid(this.inputName, true);
   }
 
   handleChange(ev: SyntheticInputEvent, value: string) {
@@ -76,7 +81,7 @@ class AddressInput extends React.Component {
         <MietspiegelPlace 
           query={this.state.query} 
           handleSelection={this.handleSelection} 
-          selected={this.state.address} />
+          value={this.state.address} />
       </CardText>
     </Card>;
   }
@@ -84,7 +89,7 @@ class AddressInput extends React.Component {
 
 type MietspiegelPlaceProps = {
   query: string,
-  selected: ?Address
+  value: ?Address
 };
 
 class MietspiegelPlace extends React.Component {
@@ -109,9 +114,9 @@ class MietspiegelPlace extends React.Component {
     super(props);
     this.state = {
       query: props.query,
-      state: this.states.WAITING,
+      state: props.value === undefined ? this.states.WAITING : this.states.FINISHED,
       places: [],
-      selected: props.selected
+      selected: props.value
     };
     autoBind(this);
   }

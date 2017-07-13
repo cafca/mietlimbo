@@ -25,7 +25,7 @@ if (areIntlLocalesSupported(['de'])) {
 
 class LeaseCreatedInput extends React.Component {
   state: {
-    value: ?{},
+    value: ?Date,
     errors: Array<any>
   };
 
@@ -34,8 +34,11 @@ class LeaseCreatedInput extends React.Component {
   constructor(props: AssistantInputProps) {
     super(props);
     autoBind(this);
+
+    const initialDate = props.value === undefined ? null
+      : new Date(props.value);
     this.state = {
-      value: undefined,
+      value: initialDate,
       errors: []
     }
   }
@@ -44,7 +47,7 @@ class LeaseCreatedInput extends React.Component {
     const errors = [];
     this.props.changed({[this.inputName]: value});
     this.setState({errors, value});
-    this.props.valid(this.inputName, errors.length === 0);
+    this.props.valid(this.inputName, true);
   }
 
   render() {

@@ -22,9 +22,11 @@ class RentInput extends React.Component {
     super(props);
     autoBind(this);
     this.state = {
-      value: "",
+      value: props.value === undefined ? "" : props.value,
       errors: []
     }
+
+    if (props.value !== undefined) this.props.valid(this.inputName, true);
   }
 
   handleChange(e: SyntheticInputEvent) {

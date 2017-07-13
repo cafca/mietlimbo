@@ -9,6 +9,11 @@ import TextField from 'material-ui/TextField';
 
 import type {AssistantInputProps} from './Tools';
 
+type SquareMetersProps = AssistantInputProps & {
+  exact: ?string,
+  guessed: ?string
+};
+
 class SquareMetersInput extends React.Component {
 	state: {
 		exactValue: string,
@@ -45,12 +50,12 @@ class SquareMetersInput extends React.Component {
 		}
 	});
 
-	constructor(props: AssistantInputProps) {
+	constructor(props: SquareMetersProps) {
 		super(props);
 		autoBind(this);
 		this.state = {
-			exactValue: "",
-			guessedValue: null,
+			exactValue: props.exact === undefined ? "" : props.exact,
+			guessedValue: props.guessed,
 			errors: null
 		};
 	}
@@ -73,7 +78,7 @@ class SquareMetersInput extends React.Component {
 
 			default:
 				// direct input
-				const intValue = parseInt(value, 10);
+				const intValue = parseFloat(value, 10);
 
 				if (isNaN(intValue)) {
 					errors.push(<FormattedMessage 
@@ -119,7 +124,6 @@ class SquareMetersInput extends React.Component {
           value={this.state.exactValue}
           onChange={this.handleChange}
           errorText={this.state.errors} />
-
   			<div>
             <label htmlFor={this.inputNameAlt}>
               <FormattedMessage
@@ -129,7 +133,7 @@ class SquareMetersInput extends React.Component {
             <RadioButtonGroup
               name={this.inputNameAlt}
               onChange={this.handleChange}
-              value={this.state.guessedValue} >
+              valueSelected={this.state.guessedValue} >
   				    {radioControls}
             </RadioButtonGroup>
   			</div>

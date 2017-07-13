@@ -31,7 +31,7 @@ import './Assistant.css';
 
 class Assistant extends React.Component {
 	state = {
-		stage: 11,
+		stage: 2,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
@@ -139,7 +139,12 @@ class Assistant extends React.Component {
         }
       }
     });
-    this.setState({inputData});
+    // Form validity assumed on first mount
+    const inputValid = {};
+    Object.keys(this.state.inputData).map(k => {
+      inputValid[k] = true;
+    });
+    this.setState({inputData, inputValid});
   }
 
   advanceStage(steps: number) {
@@ -174,32 +179,34 @@ class Assistant extends React.Component {
 
 		switch(this.state.stage) {
 			case 1:
-        content = <div>
-          <LeaseCreatedInput valid={valid} changed={changed} />
-          <RentInput valid={valid} changed={changed} />
-          <AddressInput valid={valid} changed={changed} />
+        content = <div key="stage1">
+          <LeaseCreatedInput valid={valid} changed={changed} value={this.state.inputData.leaseCreated} />
+          <RentInput valid={valid} changed={changed} value={this.state.inputData.rent} />
+          <AddressInput valid={valid} changed={changed} value={this.state.inputData.address} />
         </div>;
         conditions = ["leaseCreated", "rent", "address"];
 				break;
 
 			case 2:
-				content = <div>
-					<NewBuildingInput valid={valid} changed={changed} />
-					<ConstructionDateInput valid={valid} changed={changed} />
-					<SquareMetersInput valid={valid} changed={changed} />
-          <BaseFeaturesInput valid={valid} changed={changed} />
+				content = <div key="stage2">
+					<NewBuildingInput valid={valid} changed={changed} value={this.state.inputData.newBuilding} />
+					<ConstructionDateInput valid={valid} changed={changed} 
+            exact={this.state.inputData.constructionDate} guessed={this.state.inputData.constructionDateGuessed}/>
+					<SquareMetersInput valid={valid} changed={changed} 
+            exact={this.state.inputData.squareMeters} guessed={this.state.inputData.squareMetersGuessed} />
+          <BaseFeaturesInput valid={valid} changed={changed} value={this.state.inputData.baseFeatures} />
 				</div>;
         conditions = ["newBuilding", "constructionDate", "squareMeters", "baseFeatures"];
 				break;
 
       case 3:
         // Mietspiegelabfrage, ob genug Daten vorhanden sind
-        conditions = ["intermediateResult"];
         content = <IntermediateResult 
           valid={valid}
           changed={changed}
           {...this.state.inputData}
         />;
+        conditions = ["intermediateResult"];
         break;
 
       case 4:
@@ -210,6 +217,7 @@ class Assistant extends React.Component {
           constructionDateGuessed={this.state.inputData.constructionDateGuessed} 
           valid={valid} 
           changed={changed} />;
+          this.advanceStage(1);
         break;
 
       case 5:
@@ -230,7 +238,7 @@ class Assistant extends React.Component {
         break;
 
       case 6:
-        content = <div>
+        content = <div key="stage6">
           <h1>
             <FormattedMessage
               id="Kitchen.Header"
@@ -247,7 +255,7 @@ class Assistant extends React.Component {
         break;
 
       case 7:
-        content = <div>
+        content = <div key="stage7">
           <h1>
             <FormattedMessage
               id="Apartment.Header"
@@ -264,7 +272,7 @@ class Assistant extends React.Component {
         break;
 
       case 8:
-        content = <div>
+        content = <div key="stage8">
           <h1>
             <FormattedMessage
               id="Building.Header"
@@ -281,7 +289,7 @@ class Assistant extends React.Component {
         break;
 
       case 9:
-        content = <div>
+        content = <div key="stage9">
           <h1>
             <FormattedMessage
               id="Energy.Header"
@@ -298,7 +306,7 @@ class Assistant extends React.Component {
         break;
 
       case 10:
-        content = <div>
+        content = <div key="stage10">
           <h1>
             <FormattedMessage
               id="Environment.Header"
@@ -315,7 +323,7 @@ class Assistant extends React.Component {
         break;
 
       case 11:
-        content = <div>
+        content = <div key="stage11">
           <FinalResult data={this.state.inputData} />
         </div>;
         break;
