@@ -51,7 +51,7 @@ class FinalResult extends React.Component {
   }
 
   render() {
-    const groups = ["ApartmentGroup", "BathGroup", "BuildingGroup", "EnvironmentGroup", "EnvironmentGroup", "KitchenGroup"];
+    const groups = ["ApartmentGroup", "BathGroup", "BuildingGroup", "EnvironmentGroup", "KitchenGroup"];
     const rangeFeatures = groups.map(group => {
       const groupName = group.slice(0, -5);
       return <TableRow key={group}>
@@ -64,8 +64,8 @@ class FinalResult extends React.Component {
       </TableRow>;
     });
 
-    // To calculate balance, for every group with predominantyl positive features 1 is added,
-    // for predominantyl negative groups 1 is subtracted
+    // To calculate balance, for every group with predominantly positive features 1 is added,
+    // for predominantly negative groups 1 is subtracted
     const balance = groups
       .map(group => this.props.data[group].balance < 0 ? -1 : this.props.data[group].balance === 0 ? 0 : 1)
       .reduce((a, b) => (a + b), 0);
