@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {injectIntl, intlShape, defineMessages} from 'react-intl';
+import {injectIntl, defineMessages} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 
 import CheckboxInput from './CheckboxInput';
