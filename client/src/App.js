@@ -6,7 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import de from 'react-intl/locale-data/de';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import logo from './logo.svg';
+import logo from './Graphics/Logo.png';
 import './App.css';
 
 import Assistant from './Assistant/Assistant';
@@ -21,10 +21,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Willkommen bei mietlimbo</h2>
-        </div>
         <div className="App-intro">
           <Assistant />
         </div>

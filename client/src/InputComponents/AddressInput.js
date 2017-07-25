@@ -23,7 +23,7 @@ type Address = {
 
 type AddressProps = AssistantInputProps & {
   value: ?Address
-}
+};
 
 class AddressInput extends React.Component {
   state: {
@@ -69,10 +69,10 @@ class AddressInput extends React.Component {
       }
     });
 
-    const inputField = this.state.address !== null ? undefined : <TextField 
+    const inputField = this.state.address === undefined ?  <TextField 
           id="addressInput"
           value={this.state.query} 
-          onChange={this.handleChange} />;
+          onChange={this.handleChange} /> : undefined;
 
     return <Card className="assistantInput">
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
