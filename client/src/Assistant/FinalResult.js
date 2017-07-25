@@ -45,14 +45,40 @@ type FinalResultProps = {
 };
 
 class FinalResult extends React.Component {
+  inputName: "FinalResult";
+  groups = ["ApartmentGroup", "BathGroup", "BuildingGroup", "EnvironmentGroup", "KitchenGroup"];
+
+  state: {
+    balance: number,
+    localRentLevel: number
+  };
+
   constructor(props: FinalResultProps) {
     super(props);
     autoBind(this);
+    this.state = this.update();
   }
 
-  render() {
-    const groups = ["ApartmentGroup", "BathGroup", "BuildingGroup", "EnvironmentGroup", "KitchenGroup"];
-    const rangeFeatures = groups.map(group => {
+  componentDidMount() {
+    this.props.changed({"FinalResult": this.props.data.squareMeters * (this.state.localRentLevel * 1.1)})
+  }
+
+  update() {
+    // To calculate balance, for every group with predominantly positive features 1 is added,
+    // for predominantly negative groups 1 is subtracted
+    const balance = this.groups
+      .map(group => this.props.data[group].balance < 0 ? -1 : this.props.data[group].balance === 0 ? 0 : 1)
+      .reduce((a, b) => (a + b), 0);
+
+    const localRentLevel = balance >= 0 
+      ? this.props.data.intermediateResult.mid + (parseFloat(balance) / 10) * (this.props.data.intermediateResult.max - this.props.data.intermediateResult.mid)
+      : this.props.data.intermediateResult.mid + (parseFloat(balance) / 10) * (this.props.data.intermediateResult.mid - this.props.data.intermediateResult.min);
+
+    return {localRentLevel, balance};
+  }
+
+  renderTableRows() {
+    const rangeFeatures = this.groups.map(group => {
       const groupName = group.slice(0, -5);
       return <TableRow key={group}>
         <TableRowColumn><FormattedMessage {...groupNameTranslations[group]} /></TableRowColumn>
@@ -63,17 +89,10 @@ class FinalResult extends React.Component {
         </TableRowColumn>
       </TableRow>;
     });
+    return rangeFeatures;
+  }
 
-    // To calculate balance, for every group with predominantly positive features 1 is added,
-    // for predominantly negative groups 1 is subtracted
-    const balance = groups
-      .map(group => this.props.data[group].balance < 0 ? -1 : this.props.data[group].balance === 0 ? 0 : 1)
-      .reduce((a, b) => (a + b), 0);
-
-    const localRentLevel = balance >= 0 
-      ? this.props.data.intermediateResult.mid + (parseFloat(balance) / 10) * (this.props.data.intermediateResult.max - this.props.data.intermediateResult.mid)
-      : this.props.data.intermediateResult.mid + (parseFloat(balance) / 10) * (this.props.data.intermediateResult.mid - this.props.data.intermediateResult.min);
-
+  render() {
     return <div>
       <p>Mit den erfassten Merkmalen kann jetzt die ortsübliche Vergleichsmiete für deine Wohnung ermittelt werden:</p>
       <p>Grundlage hierfür bildet die Spanneneinordnung in Schritt 3.</p>
@@ -89,14 +108,14 @@ class FinalResult extends React.Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>
-          {rangeFeatures}
+          {this.renderTableRows()}
           <TableRow style={{backgroundColor: "#f3f3f3"}}>
             <TableRowColumn>
               <FormattedMessage id="FinalResult.SummaryTotal" defaultMessage="Zusammen" />
             </TableRowColumn>
             <TableRowColumn></TableRowColumn>
             <TableRowColumn></TableRowColumn>
-            <TableRowColumn>{(balance < 0 ? balance + " negative Gruppen" : (balance > 0 ? balance + "positive Gruppen" : "neutral"))}</TableRowColumn>
+            <TableRowColumn>{(this.state.balance < 0 ? this.state.balance + " negative Gruppen" : (this.state.balance > 0 ? this.state.balance + "positive Gruppen" : "neutral"))}</TableRowColumn>
           </TableRow>
         </TableBody>
       </Table>
@@ -108,11 +127,11 @@ class FinalResult extends React.Component {
             Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Minimalwert abgezogen. Hierdurch ergibt sich
             die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
           values={{
-            balance: balance,
-            balanceDirection: balance >= 0 ? "positiven" : "negativen",
-            balanceAbs: Math.abs(balance),
-            correctionPercentage: Math.abs(balance) * 20,
-            localRentLevel: localRentLevel
+            balance: this.state.balance,
+            balanceDirection: this.state.balance >= 0 ? "positiven" : "negativen",
+            balanceAbs: Math.abs(this.state.balance),
+            correctionPercentage: Math.abs(this.state.balance) * 20,
+            localRentLevel: this.state.localRentLevel
           }} />
       </p>
 
@@ -123,8 +142,8 @@ class FinalResult extends React.Component {
             für die beschriebene Wohnung ein maximal zulässiger Quadratmeterpreis von {mpbRentLevel, number} €, was bei einer Wohnungsgröße
             von {squareMeters, number} Quadrametern eine Kaltmiete von {mpbRent, number, currency} Euro ergibt."
           values={{
-            mpbRentLevel: localRentLevel * 1.1,
-            mpbRent: this.props.data.squareMeters * (localRentLevel * 1.1),
+            mpbRentLevel: this.state.localRentLevel * 1.1,
+            mpbRent: this.props.data.squareMeters * (this.state.localRentLevel * 1.1),
             squareMeters: this.props.data.squareMeters
           }} />
       </p>
@@ -134,10 +153,10 @@ class FinalResult extends React.Component {
           id="FinalResult.comparison"
           defaultMessage="Das sind jeden Monat {diff, number, currency} {diffDir} als du jetzt zahlst."
           values={{
-            mpbRent: this.props.data.squareMeters * (localRentLevel * 1.1),
+            mpbRent: this.props.data.squareMeters * (this.state.localRentLevel * 1.1),
             currentRent: this.props.data.rent,
-            diff: this.props.data.rent - (this.props.data.squareMeters * (localRentLevel * 1.1)),
-            diffDir: this.props.data.rent - (this.props.data.squareMeters * (localRentLevel * 1.1)) < 0 ? 'mehr' : 'weniger'
+            diff: this.props.data.rent - (this.props.data.squareMeters * (this.state.localRentLevel * 1.1)),
+            diffDir: this.props.data.rent - (this.props.data.squareMeters * (this.state.localRentLevel * 1.1)) < 0 ? 'mehr' : 'weniger'
           }} />
       </p>
     </div>;

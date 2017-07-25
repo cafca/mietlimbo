@@ -55,7 +55,8 @@ class RangeSelectionGroup extends React.Component {
   render() {
     // The index of checked fields allows passing in the current value to the input
     // componenet below by checking whether it's included in this index
-    const checkedFields = this.props.inputData.negative.concat(this.props.inputData.positive);
+    const checkedFields = this.props.inputData === undefined ? [] 
+      : this.props.inputData.negative.concat(this.props.inputData.positive);
 
     const inputElements = Object.keys(this.props.inputComponents).map(
       k => React.createElement(
