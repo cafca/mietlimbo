@@ -30,13 +30,15 @@ class LeaseCreatedInput extends React.Component {
   };
 
   inputName = "leaseCreated";
+  // Month is 0-indexed
+  minDate = new Date(2015, 5, 1);
+  maxDate = new Date();
 
   constructor(props: AssistantInputProps) {
     super(props);
     autoBind(this);
 
-    const initialDate = props.value === undefined ? null
-      : new Date(props.value);
+    const initialDate = props.value === undefined ? null : new Date(props.value);
     this.state = {
       value: initialDate,
       errors: []
@@ -60,13 +62,9 @@ class LeaseCreatedInput extends React.Component {
         id: "LeaseCreatedInput.inputLabel",
         defaultMessage: "Vertragsabschluss"
       },
-      ok: {
-        id: "LeaseCreatedInput.confirm",
-        defaultMessage: "Ja"
-      },
       cancel: {
         id: "LeaseCreatedInput.cancel",
-        defaultMessage: "Doch nicht"
+        defaultMessage: "Zurück"
       }
     });
 
@@ -74,16 +72,20 @@ class LeaseCreatedInput extends React.Component {
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
         <p>Bitte gib hier das Vertragsdatum an.</p>
-        <p><em>Tip: Gleich oben auf die Jahreszahl klicken um zu einem anderen Jahr zu springen.</em></p>
+        <p>Leider erlaubt die Mietpreisbremse in Berlin nur Mietsenkungen für Verträge ab 1.Juni 2015.</p>
         <DatePicker 
           id={this.inputName}
           name={this.inputName} 
           hintText={this.props.intl.formatMessage(messages.inputLabel)}
+          cancelLabel={this.props.intl.formatMessage(messages.cancel)}
           className="textInput"
           DateTimeFormat={DateTimeFormat}
+          openToYearSelection={true}
+          minDate={this.minDate}
+          maxDate={this.maxDate}
           locale={"de"}
-          okLabel={this.props.intl.formatMessage(messages.ok)}
-          cancelLabel={this.props.intl.formatMessage(messages.cancel)}
+          autoOk={true}
+          hideCalendarDate={true}
           value={this.state.value}
           onChange={this.handleChange} />
         <ErrorList errors={this.state.errors} />
