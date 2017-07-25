@@ -18,7 +18,7 @@ type Address = {
   id: string,
   streetname: string,
   range: string
-}
+};
 
 type AddressProps = AssistantInputProps & {
   value: ?Address
@@ -222,7 +222,7 @@ class MietspiegelPlace extends React.Component {
     return <Menu 
       disableAutoFocus={true} 
       desktop={true} 
-      style={{width: "60%"}}
+      style={{width: "99%"}}
       value={this.state.selected}>
         {menuItems}
     </Menu>;
