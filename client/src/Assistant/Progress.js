@@ -133,7 +133,8 @@ const SectionPicture = (props) => {
     default:
       src = Logo;
   }
-  return <img src={src} style={style} />;
+  // alt prop left empty as this image is decorative
+  return <img src={src} style={style} alt="" />;
 }
 
 export default injectIntl(Progress);

@@ -37,7 +37,7 @@ class SquareMetersInput extends React.Component {
 		if (isNaN(intValue)) {
 			errors.push(<FormattedMessage 
 				id="Spanneneinordnung.squareMetersError"
-				defaultMessage="Bitte gib hier eine Quadratmeterzahl ein. Du findest die Fläche in deinem Mietvertrag, kannst aber auch erst einmal schätzen." />);
+				defaultMessage="Bitte gib hier eine Quadratmeterzahl ein. Du findest die Fläche in deinem Mietvertrag." />);
 			this.props.valid(this.inputName, false);
 		} else {
 			this.props.changed({

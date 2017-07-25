@@ -6,7 +6,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import de from 'react-intl/locale-data/de';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import logo from './Graphics/Logo.png';
 import './App.css';
 
 import Assistant from './Assistant/Assistant';

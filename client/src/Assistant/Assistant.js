@@ -17,7 +17,6 @@ import NewBuildingInput from '../InputComponents/NewBuildingInput';
 import ConstructionDateInput from '../InputComponents/ConstructionDateInput';
 import SquareMetersInput from '../InputComponents/SquareMetersInput';
 import BaseFeaturesInput from '../InputComponents/BaseFeaturesInput';
-import SpecialFeaturesInput from '../InputComponents/SpecialFeaturesInput';
 
 import RangeSelectionGroup from '../RangeInputComponents/RangeSelectionGroup';
 import * as BathFeatures from '../RangeInputComponents/BathFeatures';
@@ -31,59 +30,24 @@ import './Assistant.css';
 
 class Assistant extends React.Component {
 	state = {
-		stage: 2,
+		stage: 1,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
-      "leaseCreated": "2017-06-30T22:00:00.000Z",
-      "rent": 1200,
-      "address": {
-        "id": 38536,
-        "streetname": "Wittstocker Straße (Mitte)",
-        "range": "alle Hausnummern von 2 bis 26"
-      },
-      "newBuilding": false,
-      "constructionDate": null,
-      "constructionDateGuessed": "Pre1949",
-      "squareMeters": 128,
-      "squareMetersGuessed": null,
-      "baseFeatures": "default",
-      "intermediateResult": {
-        "max": 7.51,
-        "mid": 5.8,
-        "min": 4.29
-      },
-      "BathGroup": {
-        "positive": [],
-        "negative": [
-          "FixedBathtub",
-          "InsufficientTiling",
-          "NoWindows"
-        ],
-        "balance": -3
-      },
       "KitchenGroup": {
         "positive": [],
         "negative": [],
         "balance": 0
       },
       "ApartmentGroup": {
-        "positive": [
-          "BidirectionalBroadband",
-          "StorageCabinet"
-        ],
-        "negative": [
-          "NoBalcony",
-          "WindowStyleSingle"
-        ],
+        "positive": [],
+        "negative": [],
         "balance": 0
       },
       "BuildingGroup": {
         "positive": [],
-        "negative": [
-          "NoStorageRoom"
-        ],
-        "balance": -1
+        "negative": [],
+        "balance": 0
       },
       "EnergyGroup": {
         "positive": [],
@@ -91,13 +55,15 @@ class Assistant extends React.Component {
         "balance": 0
       },
       "EnvironmentGroup": {
-        "positive": [
-          "NeatoTrash"
-        ],
-        "negative": [
-          "CommercialNoise"
-        ],
+        "positive": [],
+        "negative": [],
         "balance": 0
+      },
+      "rent": 1200,
+      "address": {
+        "id": 38536,
+        "streetname": "Wittstocker Straße (Mitte)",
+        "range": "alle Hausnummern von 2 bis 26"
       }
     }
 	}
@@ -106,7 +72,6 @@ class Assistant extends React.Component {
     "Start",
     "Eckdaten",
     "Mietspiegelabfrage",
-    "Sondermerkmale",
     "Bad",
     "Küche",
     "Wohnung",
@@ -130,17 +95,19 @@ class Assistant extends React.Component {
   componentWillMount() {
     // Fill state with empty data sets
     const inputData = Object.assign({}, this.state.inputData);
-    const rangeData = ["KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnergyGroup", "EnvironmentGroup"].map(name => {
-      if (inputData[name] === undefined) {
-        inputData[name] = {
-          positive: [],
-          negative: [],
-          balance: 0
-        }
-      }
-    });
+    // const rangeData = ["BathGroup", "KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnergyGroup", "EnvironmentGroup"].map(name => {
+    //   if (inputData[name] === undefined) {
+    //     inputData[name] = {
+    //       positive: [],
+    //       negative: [],
+    //       balance: 0
+    //     }
+    //   }
+    // });
     // Form validity assumed on first mount
     const inputValid = {};
+    // Linter wants arrow functions to always return a value
+    // eslint-disable-next-line
     Object.keys(this.state.inputData).map(k => {
       inputValid[k] = true;
     });
@@ -210,17 +177,6 @@ class Assistant extends React.Component {
         break;
 
       case 4:
-        // Let component add to validity conditions of current stage
-        conditions = ["specialFeatures"];
-        content = <SpecialFeaturesInput 
-          constructionDate={this.state.inputData.constructionDate} 
-          constructionDateGuessed={this.state.inputData.constructionDateGuessed} 
-          valid={valid} 
-          changed={changed} />;
-          this.advanceStage(1);
-        break;
-
-      case 5:
         content = <div>
           <h1>
             <FormattedMessage
@@ -237,7 +193,7 @@ class Assistant extends React.Component {
         </div>;
         break;
 
-      case 6:
+      case 5:
         content = <div key="stage6">
           <h1>
             <FormattedMessage
@@ -254,7 +210,7 @@ class Assistant extends React.Component {
         </div>;
         break;
 
-      case 7:
+      case 6:
         content = <div key="stage7">
           <h1>
             <FormattedMessage
@@ -271,7 +227,7 @@ class Assistant extends React.Component {
         </div>;
         break;
 
-      case 8:
+      case 7:
         content = <div key="stage8">
           <h1>
             <FormattedMessage
@@ -288,7 +244,7 @@ class Assistant extends React.Component {
         </div>;
         break;
 
-      case 9:
+      case 8:
         content = <div key="stage9">
           <h1>
             <FormattedMessage
@@ -305,7 +261,7 @@ class Assistant extends React.Component {
         </div>;
         break;
 
-      case 10:
+      case 9:
         content = <div key="stage10">
           <h1>
             <FormattedMessage
@@ -322,9 +278,9 @@ class Assistant extends React.Component {
         </div>;
         break;
 
-      case 11:
+      case 10:
         content = <div key="stage11">
-          <FinalResult data={this.state.inputData} />
+          <FinalResult data={this.state.inputData} changed={changed} />
         </div>;
         break;
 
@@ -333,16 +289,21 @@ class Assistant extends React.Component {
 				content = <Introduction serialNumber={this.state.serialNumber} />;
 		}
 
+    const buttonDisplayStyle = this.state.stage === this.stageNames.length ? "none" : "initial";
 		return <div className="assistant" style={this.style.container} >
       <Progress 
         serialNumber={this.state.serialNumber} 
         stage={this.state.stage} 
         stageNames={this.stageNames}
-        advance={this.advanceStage} />
+        advance={this.advanceStage} 
+        intermediateResult={this.state.inputData.intermediateResult} 
+        finalResult={this.state.inputData.FinalResult}
+        squareMeters={this.state.inputData.squareMeters} 
+        rent={this.state.inputData.rent} />
       {content}
       <RaisedButton 
         primary={true} 
-        style={{display: (this.state.stage == this.stageNames.length ? "none" : "initial")}}
+        style={{display: buttonDisplayStyle}}
         onClick={() => this.advanceStage(1)} 
         disabled={!this.stageValid(conditions)}
         label={this.props.intl.formatMessage({
