@@ -39,6 +39,11 @@ class SquareMetersInput extends React.Component {
 				id="Spanneneinordnung.squareMetersError"
 				defaultMessage="Bitte gib hier eine Quadratmeterzahl ein. Du findest die Fläche in deinem Mietvertrag." />);
 			this.props.valid(this.inputName, false);
+    } else if (value.indexOf(",") > -1) {
+      errors.push(<FormattedMessage
+        id="Spanneneinordnung.errorDecSeparator"
+        defaultMessage="Bitte benutze einen Punkt, um Nachkommastellen zu trennen. Also z.B. '80.8'."
+        />);
 		} else {
 			this.props.changed({
         [this.inputName]: intValue,
@@ -58,6 +63,10 @@ class SquareMetersInput extends React.Component {
       title: {
         id: "Spanneneinordnung.squareMeters",
         defaultMessage: "Wieviele Quadratmeter hat die Wohnung?"
+      },
+      hint: {
+        id: "Spanneneinordnung.squareMetersHint",
+        defaultMessage: "Wohnfläche in Quadratmeter"
       }
     });
 
@@ -69,6 +78,7 @@ class SquareMetersInput extends React.Component {
           defaultMessage="Du kannst auch erstmal schätzen, wenn du es nicht genau weißt. Denk dann später daran, den genauen Wert in deinem Mietvertrag nachzuschlagen." /></p>
         <TextField
           name={this.inputName}
+          hintText={this.props.intl.formatMessage(messages.hint)}
           value={this.state.value}
           onChange={this.handleChange}
           errorText={this.state.errors} />
