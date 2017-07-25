@@ -11,7 +11,6 @@ import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import ErrorIcon from 'material-ui/svg-icons/alert/error';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import TextField from 'material-ui/TextField';
-import IconButton from 'material-ui/IconButton';
 
 import type {AssistantInputProps} from './Tools';
 
@@ -33,7 +32,7 @@ class AddressInput extends React.Component {
 
   inputName: string = "address";
 
-  constructor(props: AssistantInputProps) {
+  constructor(props: AddressProps) {
     super(props);
     autoBind(this);
     this.state = {
@@ -47,7 +46,10 @@ class AddressInput extends React.Component {
     this.setState({query: value});
   }
 
-  handleSelection(value: ?Address) {
+  handleSelection(value: ?Address) {  
+    // Linter complains about '!=', but it is necessary to compare against both
+    // null and undefined as possible values
+    // eslint-disable-next-line
     if (value != undefined) {
       this.setState({
         address: value

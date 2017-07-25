@@ -78,17 +78,15 @@ class FinalResult extends React.Component {
   }
 
   renderTableRows() {
-    const rangeFeatures = this.groups.map(group => {
-      const groupName = group.slice(0, -5);
-      return <TableRow key={group}>
+    const rangeFeatures = this.groups.map(group => <TableRow key={group}>
         <TableRowColumn><FormattedMessage {...groupNameTranslations[group]} /></TableRowColumn>
         <TableRowColumn>{this.props.data[group].positive.map(n => <p key={n}>{n}</p>)}</TableRowColumn>
         <TableRowColumn>{this.props.data[group].negative.map(n => <p key={n}>{n}</p>)}</TableRowColumn>
         <TableRowColumn style={{color: (this.props.data[group].balance < 0 ? "green" : this.props.data[group].balance > 0 ? "red" : "black")}}>
            {(this.props.data[group].balance < 0 ? "Mietsenkend" : (this.props.data[group].balance === 0 ? "Neutral" : "Mietsteigernd"))} ({this.props.data[group].balance})
         </TableRowColumn>
-      </TableRow>;
-    });
+      </TableRow>
+    );
     return rangeFeatures;
   }
 

@@ -13,13 +13,13 @@ type RentData = {
   mid: number,
   min: number,
   warnings: ?string
-}
+};
 
 type RentDataSet = {
   default: RentData,
   both: ?RentData,
   either: ?RentData
-}
+};
 
 class IntermediateResult extends React.Component {
   state: {
@@ -51,6 +51,9 @@ class IntermediateResult extends React.Component {
   }
 
   currentRentLevel() {
+    // Linter complains about '!=', but it is necessary to compare against both
+    // null and undefined as possible values
+    // eslint-disable-next-line
     return this.state.state === this.states.SUCCESS && this.props.squareMeters != undefined 
       ? {
         rent: this.props.rent,
@@ -82,10 +85,12 @@ class IntermediateResult extends React.Component {
           this.props.valid(this.inputName, false);
         } else {
           const data = this.selectDataset(respData.data)
-          this.setState({
-            data,
-            state: data != undefined ? this.states.SUCCESS : this.states.INSUFFICIENT_DATA
-          });
+          // Linter complains about '!=', but it is necessary to compare against both
+          // null and undefined as possible values
+          // eslint-disable-next-line
+          const state = data != undefined ? this.states.SUCCESS : this.states.INSUFFICIENT_DATA
+          this.setState({data, state});
+          // eslint-disable-next-line
           this.props.valid(this.inputName, data != undefined);
           this.props.changed({[this.inputName]: data});
         }
@@ -115,6 +120,7 @@ class IntermediateResult extends React.Component {
         </p>;
 
       case this.states.SUCCESS:
+        // eslint-disable-next-line
         const currentLevel = this.currentRentLevel() != undefined ? <div>
           <p><FormattedMessage
             id="IntermediateResult.rangeApplied"

@@ -36,7 +36,7 @@ class RentInput extends React.Component {
     if(isNaN(fValue)) {
       errors.push(<FormattedMessage 
         id="RentInput.errorNotANumber" 
-        defaultMessage="Bitte gib deine Kaltmiete als Zahl an, z.B. '460.80'." />);
+        defaultMessage="Bitte gib deine Kaltmiete als Zahl an." />);
     } else if (fValue < 1) {
       errors.push(<FormattedMessage 
         id="RentInput.errorRentTooLow" 
@@ -60,6 +60,10 @@ class RentInput extends React.Component {
       title: {
         id: "RentInput.title",
         defaultMessage: "Wieviel Kaltmiete bezahlst du jetzt?"
+      },
+      inputHint: {
+        id: "RentInput.hint",
+        defaultMessage: "Zum Beispiel: 460.80"
       }
     });
 
@@ -70,11 +74,12 @@ class RentInput extends React.Component {
       <CardText>
         <p><FormattedMessage
           id="RentInput.description"
-          defaultMessage="Bitte gib die Miete in Euro an (z.B. 480.20)" />
+          defaultMessage="Bitte gib die Miete in Euro an." />
         </p>
         <TextField 
           id={this.inputName}
           name={this.inputName}
+          hintText={this.props.intl.formatMessage(messages.inputHint)}
           errorText={errors}
           className="textInput"
           value={this.state.value}
