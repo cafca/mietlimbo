@@ -71,7 +71,10 @@ class AddressInput extends React.Component {
       }
     });
 
-    const inputField = this.state.address === undefined ?  <TextField 
+    // Linter complains about '!=', but it is necessary to compare against both
+    // null and undefined as possible values
+    // eslint-disable-next-line
+    const inputField = this.state.address == undefined ?  <TextField 
           id="addressInput"
           value={this.state.query} 
           onChange={this.handleChange} /> : undefined;
@@ -101,7 +104,7 @@ class MietspiegelPlace extends React.Component {
     query: string,
     state: string,
     places: Array<{name: string, ranges: Array<{name: string, id: string}>}>,
-    selected: Address
+    selected: ?Address
   }
 
   states = {
@@ -168,7 +171,7 @@ class MietspiegelPlace extends React.Component {
               id={"AddressInput.placesLoading"} 
               defaultMessage={"Lade Straßennamen..."} />
           </span>;
-          break;
+        break;
 
       case this.states.SELECTING:
         menuItems = this.state.places.map(placeData => {
@@ -194,11 +197,12 @@ class MietspiegelPlace extends React.Component {
               onTouchTap={ev => {this.handleSelection(ev, 
                 {id: placeData.ranges[0].id, streetname: placeData.name, range: placeData.ranges[0].name})}} />;
           }
-        })
+        });
         break;
 
       case this.states.FINISHED:
         menuItems = <MenuItem
+          key={"FINISHED-" + this.state.selected.streetname}
           leftIcon={<ClearIcon />}
           primaryText={this.state.selected.streetname}
           secondaryText={this.state.selected.range}
@@ -215,7 +219,6 @@ class MietspiegelPlace extends React.Component {
           onTouchTap={ev => this.handleQuery(this.state.query)}
           />;
         break;
-
       default:
         menuItems = "";
     }

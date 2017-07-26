@@ -2,7 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 
 import type {AssistantInputProps} from '../InputComponents/Tools';
 
@@ -37,6 +37,55 @@ class IntermediateResult extends React.Component {
     ERROR: "There was an error retrieving results"
   }
 
+  messages = defineMessages({
+    loading: {
+      id: "IntermediateResult.loading",
+      defaultMessage: "Mietspiegelabfrage..." 
+    },
+    success: {
+      id: "IntermediateResult.success",
+      defaultMessage: `Es gibt im Berliner Mietspiegel genug Daten für 
+        Wohnungen wie deine!`
+    },
+    info: {
+      id: "IntermediateResult.info",
+      defaultMessage: `Die ortsübliche Vergleichsmiete beträgt demnach 
+      {mid, number, currency}. Je nachdem, wie gut deine Wohnung ausgestattet 
+      ist, wird von diesem Wert noch etwas abgezogen oder dazugerechnet. 
+      Dadurch kann der angemessene Mietpreis für eine Wohnung wie deine zwischen 
+      {min, number, currency} und {max, number, currency} pro Quadratmeter 
+      liegen.`
+    },
+    infoApplied: {
+      id: "IntermediateResult.rangeApplied",
+      defaultMessage: `Bei {squareMeters, number} Quadratmeter Grundfläche 
+      entspricht dies einer Kaltmiete zwischen {minApplied, number, currency} 
+      und {maxApplied, number, currency}.`
+    },
+    encouragement: {
+      id: "IntermediateResult.encouragement",
+      defaultMessage: `Lass uns das rausfinden! Hierfür frage ich dich 82 
+      Fragen. Klingt viel, ist es auch. Macht nix, los!`
+    },
+    insufficientData: {
+      id: "IntermediateResult.insufficientData",
+      defaultMessage: `Leider gibt es im aktuellen Berliner Mietspiegel nicht 
+        genug Daten über Wohnungen wie deine. Ohne Daten aus dem Mietspiegel 
+        kann dir dieser Assistent leider nicht bei der Einordnung deiner Wohnung 
+        weiterhelfen. Je nach individueller Situation kann ein Mieterverein wie 
+        [NAME, KONTAKT] mit einer persönlichen Beratung weiterhelfen.`
+    },
+    connectionError: {
+      id: "IntermediateResult.connectionError",
+      defaultMessage: `Es gab leider einen Fehler beim Laden der Daten. Bitte 
+        überprüfe deine Internetverbindung oder warte eine Weile.`
+    },
+    retry: {
+      id: "IntermediateResult.retry",
+      defaultMessage: "Nochmal probieren, los!"
+    }
+  })
+
   constructor(props: AssistantInputProps) {
     super(props);
     autoBind(this);
@@ -48,20 +97,6 @@ class IntermediateResult extends React.Component {
 
   componentDidMount() {
     this.loadRentData();
-  }
-
-  currentRentLevel() {
-    // Linter complains about '!=', but it is necessary to compare against both
-    // null and undefined as possible values
-    // eslint-disable-next-line
-    return this.state.state === this.states.SUCCESS && this.props.squareMeters != undefined 
-      ? {
-        rent: this.props.rent,
-        rentLevel: (this.props.rent / this.props.squareMeters),
-        squareMeters: this.props.squareMeters,
-        minApplied: this.props.squareMeters * this.state.data.min,
-        maxApplied: this.props.squareMeters * this.state.data.max
-      } : null;
   }
 
   loadRentData() {
@@ -113,69 +148,33 @@ class IntermediateResult extends React.Component {
   render() {
     switch (this.state.state) {
       case this.states.LOADING:
-        return <p>
-          <FormattedMessage
-            id="IntermediateResult.loading"
-            defaultMessage="Mietspiegelabfrage..." />
-        </p>;
+        return <p><FormattedMessage {...this.messages.loading} /></p>;
 
       case this.states.SUCCESS:
-        // eslint-disable-next-line
-        const currentLevel = this.currentRentLevel() != undefined ? <div>
-          <p><FormattedMessage
-            id="IntermediateResult.rangeApplied"
-            defaultMessage="Bei {squareMeters, number} Quadratmeter Grundfläche entspricht dies einer Kaltmiete
-            zwischen {minApplied, number, currency} und {maxApplied, number, currency}." 
-            values={this.currentRentLevel()} /></p>
-          <p><FormattedMessage
-            id="IntermediateResult.currentRentLevel"
-            defaultMessage="Momentan entspricht deine Kaltmiete von {rent, number, currency} einem Quadratmeterpreis 
-            von {rentLevel, number, currency}." 
-            values={this.currentRentLevel()} /></p>
-        </div> : null;
+        const rentData = {
+          squareMeters: this.props.squareMeters,
+          minApplied: this.props.squareMeters * this.state.data.min,
+          maxApplied: this.props.squareMeters * this.state.data.max
+        };
 
         return <div>
-          <p><FormattedMessage
-            id="IntermediateResult.success"
-            defaultMessage="Es gibt im Berliner Mietspiegel genug Daten für Wohnungen wie deine!"
-          /></p>
-
-          <p><FormattedMessage 
-            id="IntermediateResult.info"
-            defaultMessage="Die ortsübliche Vergleichsmiete beträgt demnach {mid, number, currency}. 
-            Je nachdem, wie gut deine 
-            Wohnung ausgestattet ist, wird von diesem Wert noch etwas abgezogen oder dazugerechnet. 
-            Dadurch kann der angemessene Mietpreis für eine Wohnung wie deine zwischen 
-            {min, number, currency} und {max, number, currency} pro Quadratmeter liegen." 
-            values={this.state.data} /></p>
-
-          {currentLevel}
-
-          <p><FormattedMessage
-            id="IntermediateResult.encouragement"
-            defaultMessage="Lass uns das rausfinden! Hierfür frage ich dich 82 Fragen. 
-            Klingt viel, ist es auch. Macht nix, los!" /></p>
+          <p><FormattedMessage {...this.messages.success} /></p>
+          <p><FormattedMessage {...this.messages.info} values={this.state.data} /></p>
+          <p><FormattedMessage {...this.messages.infoApplied} values={rentData} /></p>
+          <p><FormattedMessage {...this.messages.encouragement} /></p>
         </div>;
 
       case this.states.INSUFFICIENT_DATA:
-        return <p><FormattedMessage
-          id="IntermediateResult.insufficient_data"
-          defaultMessage="Leider gibt es im aktuellen Berliner Mietspiegel nicht genug Daten über Wohnungen 
-          wie deine. Ohne Daten aus dem Mietspiegel kann dir dieser Assistent leider nicht bei der Einordnung
-          deiner Wohnung weiterhelfen. Je nach individueller Situation kann ein Mieterverein wie [NAME, KONTAKT]
-          mit einer persönlichen Beratung weiterhelfen." /></p>;
+        return <p><FormattedMessage {...this.messages.insufficientData} /></p>;
 
       case this.states.ERROR:
       default:
         return <div>
-          <FormattedMessage
-            id="IntermediateResult.success"
-            defaultMessage="Es gab leider einen Fehler beim Laden der Daten. Bitte überprüfe deine Internetverbindung oder warte eine Weile."
-          />
-          <p><RaisedButton label="Retry" onTouchTap={() => this.loadRentData()} /></p>
+          <FormattedMessage {...this.messages.connectionError} />
+          <p><RaisedButton label={this.props.intl.formatMessage(this.messages.retry)} onTouchTap={() => this.loadRentData()} /></p>
         </div>;
     }
   }
 }
 
-export default IntermediateResult;
+export default injectIntl(IntermediateResult);

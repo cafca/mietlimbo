@@ -30,41 +30,22 @@ import './Assistant.css';
 
 class Assistant extends React.Component {
 	state = {
-		stage: 1,
+		stage: 3,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
-      "KitchenGroup": {
-        "positive": [],
-        "negative": [],
-        "balance": 0
-      },
-      "ApartmentGroup": {
-        "positive": [],
-        "negative": [],
-        "balance": 0
-      },
-      "BuildingGroup": {
-        "positive": [],
-        "negative": [],
-        "balance": 0
-      },
-      "EnergyGroup": {
-        "positive": [],
-        "negative": [],
-        "balance": 0
-      },
-      "EnvironmentGroup": {
-        "positive": [],
-        "negative": [],
-        "balance": 0
-      },
-      "rent": 1200,
       "address": {
-        "id": 38536,
-        "streetname": "Wittstocker Straße (Mitte)",
-        "range": "alle Hausnummern von 2 bis 26"
-      }
+    "id": 32494,
+    "streetname": "Sickingenstraße (Mitte)",
+    "range": "alle Hausnummern von 51 bis 79"
+  },
+  "leaseCreated": "2017-06-30T22:00:00.000Z",
+  "rent": 500,
+  "newBuilding": false,
+  "constructionDate": null,
+  "constructionDateGuessed": "Pre1949",
+  "squareMeters": 80,
+  "baseFeatures": "default"
     }
 	}
 
@@ -95,15 +76,16 @@ class Assistant extends React.Component {
   componentWillMount() {
     // Fill state with empty data sets
     const inputData = Object.assign({}, this.state.inputData);
-    // const rangeData = ["BathGroup", "KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnergyGroup", "EnvironmentGroup"].map(name => {
-    //   if (inputData[name] === undefined) {
-    //     inputData[name] = {
-    //       positive: [],
-    //       negative: [],
-    //       balance: 0
-    //     }
-    //   }
-    // });
+    // eslint-disable-next-line
+    ["BathGroup", "KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnergyGroup", "EnvironmentGroup"].map(name => {
+      if (inputData[name] === undefined) {
+        inputData[name] = {
+          positive: [],
+          negative: [],
+          balance: 0
+        }
+      }
+    });
     // Form validity assumed on first mount
     const inputValid = {};
     // Linter wants arrow functions to always return a value
