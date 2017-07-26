@@ -22,10 +22,12 @@ import {
   StepLabel,
 } from 'material-ui/Stepper';
 
+import { stageNames } from "./Assistant";
+
 type ProgressProps = {
   advance: number => any,
-  stageNames: Array<string>,
   stage: number,
+  isStageEnabled: number => any,
   serialNumber: string,
   intermediateResult: {
     max: number, mid: number, min: number
@@ -50,6 +52,9 @@ class Progress extends React.Component {
       height: 3,
       cursor: "pointer"
     },
+    stepLabelDisabled: {
+      height: 3
+    },
     result: {
       fontSize: 16
     }
@@ -61,29 +66,47 @@ class Progress extends React.Component {
   }
 
   handleClick(i: number) {
-    this.props.advance(i - this.props.stage + 1);
+    if (this.props.isStageEnabled(i)) this.props.advance(i - this.props.stage);
   }
 
   render() { 
-    const steps = this.props.stageNames.map((l, i) => <Step style={this.style.step} key={l} className="progressBarStep">
-          <StepLabel onClick={() => this.handleClick(i)} style={this.style.stepLabel}>{l}</StepLabel>
-        </Step>);
+    const steps = stageNames.map(
+      (l, i) => {
+        return<Step style={this.style.step} key={l} className="progressBarStep">
+          <StepLabel 
+            onClick={() => this.handleClick(i + 1)} 
+            style={this.props.isStageEnabled(i + 1) ? this.style.stepLabel : this.style.stepLabelDisabled}
+            disabled={!this.props.isStageEnabled(i + 1)}
+            completed={false}
+          >{l}</StepLabel>
+        </Step>}
+      );
 
-      const rentLevel = this.props.finalResult ? <div style={this.style.result}>
+    let rentLevel = null;
+    if (this.props.data.finalResult != undefined) {
+      rentLevel = <div style={this.style.result}>
         <p><FormattedMessage 
           id="Progress.finalResult"
           defaultMessage="Mit diesen Angaben kannst du {lower, number, currency} pro Monat sparen."
-          values={{lower: this.props.rent - this.props.finalResult}} /></p>
-      </div> : this.props.intermediateResult !== undefined ? <div style={this.style.result}>
+          values={{lower: this.props.data.rent - this.props.data.finalResult}} /></p>
+      </div>;
+
+    } else if (this.props.data.intermediateResult != undefined && this.props.data.intermediateResult.min != undefined) {
+      const irValues = {
+        min: Math.abs(this.props.data.intermediateResult.min * 1.1 * this.props.data.squareMeters - this.props.data.rent)
+      }
+          
+      rentLevel = <div style={this.style.result}>
         <p><FormattedMessage 
           id="Progress.intermediateResult"
           defaultMessage="Du kannst bis zu {min, number, currency} pro Monat sparen."
-          values={{min: Math.abs(this.props.intermediateResult.min * 1.1 * this.props.squareMeters - this.props.rent), max: Math.min(0.00, (this.props.intermediateResult.max * 1.1 * this.props.squareMeters - this.props.rent))}} /></p>
-      </div> : null;
+          values={irValues} /></p>
+      </div>;
+    }
 
 
     return <section style={this.style.main}>
-      <SectionPicture name={this.props.stageNames[this.props.stage - 1]} />
+      <SectionPicture name={stageNames[this.props.stage - 1]} />
       {rentLevel}
       <Stepper activeStep={(this.props.stage - 1)} orientation="vertical" >
         {steps}

@@ -28,9 +28,35 @@ import * as EnvironmentFeatures from '../RangeInputComponents/EnvironmentFeature
 
 import './Assistant.css';
 
+export const stageNames = [
+  "Start",
+  "Eckdaten",
+  "Mietspiegelabfrage",
+  "Bad",
+  "Küche",
+  "Wohnung",
+  "Gebäude",
+  "Energie",
+  "Umfeld",
+  "Ergebnis"
+];
+
+export const stageConditions = [
+  [],
+  ["leaseCreated", "rent", "address"],
+  ["newBuilding", "constructionDate", "squareMeters", "baseFeatures"],
+  ["intermediateResult"],
+  [],
+  [],
+  [],
+  [],
+  [],
+  []
+];
+
 class Assistant extends React.Component {
 	state = {
-		stage: 3,
+		stage: 1,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
@@ -48,19 +74,6 @@ class Assistant extends React.Component {
   "baseFeatures": "default"
     }
 	}
-
-  stageNames = [
-    "Start",
-    "Eckdaten",
-    "Mietspiegelabfrage",
-    "Bad",
-    "Küche",
-    "Wohnung",
-    "Gebäude",
-    "Energie",
-    "Umfeld",
-    "Ergebnis"
-  ];
 
   style = {
     container: {
@@ -97,7 +110,7 @@ class Assistant extends React.Component {
   }
 
   advanceStage(steps: number) {
-    const stage = (this.state.stage + steps) % (this.stageNames.length + 1)
+    const stage = (this.state.stage + steps) % (stageNames.length + 1)
     this.setState({stage});
     window.scrollTo(0, 0);
   }
@@ -113,8 +126,18 @@ class Assistant extends React.Component {
     Object.keys(newData).map(k => console.log(k, newData[k]));
 	}
 
-  stageValid(fieldNames: Array<string>) {
-    return fieldNames.map(k => this.state.inputValid[k] === true).every(v => v === true);
+  isStageEnabled(stage: number) {
+    if (stage > stageNames.length) {
+      return false;
+    } else {
+      // A stage is enabled if the conditions for all stages up to
+      // it are keys of the inputValid object
+      return stageConditions
+        .slice(0, stage)
+        .reduce((acc, cur) => acc.concat(cur), [])
+        .map(condition => this.state.inputValid[condition] === true)
+        .every(v => v === true);
+    }
   }
 
 	render() {
@@ -133,7 +156,6 @@ class Assistant extends React.Component {
           <RentInput valid={valid} changed={changed} value={this.state.inputData.rent} />
           <AddressInput valid={valid} changed={changed} value={this.state.inputData.address} />
         </div>;
-        conditions = ["leaseCreated", "rent", "address"];
 				break;
 
 			case 2:
@@ -145,7 +167,6 @@ class Assistant extends React.Component {
             exact={this.state.inputData.squareMeters} guessed={this.state.inputData.squareMetersGuessed} />
           <BaseFeaturesInput valid={valid} changed={changed} value={this.state.inputData.baseFeatures} />
 				</div>;
-        conditions = ["newBuilding", "constructionDate", "squareMeters", "baseFeatures"];
 				break;
 
       case 3:
@@ -155,7 +176,6 @@ class Assistant extends React.Component {
           changed={changed}
           {...this.state.inputData}
         />;
-        conditions = ["intermediateResult"];
         break;
 
       case 4:
@@ -271,23 +291,20 @@ class Assistant extends React.Component {
 				content = <Introduction serialNumber={this.state.serialNumber} />;
 		}
 
-    const buttonDisplayStyle = this.state.stage === this.stageNames.length ? "none" : "initial";
+    const buttonDisplayStyle = this.state.stage === stageNames.length ? "none" : "initial";
 		return <div className="assistant" style={this.style.container} >
       <Progress 
         serialNumber={this.state.serialNumber} 
         stage={this.state.stage} 
-        stageNames={this.stageNames}
+        isStageEnabled={this.isStageEnabled}
         advance={this.advanceStage} 
-        intermediateResult={this.state.inputData.intermediateResult} 
-        finalResult={this.state.inputData.FinalResult}
-        squareMeters={this.state.inputData.squareMeters} 
-        rent={this.state.inputData.rent} />
+        data={this.state.inputData} />
       {content}
       <RaisedButton 
         primary={true} 
         style={{display: buttonDisplayStyle}}
         onClick={() => this.advanceStage(1)} 
-        disabled={!this.stageValid(conditions)}
+        disabled={!this.isStageEnabled(this.state.stage + 1)}
         label={this.props.intl.formatMessage({
           id: "Assistant.continue",
           defaultMessage: "Weiter"

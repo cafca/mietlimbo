@@ -64,6 +64,7 @@ class FinalResult extends React.Component {
   }
 
   update() {
+    debugger;
     // To calculate balance, for every group with predominantly positive features 1 is added,
     // for predominantly negative groups 1 is subtracted
     const balance = this.groups
@@ -93,7 +94,7 @@ class FinalResult extends React.Component {
   render() {
     return <div>
       <p>Mit den erfassten Merkmalen kann jetzt die ortsübliche Vergleichsmiete für deine Wohnung ermittelt werden:</p>
-      <p>Grundlage hierfür bildet die Spanneneinordnung in Schritt 3.</p>
+      <p>Grundlage hierfür bildet die Mietspiegelabfrage in Schritt 3.</p>
       <p>Je nachdem, wieviele von den 5 Merkmalsgruppen positiv oder negativ ausfallen, liegt die ortsübliche Vergleichsmiete 
       zwischen der dort ermittelten Ober- und Untergrenze</p>
       <Table selectable={false} style={{border: "1px solid #eee"}}>
