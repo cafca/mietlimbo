@@ -2,11 +2,10 @@
   text-align: left;
   width: 960px;
   margin: 0 auto;
-  background-color: #fafafa;
   min-height: 600px;
 }
 
-.App-intro {
+.App-main {
   margin-top: 40px;
   font-size: 20px;
   padding: 10px 20px;
