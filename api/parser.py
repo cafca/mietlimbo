@@ -123,13 +123,23 @@ class MietspiegelParser(object):
             except ValueError:
                 logger.error("Float conversion failed for: {}\n\n{}".format(rv[k], result))
                 return None
-            finally:
+            else:
                 return rv
 
-        rv = {
-            "both": extract_values(results[0]),
-            "either": extract_values(results[1]),
-            "default": extract_values(results[2])
-        }
+        def extract_category(result):
+            names = {
+                "ohne SH,  ohne Bad,  mit IWC":     "both",
+                "mit SH  oder Bad,  mit IWC":       "either",
+                "mit SH,  Bad  und IWC":            "default"
+            }
+            elem = result.findPrevious("h4", class_="mm_rot")
+            desc = elem.text[15:]
+            return names[desc]
+
+        rv = {}
+        for dataset in results:
+            category = extract_category(dataset)
+            rv[category] = extract_values(dataset)
+
         logger.debug("Result set:\n{}".format(pformat(rv, indent=2)))
         return rv
