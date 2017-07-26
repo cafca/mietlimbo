@@ -6,6 +6,7 @@ import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 
 import type {AssistantInputProps} from '../InputComponents/Tools';
 
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 
 type RentData = {
@@ -71,9 +72,13 @@ class IntermediateResult extends React.Component {
       id: "IntermediateResult.insufficientData",
       defaultMessage: `Leider gibt es im aktuellen Berliner Mietspiegel nicht 
         genug Daten über Wohnungen wie deine. Ohne Daten aus dem Mietspiegel 
-        kann dir dieser Assistent leider nicht bei der Einordnung deiner Wohnung 
-        weiterhelfen. Je nach individueller Situation kann ein Mieterverein wie 
-        [NAME, KONTAKT] mit einer persönlichen Beratung weiterhelfen.`
+        kann dir dieser Assistent leider nicht genau bei der Einordnung deiner Wohnung 
+        weiterhelfen. Je nach individueller Situation kann ein Mieterverein 
+        mit einer persönlichen Beratung weiterhelfen.`
+    },
+    insufficientDataTitle: {
+      id: "IntermediateResult.insufficientDataTitle",
+      defaultMessage: "Nicht genug Daten im Mietspiegel"
     },
     connectionError: {
       id: "IntermediateResult.connectionError",
@@ -146,9 +151,13 @@ class IntermediateResult extends React.Component {
   }
 
   render() {
+    let content = "";
+    let title = "";
+
     switch (this.state.state) {
       case this.states.LOADING:
-        return <p><FormattedMessage {...this.messages.loading} /></p>;
+        title = <p><FormattedMessage {...this.messages.loading} /></p>;
+        break;
 
       case this.states.SUCCESS:
         const rentData = {
@@ -157,23 +166,36 @@ class IntermediateResult extends React.Component {
           maxApplied: this.props.squareMeters * this.state.data.max
         };
 
-        return <div>
-          <p><FormattedMessage {...this.messages.success} /></p>
+        title = <FormattedMessage {...this.messages.success} />;
+        content = <div>
           <p><FormattedMessage {...this.messages.info} values={this.state.data} /></p>
           <p><FormattedMessage {...this.messages.infoApplied} values={rentData} /></p>
           <p><FormattedMessage {...this.messages.encouragement} /></p>
         </div>;
+        break;
 
       case this.states.INSUFFICIENT_DATA:
-        return <p><FormattedMessage {...this.messages.insufficientData} /></p>;
+        title = <FormattedMessage {...this.messages.insufficientDataTitle} />;
+        content = <p><FormattedMessage {...this.messages.insufficientData} /></p>;
+        break;
 
       case this.states.ERROR:
       default:
-        return <div>
-          <FormattedMessage {...this.messages.connectionError} />
+        title = <FormattedMessage {...this.messages.connectionError} />;
+        content = <div>
           <p><RaisedButton label={this.props.intl.formatMessage(this.messages.retry)} onTouchTap={() => this.loadRentData()} /></p>
         </div>;
+        break;
     }
+
+    return <Card className="assistantInput">
+      <CardTitle>
+        {title}
+      </CardTitle>
+      <CardText>
+        {content}
+      </CardText>
+    </Card>
   }
 }
 
