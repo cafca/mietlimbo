@@ -4,13 +4,15 @@ Mietspiegel API
 
 """
 import os
+import logging
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from logger import setup_logger
 from parser import MietspiegelParser
+from pprint import pformat
 
-logger = setup_logger(logfile=None)
+logger = setup_logger(logfile="./main.log")
 
 def create_app(config=None):
     app = Flask(__name__)
@@ -23,8 +25,9 @@ def create_app(config=None):
 
     @app.route("/api/v1/street", methods=["GET"])
     def find_street():
-        logger.info("street api")
         rv = {}
+
+        logger.info("Street API\nData: {}".format(pformat(request.args)))
 
         street_name = request.args.get("name")
         if street_name is None or len(street_name) < 4:
@@ -37,9 +40,7 @@ def create_app(config=None):
 
     @app.route("/api/v1/range", methods=["POST"])
     def get_range():
-        logger.info("range api")
         rv = {}
-
         data = request.get_json()
 
         street_id = int(data.get("street_id"))
@@ -51,10 +52,11 @@ def create_app(config=None):
         else:
             guessed_size = None
 
+        logger.info("Range API\nData: {}".format(pformat(data)))
+
         ps = MietspiegelParser()
         rv["data"] = ps.get_range(street_id, year_range, real_size, guessed_size)
         return jsonify(rv)
-
     return app
 
 
