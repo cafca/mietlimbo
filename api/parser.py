@@ -13,13 +13,6 @@ url_search = "http://www.stadtentwicklung.berlin.de/wohnen/mietspiegel/de/strass
 url_save = "http://www.stadtentwicklung.berlin.de/wohnen/mietspiegel/skript/save.php?sid=12"
 
 class MietspiegelParser(object):
-    year_ranges = {
-
-    }
-
-    def __init__(self):
-        self.cookies = self.get_cookies()
-
     def get_cookies(self):
         """Return a fresh cookie jar."""
         req = requests.head(url_search)
@@ -31,7 +24,7 @@ class MietspiegelParser(object):
         assert len(query) >= 4
 
         if cookies is None:
-            cookies = self.cookies
+            cookies = self.get_cookies()
 
         logger.info("Searching street directory for '{}'".format(query))
 
@@ -93,7 +86,7 @@ class MietspiegelParser(object):
         guessed_size = size_ranges.get(guessed_size_name, None)
 
         if cookies is None:
-            cookies = self.cookies
+            cookies = self.get_cookies()
 
         payload = {'qact': 'svstraw', 'strt': street_id, 'sid': 12}
         req = requests.get(url_save, params=payload, cookies=cookies)
@@ -129,9 +122,9 @@ class MietspiegelParser(object):
                     rv[k] = float(rv[k])
             except ValueError:
                 logger.error("Float conversion failed for: {}\n\n{}".format(rv[k], result))
-                quit()
-
-            return rv
+                return None
+            finally:
+                return rv
 
         rv = {
             "both": extract_values(results[0]),
