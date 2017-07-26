@@ -8,6 +8,7 @@ import type {AssistantInputProps} from '../InputComponents/Tools';
 
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
+import LinearProgress from 'material-ui/LinearProgress';
 
 type RentData = {
   max: number,
@@ -157,6 +158,7 @@ class IntermediateResult extends React.Component {
     switch (this.state.state) {
       case this.states.LOADING:
         title = <p><FormattedMessage {...this.messages.loading} /></p>;
+        content = <LinearProgress />;
         break;
 
       case this.states.SUCCESS:

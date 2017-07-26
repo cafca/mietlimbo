@@ -78,6 +78,7 @@ class Progress extends React.Component {
             style={this.props.isStageEnabled(i + 1) ? this.style.stepLabel : this.style.stepLabelDisabled}
             disabled={!this.props.isStageEnabled(i + 1)}
             completed={false}
+            className={this.props.isStageEnabled(i + 1) ? "activeStepLabel" : null}
           >{l}</StepLabel>
         </Step>}
       );
