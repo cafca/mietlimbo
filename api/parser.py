@@ -103,7 +103,6 @@ class MietspiegelParser(object):
         soup = BeautifulSoup(req.text, 'html.parser')
         
         results = soup.find_all('div', class_='zf')
-        assert len(results) == 3
 
         def extract_values(result):
             rv = {
@@ -130,11 +129,17 @@ class MietspiegelParser(object):
             names = {
                 "ohne SH,  ohne Bad,  mit IWC":     "both",
                 "mit SH  oder Bad,  mit IWC":       "either",
-                "mit SH,  Bad  und IWC":            "default"
+                "mit SH,  Bad  und IWC":            "default",
+                "t SH,  Bad  und IWC":              "default"
             }
             elem = result.findPrevious("h4", class_="mm_rot")
             desc = elem.text[15:]
-            return names[desc]
+            try:
+                rv = names[desc]
+            except KeyError:
+                logger.error("Category '{}' not known\Source: {}".format(desc, elem.text))
+                rv = None
+            return rv
 
         rv = {}
         for dataset in results:

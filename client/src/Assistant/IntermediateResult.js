@@ -147,7 +147,7 @@ class IntermediateResult extends React.Component {
     // props.baseFeatures determines the selected set.
     const baseConfiguration = ["noheating", "nobath"].indexOf(this.props.baseFeatures) > 0 
       ? "either" : this.props.baseFeatures;
-    return data != null && Object.keys(data).indexOf(baseConfiguration) > 0 
+    return data != null && Object.keys(data).indexOf(baseConfiguration) >= 0 
       ? data[baseConfiguration] : null;
   }
 
