@@ -1,11 +1,14 @@
 // @flow
 
 import React from 'react';
-import {injectIntl, defineMessages} from 'react-intl';
-import {Card, CardTitle} from 'material-ui/Card';
+import { injectIntl, defineMessages } from 'react-intl';
+import { Card, CardTitle } from 'material-ui/Card';
 
 import CheckboxInput from './CheckboxInput';
 import type {RangeInputProps} from './RangeSelectionGroup';
+import EnergyClass from './EnergyFeatures';
+
+import './Styles.css';
 
 export const EntranceCondition = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
@@ -294,3 +297,5 @@ export const AntiBurglary = injectIntl((props: RangeInputProps) => {
       />} />
   </Card>;
 });
+
+export const Energy = injectIntl(EnergyClass)
