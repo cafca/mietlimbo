@@ -23,7 +23,6 @@ import * as BathFeatures from '../RangeInputComponents/BathFeatures';
 import * as KitchenFeatures from '../RangeInputComponents/KitchenFeatures';
 import * as ApartmentFeatures from '../RangeInputComponents/ApartmentFeatures';
 import * as BuildingFeatures from '../RangeInputComponents/BuildingFeatures';
-import * as EnergyFeatures from '../RangeInputComponents/EnergyFeatures';
 import * as EnvironmentFeatures from '../RangeInputComponents/EnvironmentFeatures';
 
 import './Assistant.css';
@@ -36,7 +35,6 @@ export const stageNames = [
   "Küche",
   "Wohnung",
   "Gebäude",
-  "Energie",
   "Umfeld",
   "Ergebnis"
 ];
@@ -50,16 +48,20 @@ export const stageConditions = [
   [],
   [],
   [],
-  [],
   []
 ];
 
 class Assistant extends React.Component {
 	state = {
-		stage: 1,
+		stage: 7,
 		serialNumber: "03",
     inputValid: {},
     inputData: {
+      "intermediateResult": {
+        "min": 4,
+        "mid": 5,
+        "max": 6
+      },
       "address": {
     "id": 32494,
     "streetname": "Sickingenstraße (Mitte)",
@@ -90,7 +92,7 @@ class Assistant extends React.Component {
     // Fill state with empty data sets
     const inputData = Object.assign({}, this.state.inputData);
     // eslint-disable-next-line
-    ["BathGroup", "KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnergyGroup", "EnvironmentGroup"].map(name => {
+    ["BathGroup", "KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnvironmentGroup"].map(name => {
       if (inputData[name] === undefined) {
         inputData[name] = {
           positive: [],
@@ -120,9 +122,9 @@ class Assistant extends React.Component {
     this.setState({inputValid: newInputValid});
 	}
 
-	handleInputChanged(newData: Object) {
+	handleInputChanged(newData: Object, cb: () => any) {
     // This method is called from input components when their internal data is updated
-    this.setState({inputData: Object.assign({}, this.state.inputData, newData)});
+    this.setState({inputData: Object.assign({}, this.state.inputData, newData)}, cb);
     Object.keys(newData).map(k => console.log(k, newData[k]));
 	}
 
@@ -247,23 +249,6 @@ class Assistant extends React.Component {
         break;
 
       case 8:
-        content = <div key="stage9">
-          <h1>
-            <FormattedMessage
-              id="Energy.Header"
-              defaultMessage="Energie" />
-          </h1>
-          <RangeSelectionGroup 
-            domain="EnergyGroup"
-            key="EnergyGroup"
-            inputComponents={EnergyFeatures}
-            inputData={this.state.inputData.EnergyGroup}
-            changed={changed} 
-            />
-        </div>;
-        break;
-
-      case 9:
         content = <div key="stage10">
           <h1>
             <FormattedMessage
@@ -280,7 +265,7 @@ class Assistant extends React.Component {
         </div>;
         break;
 
-      case 10:
+      case 9:
         content = <div key="stage11">
           <FinalResult data={this.state.inputData} changed={changed} />
         </div>;
@@ -309,7 +294,7 @@ class Assistant extends React.Component {
           id: "Assistant.continue",
           defaultMessage: "Weiter"
         })} />
-      <div><pre>{data}</pre></div>
+      <pre>{data}</pre>
 		</div>;
 	}
 }
