@@ -7,6 +7,8 @@ import {Card, CardTitle} from 'material-ui/Card';
 import CheckboxInput from './CheckboxInput';
 import type {RangeInputProps} from './RangeSelectionGroup';
 
+import './Styles.css';
+
 export const NoVentilation = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {

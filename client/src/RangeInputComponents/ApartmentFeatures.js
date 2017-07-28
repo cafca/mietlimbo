@@ -1,44 +1,49 @@
 // @flow
 
 import React from 'react';
-import {injectIntl, defineMessages} from 'react-intl';
+import {injectIntl, defineMessages, FormattedMessage} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 
 import CheckboxInput from './CheckboxInput';
 import type {RangeInputProps} from './RangeSelectionGroup';
 
-export const WindowStyle = injectIntl((props: RangeInputProps) => {
+import './Styles.css';
+
+export const WindowStyleSingle = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
-      id: "Apartment.WindowStyle",
-      defaultMessage: "Art der Fenster"
-    },
-    singlePane: {
       id: "Apartment.WindowStyleSingle",
       defaultMessage: "Mindestens die Hälfte der Fenster haben nur Einfachverglasung."
-    },
-    insulating: {
-      id: "Apartment.WindowStyleInsulating",
-      defaultMessage: "Mindestens die Hälfte der Fenster haben Isolierverglasung (Einbau ab 1987) oder Schallschutzfenster."
     }
   })
   return <Card className="assistantInput">
-    <CardTitle title={props.intl.formatMessage(messages.title)} />
-    <CardText>
-      <CheckboxInput
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="WindowStyle"
+        name="WindowStyleSingle"
         positive={false}
-        message={props.intl.formatMessage(messages.singlePane)}
+        message={props.intl.formatMessage(messages.title)}
         value={props.value}
-      />
-      <CheckboxInput
+      />} />
+  </Card>;
+});
+
+export const WindowStyleInsulating = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Apartment.WindowStyleInsulating",
+      defaultMessage: "Mindestens die Hälfte der Fenster haben Isolierverglasung oder Schallschutzfenster."
+    }
+  })
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="WindowStyle"
+        name="WindowStyleInsulating"
         positive={true}
-        message={props.intl.formatMessage(messages.insulating)}
+        message={props.intl.formatMessage(messages.title)}
         value={props.value}
-      />
+      />} />
+    <CardText className="cardText">
+      <p>Nur moderne Isolierverglasung, welche nach 1987 eingebaut wurde, ist hier gültig.</p>
     </CardText>
   </Card>;
 });
@@ -47,7 +52,7 @@ export const HighGradeFlooring = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Apartment.HighGradeFlooring",
-      defaultMessage: "Hochwertiges Parkett, Natur-/Kunststein Fliesen oder gleichwertiger Boden/-belag in der überwiegenden Zahl der Wohnräume (Als Sondermerkmal)"
+      defaultMessage: "Hochwertiges Parkett, Natur-/Kunststein Fliesen oder gleichwertiger Bodenbelag in der überwiegenden Zahl der Wohnräume"
     }
   })
   return <Card className="assistantInput">
@@ -65,7 +70,13 @@ export const InsufficientPower = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Apartment.InsufficientPower",
-      defaultMessage: "Unzureichende Elektroinstallation: Kein gleichzeitiger Betrieb von mindestens zwei haushaltsüblichen größeren Elektrogeräten (z.B. Waschmaschine und Staubsauger) möglich oder weniger als zwei Steckdosen in Wohnräumen."
+      defaultMessage: "Unzureichende Elektroinstallation"
+    },
+    hint: {
+      id: "Apartment.InsufficientPowerHint",
+      defaultMessage: `Kein gleichzeitiger Betrieb von mindestens zwei haushaltsüblichen größeren 
+      Elektrogeräten (z.B. Waschmaschine und Staubsauger) möglich oder weniger 
+      als zwei Steckdosen in Wohnräumen.`
     }
   })
   return <Card className="assistantInput">
@@ -76,6 +87,9 @@ export const InsufficientPower = injectIntl((props: RangeInputProps) => {
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
+    <CardText className="cardText">
+      <p><FormattedMessage {...messages.hint} /></p>
+    </CardText>
   </Card>;
 });
 
@@ -100,7 +114,7 @@ export const WallInstallation = injectIntl((props: RangeInputProps) => {
   })
   return <Card className="assistantInput">
     <CardTitle title={props.intl.formatMessage(messages.title)} />
-    <CardText>
+    <CardText className="cardText">
       <CheckboxInput
         changed={props.changed}
         name="WallInstallationElectrical"

@@ -7,6 +7,7 @@ import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card';
 import CheckboxInput from './CheckboxInput';
 import type {RangeInputProps} from './RangeSelectionGroup';
 
+import './Styles.css';
 
 // 
 // Negative Features
@@ -22,7 +23,7 @@ export const TinySink = injectIntl((props: RangeInputProps) => {
 
   return <Card className="assistantInput">
     <CardTitle title={props.intl.formatMessage(messages.title)} />
-    <CardText>
+    <CardText className="cardText">
       <ul>
         <li><FormattedMessage 
           id="Bath.TinySink1" 
@@ -93,7 +94,7 @@ export const NoHeating = injectIntl((props: RangeInputProps) => {
 
   return <Card className="assistantInput">
     <CardTitle title={props.intl.formatMessage(messages.title)} />
-    <CardText>
+    <CardText className="cardText">
       <ul>
         <li><FormattedMessage 
           id="Bath.NoHeating1" 
@@ -130,8 +131,14 @@ export const WarmWater = injectIntl((props: RangeInputProps) => {
   });
 
   return <Card className="assistantInput">
-    <CardTitle title={props.intl.formatMessage(messages.title)} />
-    <CardText>
+    <CardTitle title={<CheckboxInput
+        changed={props.changed}
+        name="WarmWater"
+        positive={false}
+        message={props.intl.formatMessage(messages.title)}
+        value={props.value}
+      />} />
+    <CardText className="cardText">
       <p>
         <FormattedMessage 
           id="Bath.WarmWaterExamples" 
@@ -139,15 +146,6 @@ export const WarmWater = injectIntl((props: RangeInputProps) => {
         />
       </p>
     </CardText>
-    <CardActions>
-      <CheckboxInput
-        changed={props.changed}
-        name="WarmWater"
-        positive={false}
-        message={"applies"}
-        value={props.value}
-      />
-    </CardActions>
   </Card>;
 });
 
@@ -256,7 +254,7 @@ export const LargeSink = injectIntl((props: RangeInputProps) => {
   })
   return <Card className="assistantInput">
     <CardTitle title={props.intl.formatMessage(messages.title)} />
-    <CardText>
+    <CardText className="cardText">
       <ul>
         <li><FormattedMessage 
           id="Bath.LargeSink1" 
@@ -292,8 +290,14 @@ export const HighClassFeatures = injectIntl((props: RangeInputProps) => {
     }
   })
   return <Card className="assistantInput">
-    <CardTitle title={props.intl.formatMessage(messages.title)} />
-    <CardText>
+    <CardTitle title={<CheckboxInput
+        changed={props.changed}
+        name="HighClassFeatures"
+        positive={true}
+        message={props.intl.formatMessage(messages.title)}
+        value={props.value}
+      />} />
+    <CardText className="cardText">
       <p>
       <FormattedMessage 
         id="Bath.HighClassFeaturesExamples" 
@@ -301,15 +305,6 @@ export const HighClassFeatures = injectIntl((props: RangeInputProps) => {
       />
     </p>
     </CardText>
-    <CardActions>
-      <CheckboxInput
-        changed={props.changed}
-        name="HighClassFeatures"
-        positive={true}
-        message={"applies"}
-        value={props.value}
-      />
-    </CardActions>
   </Card>;
 });
 
@@ -325,21 +320,18 @@ export const ElectronicVentilation = injectIntl((props: RangeInputProps) => {
     }
   })
   return <Card className="assistantInput">
-    <CardTitle title={props.intl.formatMessage(messages.title)} />
-    <CardText>
+    <CardTitle title={<CheckboxInput
+        changed={props.changed}
+        name="ElectronicVentilation"
+        positive={true}
+        message={props.intl.formatMessage(messages.title)}
+        value={props.value}
+      />} />
+    <CardText className="cardText">
       <p>
        <FormattedMessage {...messages.description} />
     </p>
     </CardText>
-    <CardActions>
-      <CheckboxInput
-        changed={props.changed}
-        name="ElectronicVentilation"
-        positive={true}
-        message={"applies"}
-        value={props.value}
-      />
-    </CardActions>
   </Card>;
 });
 

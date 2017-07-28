@@ -3,6 +3,8 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { intlShape } from 'react-intl';
 
+import './Styles.css';
+
 // Properties passed to a RangeSelectionGroup
 type RangeSelectionGroupProps = {
   changed: Object => any,

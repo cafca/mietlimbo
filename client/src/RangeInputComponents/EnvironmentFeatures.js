@@ -1,11 +1,13 @@
 // @flow
 
 import React from 'react';
-import {injectIntl, defineMessages} from 'react-intl';
+import {injectIntl, defineMessages, FormattedMessage} from 'react-intl';
 import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card';
 
 import CheckboxInput from './CheckboxInput';
 import type {RangeInputProps} from './RangeSelectionGroup';
+
+import './Styles.css';
 
 export const QuietStreet = injectIntl((props: RangeInputProps) => {
   // WC ohne Lüftungsmöglichkeit oder Entlüftung
@@ -31,24 +33,25 @@ export const TrafficNoise = injectIntl((props: RangeInputProps) => {
     title: {
       id: "Environment.TrafficNoiseTitle",
       defaultMessage: "Verkehrslärm"
+    },
+    hint: {
+      id: "Environment.TrafficNoiseTitleHint",
+      defaultMessage: `Lage der Wohnung an einer Straße oder Schienenstrecke mit hoher Verkehrslärmbelastung 
+      oder Belastung durch Flugverkehr nach Maßgabe der Erläuterungen zur Verkehrslärmbelastung`
     }
   });
 
   return <Card className="assistantInput">
-    <CardTitle title={props.intl.formatMessage(messages.title)} />
-    <CardText>
-      <p>Lage der Wohnung an einer Straße oder Schienenstrecke mit hoher Verkehrslärmbelastung 
-      oder Belastung durch Flugverkehr nach Maßgabe der Erläuterungen zur Verkehrslärmbelastung</p>
-    </CardText>
-    <CardActions>
-      <CheckboxInput
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="TrafficNoise"
         positive={false}
-        message="applies"
+        message={props.intl.formatMessage(messages.title)}
         value={props.value}
-      />
-    </CardActions>
+      />} />
+    <CardText className="cardText">
+      <p><FormattedMessage {...messages.hint} /></p>
+    </CardText>
   </Card>;
 });
 
@@ -57,23 +60,25 @@ export const CommercialNoise = injectIntl((props: RangeInputProps) => {
     title: {
       id: "Environment.CommercialNoiseTitle",
       defaultMessage: "Gewerbelärm und -gerüche"
+    },
+    hint: {
+      id: "Environment.CommercialNoiseHint",
+      defaultMessage: `Erhebliche, regelmäßige Beeinträchtigung durch 
+        Geräusche oder Gerüche (Gewerbe) z.B. durch Liefer- und Kundenverkehr.`
     }
   });
 
   return <Card className="assistantInput">
-    <CardTitle title={props.intl.formatMessage(messages.title)} />
-    <CardText>
-      <p>Erhebliche, regelmäßige Beeinträchtigung durch Geräusche oder Gerüche (Gewerbe) z.B. durch Liefer- und Kundenverkehr.</p>
-    </CardText>
-    <CardActions>
-      <CheckboxInput
+    <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="CommercialNoise"
         positive={false}
-        message="applies"
+        message={props.intl.formatMessage(messages.title)}
         value={props.value}
-      />
-    </CardActions>
+      />} />
+    <CardText className="cardText">
+      <p><FormattedMessage {...messages.hint} /></p>
+    </CardText>
   </Card>;
 });
 
@@ -83,6 +88,11 @@ export const PrimeDowntown = injectIntl((props: RangeInputProps) => {
     title: {
       id: "Environment.PrimeDowntown",
       defaultMessage: "Bevorzugte Citylage"
+    },
+    hint: {
+      id: "Environment.PrimeDowntownHint",
+      defaultMessage: `Nahe repräsentativen, überregional ausstrahlenden Einkaufs-, 
+        Dienstleistungs- und Wohnstandorten.`
     }
   })
   return <Card className="assistantInput">
@@ -94,7 +104,7 @@ export const PrimeDowntown = injectIntl((props: RangeInputProps) => {
         value={props.value}
       />} />
     <CardText>
-      <p>Nahe repräsentativen, überregional ausstrahlenden Einkaufs-, Dienstleistungs- und Wohnstandorten.</p>
+      <p><FormattedMessage {...messages.hint} /></p>
     </CardText>
   </Card>;
 });
@@ -162,6 +172,11 @@ export const NeatoBackyard = injectIntl((props: RangeInputProps) => {
     title: {
       id: "Environment.NeatoBackyard",
       defaultMessage: "Aufwändig gestaltetes Wohnumfeld auf dem Grundstück"
+    },
+    hint: {
+      id: "Environment.NeatoBackyardHint",
+      defaultMessage: `Zum Beispiel Sitzbänke oder Ruhezonen, neu angelegte 
+        Wegebefestigung mit Grünflächen.`
     }
   })
   return <Card className="assistantInput">
@@ -173,7 +188,7 @@ export const NeatoBackyard = injectIntl((props: RangeInputProps) => {
         value={props.value}
       />} />
     <CardText>
-      <p>Zum Beispiel Sitzbänke oder Ruhezonen, neu angelegte Wegebefestigung mit Grünflächen.</p>
+      <p><FormattedMessage {...messages.hint} /></p>
     </CardText>
   </Card>;
 });
@@ -183,16 +198,28 @@ export const PrivateBackyard = injectIntl((props: RangeInputProps) => {
     title: {
       id: "Environment.PrivateBackyardTitle",
       defaultMessage: "Garten"
+    },
+    option1: {
+      id: "Environment.PrivateBackyard1",
+      defaultMessage: "Garten zur alleinigen Nutzung"
+    },
+    option2: {
+      id: "Environment.PrivateBackyard2",
+      defaultMessage: "Mietergarten ohne Entgelt"
+    },
+    option3: {
+      id: "Environment.PrivateBackyard3",
+      defaultMessage: "Zur Wohnung gehörender Garten mit direktem Zugang"
     }
   });
 
   return <Card className="assistantInput">
     <CardTitle title={props.intl.formatMessage(messages.title)} />
-    <CardText>
+    <CardText className="cardText">
       <ul>
-        <li>Garten zur alleinigen Nutzung</li>
-        <li>Mietergarten ohne Entgelt</li>
-        <li>Zur Wohnung gehörender Garten mit direktem Zugang</li>
+        <li><FormattedMessage {...messages.option1} /></li>
+        <li><FormattedMessage {...messages.option2} /></li>
+        <li><FormattedMessage {...messages.option3} /></li>
       </ul>
     </CardText>
     <CardActions>

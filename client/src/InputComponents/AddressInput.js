@@ -67,7 +67,7 @@ class AddressInput extends React.Component {
     const messages = defineMessages({
       title: {
         id: "AddressInput.title",
-        defaultMessage: "Wie lautet deine Adresse?"
+        defaultMessage: "Wo wohnst du?"
       }
     });
 
