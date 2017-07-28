@@ -74,7 +74,7 @@ class RentInput extends React.Component {
       <CardText>
         <p><FormattedMessage
           id="RentInput.description"
-          defaultMessage="Bitte gib die Miete in Euro an." />
+          defaultMessage="In diesem Betrag sind keine Heizkosten oder Nebenkosten enthalten." />
         </p>
         <TextField 
           id={this.inputName}
