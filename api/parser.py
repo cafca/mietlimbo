@@ -7,6 +7,7 @@ from urllib.parse import urlparse
 from pprint import pformat
 from logger import setup_logger
 
+
 logger = setup_logger()
 
 url_search = "http://www.stadtentwicklung.berlin.de/wohnen/mietspiegel/de/strassensuche.shtml?sid=12"
@@ -158,14 +159,29 @@ class MietspiegelParser(object):
             try:
                 rv = names[desc]
             except KeyError:
-                logger.error("Category '{}' not known\Source: {}".format(desc, elem.text))
-                rv = None
+                logger.error("Category '{}' not known\nSource: {}".format(desc, elem.text))
+                rv = "unknown-{}".format(elem.text[:8])
+            return rv
+
+        def extract_metadata(result):
+            rv = {}
+            for feature in result.find_all('strong'):
+                fname = feature.text[:-1]
+                fvalue = feature.nextSibling.strip()
+                rv[fname] = fvalue
             return rv
 
         rv = {}
         for dataset in results:
             category = extract_category(dataset)
             rv[category] = extract_values(dataset)
+        
+        metadata = soup.find_all("div", class_="msadresse")
+        if len(metadata) == 1:
+            rv["metadata"] = extract_metadata(metadata[0])
+        else:
+            logger.error("Metadata not found\n{}".format(metadata))
+            rv["metadata"] = None
 
         logger.debug("Result set:\n{}".format(pformat(rv, indent=2)))
         return rv
