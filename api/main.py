@@ -7,12 +7,16 @@ import os
 import logging
 
 from flask import Flask, jsonify, request
+from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from logger import setup_logger
 from parser import MietspiegelParser
 from pprint import pformat
 
-logger = setup_logger(logfile="./main.log")
+logger = setup_logger(logfile="./main.log", level=logging.INFO)
+
+db = SQLAlchemy()
+
 
 def create_app(config=None):
     app = Flask(__name__)
@@ -20,6 +24,10 @@ def create_app(config=None):
     # See http://flask.pocoo.org/docs/0.12/config/
     app.config.update(dict(DEBUG=True, SECRET_KEY="development key"))
     app.config.update(config or {})
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
+    app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///../tmp.db'
+
+    db.init_app(app)
 
     CORS(app)
 

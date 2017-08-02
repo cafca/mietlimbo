@@ -20,6 +20,26 @@ class MietspiegelParser(object):
         logger.debug("Cookie get {}".format(req.status_code))
         return cookies
 
+    def save_streets(self, data):
+        from main import db
+        from model import Street
+
+        i = 0
+        for street in data:
+            for street_range in street["ranges"]:
+                s = Street.query.get(street_range["id"])
+                if s is None:
+                    i += 1
+                    s = Street(
+                        id=street_range["id"],
+                        name=street["name"],
+                        number_range=street_range["name"]
+                    )
+                    db.session.add(s)
+        logger.info("Saving {} new streets".format(i))
+        db.session.commit()
+
+
     def find_street(self, query, cookies=None):
         assert len(query) >= 4
 
@@ -37,7 +57,7 @@ class MietspiegelParser(object):
         logger.debug("Result lists: {}".format(len(res_list)))
 
         results = res_list[0].find_all('div', class_='strblock')
-        logger.info("Found {} results\n".format(len(results)))
+        logger.debug("Found {} results\n".format(len(results)))
 
         streets = list()
         for res in results:
@@ -54,8 +74,9 @@ class MietspiegelParser(object):
                 "name": res.h3.text,
                 "ranges": ranges
             })
+        # logger.debug("Street search result:\n{}".format(pformat(streets, indent=2)))
 
-        logger.debug("Street search result:\n{}".format(pformat(streets, indent=2)))
+        self.save_streets(streets)
         return streets
 
 
