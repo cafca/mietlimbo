@@ -93,10 +93,9 @@ class FinalResult extends React.Component {
 
   render() {
     return <div>
-      <p>Mit den erfassten Merkmalen kann jetzt die ortsübliche Vergleichsmiete für deine Wohnung ermittelt werden:</p>
-      <p>Grundlage hierfür bildet die Mietspiegelabfrage in Schritt 3.</p>
-      <p>Je nachdem, wieviele von den 5 Merkmalsgruppen positiv oder negativ ausfallen, liegt die ortsübliche Vergleichsmiete 
-      zwischen der dort ermittelten Ober- und Untergrenze</p>
+      <p>Du hast es geschafft! Mit den erfassten Merkmalen kann jetzt die ortsübliche Vergleichsmiete für deine Wohnung ermittelt werden:</p>
+      <p>Für jede der fünf Merkmalgruppen, in der überwiegend positive Merkmale ausgewählt wurden, werden jetzt auf den Mittelwert aus dem Mietspiegel
+      20% der Differenz zum Maximalwert addiert, bzw. umgekehrt für negative Merkmale.</p>
       <Table selectable={false} style={{border: "1px solid #eee"}}>
         <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
           <TableRow>
@@ -114,7 +113,7 @@ class FinalResult extends React.Component {
             </TableRowColumn>
             <TableRowColumn></TableRowColumn>
             <TableRowColumn></TableRowColumn>
-            <TableRowColumn>{(this.state.balance < 0 ? this.state.balance + " negative Gruppen" : (this.state.balance > 0 ? this.state.balance + "positive Gruppen" : "neutral"))}</TableRowColumn>
+            <TableRowColumn>{(this.state.balance < 0 ? "+" + Math.abs(this.state.balance) + " negative Gruppen" : (this.state.balance > 0 ? "+" + this.state.balance + " positive Gruppen" : "neutral"))}</TableRowColumn>
           </TableRow>
         </TableBody>
       </Table>
@@ -138,7 +137,7 @@ class FinalResult extends React.Component {
         <FormattedMessage 
           id="FinalResult.prediction"
           defaultMessage="Nach einem Zuschlag von 10% auf die örtliche Vergleichsmiete ergibt sich
-            für die beschriebene Wohnung ein maximal zulässiger Quadratmeterpreis von {mpbRentLevel, number} €, was bei einer Wohnungsgröße
+            für die beschriebene Wohnung ein maximaler Quadratmeterpreis von {mpbRentLevel, number} €, was bei einer Wohnungsgröße
             von {squareMeters, number} Quadrametern eine Kaltmiete von {mpbRent, number, currency} Euro ergibt."
           values={{
             mpbRentLevel: this.state.localRentLevel * 1.1,
