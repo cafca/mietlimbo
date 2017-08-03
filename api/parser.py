@@ -200,8 +200,8 @@ class MietspiegelParser(object):
         if s is None:
             logger.error("Street not found {}".format(street_id))
         elif metadata is not None:
-            s.rentlevel = metadata.get("Wohnlage", None)
-            s.noise = metadata.get("Lärmbelastung", None)
+            s.area_rating = metadata.get("Wohnlage", None)
+            s.noise_impact = metadata.get("Lärmbelastung", None)
             s.bezirk = metadata.get("Bezirk", None)
             s.stadtgebiet = metadata.get("Stadtgebiet", None)
 
@@ -211,7 +211,9 @@ class MietspiegelParser(object):
                 "both": rv.get("both", None)
             })
 
-            s.web = request.content if request is not None else None
+            if request is not None:
+                with open("../data/{}.html".format(street_id), "wb") as f:
+                    f.write(request.content)
 
             logger.debug("Storing updated street {}".format(s))
             db.session.add(s)

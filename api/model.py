@@ -10,12 +10,11 @@ class Street(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120))
     number_range = db.Column(db.Text)
-    rentlevel = db.Column(db.String(16))
-    noise = db.Column(db.String(16))
+    area_rating = db.Column(db.String(16))
+    noise_impact = db.Column(db.String(16))
     bezirk = db.Column(db.String(32))
     stadtgebiet = db.Column(db.String(32))
     rent = db.Column(db.PickleType())
-    web = db.Column(db.LargeBinary())
 
     def __init__(self, id, name, number_range):
         self.id = id
