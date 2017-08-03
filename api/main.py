@@ -26,6 +26,8 @@ def create_app(config=None):
     app.config.update(config or {})
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
     app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///../tmp.db'
+    app.config["SQLALCHEMY_ECHO"] = False
+    app.config["SQLALCHEMY_RECORD_QUERIES"] = False
 
     db.init_app(app)
 
