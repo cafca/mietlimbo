@@ -2,11 +2,11 @@
 
 import re
 import requests
+import pickle
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from pprint import pformat
 from logger import setup_logger
-
 
 logger = setup_logger()
 
@@ -42,7 +42,8 @@ class MietspiegelParser(object):
 
 
     def find_street(self, query, cookies=None):
-        assert len(query) >= 4
+        if len(query) <= 4:
+            logger.warning("Less than four chars: {}".format(query))
 
         if cookies is None:
             cookies = self.get_cookies()
@@ -101,10 +102,12 @@ class MietspiegelParser(object):
 
         assert type(street_id) == int
 
-        assert year_range_name in year_ranges.keys()
-        year_range = year_ranges.get(year_range_name)
+        if year_range_name not in year_ranges.keys():
+            logger.debug("Default year range selected")
+        year_range = year_ranges.get(year_range_name, year_ranges["Pre1918"])
 
-        assert real_size is not None or guessed_size_name in size_ranges.keys()
+        if real_size is  None and guessed_size_name not in size_ranges.keys():
+            logger.debug("No size range given")
         guessed_size = size_ranges.get(guessed_size_name, None)
 
         if cookies is None:
@@ -180,8 +183,41 @@ class MietspiegelParser(object):
         if len(metadata) == 1:
             rv["metadata"] = extract_metadata(metadata[0])
         else:
-            logger.error("Metadata not found\n{}".format(metadata))
+            logger.warning("Metadata not found for {}\n{}".format(street_id, metadata))
             rv["metadata"] = None
 
-        logger.debug("Result set:\n{}".format(pformat(rv, indent=2)))
+        self.save_range(street_id, rv, req)
+        logger.debug("=> {}".format(pformat(rv["metadata"], indent=2)))
         return rv
+
+    def save_range(self, street_id, rv, request):
+        from main import db
+        from model import Street
+
+        metadata = rv.get("metadata", {})
+
+        s = Street.query.get(street_id)
+        if s is None:
+            logger.error("Street not found {}".format(street_id))
+        elif metadata is not None:
+            s.rentlevel = metadata.get("Wohnlage", None)
+            s.noise = metadata.get("Lärmbelastung", None)
+            s.bezirk = metadata.get("Bezirk", None)
+            s.stadtgebiet = metadata.get("Stadtgebiet", None)
+
+            s.rent = pickle.dumps({
+                "default": rv.get("default", None),
+                "either": rv.get("either", None),
+                "both": rv.get("both", None)
+            })
+
+            s.web = request.content if request is not None else None
+
+            logger.debug("Storing updated street {}".format(s))
+            db.session.add(s)
+            db.session.commit()
+        else:
+            logger.warning("No data for {}".format(street_id))
+
+
+

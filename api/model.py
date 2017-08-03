@@ -10,6 +10,12 @@ class Street(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120))
     number_range = db.Column(db.Text)
+    rentlevel = db.Column(db.String(16))
+    noise = db.Column(db.String(16))
+    bezirk = db.Column(db.String(32))
+    stadtgebiet = db.Column(db.String(32))
+    rent = db.Column(db.PickleType())
+    web = db.Column(db.LargeBinary())
 
     def __init__(self, id, name, number_range):
         self.id = id
@@ -21,13 +27,14 @@ class Street(db.Model):
 
     @classmethod
     def find(cls, query):
-    	errors = []
-    	rv = cls.query.filter(cls.name.startswith(query)).group_by(cls.name).all()
-    	logger.warning("Find result\n", rv)
-    	if len(rv) == 0:
-    		errors.append("No streets found")
-    	return rv, errors
+        errors = []
+        rv = cls.query.filter(cls.name.startswith(query)).group_by(cls.name).all()
+        logger.warning("Find result\n", rv)
+        if len(rv) == 0:
+            errors.append("No streets found")
+        return rv, errors
 
 if __name__ == "__main__":
     logger.warning("Resetting database...")
-    db.create_all(app=create_app())
+    from main import create_app
+    # db.create_all(app=create_app())

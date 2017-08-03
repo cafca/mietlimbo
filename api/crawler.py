@@ -8,18 +8,17 @@ from parser import MietspiegelParser
 from datetime import datetime, timedelta
 from time import sleep
 
-logger = setup_logger(logfile="./crawler.log", level=logging.INFO)
+logger = setup_logger(logfile="./crawler.log", level=logging.DEBUG)
 
 LETTERS = "abcdefghiklmnopqrstuvwxyzäöüß-"
 STARTING_QUERY = "aaaa"
 QLEN = 4
 STREET_NAMES = "../streetnames.csv"
 JSON_STREETS = "../streets.json"
-STARTAT = 96
 
 class Limiter(object):
 	# limit in calls per second
-	limit = timedelta(seconds=2)
+	limit = timedelta(seconds=1)
 	last = datetime.now()
 
 	def wait(self):
@@ -56,7 +55,9 @@ def load_street_names():
 			logger.info("{}: {}".format(i, row[1]))
 			json.dump(streets, f1)
 
-def main():
+def crawl_street_names():
+	STARTAT = 8985
+
 	logger.info("Starting crawling")
 	QUERIES = set(["STRNAME"])
 	ps = MietspiegelParser()
@@ -68,17 +69,42 @@ def main():
 	i = 0
 	numstreets = len(streets)
 	for cur in streets:
+		if i%1000 == 0: logger.info("{} done".format(i))
 		q = cur[:4]
 		i += 1
+		QUERIES.add(q)
 		if i < STARTAT:
 			continue
 		elif q != last and q not in QUERIES:
 			ps.find_street(q)
-			QUERIES.add(q)
 
 			last = q
 			dt = limiter.wait()
 			logger.info("Finished {}/{} ({} %)".format(i, numstreets, round((100.0 * i) / numstreets, 2)))
+
+
+def crawl_street_data():
+	from model import Street
+	ps = MietspiegelParser()
+	cookies = ps.get_cookies()
+
+	logger.info("Starting crawling")
+
+	limiter = Limiter()
+	streets = Street.query.all()
+	i = 0
+
+	numstreets = len(streets)
+	for street in streets[i:]:
+		if i%25 == 0: cookies = ps.get_cookies()
+		i += 1
+		try:
+			ps.get_range(street.id, None, cookies=cookies)
+		except Exception as e:
+			import pdb
+			pdb.set_trace()
+		dt = limiter.wait()
+		logger.info("Loaded {} % - {} left - {}".format(round((100.0 * i) / numstreets, 2), numstreets - i, street))
 
 
 
@@ -87,4 +113,4 @@ if __name__ == "__main__":
 	app = create_app()
 	app.app_context().push()
 	with app.app_context():
-		main()
+		crawl_street_data()
