@@ -23,7 +23,7 @@ const Introduction = (props: {serialNumber: string}) => {
       <FormattedMessage
         id="Introduction.requirements"
         defaultMessage={`Um möglichst schnell und einfach zum Ergebnis zu kommen,
-          hilft es enorm, wenn du Zugang hast zu:`}
+          helfen einige Dinge enorm:`}
       />
       <ul className="inline-list">
         <li>
@@ -36,6 +36,12 @@ const Introduction = (props: {serialNumber: string}) => {
           <FormattedMessage
             id="Introduction.requirement2"
             defaultMessage={`Heizkostenabrechnung`}
+          />
+        </li>
+        <li>
+          <FormattedMessage
+            id="Introduction.requirement2"
+            defaultMessage={`Mietzins des Vormieters`}
           />
         </li>
         <li>

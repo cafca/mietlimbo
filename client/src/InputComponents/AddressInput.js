@@ -104,7 +104,8 @@ class MietspiegelPlace extends React.Component {
     query: string,
     state: string,
     places: Array<{name: string, ranges: Array<{name: string, id: string}>}>,
-    selected: ?Address
+    selected: ?Address,
+    errorMsg: ?string
   }
 
   states = {
@@ -121,7 +122,8 @@ class MietspiegelPlace extends React.Component {
       query: props.query,
       state: props.value === undefined ? this.states.WAITING : this.states.FINISHED,
       places: [],
-      selected: props.value
+      selected: props.value,
+      errorMsg: null
     };
     autoBind(this);
   }
@@ -138,13 +140,19 @@ class MietspiegelPlace extends React.Component {
 
   handleQuery(query: string) {
     return fetch("http://localhost:8000/api/v1/street?name=" + encodeURIComponent(query))
-      .then((resp) => {console.log(resp); return resp.json()})
+      .then((resp) => resp.json())
       .then((respJson) => {
-        this.setState({
-          places: respJson.data,
-          errors: respJson.errors,
-          state: this.states.SELECTING
-        });
+        if (respJson.errors && respJson.errors.length > 0) {
+          this.setState({
+            state: this.states.ERROR,
+            errorMsg: respJson.errors[0]
+          })
+        } else {
+          this.setState({
+            places: respJson.data,
+            state: this.states.SELECTING
+          });
+        }
       })
       .catch(error => {
         console.error("Error handling address query.", error);
@@ -214,7 +222,7 @@ class MietspiegelPlace extends React.Component {
         menuItems = <MenuItem
           children={<FormattedMessage 
             id={"AddressInput.errorMessage"}
-            defaultMessage={"Es gab leider einen Fehler beim Laden der Adressen. Bitte klicke hier um es nochmal zu versuchen."} />}
+            defaultMessage={this.state.errorMsg + "\nBitte klicke hier um es nochmal zu versuchen."} />}
           leftIcon={<ErrorIcon />}
           onTouchTap={ev => this.handleQuery(this.state.query)}
           />;

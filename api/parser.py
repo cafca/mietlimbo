@@ -17,6 +17,7 @@ class MietspiegelParser(object):
     def get_cookies(self):
         """Return a fresh cookie jar."""
         req = requests.head(url_search)
+
         cookies = req.cookies
         logger.debug("Cookie get {}".format(req.status_code))
         return cookies
