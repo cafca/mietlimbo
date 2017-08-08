@@ -22,6 +22,11 @@ class MietspiegelParser(object):
         return cookies
 
     def save_streets(self, data):
+        """Save each street name from a dataset to the db.
+
+        Args:
+            data (list): A list of dicts, each describing a street range
+        """
         from main import db
         from model import Street
 
@@ -30,6 +35,7 @@ class MietspiegelParser(object):
             for street_range in street["ranges"]:
                 s = Street.query.get(street_range["id"])
                 if s is None:
+                    # This is a new street entry
                     i += 1
                     s = Street(
                         id=street_range["id"],
@@ -42,6 +48,12 @@ class MietspiegelParser(object):
 
 
     def find_street(self, query, cookies=None):
+        """Given a 4-char query, crawl Mietspiegel site for street range entries.
+
+        Args:
+            query (string): Leading four characters of a street name.
+            cookies (CookieJar): Optional cookie jar to use for the req.
+        """
         if len(query) <= 4:
             logger.warning("Less than four chars: {}".format(query))
 
@@ -71,7 +83,7 @@ class MietspiegelParser(object):
                 ranges.append({
                     "name": entry.a.text.strip(),
                     "id": int(href[spos:epos])
-                    })
+                })
             streets.append({
                 "name": res.h3.text,
                 "ranges": ranges
@@ -82,7 +94,17 @@ class MietspiegelParser(object):
         return streets
 
 
-    def get_range(self, street_id, year_range_name, real_size=None, guessed_size_name=None, cookies=None):
+    def get_range(self, street_id, year_range_name, real_size=None, 
+            guessed_size_name=None, cookies=None):
+        """Query Mietspiegel site for detailed data about a given street entry.
+
+        Args:
+            street_id (int): Street id obtained through self.find_street
+            year_range_name (string): Building construction date range
+            real_size (float): Size of the flat
+            guessed_size_name (string): Size range of the flat
+            cookies (CookieJar): Optional cookie jar to use for the req
+        """
         year_ranges = {    
             "Pre1918": 1,
             "Pre1949": 2, 
@@ -130,6 +152,7 @@ class MietspiegelParser(object):
         results = soup.find_all('div', class_='zf')
 
         def extract_values(result):
+            """Extract rent values from result object."""
             rv = {
                 'min': result.find_all('span', class_='min')[0].text[:-2].replace(',', '.'),
                 'mid': result.strong.text.strip().replace(',', '.'),
@@ -151,6 +174,7 @@ class MietspiegelParser(object):
                 return rv
 
         def extract_category(result):
+            """Extract available categories from result object."""
             names = {
                 "ohne SH,  ohne Bad,  mit IWC":     "both",
                 "mit SH  oder Bad,  mit IWC":       "either",
@@ -167,6 +191,7 @@ class MietspiegelParser(object):
             return rv
 
         def extract_metadata(result):
+            """Extract additional metadata (noise level, etc)."""
             rv = {}
             for feature in result.find_all('strong'):
                 fname = feature.text[:-1]
@@ -191,6 +216,14 @@ class MietspiegelParser(object):
         return rv
 
     def save_range(self, street_id, rv, request):
+        """Save each ranged street entry from a dataset to the db.
+
+        Args:
+            street_id (int): Identifier for the street
+            rv (dict): Return value of self.get_range function
+            request (Request): Full request object to be stored on disk for
+                future further processing / error correction
+        """
         from main import db
         from model import Street
 
