@@ -26,12 +26,25 @@ class Street(db.Model):
 
     @classmethod
     def find(cls, query):
+        """Return all streets starting with query from database."""
         errors = []
-        rv = cls.query.filter(cls.name.startswith(query)).group_by(cls.name).all()
-        logger.warning("Find result\n", rv)
-        if len(rv) == 0:
-            errors.append("No streets found")
-        return rv, errors
+        streets = cls.query.filter(cls.name.startswith(query)).all()
+
+        rv = {}
+        for street in streets:
+            logger.debug(street)
+            range_data = {
+                "id": street.id,
+                "name": street.number_range
+            }
+            if street.name not in rv:
+                rv[street.name] = {
+                    "name": street.name,
+                    "ranges": [range_data]
+                }
+            else:
+                rv[street.name]["ranges"].append(range_data)
+        return [s for s in rv.values()]
 
 if __name__ == "__main__":
     logger.warning("Resetting database...")

@@ -25,7 +25,7 @@ def create_app(config=None):
     app.config.update(dict(DEBUG=True, SECRET_KEY="development key"))
     app.config.update(config or {})
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///../tmp.db'
+    app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///../Mietspiegel.db'
     app.config["SQLALCHEMY_ECHO"] = False
     app.config["SQLALCHEMY_RECORD_QUERIES"] = False
 
@@ -35,6 +35,7 @@ def create_app(config=None):
 
     @app.route("/api/v1/street", methods=["GET"])
     def find_street():
+        from model import Street
         rv = {}
 
         logger.info("Street API\nData: {}".format(pformat(request.args)))
@@ -43,8 +44,15 @@ def create_app(config=None):
         if street_name is None or len(street_name) < 4:
             rv["errors"] = ["Street query too short"]
         else:
-            ps = MietspiegelParser()
-            rv["data"] = ps.find_street(street_name)
+            # get results
+            street_data = Street.find(street_name)
+
+            if len(street_data) > 0:
+                rv["data"] = street_data
+            else:
+                # Fallback to querying the actual Mietspiegel site
+                ps = MietspiegelParser()
+                rv["data"] = ps.find_street(street_name)
 
         return jsonify(rv)
 
