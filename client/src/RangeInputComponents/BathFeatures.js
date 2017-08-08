@@ -142,7 +142,7 @@ export const WarmWater = injectIntl((props: RangeInputProps) => {
       <p>
         <FormattedMessage 
           id="Bath.WarmWaterExamples" 
-          defaultMessage="Zum Beispiel: keine zentrale Warmwasserversorgung, kein Durchlauferhitzer, kein Boiler > 60 Liter)" 
+          defaultMessage="Zum Beispiel: keine zentrale Warmwasserversorgung, kein Durchlauferhitzer, kein Boiler > 60 Liter" 
         />
       </p>
     </CardText>
