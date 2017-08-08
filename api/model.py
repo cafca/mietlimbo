@@ -5,6 +5,7 @@ Mietspiegel Persistence Model
 """
 from main import db, create_app, logger
 from flask_sqlalchemy import SQLAlchemy
+import pickle
 
 class Street(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -45,6 +46,24 @@ class Street(db.Model):
             else:
                 rv[street.name]["ranges"].append(range_data)
         return [s for s in rv.values()]
+
+    @classmethod
+    def get_range(cls, street_id, year_range_name, real_size=None, 
+            guessed_size_name=None):
+        """Return data for a given street and number_range."""
+
+        street = cls.query.get(street_id)
+        if street is not None:
+            rv = pickle.loads(street.range)
+            rv["metadata"] = {
+                "Wohnlage": street.area_rating,
+                "Lärmbelastung": street.noise_impact
+            }
+
+        else:
+            rv = None
+
+        return rv
 
 if __name__ == "__main__":
     logger.warning("Resetting database...")

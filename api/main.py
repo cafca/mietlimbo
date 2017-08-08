@@ -35,6 +35,7 @@ def create_app(config=None):
 
     @app.route("/api/v1/street", methods=["GET"])
     def find_street():
+        """Search for streets in the db, fall back to crawling."""
         from model import Street
         rv = {}
 
@@ -58,6 +59,7 @@ def create_app(config=None):
 
     @app.route("/api/v1/range", methods=["POST"])
     def get_range():
+        from model import Street
         rv = {}
         data = request.get_json()
 
@@ -72,8 +74,12 @@ def create_app(config=None):
 
         logger.info("Range API\nData: {}".format(pformat(data)))
 
-        ps = MietspiegelParser()
-        rv["data"] = ps.get_range(street_id, year_range, real_size, guessed_size)
+        range_data = Street.get_range(street_id, year_range, real_size, guessed_size)
+        if range_data is not None:
+            rv["data"] = range_data
+        else:
+            ps = MietspiegelParser()
+            rv["data"] = ps.get_range(street_id, year_range, real_size, guessed_size)
         return jsonify(rv)
     return app
 
