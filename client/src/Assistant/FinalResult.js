@@ -64,7 +64,6 @@ class FinalResult extends React.Component {
   }
 
   update() {
-    debugger;
     // To calculate balance, for every group with predominantly positive features 1 is added,
     // for predominantly negative groups 1 is subtracted
     const balance = this.groups

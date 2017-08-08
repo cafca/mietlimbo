@@ -39,6 +39,7 @@ export const stageNames = [
   "Ergebnis"
 ];
 
+// These fields are required in order to advance to the next assistant stage
 export const stageConditions = [
   [],
   ["leaseCreated", "rent", "address"],
@@ -53,28 +54,10 @@ export const stageConditions = [
 
 class Assistant extends React.Component {
 	state = {
-		stage: 7,
+		stage: 0,
 		serialNumber: "03",
     inputValid: {},
-    inputData: {
-      "intermediateResult": {
-        "min": 4,
-        "mid": 5,
-        "max": 6
-      },
-      "address": {
-    "id": 32494,
-    "streetname": "Sickingenstraße (Mitte)",
-    "range": "alle Hausnummern von 51 bis 79"
-  },
-  "leaseCreated": "2017-06-30T22:00:00.000Z",
-  "rent": 500,
-  "newBuilding": false,
-  "constructionDate": null,
-  "constructionDateGuessed": "Pre1949",
-  "squareMeters": 80,
-  "baseFeatures": "default"
-    }
+    inputData: {}
 	}
 
   style = {
