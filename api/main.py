@@ -13,6 +13,8 @@ from logger import setup_logger
 from parser import MietspiegelParser
 from pprint import pformat
 
+from requests.exceptions import ConnectionError
+
 logger = setup_logger(logfile="./main.log", level=logging.INFO)
 
 db = SQLAlchemy()
@@ -52,8 +54,13 @@ def create_app(config=None):
                 rv["data"] = street_data
             else:
                 # Fallback to querying the actual Mietspiegel site
+                logger.info("Fallback to remote Mietspiegel")
                 ps = MietspiegelParser()
-                rv["data"] = ps.find_street(street_name)
+                try:
+                    rv["data"] = ps.find_street(street_name)
+                except ConnectionError as e:
+                    logger.error("Error connecting to Mietspiegel server\n\n{}".format(e))
+                    rv["errors"] = ["Mietlimbo kann leider momentan nicht auf den Online-Mietspiegel der Berliner Senatsverwaltung zugreifen. "]
 
         return jsonify(rv)
 
@@ -78,6 +85,7 @@ def create_app(config=None):
         if range_data is not None:
             rv["data"] = range_data
         else:
+            logger.info("Fallback to remote Mietspiegel")
             ps = MietspiegelParser()
             rv["data"] = ps.get_range(street_id, year_range, real_size, guessed_size)
         return jsonify(rv)
