@@ -23,8 +23,8 @@ export const constructionDateRange = (year: number) => {
     return "Pre1990";
   } else if (year <= 2002) {
     return "Pre2002";
-  } else if (year <= 2013) {
-    return "Pre2013";
+  } else if (year <= 2015) {
+    return "Pre2015";
   } else {
     return "newBuilding";
   }

@@ -37,11 +37,13 @@ class SquareMetersInput extends React.Component {
 		if (isNaN(intValue)) {
 			errors.push(<FormattedMessage 
 				id="Spanneneinordnung.squareMetersError"
+        key="Spanneneinordnung.squareMetersError"
 				defaultMessage="Bitte gib hier eine Quadratmeterzahl ein. Du findest die Fläche in deinem Mietvertrag." />);
 			this.props.valid(this.inputName, false);
     } else if (value.indexOf(",") > -1) {
       errors.push(<FormattedMessage
         id="Spanneneinordnung.errorDecSeparator"
+        key="Spanneneinordnung.errorDecSeparator"
         defaultMessage="Bitte benutze einen Punkt, um Nachkommastellen zu trennen. Also z.B. '80.8'."
         />);
 		} else {

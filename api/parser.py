@@ -91,7 +91,7 @@ class MietspiegelParser(object):
             })
         # logger.debug("Street search result:\n{}".format(pformat(streets, indent=2)))
 
-        self.save_streets(streets)
+        # self.save_streets(streets)
         return streets
 
 
@@ -203,7 +203,10 @@ class MietspiegelParser(object):
         rv = {}
         for dataset in results:
             category = extract_category(dataset)
-            rv[category] = extract_values(dataset)
+            # Remove following line to extract non-default variations as well
+            # (they are calculated in Street.get_rent)
+            if category == "default":
+                rv[category] = extract_values(dataset)
         
         metadata = soup.find_all("div", class_="msadresse")
         if len(metadata) == 1:
@@ -212,7 +215,7 @@ class MietspiegelParser(object):
             logger.warning("Metadata not found for {}\n{}".format(street_id, metadata))
             rv["metadata"] = None
 
-        self.save_range(street_id, rv, req)
+        # self.save_range(street_id, rv, req)
         logger.debug("=> {}".format(pformat(rv["metadata"], indent=2)))
         return rv
 

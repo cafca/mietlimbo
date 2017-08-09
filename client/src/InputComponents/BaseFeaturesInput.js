@@ -2,7 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {injectIntl, defineMessages} from 'react-intl';
+import {injectIntl, defineMessages, FormattedMessage} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
@@ -61,8 +61,19 @@ class BaseFeaturesInput extends React.Component {
       title: {
         id: "BaseFeaturesInput.label",
         defaultMessage: "Gibt es noch was außergewöhnliches?"
+      },
+      warning: {
+        id: "BaseFeaturesInput.warning",
+        defaultMessage: `Die Daten im Mietspiegel zu Wohnungen mit einer solchen
+          außergewöhnlichen Ausstattung beruhen auf sehr wenigen Mietwerten und 
+          haben daher nur eine geringe Aussagekraft. Für einen solchen Sonderfall
+          empfiehlt Mietlimbo unbedingt, deinen Fall mit einem Mieterverein 
+          durchzusprechen. `
       }
     })
+
+    const warning = this.state.value === undefined || this.state.value === "default" ? "" : 
+      <p style={{color: "red"}}><FormattedMessage {...messages.warning} /></p>;
 
 		return <Card className="assistantInput">
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
@@ -73,6 +84,7 @@ class BaseFeaturesInput extends React.Component {
           valueSelected={this.state.value} >
           {radioControls}
         </RadioButtonGroup>
+        {warning}
       </CardText>
 		</Card>;
 	}
