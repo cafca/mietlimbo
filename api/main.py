@@ -81,10 +81,12 @@ def create_app(config=None):
 
         logger.info("Range API\nData: {}".format(pformat(data)))
 
-        range_data = Street.get_range(street_id, year_range, real_size, guessed_size)
-        if range_data is not None:
-            rv["data"] = range_data
+        street = Street.query.get(street_id)
+
+        if street is not None:
+            rv["data"] = street.get_rent(year_range, real_size, guessed_size)
         else:
+            import pdb; pdb.set_trace()
             logger.info("Fallback to remote Mietspiegel")
             ps = MietspiegelParser()
             rv["data"] = ps.get_range(street_id, year_range, real_size, guessed_size)

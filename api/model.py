@@ -3,9 +3,12 @@
 Mietspiegel Persistence Model
 
 """
+import json
+
 from main import db, create_app, logger
 from flask_sqlalchemy import SQLAlchemy
 import pickle
+
 
 class Street(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -47,21 +50,56 @@ class Street(db.Model):
                 rv[street.name]["ranges"].append(range_data)
         return [s for s in rv.values()]
 
-    @classmethod
-    def get_range(cls, street_id, year_range_name, real_size=None, 
-            guessed_size_name=None):
-        """Return data for a given street and number_range."""
+    def get_rent(self, year_range, real_size, guessed_size):
+        """Return rent data for a given street/range."""
 
-        street = cls.query.get(street_id)
-        if street is not None:
-            rv = pickle.loads(street.range)
-            rv["metadata"] = {
-                "Wohnlage": street.area_rating,
-                "Lärmbelastung": street.noise_impact
-            }
+        with open("./data.json") as f:
+            data = json.load(f)
 
-        else:
-            rv = None
+        if guessed_size is None:
+            if real_size < 40:
+                guessed_size = "Sub40"
+            elif real_size < 60:
+                guessed_size = "Sub60"
+            elif real_size < 90:
+                guessed_size = "Sub90"
+            else:
+                guessed_size = "Sup90"
+
+        if year_range == "Pre1990":
+            year_range = "Pre1990W" if self.stadtgebiet == "Berlin West" else "Pre1990E"
+
+        rent_range = data[year_range][guessed_size][self.area_rating]
+
+        labels = ["min", "mid", "max", "warnings"]
+        rv = {"default": {}}
+        for i in range(len(rent_range)):
+            rv["default"][labels[i]] = rent_range[i]
+
+        # See annotation of the Mietspiegeltabelle
+        if year_range == "Pre1918":
+            rv["either"] = dict([(k, v - 1.34) for k, v 
+                in rv["default"].items() if type(v) == float])
+            rv["both"] = dict([(k, v - 0.87) for k, v 
+                in rv["default"].items() if type(v) == float])
+
+        if year_range == "Pre1949":
+            rv["either"] = dict([(k, v - 0.35) for k, v 
+                in rv["default"].items() if type(v) == float])
+            rv["both"] = dict([(k, v - 0.87) for k, v 
+                in rv["default"].items() if type(v) == float])
+
+        if year_range == "Pre1964":
+            rv["either"] = dict([(k, v - 0.81) for k, v 
+                in rv["default"].items() if type(v) == float])
+
+        rv["metadata"] = {
+            "Wohnlage": self.area_rating,
+            "Lärmbelastung": self.noise_impact,
+            "Stadtgebiet": self.stadtgebiet
+        }
+
+        logger.info("RV: {}".format(rv))
 
         return rv
 

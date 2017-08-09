@@ -46,8 +46,7 @@ class IntermediateResult extends React.Component {
     },
     success: {
       id: "IntermediateResult.success",
-      defaultMessage: `Es gibt im Berliner Mietspiegel genug Daten für 
-        Wohnungen wie deine!`
+      defaultMessage: `Erster Teil fertig!`
     },
     info: {
       id: "IntermediateResult.info",
@@ -126,13 +125,15 @@ class IntermediateResult extends React.Component {
           this.props.valid(this.inputName, false);
         } else {
           const data = this.selectDataset(respData.data)
-          // Linter complains about '!=', but it is necessary to compare against both
-          // null and undefined as possible values
+          if (respData.data.default.warnings && respData.data.default.warnings.indexOf("***") >= 0) {
+            this.setState({data: null, state: this.states.INSUFFICIENT_DATA})
+            this.props.valid(this.inputName, false);
+          } else {
+            this.setState({data, state: this.states.SUCCESS})
+            this.props.valid(this.inputName, true);
+          }
+
           // eslint-disable-next-line
-          const state = data != undefined ? this.states.SUCCESS : this.states.INSUFFICIENT_DATA
-          this.setState({data, state});
-          // eslint-disable-next-line
-          this.props.valid(this.inputName, data != undefined);
           this.props.changed({[this.inputName]: data});
         }
       })
@@ -145,10 +146,10 @@ class IntermediateResult extends React.Component {
   selectDataset(data: RentDataSet) {
     // For configurations 'noheating' and 'nobath', the 'either' set is selected. Otherwise,
     // props.baseFeatures determines the selected set.
-    const baseConfiguration = ["noheating", "nobath"].indexOf(this.props.baseFeatures) > 0 
+    const baseConfiguration = ["noheating", "nobath"].indexOf(this.props.baseFeatures) >= 0 
       ? "either" : this.props.baseFeatures;
     return data != null && Object.keys(data).indexOf(baseConfiguration) >= 0 
-      ? data[baseConfiguration] : null;
+      ? data[baseConfiguration] : data["default"];
   }
 
   render() {

@@ -32,7 +32,7 @@ class ConstructionDateInput extends React.Component {
     "Pre1972", 
     "Pre1990", 
     "Pre2002", 
-    "Pre2013"
+    "Pre2015"
   ];
 
 	radioDescriptions = defineMessages({
@@ -60,9 +60,9 @@ class ConstructionDateInput extends React.Component {
 			id: "Spanneneinordnung.constructionDateGuessedPre2002",
 			defaultMessage: "1991 - 2002"
 		}, 
-		Pre2013: {
-			id: "Spanneneinordnung.constructionDateGuessedPre2013",
-			defaultMessage: "2003 - 31.12.2013"
+		Pre2015: {
+			id: "Spanneneinordnung.constructionDateGuessedPre2015",
+			defaultMessage: "2003 - 31.12.2015"
 		} 
 	});
 
