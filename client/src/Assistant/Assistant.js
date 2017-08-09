@@ -146,8 +146,7 @@ class Assistant extends React.Component {
 			case 2:
 				content = <div key="stage2">
 					<NewBuildingInput valid={valid} changed={changed} value={this.state.inputData.newBuilding} />
-					<ConstructionDateInput valid={valid} changed={changed} 
-            exact={this.state.inputData.constructionDate} guessed={this.state.inputData.constructionDateGuessed}/>
+					<ConstructionDateInput valid={valid} changed={changed} value={this.state.inputData.constructionDate} />
 					<SquareMetersInput valid={valid} changed={changed} 
             exact={this.state.inputData.squareMeters} guessed={this.state.inputData.squareMetersGuessed} />
           <BaseFeaturesInput valid={valid} changed={changed} value={this.state.inputData.baseFeatures} />

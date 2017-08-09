@@ -11,19 +11,11 @@ import type {AssistantInputProps} from './Tools';
 
 class ConstructionDateInput extends React.Component {
 	state: {
-		exactValue: string,
-		guessedValue: ?string,
+		value: string,
 		errors: ?Array<any>
 	}
 
-  style = {
-    guessedContainer: {
-      marginTop: "1em"
-    }
-  };
-
 	inputName: string = "constructionDate";
-  inputNameAlt: string = "constructionDateGuessed";
 
 	radioOptions: Array<string> = [
     "Pre1918",
@@ -70,62 +62,17 @@ class ConstructionDateInput extends React.Component {
 		super(props);
 		autoBind(this);
 		this.state = {
-			exactValue: props.exact || "",
-			guessedValue: props.guessed,
-			errors: null
+			value: props.value,
+			errors: []
 		};
 
     if (props.value !== undefined) this.props.valid(this.inputName, true);
 	}
 
 	handleChange(e: SyntheticInputEvent, value: string) {
-		const errors = [];
-		switch (e.target.name) {
-			case "constructionDateGuessed":
-				this.setState({
-					exactValue: "",
-					guessedValue: value,
-					errors: null
-				})
-        this.props.changed({
-          [this.inputName]: null,
-          [this.inputNameAlt]: value
-        });
-				this.props.valid("constructionDate", true);
-				break;
-
-			default:
-				// direct input
-				const intValue = parseInt(value, 10);
-
-				if (isNaN(intValue)) {
-					errors.push(<FormattedMessage 
-						id="Spanneneinordnung.constructionDateError"
-            key="Spanneneinordnung.constructionDateError"
-						defaultMessage="Bitte gib hier eine Jahreszahl ein oder schätze das Baudatum unten." />);
-					this.props.valid("constructionDate", false);
-        } else if (intValue > 21 && intValue < 100) {
-          errors.push(<FormattedMessage 
-            id="Spanneneinordnung.constructionDateFormatError"
-            key="Spanneneinordnung.constructionDateFormatError"
-            defaultMessage="Bitte gib die vollständige Jahreszahl an (zum Beispiel 1950)." />);
-          this.props.valid("constructionDate", false);
-				} else {
-					this.props.changed({
-            [this.inputName]: intValue,
-            [this.inputNameAlt]: null
-          });
-					// don't save date while user is typing
-					if (intValue > 500) this.props.valid("constructionDate", true);
-				}
-
-        // TODO: This should set the RadioButtonGroup value to null, but doesn't.
-				this.setState({
-					exactValue: value,
-					guessedValue: null,
-					errors: (errors.length > 0 ? errors : null)
-				})
-		}
+    this.props.changed({[this.inputName]: value});
+		this.props.valid("constructionDate", true);
+		this.setState({value})
 	}
 
 	render() {
@@ -144,25 +91,12 @@ class ConstructionDateInput extends React.Component {
 		return <Card className="assistantInput">
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
-        <TextField
+        <RadioButtonGroup 
           name={this.inputName}
-          value={this.state.exactValue}
-          onChange={this.handleChange} 
-          errorText={this.state.errors} />
-
-  			<div style={this.style.guessedContainer}>
-          <label htmlFor={this.inputNameAlt} >
-            <FormattedMessage
-  					id="Spanneneinordnung.constructionDateGuessed"
-  					defaultMessage="Das weiß ich nicht, aber ich würde schätzen:" />
-          </label>
-          <RadioButtonGroup 
-            name={this.inputNameAlt}
-            onChange={this.handleChange}
-            valueSelected={this.state.guessedValue} >
-            {radioControls}
-          </RadioButtonGroup>
-  			</div>
+          onChange={this.handleChange}
+          valueSelected={this.state.value} >
+          {radioControls}
+        </RadioButtonGroup>
       </CardText>
 		</Card>;
 	}
