@@ -222,7 +222,7 @@ class MietspiegelPlace extends React.Component {
         menuItems = <MenuItem
           children={<FormattedMessage 
             id={"AddressInput.errorMessage"}
-            defaultMessage={this.state.errorMsg + "\nBitte klicke hier um es nochmal zu versuchen."} />}
+            defaultMessage={this.state.errorMsg || "Das hat leider nicht geklappt." + "\nBitte klicke hier um es nochmal zu versuchen."} />}
           leftIcon={<ErrorIcon />}
           onTouchTap={ev => this.handleQuery(this.state.query)}
           />;

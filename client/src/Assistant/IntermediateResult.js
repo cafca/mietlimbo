@@ -112,7 +112,7 @@ class IntermediateResult extends React.Component {
         headers: new Headers({"Content-Type": "Application/JSON"}),
         body: JSON.stringify({
           street_id: this.props.address.id,
-          year_range: this.props.constructionDateGuessed,
+          year_range: this.props.constructionDate,
           real_size: this.props.squareMeters,
           guessed_size: this.props.squareMetersGuessed
         })
