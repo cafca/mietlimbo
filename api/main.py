@@ -24,10 +24,10 @@ def create_app(config=None):
     app = Flask(__name__)
 
     # See http://flask.pocoo.org/docs/0.12/config/
-    app.config.update(dict(DEBUG=True, SECRET_KEY="development key"))
+    app.config.update(dict(DEBUG=False, SECRET_KEY="Rrt4ncDojfBrAe]JFGvR#C&R"))
     app.config.update(config or {})
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///../Mietspiegel.db'
+    app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///../Mietspiegel.sqlite'
     app.config["SQLALCHEMY_ECHO"] = False
     app.config["SQLALCHEMY_RECORD_QUERIES"] = False
 
