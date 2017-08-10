@@ -1,0 +1,16 @@
+[32m[I 170726 16:24:19 main:55](B[m Range API
+    Data: {'real_size': 80, 'street_id': 32494, 'year_range': 'Pre1949'}
+[34m[D 170726 16:24:19 parser:20](B[m Cookie get 200
+[34m[D 170726 16:24:20 parser:93](B[m Search 200
+[34m[D 170726 16:24:20 parser:134](B[m Result set:
+    { 'both': {'max': 6.69, 'mid': 4.78, 'min': 4.03, 'warnings': '***'},
+      'default': {'max': 7.56, 'mid': 5.65, 'min': 4.9},
+      'either': {'max': 7.21, 'mid': 5.3, 'min': 4.55, 'warnings': '***'}}
+[32m[I 170726 16:24:20 main:55](B[m Range API
+    Data: {'real_size': 80, 'street_id': 32494, 'year_range': 'Pre1949'}
+[34m[D 170726 16:24:20 parser:20](B[m Cookie get 200
+[34m[D 170726 16:24:20 parser:93](B[m Search 200
+[34m[D 170726 16:24:21 parser:134](B[m Result set:
+    { 'both': {'max': 6.69, 'mid': 4.78, 'min': 4.03, 'warnings': '***'},
+      'default': {'max': 7.56, 'mid': 5.65, 'min': 4.9},
+      'either': {'max': 7.21, 'mid': 5.3, 'min': 4.55, 'warnings': '***'}}
