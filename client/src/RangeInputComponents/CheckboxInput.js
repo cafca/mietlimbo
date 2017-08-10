@@ -2,10 +2,10 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import Checkbox from 'material-ui/Checkbox';
 
-import './CheckboxInput.css';
+import './Styles.css';
 
 type CheckboxInputProps = {
   changed: (string, string) => mixed, 
@@ -34,7 +34,7 @@ class CheckboxInput extends React.Component {
     super(props);
     autoBind(this);
     this.state = {
-      value: null
+      value: this.props.value
     };
   }
 
@@ -45,13 +45,17 @@ class CheckboxInput extends React.Component {
 
   render() {
     let message;
+    const style = {};
     switch (this.props.message) {
       case "applies":
         message = this.props.intl.formatMessage(messages["applies"]);
+        style["marginLeft"] = 13;
+        style["fontSize"] = 40;
         break;
 
       case "atLeastOne":
         message = this.props.intl.formatMessage(messages["atLeastOne"]);
+        style["marginLeft"] = 13;
         break
 
       default:
@@ -63,6 +67,7 @@ class CheckboxInput extends React.Component {
       name={this.props.name}
       label={message}
       className="rangeCheckbox"
+      style={style}
       value={this.props.name}
       checked={this.state.value === true}
       onCheck={this.handleChange} />;

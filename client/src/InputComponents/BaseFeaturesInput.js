@@ -2,7 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage, injectIntl, defineMessages} from 'react-intl';
+import {injectIntl, defineMessages, FormattedMessage} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
@@ -39,8 +39,9 @@ class BaseFeaturesInput extends React.Component {
 		super(props);
 		autoBind(this);
 		this.state = {
-			value: null
+			value: props.value
 		}
+    if (props.value !== undefined) this.props.valid(this.inputName, true);
 	}
 
 	handleChange(e: SyntheticInputEvent, value: string) {
@@ -53,24 +54,37 @@ class BaseFeaturesInput extends React.Component {
 		const radioControls = this.options.map((name, i) => <RadioButton
       key={"BaseFeaturesOptions-" + i}
       value={name}
-      label={this.props.intl.formatMessage(this.optionDescriptions[name])} />);
+      label={this.props.intl.formatMessage(this.optionDescriptions[name])} />
+    );
 
     const messages = defineMessages({
       title: {
         id: "BaseFeaturesInput.label",
         defaultMessage: "Gibt es noch was außergewöhnliches?"
+      },
+      warning: {
+        id: "BaseFeaturesInput.warning",
+        defaultMessage: `Die Daten im Mietspiegel zu Wohnungen mit einer solchen
+          außergewöhnlichen Ausstattung beruhen auf sehr wenigen Mietwerten und 
+          haben daher nur eine geringe Aussagekraft. Für einen solchen Sonderfall
+          empfiehlt Mietlimbo unbedingt, deinen Fall mit einem Mieterverein 
+          durchzusprechen. `
       }
     })
+
+    const warning = this.state.value === undefined || this.state.value === "default" ? "" : 
+      <p style={{color: "red"}}><FormattedMessage {...messages.warning} /></p>;
 
 		return <Card className="assistantInput">
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
         <RadioButtonGroup
           name={this.inputName}
-          value={this.state.value}
-          onChange={this.handleChange} >
+          onChange={this.handleChange} 
+          valueSelected={this.state.value} >
           {radioControls}
         </RadioButtonGroup>
+        {warning}
       </CardText>
 		</Card>;
 	}

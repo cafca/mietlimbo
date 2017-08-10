@@ -17,3 +17,7 @@ input {
 .assistantInput {
 	margin-bottom: 1em;
 }
+
+.activeStepLabel:hover {
+	text-decoration: underline;
+}

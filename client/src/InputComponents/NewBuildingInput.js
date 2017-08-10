@@ -2,7 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {FormattedMessage, injectIntl, defineMessages} from 'react-intl';
+import {injectIntl, defineMessages, FormattedMessage} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
@@ -17,15 +17,14 @@ class NewBuildingInput extends React.Component {
 
 	constructor(props: AssistantInputProps) {
 		super(props);
-		this.state = {
-			value: null,
-		}
-		autoBind(this);
+		this.state = {value: props.value};
+    if(props.value !== undefined) props.valid(this.inputName, true);
+ 		autoBind(this);
 	}
 
 	handleChange(e: SyntheticInputEvent, value: boolean) {
 		this.props.changed({[this.inputName]: value});
-    this.props.valid(this.inputName, true);
+    this.props.valid(this.inputName, value === false);
 		this.setState({value});
 	}
 
@@ -42,8 +41,16 @@ class NewBuildingInput extends React.Component {
       labelFalse: {
         id: "Spanneneinordnung.newBuildingFalse",
         defaultMessage: "Nein, das Haus ist entweder älter oder es gab schon vor mir Mieter."
+      },
+      warning: {
+        id: "Spanneneinordnung.newBuildingWarning",
+        defaultMessage: "Für Neubauten gilt die Mietpreisbremse leider nicht."
       }
     });
+
+    const conditionalWarning = this.state.value === true ? <p style={{color: "red"}}>
+      <FormattedMessage {...messages.warning} />
+    </p> : <span></span>;
 
 		return <Card className="assistantInput">
 			<CardTitle title={this.props.intl.formatMessage(messages.title)} />
@@ -60,6 +67,7 @@ class NewBuildingInput extends React.Component {
             value={false}
             label={this.props.intl.formatMessage(messages.labelFalse)} />
         </RadioButtonGroup>
+        {conditionalWarning}
       </CardText>
 		</Card>;
 	}
