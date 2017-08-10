@@ -74,7 +74,7 @@ class Assistant extends React.Component {
   componentWillMount() {
     // Fill state with empty data sets
     const inputData = Object.assign({}, this.state.inputData);
-    // eslint-disable-next-line
+    // eslint-disable-next-line array-callback-return
     ["BathGroup", "KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnvironmentGroup"].map(name => {
       if (inputData[name] === undefined) {
         inputData[name] = {
@@ -87,7 +87,7 @@ class Assistant extends React.Component {
     // Form validity assumed on first mount
     const inputValid = {};
     // Linter wants arrow functions to always return a value
-    // eslint-disable-next-line
+    // eslint-disable-next-line array-callback-return
     Object.keys(this.state.inputData).map(k => {
       inputValid[k] = true;
     });
@@ -126,8 +126,7 @@ class Assistant extends React.Component {
   }
 
 	render() {
-		let content;
-    let conditions: Array<string> = [];
+		let content = "";
 
 		const valid = this.handleInputValid;
 		const changed = this.handleInputChanged;

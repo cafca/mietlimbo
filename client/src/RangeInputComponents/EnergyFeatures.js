@@ -13,7 +13,7 @@ import type {RangeInputProps} from './RangeSelectionGroup';
 import './Styles.css';
 
 // 
-// This class is a bit of a hack in that all other features are boolean in that
+// This class is a bit of a hack: All other features are boolean in that
 // that they either apply or not, while energy is also boolean in that it either
 // raises or lowers the rent, but also not boolean in that there are several 
 // ranges into which energy consumption can fall as well as three options that
@@ -132,6 +132,7 @@ export default class EnergyClass extends React.Component {
     // Calculate the current limits for energy consumption based on the selected
     // options.
     const customLimits = {};
+    // eslint-disable-next-line array-callback-return
     Object.keys(this.baseLimits).map(k => {
       customLimits[k] = this.baseLimits[k] 
         * (this.props.directValue.energyValue !== undefined 

@@ -102,8 +102,7 @@ class FinalResult extends React.Component {
   }
 
   render() {
-
-    const calculationMessage = this.state.balance != 0 ? 
+    const calculationMessage = this.state.balance !== 0 ? 
         <FormattedMessage
           id="FinalResult.calculation"
           defaultMessage="Insgesamt überwiegen Gruppen mit {balanceDirection} Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
