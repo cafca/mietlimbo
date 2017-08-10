@@ -84,6 +84,8 @@ class Progress extends React.Component {
       );
 
     let rentLevel = null;
+    // may be undefined or null
+    // eslint-disable-next-line eqeqeq
     if (this.props.data.finalResult != undefined) {
       rentLevel = <div style={this.style.result}>
         <p><FormattedMessage 
@@ -91,7 +93,7 @@ class Progress extends React.Component {
           defaultMessage="Mit diesen Angaben kannst du {lower, number, currency} pro Monat sparen."
           values={{lower: this.props.data.rent - this.props.data.finalResult}} /></p>
       </div>;
-
+    // eslint-disable-next-line eqeqeq
     } else if (this.props.data.intermediateResult != undefined && this.props.data.intermediateResult.min != undefined) {
       const irValues = {
         min: Math.abs(this.props.data.intermediateResult.min * 1.1 * this.props.data.squareMeters - this.props.data.rent)

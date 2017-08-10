@@ -203,7 +203,10 @@ class MietspiegelPlace extends React.Component {
               primaryText={placeData.name} 
               key={placeData.name} 
               onTouchTap={ev => {this.handleSelection(ev, 
-                {id: placeData.ranges[0].id, streetname: placeData.name, range: placeData.ranges[0].name})}} />;
+                {
+                  id: placeData.ranges[0].id, 
+                  streetname: placeData.name, 
+                  range: placeData.ranges[0].name})}} />;
           }
         });
         break;
@@ -222,7 +225,8 @@ class MietspiegelPlace extends React.Component {
         menuItems = <MenuItem
           children={<FormattedMessage 
             id={"AddressInput.errorMessage"}
-            defaultMessage={this.state.errorMsg || "Das hat leider nicht geklappt." + "\nBitte klicke hier um es nochmal zu versuchen."} />}
+            defaultMessage={(this.state.errorMsg || "Das hat leider nicht geklappt.") 
+              + "\nBitte klicke hier um es nochmal zu versuchen."} />}
           leftIcon={<ErrorIcon />}
           onTouchTap={ev => this.handleQuery(this.state.query)}
           />;
