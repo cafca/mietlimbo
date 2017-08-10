@@ -18,7 +18,6 @@ class Street(db.Model):
     noise_impact = db.Column(db.String(16))
     bezirk = db.Column(db.String(32))
     stadtgebiet = db.Column(db.String(32))
-    rent = db.Column(db.PickleType())
 
     def __init__(self, id, name, number_range):
         self.id = id
