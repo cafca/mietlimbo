@@ -74,7 +74,18 @@ class FinalResult extends React.Component {
       ? this.props.data.intermediateResult.mid + (parseFloat(balance) / 10) * (this.props.data.intermediateResult.max - this.props.data.intermediateResult.mid)
       : this.props.data.intermediateResult.mid + (parseFloat(balance) / 10) * (this.props.data.intermediateResult.mid - this.props.data.intermediateResult.min);
 
-    return {localRentLevel, balance};
+    // Rent may be 10% above local rent level
+    const mpbRentLevel = localRentLevel * 1.1;
+    const mpbRent = mpbRentLevel * this.props.squareMeters;
+
+    this.props.changed({[this.inputName]: mpbRentLevel});
+
+    return {
+      localRentLevel, 
+      mpbRentLevel,
+      mpbRent,
+      balance
+    };
   }
 
   renderTableRows() {
@@ -91,6 +102,27 @@ class FinalResult extends React.Component {
   }
 
   render() {
+
+    const calculationMessage = this.state.balance != 0 ? 
+        <FormattedMessage
+          id="FinalResult.calculation"
+          defaultMessage="Insgesamt überwiegen Gruppen mit {balanceDirection} Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
+            Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Minimalwert abgezogen. Hierdurch ergibt sich
+            die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
+          values={{
+            balance: this.state.balance,
+            balanceDirection: this.state.balance >= 0 ? "positiven" : "negativen",
+            balanceAbs: Math.abs(this.state.balance),
+            correctionPercentage: Math.abs(this.state.balance) * 20,
+            localRentLevel: this.state.localRentLevel
+          }} /> :
+        <FormattedMessage
+          id="FinalResult.calculationBalanced"
+          defaultMessage="In deinem Fall halten sich positive und negative Merkmalgruppen die Waage. Hierdurch gilt direkt
+            die ortsübliche Vergleichsmiete aus Schritt 3 von {localRentLevel, number} € pro Quadratmeter."
+          values={{
+            localRentLevel: this.state.localRentLevel
+          }} />;
     return <div>
       <p>Du hast es geschafft! Mit den erfassten Merkmalen kann jetzt die ortsübliche Vergleichsmiete für deine Wohnung ermittelt werden:</p>
       <p>Für jede der fünf Merkmalgruppen, in der überwiegend positive Merkmale ausgewählt wurden, werden jetzt auf den Mittelwert aus dem Mietspiegel
@@ -118,18 +150,7 @@ class FinalResult extends React.Component {
       </Table>
 
       <p>
-        <FormattedMessage
-          id="FinalResult.calculation"
-          defaultMessage="Insgesamt überwiegen Gruppen mit {balanceDirection} Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
-            Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Minimalwert abgezogen. Hierdurch ergibt sich
-            die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
-          values={{
-            balance: this.state.balance,
-            balanceDirection: this.state.balance >= 0 ? "positiven" : "negativen",
-            balanceAbs: Math.abs(this.state.balance),
-            correctionPercentage: Math.abs(this.state.balance) * 20,
-            localRentLevel: this.state.localRentLevel
-          }} />
+        {calculationMessage}
       </p>
 
       <p>

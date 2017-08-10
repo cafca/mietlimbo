@@ -30,11 +30,11 @@ class ConstructionDateInput extends React.Component {
 	radioDescriptions = defineMessages({
 		Pre1918: {
 			id: "Spanneneinordnung.constructionDateGuessedPre1918",
-			defaultMessage: "bezugsfertig bis 1918"
+			defaultMessage: "bezugsfertig bis 1918 (Altbau)"
 		},
 		Pre1949: {
 			id: "Spanneneinordnung.constructionDateGuessedPre1949",
-			defaultMessage: "1919 - 1949"
+			defaultMessage: "1919 - 1949 (Altbau)"
 		}, 
 		Pre1964: {
 			id: "Spanneneinordnung.constructionDateGuessedPre1964",
