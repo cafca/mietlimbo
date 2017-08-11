@@ -19,6 +19,12 @@ const Introduction = (props: {serialNumber: string}) => {
         sparen, sondern auch deinen Kiez davor schützen, bei explosiven 
         Mietsteigerungen sein Gesicht zu verlieren.`}
     /></p>
+    <p style={{color: "red"}}>
+      <FormattedMessage
+        id="Introduction.warning"
+        defaultMessage="Achtung! Mietlimbo wird gerade noch gestestet und ist definitiv noch nicht fehlerfrei. 
+          Die Informationen auf dieser Seite solltest du nicht direkt für bare Münze nehmen." />
+    </p>
     <p>
       <FormattedMessage
         id="Introduction.requirements"
