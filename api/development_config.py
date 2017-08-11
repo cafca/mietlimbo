@@ -1,0 +1,7 @@
+DEBUG = True
+SECRET_KEY="development secret key"
+SQLALCHEMY_DATABASE_URI = 'sqlite:///../mietspiegel.sqlite'
+
+SQLALCHEMY_TRACK_MODIFICATIONS = True
+SQLALCHEMY_ECHO = False
+SQLALCHEMY_RECORD_QUERIES = False
