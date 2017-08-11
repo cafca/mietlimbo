@@ -97,7 +97,7 @@ class IntermediateResult extends React.Component {
       state: this.states.LOADING,
       data: null
     }
-    this.serverURL = process.env.NODE_ENV === "production" ? "http://mietlimbo.de:8000" : "http://localhost:8000";
+    this.serverURL = process.env.NODE_ENV === "production" ? "https://mietlimbo.de:8000" : "http://localhost:8000";
   }
 
   componentDidMount() {
