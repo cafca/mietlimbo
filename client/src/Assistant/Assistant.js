@@ -256,6 +256,9 @@ class Assistant extends React.Component {
 			default:
 				content = <Introduction serialNumber={this.state.serialNumber} />;
 		}
+    
+    const debug = "";
+    // const debug = <pre>{data}</pre>;
 
     const buttonDisplayStyle = this.state.stage === stageNames.length ? "none" : "initial";
 		return <div className="assistant" style={this.style.container} >
@@ -275,7 +278,7 @@ class Assistant extends React.Component {
           id: "Assistant.continue",
           defaultMessage: "Weiter"
         })} />
-      <pre>{data}</pre>
+      {debug}
 		</div>;
 	}
 }
