@@ -131,8 +131,6 @@ class Assistant extends React.Component {
 		const valid = this.handleInputValid;
 		const changed = this.handleInputChanged;
 
-    const data = JSON.stringify(this.state.inputData, null, 2);
-
 		switch(this.state.stage) {
 			case 1:
         content = <div key="stage1">
