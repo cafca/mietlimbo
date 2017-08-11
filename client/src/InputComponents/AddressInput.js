@@ -99,7 +99,7 @@ type MietspiegelPlaceProps = {
 
 class MietspiegelPlace extends React.Component {
   inputName: "addressInput"
-
+  
   state: {
     query: string,
     state: string,
@@ -125,6 +125,7 @@ class MietspiegelPlace extends React.Component {
       selected: props.value,
       errorMsg: null
     };
+    this.serverURL = process.env.NODE_ENV === "production" ? "http://mietlimbo.de:8000" : "http://localhost:8000";
     autoBind(this);
   }
 
@@ -139,7 +140,7 @@ class MietspiegelPlace extends React.Component {
   }
 
   handleQuery(query: string) {
-    return fetch("http://localhost:8000/api/v1/street?name=" + encodeURIComponent(query))
+    return fetch(this.serverURL + "/api/v1/street?name=" + encodeURIComponent(query))
       .then((resp) => resp.json())
       .then((respJson) => {
         if (respJson.errors && respJson.errors.length > 0) {

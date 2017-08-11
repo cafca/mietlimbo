@@ -2,8 +2,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import './Introduction.css';
-
 const Introduction = (props: {serialNumber: string}) => {
   return <section>
     <p><FormattedMessage
@@ -19,39 +17,47 @@ const Introduction = (props: {serialNumber: string}) => {
         sparen, sondern auch deinen Kiez davor schützen, bei explosiven 
         Mietsteigerungen sein Gesicht zu verlieren.`}
     /></p>
+    <p style={{color: "red"}}>
+      <FormattedMessage
+        id="Introduction.warning"
+        defaultMessage="Achtung! Mietlimbo wird gerade noch gestestet und ist definitiv noch nicht fehlerfrei. 
+          Die Informationen auf dieser Seite solltest du nicht direkt für bare Münze nehmen." />
+    </p>
     <p>
       <FormattedMessage
         id="Introduction.requirements"
         defaultMessage={`Um möglichst schnell und einfach zum Ergebnis zu kommen,
           helfen einige Dinge enorm:`}
       />
-      <ul className="inline-list">
-        <li>
-          <FormattedMessage
-            id="Introduction.requirement1"
-            defaultMessage={`Mietvertrag`}
-          />
-        </li>
-        <li>
-          <FormattedMessage
-            id="Introduction.requirement2"
-            defaultMessage={`Heizkostenabrechnung`}
-          />
-        </li>
-        <li>
-          <FormattedMessage
-            id="Introduction.requirement2"
-            defaultMessage={`Mietzins des Vormieters`}
-          />
-        </li>
-        <li>
-          <FormattedMessage
-            id="Introduction.requirement2"
-            defaultMessage={`Der Wohnung selbst! Bei manchen Fragen muss man
-              einfach mal eben nachgucken.`}
-          />
-        </li>
-      </ul>
+    </p>
+    <ul className="inline-list">
+      <li>
+        <FormattedMessage
+          id="Introduction.requirement1"
+          defaultMessage={`Mietvertrag`}
+        />
+      </li>
+      <li>
+        <FormattedMessage
+          id="Introduction.requirement2"
+          defaultMessage={`Heizkostenabrechnung`}
+        />
+      </li>
+      <li>
+        <FormattedMessage
+          id="Introduction.requirement2"
+          defaultMessage={`Mietzins des Vormieters`}
+        />
+      </li>
+      <li>
+        <FormattedMessage
+          id="Introduction.requirement2"
+          defaultMessage={`Der Wohnung selbst! Bei manchen Fragen muss man
+            einfach mal eben nachgucken.`}
+        />
+      </li>
+    </ul>
+    <p>
       <FormattedMessage
         id="Introduction.requirementsUnavailable"
         defaultMessage={`Wenn nicht alles zur Hand ist, dann ist das auch nicht schlimm, du kannst auch 
