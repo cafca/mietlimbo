@@ -30,7 +30,6 @@ class IntermediateResult extends React.Component {
   };
 
   inputName = "intermediateResult"
-  apiEndpoint = "http://localhost:8000/api/v1/range"
 
   states = {
     LOADING: "Requesting rent level data",
@@ -98,6 +97,7 @@ class IntermediateResult extends React.Component {
       state: this.states.LOADING,
       data: null
     }
+    this.serverURL = process.env.NODE_ENV === "production" ? "http://mietlimbo.de:8000" : "http://localhost:8000";
   }
 
   componentDidMount() {
@@ -107,7 +107,7 @@ class IntermediateResult extends React.Component {
   loadRentData() {
     this.setState({state: this.states.LOADING});
 
-    fetch(this.apiEndpoint, {
+    fetch(this.serverURL + "/api/v1/range", {
         method: "POST",
         headers: new Headers({"Content-Type": "Application/JSON"}),
         body: JSON.stringify({
