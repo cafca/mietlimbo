@@ -62,7 +62,8 @@ class Assistant extends React.Component {
 
   style = {
     container: {
-      paddingLeft: 180
+      paddingLeft: 180,
+      marginBottom: 100
     }
   }
 
