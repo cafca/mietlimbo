@@ -62,7 +62,8 @@ class Assistant extends React.Component {
 
   style = {
     container: {
-      paddingLeft: 180
+      paddingLeft: 180,
+      marginBottom: 100
     }
   }
 
@@ -130,8 +131,6 @@ class Assistant extends React.Component {
 
 		const valid = this.handleInputValid;
 		const changed = this.handleInputChanged;
-
-    const data = JSON.stringify(this.state.inputData, null, 2);
 
 		switch(this.state.stage) {
 			case 1:
@@ -256,6 +255,9 @@ class Assistant extends React.Component {
 			default:
 				content = <Introduction serialNumber={this.state.serialNumber} />;
 		}
+    
+    const debug = "";
+    // const debug = <pre>{data}</pre>;
 
     const buttonDisplayStyle = this.state.stage === stageNames.length ? "none" : "initial";
 		return <div className="assistant" style={this.style.container} >
@@ -275,7 +277,7 @@ class Assistant extends React.Component {
           id: "Assistant.continue",
           defaultMessage: "Weiter"
         })} />
-      <pre>{data}</pre>
+      {debug}
 		</div>;
 	}
 }
