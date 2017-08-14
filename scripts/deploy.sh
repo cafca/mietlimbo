@@ -1,11 +1,12 @@
 #!/bin/bash
 
-git pull
-git checkout master
+git pull &&
+git checkout master &&
 
-cd client
-npm run build
+cd client &&
+npm install &&
+npm run build &&
 
-mv build/* /var/www/mietlimbo/
-rm build
-cd -s
+mv build/* /var/www/mietlimbo/ &&
+rm build &&
+cd -s &&
