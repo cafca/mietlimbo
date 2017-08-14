@@ -12,7 +12,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import './App.css';
 
 import Assistant from './Assistant/Assistant';
-import Landing from './Landing';
+import Landing from './Pages/Landing';
 import Theme from './Theme.js'
 
 addLocaleData([...de]);
@@ -28,8 +28,8 @@ class App extends Component {
         <div className="App">
           <div className="App-main">
             <Route exact path="/" component={Landing} />
+            <Route exact path="/app/" component={Assistant} />
             <Route path="/app/:stage/" component={Assistant} />
-            <Route path="/app/" component={Assistant} />
           </div>
         </div>  
       </BrowserRouter>

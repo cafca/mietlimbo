@@ -80,6 +80,23 @@ class Assistant extends React.Component {
 
   componentWillMount() {
     // Fill state with empty data sets
+    this.setState(this.initializeData(), () => {
+      // Process route passed in through URL if the requested stage is available
+      if (this.props.match && this.props.match.params.stage) {
+        this.requestStage(parseInt(this.props.match.params.stage));
+      }
+    });
+  }
+
+  componentWillReceiveProps(nextProps: AssistantProps) {
+    // Process route passed in through URL if the requested stage is available
+    if (nextProps.match && nextProps.match.params.stage !== this.props.match.params.stage) {
+      this.requestStage(parseInt(nextProps.match.params.stage));
+    }
+  }
+
+  initializeData() {
+    // Fill the dataset with emoty objects in the beginning
     const inputData = Object.assign({}, this.state.inputData);
     // eslint-disable-next-line array-callback-return
     ["BathGroup", "KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnvironmentGroup"].map(name => {
@@ -101,9 +118,18 @@ class Assistant extends React.Component {
     return { inputData, inputValid };
   }
 
+  requestStage(requestedStage: number) {
+      if (requestedStage !== undefined && requestedStage !== this.state.stage && this.isStageEnabled(requestedStage)) {
+        this.advanceStage(requestedStage - this.state.stage);
+      } else {
+        this.props.history.push("/app/");
+      }
+  }
+
   advanceStage(steps: number) {
     const stage = (this.state.stage + steps) % (stageNames.length + 1)
     this.setState({stage});
+    this.props.history.push("/app/" + stage + "/");
     window.scrollTo(0, 0);
   }
 
