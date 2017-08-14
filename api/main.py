@@ -4,6 +4,7 @@ Mietspiegel API
 
 """
 import os
+import sys
 import logging
 
 from flask import Flask, jsonify, request
@@ -15,21 +16,15 @@ from pprint import pformat
 
 from requests.exceptions import ConnectionError
 
-logger = setup_logger(logfile="./main.log", level=logging.INFO)
+logger = setup_logger(logfile="../mietlimbo-api.log", level=logging.INFO)
 
 db = SQLAlchemy()
 
 
 def create_app(config=None):
     app = Flask(__name__)
-
-    # See http://flask.pocoo.org/docs/0.12/config/
-    app.config.update(dict(DEBUG=True, SECRET_KEY="development key"))
     app.config.update(config or {})
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
-    app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///../Mietspiegel.db'
-    app.config["SQLALCHEMY_ECHO"] = False
-    app.config["SQLALCHEMY_RECORD_QUERIES"] = False
+    app.config.from_envvar("MIETLIMBO_CONFIG")
 
     db.init_app(app)
 
