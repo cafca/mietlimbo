@@ -25,7 +25,10 @@ injectTapEventPlugin();
 const Navigation = (props) => {
   const style = {
     main: {
-      marginTop: 0,
+      marginTop: 10,
+      height: 25,
+    },
+    container: {
       float: "right"
     },
     link: {
@@ -40,10 +43,12 @@ const Navigation = (props) => {
   };
 
   return <div className="App-Navigation" style={style.main} >
-    <NavLink style={style.link} activeStyle={style.active} exact={true} to="/">vorwort</NavLink>
-    <NavLink style={style.link} activeStyle={style.active} to="/app/">mietlimbo</NavLink>
-    <a style={style.link} href="https://blog.mietlimbo.de/">blog</a>
-    <NavLink style={style.link} activeStyle={style.active} to="/about/">über</NavLink>
+    <div style={style.container}>
+      <NavLink style={style.link} activeStyle={style.active} exact={true} to="/">vorwort</NavLink>
+      <NavLink style={style.link} activeStyle={style.active} to="/app/">mietlimbo</NavLink>
+      <a style={style.link} href="https://blog.mietlimbo.de/">blog</a>
+      <NavLink style={style.link} activeStyle={style.active} to="/about/">über</NavLink>
+    </div>
   </div>;
 }
 
