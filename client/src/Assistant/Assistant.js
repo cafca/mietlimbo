@@ -52,6 +52,12 @@ export const stageConditions = [
   []
 ];
 
+type AssistantProps = {
+  match: {params: {stage: number}},
+  location: {},
+  intl: {}
+};
+
 class Assistant extends React.Component {
 	state = {
 		stage: 0,
@@ -92,7 +98,7 @@ class Assistant extends React.Component {
     Object.keys(this.state.inputData).map(k => {
       inputValid[k] = true;
     });
-    this.setState({inputData, inputValid});
+    return { inputData, inputValid };
   }
 
   advanceStage(steps: number) {
