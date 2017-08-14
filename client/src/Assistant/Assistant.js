@@ -40,6 +40,7 @@ export const stageNames = [
 ];
 
 // These fields are required in order to advance to the next assistant stage
+// (all previous conditions are also required, of course)
 export const stageConditions = [
   [],
   ["leaseCreated", "rent", "address"],
@@ -81,9 +82,9 @@ class Assistant extends React.Component {
   componentWillMount() {
     // Fill state with empty data sets
     this.setState(this.initializeData(), () => {
-      // Process route passed in through URL if the requested stage is available
       if (this.props.match && this.props.match.params.stage) {
-        this.requestStage(parseInt(this.props.match.params.stage));
+        const stage = parseInt(this.props.match.params.stage, 10);
+        stage !== undefined && this.requestStage(stage);
       }
     });
   }
@@ -91,7 +92,8 @@ class Assistant extends React.Component {
   componentWillReceiveProps(nextProps: AssistantProps) {
     // Process route passed in through URL if the requested stage is available
     if (nextProps.match && nextProps.match.params.stage !== this.props.match.params.stage) {
-      this.requestStage(parseInt(nextProps.match.params.stage));
+      const stage = parseInt(nextProps.match.params.stage, 10);
+      stage !== undefined && this.requestStage(stage);
     }
   }
 
@@ -118,19 +120,13 @@ class Assistant extends React.Component {
     return { inputData, inputValid };
   }
 
-  requestStage(requestedStage: number) {
-      if (requestedStage !== undefined && requestedStage !== this.state.stage && this.isStageEnabled(requestedStage)) {
-        this.advanceStage(requestedStage - this.state.stage);
-      } else {
-        this.props.history.push("/app/");
-      }
-  }
-
-  advanceStage(steps: number) {
-    const stage = (this.state.stage + steps) % (stageNames.length + 1)
-    this.setState({stage});
-    this.props.history.push("/app/" + stage + "/");
-    window.scrollTo(0, 0);
+  requestStage(stage: number) {
+    if (stage !== undefined && stage !== this.state.stage && this.isStageEnabled(stage)) {
+      this.setState({stage}, () => {
+        // Callback to prevent race condition in this.componentWillReceiveProps
+        this.props.history.push("/app/" + stage + "/");
+      });
+    }
   }
 
 	handleInputValid(name: string, valid: boolean) {
@@ -297,13 +293,13 @@ class Assistant extends React.Component {
         serialNumber={this.state.serialNumber} 
         stage={this.state.stage} 
         isStageEnabled={this.isStageEnabled}
-        advance={this.advanceStage} 
+        requestStage={this.requestStage} 
         data={this.state.inputData} />
       {content}
       <RaisedButton 
         primary={true} 
         style={{display: buttonDisplayStyle}}
-        onClick={() => this.advanceStage(1)} 
+        onClick={() => this.requestStage(this.state.stage + 1)} 
         disabled={!this.isStageEnabled(this.state.stage + 1)}
         label={this.props.intl.formatMessage({
           id: "Assistant.continue",
