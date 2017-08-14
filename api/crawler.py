@@ -8,7 +8,7 @@ from parser import MietspiegelParser
 from datetime import datetime, timedelta
 from time import sleep
 
-logger = setup_logger(logfile="./crawler.log", level=logging.DEBUG)
+logger = setup_logger(level=logging.DEBUG)
 
 LETTERS = "abcdefghiklmnopqrstuvwxyzäöüß-"
 STARTING_QUERY = "aaaa"

@@ -125,7 +125,7 @@ class MietspiegelPlace extends React.Component {
       selected: props.value,
       errorMsg: null
     };
-    this.serverURL = process.env.NODE_ENV === "production" ? "http://mietlimbo.de:8000" : "http://localhost:8000";
+    this.serverURL = process.env.NODE_ENV === "production" ? "https://mietlimbo.de:8000" : "http://localhost:8000";
     autoBind(this);
   }
 
