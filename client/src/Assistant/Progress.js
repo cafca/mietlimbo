@@ -66,7 +66,7 @@ class Progress extends React.Component {
   }
 
   handleClick(i: number) {
-    if (this.props.isStageEnabled(i)) this.props.advance(i - this.props.stage);
+    this.props.requestStage(i);
   }
 
   render() { 
