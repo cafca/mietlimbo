@@ -71,6 +71,7 @@ class ConstructionDateInput extends React.Component {
 	handleChange(e: SyntheticInputEvent, value: string) {
     this.props.changed({[this.inputName]: value});
 		this.props.valid("constructionDate", true);
+    this.props.valid("intermediateResult", false);
 		this.setState({value})
 	}
 

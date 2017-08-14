@@ -61,6 +61,7 @@ class AddressInput extends React.Component {
       this.props.valid(this.inputName, false);
       this.props.changed({address: null});
     }
+    this.props.valid("intermediateResult", false);
   }
 
   render() {
