@@ -55,7 +55,7 @@ class MietspiegelParser(object):
             query (string): Leading four characters of a street name.
             cookies (CookieJar): Optional cookie jar to use for the req.
         """
-        if len(query) <= 4:
+        if len(query) < 4:
             logger.warning("Less than four chars: {}".format(query))
 
         if cookies is None:
