@@ -5,6 +5,8 @@ import autoBind from 'react-autobind';
 import {FormattedMessage, injectIntl, defineMessages} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
+import HelpIcon from 'material-ui/svg-icons/action/help-outline'
+import {blue500} from 'material-ui/styles/colors';
 
 import type {AssistantInputProps} from './Tools';
 
@@ -64,21 +66,40 @@ class SquareMetersInput extends React.Component {
 	render() {
     const messages = defineMessages({
       title: {
-        id: "Spanneneinordnung.squareMeters",
+        id: "SquareMeters.title",
         defaultMessage: "Wieviele Quadratmeter hat die Wohnung?"
       },
+      description: {
+        id: "SquareMeters.description",
+        defaultMessage: `Dieser Wert wird benutzt um vom Quadratmeterpreis auf die Gesamtmiete 
+          zu kommen und entscheidet zugleich darüber, welche Vergleichsmiete gilt. Dafür kommt
+          es darauf an, ob folgende Grenzen überschritten wurden: Ab 40qm, ab 60qm und ab 90qm.`
+      },
       hint: {
-        id: "Spanneneinordnung.squareMetersHint",
+        id: "SquareMeters.textBoxHint",
         defaultMessage: "Wohnfläche in Quadratmeter"
+      },
+      explanation: {
+        id: "SquareMeters.hint",
+        defaultMessage: `Du kannst auch erstmal schätzen, wenn du es nicht genau weißt. 
+          Denk dann später daran, den genauen Wert in deinem Mietvertrag nachzuschlagen.`
       }
     });
 
 		return <Card className="assistantInput">
-      <CardTitle title={this.props.intl.formatMessage(messages.title)} />
+      <CardTitle 
+        title={this.props.intl.formatMessage(messages.title)} 
+        actAsExpander={true}
+        showExpandableButton={true} 
+        closeIcon={<HelpIcon color={blue500} />}
+      />
+      <CardText expandable={true}>
+        <p><FormattedMessage {...messages.explanation} /></p>
+      </CardText>
       <CardText>
-        <p><FormattedMessage 
-          id="SquareMeters.hint"
-          defaultMessage="Du kannst auch erstmal schätzen, wenn du es nicht genau weißt. Denk dann später daran, den genauen Wert in deinem Mietvertrag nachzuschlagen." /></p>
+        <p>
+          <FormattedMessage {...messages.description} />
+        </p>
         <TextField
           name={this.inputName}
           hintText={this.props.intl.formatMessage(messages.hint)}

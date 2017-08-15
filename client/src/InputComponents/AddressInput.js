@@ -11,6 +11,8 @@ import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import ErrorIcon from 'material-ui/svg-icons/alert/error';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 import TextField from 'material-ui/TextField';
+import HelpIcon from 'material-ui/svg-icons/action/help-outline'
+import {blue500} from 'material-ui/styles/colors';
 
 import type {AssistantInputProps} from './Tools';
 
@@ -69,6 +71,22 @@ class AddressInput extends React.Component {
       title: {
         id: "AddressInput.title",
         defaultMessage: "Wo wohnst du?"
+      },
+      explanation: {
+        id: "AddressInput.explanation",
+        defaultMessage: `Jede Straße in Berlin wurde von der Arbeitsgruppe Mietspiegel einem von drei Bereichen 
+          zugeteilt: Einfach, Mittel oder Hoch. Für viele Straßen ist diese Einordnung auch je nach Hausnummer
+          unterschiedlich. In diesem Feld suchst du nach dem Bereich, in den deine Wohnung fällt. `
+      },
+      explanation2: {
+        id: "AddressInput.explanation2",
+        defaultMessage: `Wenn deine Straße mehrmals auftaucht und hinter dem Namen jeweils ein unterschiedlicher Bezirk 
+          steht, gibt es die Straße entweder tatsächlich mehrmals in Berlin, oder verschiedene Teile davon wurden unterschiedlichen
+          Mietbereichen zugeteilt. Finde dann den Eintrag, der deine Hausnummer umfasst.`
+      },
+      inputLabel: {
+        id: "AddressInput.label",
+        defaultMessage: "Deine Adresse"
       }
     });
 
@@ -78,10 +96,19 @@ class AddressInput extends React.Component {
     const inputField = this.state.address == undefined ?  <TextField 
           id="addressInput"
           value={this.state.query} 
+          hintText={this.props.intl.formatMessage(messages.inputLabel)}
           onChange={this.handleChange} /> : undefined;
 
     return <Card className="assistantInput">
-      <CardTitle title={this.props.intl.formatMessage(messages.title)} />
+      <CardTitle 
+        title={this.props.intl.formatMessage(messages.title)}
+        actAsExpander={true}
+        showExpandableButton={true} 
+        closeIcon={<HelpIcon color={blue500} />} />
+      <CardText expandable={true}>
+        <p><FormattedMessage {...messages.explanation} /></p>
+        <p><FormattedMessage {...messages.explanation2} /></p>
+      </CardText>
       <CardText>
         {inputField}
         <MietspiegelPlace 
@@ -99,9 +126,10 @@ type MietspiegelPlaceProps = {
 };
 
 class MietspiegelPlace extends React.Component {
-  inputName: "addressInput"
+  inputName = "addressInput"
+  serverURL : string
   
-  state: {
+  state : {
     query: string,
     state: string,
     places: Array<{name: string, ranges: Array<{name: string, id: string}>}>,
@@ -126,7 +154,8 @@ class MietspiegelPlace extends React.Component {
       selected: props.value,
       errorMsg: null
     };
-    this.serverURL = process.env.NODE_ENV === "production" ? "https://mietlimbo.de:8000" : "http://localhost:8000";
+    this.serverURL = process.env.NODE_ENV === "production" 
+      ? "https://mietlimbo.de:8000" : "http://localhost:8000";
     autoBind(this);
   }
 
