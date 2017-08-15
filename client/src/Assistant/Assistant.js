@@ -125,6 +125,7 @@ class Assistant extends React.Component {
       this.setState({stage}, () => {
         // Callback to prevent race condition in this.componentWillReceiveProps
         this.props.history.push("/app/" + stage + "/");
+        window.scrollTo(0, 0);
       });
     }
   }
