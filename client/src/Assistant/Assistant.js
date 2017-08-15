@@ -66,6 +66,7 @@ class Assistant extends React.Component {
     inputValid: {},
     inputData: {}
 	}
+  // inputData: {"BathGroup":{"positive":[],"negative":[],"balance":0},"KitchenGroup":{"positive":[],"negative":[],"balance":0},"ApartmentGroup":{"positive":[],"negative":[],"balance":0},"BuildingGroup":{"positive":[],"negative":[],"balance":0},"EnvironmentGroup":{"positive":[],"negative":[],"balance":0},"leaseCreated":"2015-07-31T22:00:00.000Z","rent":900,"address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"}}}
 
   style = {
     container: {
@@ -125,6 +126,7 @@ class Assistant extends React.Component {
       this.setState({stage}, () => {
         // Callback to prevent race condition in this.componentWillReceiveProps
         this.props.history.push("/app/" + stage + "/");
+        window.scrollTo(0, 0);
       });
     }
   }
@@ -283,9 +285,6 @@ class Assistant extends React.Component {
 			default:
 				content = <Introduction serialNumber={this.state.serialNumber} />;
 		}
-    
-    const debug = "";
-    // const debug = <pre>{data}</pre>;
 
     const buttonDisplayStyle = this.state.stage === stageNames.length ? "none" : "initial";
 		return <div className="assistant" style={this.style.container} >
@@ -305,7 +304,6 @@ class Assistant extends React.Component {
           id: "Assistant.continue",
           defaultMessage: "Weiter"
         })} />
-      {debug}
 		</div>;
 	}
 }
