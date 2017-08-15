@@ -6,6 +6,8 @@ git checkout master
 cd client
 npm run build
 
-mv build/* /var/www/mietlimbo/
-rm build
+rm -rf /var/www/mietlimbo/* &&
+mv build/* /var/www/mietlimbo/ &&
+rm build &&
+
 cd -s

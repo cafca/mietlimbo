@@ -20,7 +20,7 @@ import spacing from 'material-ui/styles/spacing';
  */
 export default {
   spacing: spacing,
-  fontFamily: 'Roboto, sans-serif',
+  fontFamily: 'Open Sans, sans-serif',
   borderRadius: 2,
   palette: {
     primary1Color: blue500,
