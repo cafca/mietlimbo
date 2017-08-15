@@ -8,6 +8,6 @@ npm run build
 
 rm -rf /var/www/mietlimbo/* &&
 mv build/* /var/www/mietlimbo/ &&
-rm build &&
+rm build/* &&
 
 cd -s
