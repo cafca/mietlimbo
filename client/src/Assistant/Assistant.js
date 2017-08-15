@@ -66,6 +66,7 @@ class Assistant extends React.Component {
     inputValid: {},
     inputData: {}
 	}
+  // inputData: {"BathGroup":{"positive":[],"negative":[],"balance":0},"KitchenGroup":{"positive":[],"negative":[],"balance":0},"ApartmentGroup":{"positive":[],"negative":[],"balance":0},"BuildingGroup":{"positive":[],"negative":[],"balance":0},"EnvironmentGroup":{"positive":[],"negative":[],"balance":0},"leaseCreated":"2015-07-31T22:00:00.000Z","rent":900,"address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"}}}
 
   style = {
     container: {
