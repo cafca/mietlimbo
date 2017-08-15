@@ -10,8 +10,8 @@ import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import ErrorIcon from 'material-ui/svg-icons/alert/error';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
-import HelpIcon from 'material-ui/svg-icons/action/help-outline'
 import TextField from 'material-ui/TextField';
+import HelpIcon from 'material-ui/svg-icons/action/help-outline'
 import {blue500} from 'material-ui/styles/colors';
 
 import type {AssistantInputProps} from './Tools';
