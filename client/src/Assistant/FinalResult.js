@@ -176,6 +176,15 @@ class FinalResult extends React.Component {
             diffDir: this.props.data.rent - (this.props.data.squareMeters * (this.state.localRentLevel * 1.1)) < 0 ? 'mehr' : 'weniger'
           }} />
       </p>
+      <p>
+        <FormattedMessage
+          id="FinalResult.recommendations"
+          defaultMessage="Wie geht es jetzt weiter? Um herauszufinden, wie du mit dieser Information deine Miete senken kannst empfehle ich dir, 
+            den Artikel von {ChristopherStark} zu lesen, der diese Seite inspiriert hat."
+          values={{
+            ChristopherStark: <a target="_blank" href="https://blog.mietlimbo.de/2017/04/18/mietpreisbremse-betaetigen/">Christopher Stark</a>
+          }} />
+      </p>
     </div>;
   }
 }

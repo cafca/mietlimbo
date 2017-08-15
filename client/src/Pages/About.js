@@ -25,7 +25,7 @@ const Landing = () => <div style={style.container}>
   dem <a href="http://www.dlr.de/pt/">Deutschen Zentrum für Luft- und Raumfahrttechnik Projektträger</a> und <a href="https://www.bmbf.de/">Bundesministerium für Bildung und Forschung</a>.</p>
   <p>
     <a href="Vincent Ahrend">
-      <img style={style.img} src="http://blog.vincentahrend.com/content/images/2016/11/Untitled2222.png" />
+      <img alt="Impressum" style={style.img} src="http://blog.vincentahrend.com/content/images/2016/11/Untitled2222.png" />
     </a>
   </p>
 </div>;
