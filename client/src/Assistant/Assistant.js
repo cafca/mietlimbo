@@ -64,7 +64,21 @@ class Assistant extends React.Component {
 		stage: 0,
 		serialNumber: "03",
     inputValid: {},
-    inputData: {}
+    inputData: {
+      "BathGroup":{"positive":[],"negative":[],"balance":0},
+      "KitchenGroup":{"positive":[],"negative":[],"balance":0},
+      "ApartmentGroup":{"positive":[],"negative":[],"balance":0},
+      "BuildingGroup":{"positive":[],"negative":[],"balance":0},
+      "EnvironmentGroup":{"positive":[],"negative":[],"balance":0},
+      "leaseCreated":"2015-07-31T22:00:00.000Z",
+      "rent":900,
+      "address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"},
+      baseFeatures: "default",
+      constructionDate: "Pre2002",
+      intermediateResult: {max: 9.27, mid: 8, min: 6.3},
+      newBuilding: false,
+      squareMeters: 90
+    }
 	}
   // inputData: {"BathGroup":{"positive":[],"negative":[],"balance":0},"KitchenGroup":{"positive":[],"negative":[],"balance":0},"ApartmentGroup":{"positive":[],"negative":[],"balance":0},"BuildingGroup":{"positive":[],"negative":[],"balance":0},"EnvironmentGroup":{"positive":[],"negative":[],"balance":0},"leaseCreated":"2015-07-31T22:00:00.000Z","rent":900,"address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"}}}
 
@@ -73,9 +87,9 @@ class Assistant extends React.Component {
       paddingLeft: 180,
       marginBottom: 100
     }
-  }
+  };
 
-	constructor(props: {}) {
+	constructor(props: AssistantProps) {
 		super(props);
 		autoBind(this);
 	}
