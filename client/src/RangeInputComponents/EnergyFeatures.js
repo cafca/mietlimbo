@@ -4,7 +4,6 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { defineMessages, FormattedMessage } from 'react-intl';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Divider from 'material-ui/Divider';
 import Checkbox from 'material-ui/Checkbox';
 import RadioButtonChecked from 'material-ui/svg-icons/toggle/radio-button-checked';
@@ -264,7 +263,7 @@ export default class EnergyClass extends React.Component {
       <CardTitle title={this.props.intl.formatMessage(messages.Title)} />
       <CardText className="cardText">
         <p><FormattedMessage {...messages.Introduction} values={{
-          link: <a href="http://www.berliner-mieterverein.de/recht/infoblaetter/fl196.htm" target="_blank">
+          link: <a href="http://www.berliner-mieterverein.de/recht/infoblaetter/fl196.htm" target="_blank" rel="noopener noreferrer">
             Berliner Mieterverein Info 196
           </a>
         }} /></p>
