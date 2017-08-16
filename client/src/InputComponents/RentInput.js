@@ -25,8 +25,10 @@ class RentInput extends React.Component {
       value: props.value === undefined ? "" : props.value,
       errors: []
     }
+  }
 
-    if (props.value !== undefined) this.props.valid(this.inputName, true);
+  componentDidMount() {
+    if (this.props.value !== undefined) this.props.valid(this.inputName, true);
   }
 
   handleChange(e: SyntheticInputEvent) {

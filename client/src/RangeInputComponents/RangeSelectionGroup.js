@@ -39,6 +39,7 @@ class RangeSelectionGroup extends React.Component {
     if (value === true) {
       if (newFeatureList.indexOf(name) >= 0) {
         // Don't store the same feature twice
+        // eslint-disable-next-line eqeqeq
         if(cb != undefined) cb();
         return;
       }
@@ -47,6 +48,7 @@ class RangeSelectionGroup extends React.Component {
       const position = this.props.inputData[cat].indexOf(name);
       if (position < 0) {
         // Stop here if the feature to be removed is not on the list
+        // eslint-disable-next-line eqeqeq
         if(cb != undefined) cb();
         return;
       }
