@@ -4,9 +4,10 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { defineMessages, FormattedMessage } from 'react-intl';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Divider from 'material-ui/Divider';
 import Checkbox from 'material-ui/Checkbox';
+import RadioButtonChecked from 'material-ui/svg-icons/toggle/radio-button-checked';
+import RadioButtonUnchecked from 'material-ui/svg-icons/toggle/radio-button-unchecked';
 
 import type {RangeInputProps} from './RangeSelectionGroup';
 
@@ -43,7 +44,10 @@ const messages = defineMessages({
     id: "Building.EnergyIntroduction",
     defaultMessage: `In diesem Merkmal wird der Energieverbrauch des Gebäudes erfasst, 
     welcher sich aus dem Verbrauch für Heizung und Warmwasser zusammensetzt. Du findest
-    den Energieverbrauch in deinen Heizkostenabrechnungen oder in einem Energieausweis.`
+    den Energieverbrauchskennwert in deinen Heizkostenabrechnungen oder in einem Energieausweis.
+    Leider ist es sehr kompliziert, diesen Wert zu berechnen, wenn du ihn auf diese
+    Weise nicht einfach ablesen kannst. Hierzu hat der Berliner Mieterverein eine 
+    umfangreiche Infoseite zusammengestellt ({link}).`
   },
   Endenergiebedarf: {
     id: "Building.Endenergiebedarf",
@@ -105,11 +109,32 @@ const messages = defineMessages({
     id: "Building.EnergySuper235",
     defaultMessage: "Über {Super235} kWh/(m²a)"
   },
-  unknown: {
-    id: "Building.EnergyUnkown",
-    defaultMessage: "Das weiß ich leider nicht."
+  InsufficientInsulationLabel: {
+    id: "EnergyFeatures.InsufficientInsulationLabel",
+    defaultMessage: "Unzureichende Wärmedämmung oder Heizanlage mit ungünstigem Wirkungsgrad"
+  },
+  InsufficientInsulationHint: {
+    id: "EnergyFeatures.InsufficientInsulationHint",
+    defaultMessage: "(Einbau vor 1988)"
+  },
+  ModernizedHeatingSystemLabel: {
+    id: "EnergyFeatures.ModernizedHeatingSystemLabel",
+    defaultMessage: "Wärmedämmung zusätzlich zur Bausubstanz oder modernisierte Anlage"
+  },
+  ModernizedHeatingSystemHint: {
+    id: "EnergyFeatures.ModernizedHeatingSystemHint",
+    defaultMessage: "Heizanlagen sind modern, wenn sie ab 1.1.2003 eingebaut wurden und das Haus/Gebäude schon vorher bezugsfertig war."
+  },
+  UnknownHeatingLabel: {
+    id: "EnergyFeatures.UnknownHeatingLabel",
+    defaultMessage: "Ich weiß überhaupt nichts über den Energieverbrauch und möchte dieses Merkmal überspringen."
   }
 });
+
+const radioIcons = {
+  checkedIcon: <RadioButtonChecked />,
+  uncheckedIcon: <RadioButtonUnchecked />
+};
 
 export default class EnergyClass extends React.Component {
   baseLimits = {
@@ -143,26 +168,10 @@ export default class EnergyClass extends React.Component {
     return customLimits;
   }
 
-  saveFeature(positive: boolean, cb: ?() => any) {
-    // Represent energy consumption as two different features: 'EnergyGood' and
-    // and 'EnergyBad'. This method selects and deselects them so that only one 
-    // is active at a time.
-    this.props.changed(this.inputName + "Good", true, positive === true, () => {
-      this.props.changed(this.inputName + "Bad", false, positive === false, cb)
-    });
-  }
-
-  clearFeature(cb: ?() => any) {
-    this.props.changed(this.inputName + "Good", true, false, () => {
-      this.props.changed(this.inputName + "Bad", false, false, () => {
-        this.saveOption("value", "unknown", cb);
-      });
-    });
-  }
-
   saveOption(optionName: string, value: any, cb: ?() => any) {
     // Save options by merging them into the data object for the Building
-    // feature group under the 'energyValue' key
+    // feature group under the 'energyValue' key. Options that don't affect the end
+    // result need to be stored this way.
     const energyValue = this.props.directValue.energyValue !== undefined
       ? Object.assign({}, this.props.directValue.energyValue, {[optionName]: value})
       : {[optionName]: value};
@@ -171,42 +180,93 @@ export default class EnergyClass extends React.Component {
     this.props.directChanged({BuildingGroup}, cb);
   }
 
-  handleChange(ev: SyntheticInputEvent, value: string) {
-    if (value === "unknown") {
-      this.clearFeature();
+  applyFeatures(applicableFeatures: Array<string>) {
+    // Update the list of energy related features to only include those passed in with the
+    // applicableFeatures param.
+
+    const featureList = Object.keys(this.baseLimits)
+      .concat(["ModernizedHeatingSystem", "InsufficientInsulation"]);
+
+    const isPositive = name => name.slice(0, 3) === "Sub" || name === "ModernizedHeatingSystem";
+
+    // Function to recursively update each item in `featureList`
+    const applyFeaturesRec = () => {
+      if (featureList.length > 0) {
+        const cur = featureList.pop();
+        this.props.changed(
+          cur, 
+          isPositive(cur), 
+          applicableFeatures.indexOf(cur) >= 0, 
+          applyFeaturesRec
+        )
+      }
+    }
+    applyFeaturesRec();
+  }
+
+  handleChange(value: string) {
+    // Handler for direct selection of an energy value
+
+    const featureList = Object.keys(this.baseLimits);
+    const isPositive = name => name.slice(0, 3) === "Sub";
+
+    // Make an array of applicable features for this selection
+    const selectedIndex = featureList.indexOf(value);
+    const applicableFeatures = isPositive(value)
+      ? featureList.slice(selectedIndex, 3)
+      : featureList.slice(3, selectedIndex + 1);
+
+    this.saveOption("UnknownHeating", false, () => {
+      this.applyFeatures(applicableFeatures);
+    });
+  }
+
+  handleGenericChange(value: string) {
+    // Handler for generic options
+
+    // `UnknownHeating` and all other options are mutually exclusive
+    if (value === "UnknownHeating") {
+      this.saveOption(value, true, () => {
+        this.applyFeatures([]);
+      })
     } else {
-      const positive = value.slice(0, 3) === "Sub" ? true : false;
-      this.saveFeature(positive, () => {
-        this.saveOption("value", value);
-      });
+      this.saveOption("UnknownHeating", false, () => {
+        this.applyFeatures([value]);
+      })
     }
   }
 
   handleOptionChange(option: string, value: boolean) {
     this.saveOption(option, value, () => {
-      if (option === "historicSite" && value) this.clearFeature();
+      // Reset all other options for historic sites
+      if (option === "historicSite" && value) this.applyFeatures([]);
     });
   }
 
   render() {
     if (this.props.directValue === undefined) return <p>Nothing</p>;
     const energyValue = this.props.directValue.energyValue || {};
+    const checkedValues = this.props.directValue.negative.concat(this.props.directValue.positive);
 
     const customLimits = this.getLimits();
-
-    const options = Object.keys(this.baseLimits).concat("unknown");
-    const radioOptions = options.map(k => 
-      <RadioButton 
-        value={k}
-        key={k}
-        disabled={energyValue.historicSite}
+    const directOptions = Object.keys(this.baseLimits).map(k => 
+      <Checkbox 
+        checked={checkedValues.indexOf(k) >= 0}
+        onCheck={() => this.handleChange(k)}
+        disabled={energyValue.historicSite === true}
         label={this.props.intl.formatMessage(messages[k], customLimits)} 
+        key={k}
+        {...radioIcons} 
       />);
 
     return <Card className="assistantInput">
       <CardTitle title={this.props.intl.formatMessage(messages.Title)} />
       <CardText className="cardText">
-        <p><FormattedMessage {...messages.Introduction} /></p>
+        <p><FormattedMessage {...messages.Introduction} values={{
+          link: <a href="http://www.berliner-mieterverein.de/recht/infoblaetter/fl196.htm" target="_blank" rel="noopener noreferrer">
+            Berliner Mieterverein Info 196
+          </a>
+        }} /></p>
       </CardText>
 
       <Divider />
@@ -236,13 +296,37 @@ export default class EnergyClass extends React.Component {
 
       <CardText className="cardText">
         <h3>Einordnung</h3>
+        <p>Pauschale Einordnung</p>
+        <Checkbox
+          checked={checkedValues.indexOf("InsufficientInsulation") >= 0}
+          onCheck={() => this.handleGenericChange("InsufficientInsulation")}
+          disabled={energyValue.historicSite === true}
+          label={<span>
+            <FormattedMessage {...messages.InsufficientInsulationLabel} /><br />
+            <span className="optionHint">
+              <FormattedMessage {...messages.InsufficientInsulationHint} className="optionHint" />
+            </span>
+          </span>}
+          {...radioIcons} />
+        <Checkbox
+          checked={checkedValues.indexOf("ModernizedHeatingSystem") >= 0}
+          onCheck={() => this.handleGenericChange("ModernizedHeatingSystem")}
+          disabled={energyValue.historicSite === true}
+          label={<span>
+            <FormattedMessage {...messages.ModernizedHeatingSystemLabel} /><br />
+            <span className="optionHint">
+              <FormattedMessage {...messages.ModernizedHeatingSystemHint} className="optionHint" />
+            </span>
+          </span>}
+          {...radioIcons} />
+        <Checkbox
+          checked={energyValue.UnknownHeating === true}
+          onCheck={() => this.handleGenericChange("UnknownHeating")}
+          disabled={energyValue.historicSite === true}
+          label={this.props.intl.formatMessage(messages.UnknownHeatingLabel)}
+          {...radioIcons} />
         <p><FormattedMessage {...messages.RadioIntro} /></p>
-        <RadioButtonGroup 
-          onChange={this.handleChange} 
-          name="energyValue" 
-          valueSelected={energyValue.value} >
-          {radioOptions}
-        </RadioButtonGroup>
+        {directOptions}
       </CardText>
     </Card>;
   }

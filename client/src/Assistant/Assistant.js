@@ -12,6 +12,7 @@ import Progress from './Progress';
 
 import LeaseCreatedInput from '../InputComponents/LeaseCreatedInput';
 import RentInput from '../InputComponents/RentInput';
+import PreviousRentInput from '../InputComponents/PreviousRentInput';
 import AddressInput from '../InputComponents/AddressInput';
 import NewBuildingInput from '../InputComponents/NewBuildingInput';
 import ConstructionDateInput from '../InputComponents/ConstructionDateInput';
@@ -43,7 +44,7 @@ export const stageNames = [
 // (all previous conditions are also required, of course)
 export const stageConditions = [
   [],
-  ["leaseCreated", "rent", "address"],
+  ["leaseCreated", "rent", "previousRent", "address"],
   ["newBuilding", "constructionDate", "squareMeters", "baseFeatures"],
   ["intermediateResult"],
   [],
@@ -64,7 +65,21 @@ class Assistant extends React.Component {
 		stage: 0,
 		serialNumber: "03",
     inputValid: {},
-    inputData: {}
+    inputData: {
+      "BathGroup":{"positive":[],"negative":[],"balance":0},
+      "KitchenGroup":{"positive":[],"negative":[],"balance":0},
+      "ApartmentGroup":{"positive":[],"negative":[],"balance":0},
+      "BuildingGroup":{"positive":[],"negative":[],"balance":0},
+      "EnvironmentGroup":{"positive":[],"negative":[],"balance":0},
+      "leaseCreated":"2015-07-31T22:00:00.000Z",
+      "rent":900,
+      "address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"},
+      baseFeatures: "default",
+      constructionDate: "Pre2002",
+      intermediateResult: {max: 9.27, mid: 8, min: 6.3},
+      newBuilding: false,
+      squareMeters: 90
+    }
 	}
   // inputData: {"BathGroup":{"positive":[],"negative":[],"balance":0},"KitchenGroup":{"positive":[],"negative":[],"balance":0},"ApartmentGroup":{"positive":[],"negative":[],"balance":0},"BuildingGroup":{"positive":[],"negative":[],"balance":0},"EnvironmentGroup":{"positive":[],"negative":[],"balance":0},"leaseCreated":"2015-07-31T22:00:00.000Z","rent":900,"address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"}}}
 
@@ -73,9 +88,9 @@ class Assistant extends React.Component {
       paddingLeft: 180,
       marginBottom: 100
     }
-  }
+  };
 
-	constructor(props: {}) {
+	constructor(props: AssistantProps) {
 		super(props);
 		autoBind(this);
 	}
@@ -167,6 +182,7 @@ class Assistant extends React.Component {
         content = <div key="stage1">
           <LeaseCreatedInput valid={valid} changed={changed} value={this.state.inputData.leaseCreated} />
           <RentInput valid={valid} changed={changed} value={this.state.inputData.rent} />
+          <PreviousRentInput valid={valid} changed={changed} value={this.state.inputData.previousRent} />
           <AddressInput valid={valid} changed={changed} value={this.state.inputData.address} />
         </div>;
 				break;
@@ -285,6 +301,7 @@ class Assistant extends React.Component {
 			default:
 				content = <Introduction serialNumber={this.state.serialNumber} />;
 		}
+    const debug = process.env.NODE_ENV === "production" ? null : <pre>{JSON.stringify(this.state.inputData, null, 2)}</pre>;
 
     const buttonDisplayStyle = this.state.stage === stageNames.length ? "none" : "initial";
 		return <div className="assistant" style={this.style.container} >
@@ -304,6 +321,7 @@ class Assistant extends React.Component {
           id: "Assistant.continue",
           defaultMessage: "Weiter"
         })} />
+      {debug}
 		</div>;
 	}
 }
