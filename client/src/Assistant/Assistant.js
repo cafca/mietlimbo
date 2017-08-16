@@ -12,6 +12,7 @@ import Progress from './Progress';
 
 import LeaseCreatedInput from '../InputComponents/LeaseCreatedInput';
 import RentInput from '../InputComponents/RentInput';
+import PreviousRentInput from '../InputComponents/PreviousRentInput';
 import AddressInput from '../InputComponents/AddressInput';
 import NewBuildingInput from '../InputComponents/NewBuildingInput';
 import ConstructionDateInput from '../InputComponents/ConstructionDateInput';
@@ -43,7 +44,7 @@ export const stageNames = [
 // (all previous conditions are also required, of course)
 export const stageConditions = [
   [],
-  ["leaseCreated", "rent", "address"],
+  ["leaseCreated", "rent", "previousRent", "address"],
   ["newBuilding", "constructionDate", "squareMeters", "baseFeatures"],
   ["intermediateResult"],
   [],
@@ -181,6 +182,7 @@ class Assistant extends React.Component {
         content = <div key="stage1">
           <LeaseCreatedInput valid={valid} changed={changed} value={this.state.inputData.leaseCreated} />
           <RentInput valid={valid} changed={changed} value={this.state.inputData.rent} />
+          <PreviousRentInput valid={valid} changed={changed} value={this.state.inputData.previousRent} />
           <AddressInput valid={valid} changed={changed} value={this.state.inputData.address} />
         </div>;
 				break;
