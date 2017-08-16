@@ -299,6 +299,7 @@ class Assistant extends React.Component {
 			default:
 				content = <Introduction serialNumber={this.state.serialNumber} />;
 		}
+    const debug = process.env.NODE_ENV === "production" ? null : <pre>{JSON.stringify(this.state.inputData, null, 2)}</pre>;
 
     const buttonDisplayStyle = this.state.stage === stageNames.length ? "none" : "initial";
 		return <div className="assistant" style={this.style.container} >
@@ -318,6 +319,7 @@ class Assistant extends React.Component {
           id: "Assistant.continue",
           defaultMessage: "Weiter"
         })} />
+      {debug}
 		</div>;
 	}
 }
