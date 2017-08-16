@@ -65,7 +65,7 @@ class Assistant extends React.Component {
 		stage: 0,
 		serialNumber: "03",
     inputValid: {},
-    inputData: {
+    inputData: process.env.NODE_ENV === "production" ? {} : {
       "BathGroup":{"positive":[],"negative":[],"balance":0},
       "KitchenGroup":{"positive":[],"negative":[],"balance":0},
       "ApartmentGroup":{"positive":[],"negative":[],"balance":0},
