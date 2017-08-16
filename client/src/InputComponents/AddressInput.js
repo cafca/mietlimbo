@@ -41,7 +41,10 @@ class AddressInput extends React.Component {
       query: "",
       address: props.value
     }
-    if (props.value !== undefined) this.props.valid(this.inputName, true);
+  }
+
+  componentDidMount() {
+    if (this.props.value !== undefined) this.props.valid(this.inputName, true);
   }
 
   handleChange(ev: SyntheticInputEvent, value: string) {
