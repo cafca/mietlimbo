@@ -39,7 +39,7 @@ class RangeSelectionGroup extends React.Component {
     if (value === true) {
       if (newFeatureList.indexOf(name) >= 0) {
         // Don't store the same feature twice
-        if(cb !== undefined) cb();
+        if(cb != undefined) cb();
         return;
       }
       newFeatureList.splice(-1, 0, name);
@@ -47,7 +47,7 @@ class RangeSelectionGroup extends React.Component {
       const position = this.props.inputData[cat].indexOf(name);
       if (position < 0) {
         // Stop here if the feature to be removed is not on the list
-        if(cb !== undefined) cb();
+        if(cb != undefined) cb();
         return;
       }
       newFeatureList.splice(position, 1);
