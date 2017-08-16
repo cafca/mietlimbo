@@ -122,6 +122,17 @@ class FinalResult extends React.Component {
           values={{
             localRentLevel: this.state.localRentLevel
           }} />;
+
+
+    const isPreviousRentLimiting = this.props.data.previousRent > this.props.data.squareMeters * (this.state.localRentLevel * 1.1);
+    const previousRentCase = this.props.data.previousRent === -1
+      ? <p>Denk daran, dass du die Miete nicht niedriger senken kannst, als die Miete des Vormieters war. Du hast angegeben,
+        dass du diese nicht kennst, also wäre jetzt ein guter Schritt, zu überlegen, ob es sich bei diesem Ergebnis lohnen 
+        könnte, mal Nachforschungen dazu zu starten.</p>
+      : isPreviousRentLimiting
+        ? <p>Dadurch, dass dein Vormieter allerdings schon eine höhere Miete gezahlt hat, kannst du allerdings nur auf {this.props.data.previousRent} € senken.</p>
+        : <p>Die Miete deines Vormieters lag auch unter diesem Wert und steht damit einer Mietsenkung nicht im Wege.</p>;
+
     return <div>
       <p>Du hast es geschafft! Mit den erfassten Merkmalen kann jetzt die ortsübliche Vergleichsmiete für deine Wohnung ermittelt werden:</p>
       <p>Für jede der fünf Merkmalgruppen, in der überwiegend positive Merkmale ausgewählt wurden, werden jetzt auf den Mittelwert aus dem Mietspiegel
@@ -176,6 +187,9 @@ class FinalResult extends React.Component {
             diffDir: this.props.data.rent - (this.props.data.squareMeters * (this.state.localRentLevel * 1.1)) < 0 ? 'mehr' : 'weniger'
           }} />
       </p>
+
+      {previousRentCase}
+
       <p>
         <FormattedMessage
           id="FinalResult.recommendations"
