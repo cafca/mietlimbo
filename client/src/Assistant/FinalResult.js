@@ -133,6 +133,22 @@ class FinalResult extends React.Component {
         ? <p>Dadurch, dass dein Vormieter allerdings schon eine höhere Miete gezahlt hat, kannst du allerdings nur auf {this.props.data.previousRent} € senken.</p>
         : <p>Die Miete deines Vormieters lag auch unter diesem Wert und steht damit einer Mietsenkung nicht im Wege.</p>;
 
+
+    const renovationCase = this.props.data.renovation === "simple"
+      ? <p>
+          <h2>Sanierungskosten</h2>
+          <FormattedMessage
+          id="FinalResult.renovationCase"
+          defaultMessage="Du hast angegeben, dass eine Sanierung bzw. Modernisierung durchgeführt wurde. Der Vermieter darf 
+            11% der dafür nötigen Investitionskosten auf die Kaltmiete pro Jahr aufschlagen. Mit deiner jetzigen Miete wäre
+            also eine Sanierung am Haus mit anteiligen Kosten für deine Wohnung bis zu ({diff, number} * 12 ) / 0,11 ≈ {renovationCost, number, currency} gerechtfertigt."
+          values={{
+            diff: this.props.data.rent - (this.props.data.squareMeters * (this.state.localRentLevel * 1.1)),
+            renovationCost: ((this.props.data.rent - (this.props.data.squareMeters * (this.state.localRentLevel * 1.1))) * 12) / 0.11
+          }}/>
+        </p>
+      : null;
+
     return <div>
       <p>Du hast es geschafft! Mit den erfassten Merkmalen kann jetzt die ortsübliche Vergleichsmiete für deine Wohnung ermittelt werden:</p>
       <p>Für jede der fünf Merkmalgruppen, in der überwiegend positive Merkmale ausgewählt wurden, werden jetzt auf den Mittelwert aus dem Mietspiegel
@@ -187,6 +203,8 @@ class FinalResult extends React.Component {
             diffDir: this.props.data.rent - (this.props.data.squareMeters * (this.state.localRentLevel * 1.1)) < 0 ? 'mehr' : 'weniger'
           }} />
       </p>
+
+      {renovationCase}
 
       {previousRentCase}
 
