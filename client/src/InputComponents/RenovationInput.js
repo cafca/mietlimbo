@@ -6,7 +6,6 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
 
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import {RadioButtonGroup, RadioButton} from 'material-ui/RadioButton';
-import ErrorIcon from 'material-ui/svg-icons/alert/error';
 import {red500} from 'material-ui/styles/colors';
 
 import type {AssistantInputProps} from './Tools';
@@ -65,8 +64,8 @@ class RenovationInput extends React.Component {
       simpleNotice: {
         id: "RenovationInput.simpleNotic",
         defaultMessage: `In diesem Fall kannst du die folgenden Fragen so ausfüllen, als wäre die Modernisierung/Sanierung
-          nicht durchgeführt worden. Am Ende berechnet Mietlimbo dann die maximalen Sanierungskosten, mit denen deine jetzige
-          Miete noch zu rechtfertigen wäre. Dann kannst du abschätzen, ob du glaubst, dass die Kosten in Wirklichkeit niedriger
+          nicht durchgeführt worden. Am Ende berechnet Mietlimbo dann die minimalen Sanierungskosten, mit denen deine jetzige
+          Miete zu rechtfertigen wäre. Dann kannst du abschätzen, ob du glaubst, dass die Kosten in Wirklichkeit niedriger
           gewesen sind.`
       }
     });
