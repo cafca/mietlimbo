@@ -76,6 +76,11 @@ class PreviousRentInput extends React.Component {
           Miete nicht weiter senken, als auf die Miete des Vormieters. Auch in diesem Betrag sind keine Heizkosten oder 
           Nebenkosten enthalten.`
       },
+      recentIncrease: {
+        id: "PreviousRentInput.recentIncrease",
+        defaultMessage: `Achtung: Hat sich die Miete des Vormieters in den letzten 12 Monaten des Mietverhältnisses
+          erhöht, zählt hier noch dessen alte Miete!`
+      },
       inputHint: {
         id: "PreviousRentInput.hint",
         defaultMessage: "Zum Beispiel: 460.80"
@@ -111,6 +116,7 @@ class PreviousRentInput extends React.Component {
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
         <p><FormattedMessage {...messages.description} /></p>
+        <p><FormattedMessage {...messages.recentIncrease} /></p>
         <TextField 
           id={this.inputName}
           name={this.inputName}
