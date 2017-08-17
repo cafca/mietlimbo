@@ -85,7 +85,8 @@ class RenovationInput extends React.Component {
         <p><FormattedMessage {...messages.description} /></p>
         <RadioButtonGroup
           name={this.inputName}
-          onChange={this.handleChange} >
+          onChange={this.handleChange} 
+          valueSelected={this.props.value} >
           <RadioButton value="none" label={this.props.intl.formatMessage(messages.noneLabel)} />
           <RadioButton value="simple" label={this.props.intl.formatMessage(messages.simpleLabel)} />
           <RadioButton value="extended" label={this.props.intl.formatMessage(messages.extendedLabel)} />
