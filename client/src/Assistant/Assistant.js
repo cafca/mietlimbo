@@ -11,6 +11,7 @@ import FinalResult from './FinalResult';
 import Progress from './Progress';
 
 import LeaseCreatedInput from '../InputComponents/LeaseCreatedInput';
+import RenovationInput from '../InputComponents/RenovationInput';
 import RentInput from '../InputComponents/RentInput';
 import PreviousRentInput from '../InputComponents/PreviousRentInput';
 import AddressInput from '../InputComponents/AddressInput';
@@ -78,7 +79,9 @@ class Assistant extends React.Component {
       constructionDate: "Pre2002",
       intermediateResult: {max: 9.27, mid: 8, min: 6.3},
       newBuilding: false,
-      squareMeters: 90
+      squareMeters: 90,
+      renovation: "simple",
+      previousRent: -1
     }
 	}
   // inputData: {"BathGroup":{"positive":[],"negative":[],"balance":0},"KitchenGroup":{"positive":[],"negative":[],"balance":0},"ApartmentGroup":{"positive":[],"negative":[],"balance":0},"BuildingGroup":{"positive":[],"negative":[],"balance":0},"EnvironmentGroup":{"positive":[],"negative":[],"balance":0},"leaseCreated":"2015-07-31T22:00:00.000Z","rent":900,"address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"}}}
@@ -181,6 +184,7 @@ class Assistant extends React.Component {
 			case 1:
         content = <div key="stage1">
           <LeaseCreatedInput valid={valid} changed={changed} value={this.state.inputData.leaseCreated} />
+          <RenovationInput valid={valid} changed={changed} value={this.state.inputData.renovation} />
           <RentInput valid={valid} changed={changed} value={this.state.inputData.rent} />
           <PreviousRentInput valid={valid} changed={changed} value={this.state.inputData.previousRent} />
           <AddressInput valid={valid} changed={changed} value={this.state.inputData.address} />

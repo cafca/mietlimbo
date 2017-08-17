@@ -68,13 +68,18 @@ class PreviousRentInput extends React.Component {
     const messages = defineMessages({
       title: {
         id: "PreviousRentInput.title",
-        defaultMessage: "Wieviel Kaltmiete hat der Vormieter bezahlt?"
+        defaultMessage: "Wieviel Kaltmiete hat dein Vormieter bezahlt?"
       },
       description: {
         id: "PreviousRentInput.description",
         defaultMessage: `Egal, was bei dieser ganzen Berechnung herauskommt: Mit der Mietpreisbremse kannst du die 
           Miete nicht weiter senken, als auf die Miete des Vormieters. Auch in diesem Betrag sind keine Heizkosten oder 
           Nebenkosten enthalten.`
+      },
+      recentIncrease: {
+        id: "PreviousRentInput.recentIncrease",
+        defaultMessage: `Achtung: Hat sich die Miete des Vormieters in den letzten 12 Monaten des Mietverhältnisses
+          erhöht, zählt hier noch dessen alte Miete!`
       },
       inputHint: {
         id: "PreviousRentInput.hint",
@@ -111,13 +116,14 @@ class PreviousRentInput extends React.Component {
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
         <p><FormattedMessage {...messages.description} /></p>
+        <p><FormattedMessage {...messages.recentIncrease} /></p>
         <TextField 
           id={this.inputName}
           name={this.inputName}
           hintText={this.props.intl.formatMessage(messages.inputHint)}
           errorText={errors}
           className="textInput"
-          value={this.state.value >= 0 ? this.state.value : ""}
+          value={this.props.value >= 0 ? this.state.value : ""}
           disabled={this.props.value === -1}
           onChange={this.handleChange} />
       </CardText>

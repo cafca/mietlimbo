@@ -4,6 +4,8 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
 
+import { Card, CardTitle, CardText } from 'material-ui/Card';
+
 import {
   Table,
   TableBody,
@@ -56,14 +58,14 @@ class FinalResult extends React.Component {
   constructor(props: FinalResultProps) {
     super(props);
     autoBind(this);
-    this.state = this.update();
+    this.state = this.update(false);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.changed({"FinalResult": this.props.data.squareMeters * (this.state.localRentLevel * 1.1)})
   }
 
-  update() {
+  update(passOn=true) {
     // To calculate balance, for every group with predominantly positive features 1 is added,
     // for predominantly negative groups 1 is subtracted
     const balance = this.groups
@@ -78,7 +80,7 @@ class FinalResult extends React.Component {
     const mpbRentLevel = localRentLevel * 1.1;
     const mpbRent = mpbRentLevel * this.props.squareMeters;
 
-    this.props.changed({[this.inputName]: mpbRentLevel});
+    if (passOn) this.props.changed({[this.inputName]: mpbRentLevel});
 
     return {
       localRentLevel, 
@@ -123,15 +125,22 @@ class FinalResult extends React.Component {
             localRentLevel: this.state.localRentLevel
           }} />;
 
-
     const isPreviousRentLimiting = this.props.data.previousRent > this.props.data.squareMeters * (this.state.localRentLevel * 1.1);
     const previousRentCase = this.props.data.previousRent === -1
-      ? <p>Denk daran, dass du die Miete nicht niedriger senken kannst, als die Miete des Vormieters war. Du hast angegeben,
-        dass du diese nicht kennst, also wäre jetzt ein guter Schritt, zu überlegen, ob es sich bei diesem Ergebnis lohnen 
-        könnte, mal Nachforschungen dazu zu starten.</p>
+      ? <FormattedMessage
+          id="FinalResult.previousRentUnkown"
+          defaultMessage="Denk daran, dass du die Miete nicht niedriger senken kannst, als die Miete des Vormieters war. Du hast angegeben,
+            dass du diese nicht kennst, also wäre jetzt ein guter Schritt, zu überlegen, ob es sich bei diesem Ergebnis lohnen 
+            könnte, mal Nachforschungen dazu zu starten." />
       : isPreviousRentLimiting
-        ? <p>Dadurch, dass dein Vormieter allerdings schon eine höhere Miete gezahlt hat, kannst du allerdings nur auf {this.props.data.previousRent} € senken.</p>
-        : <p>Die Miete deines Vormieters lag auch unter diesem Wert und steht damit einer Mietsenkung nicht im Wege.</p>;
+        ? <FormattedMessage
+            id="FinalResult.previousRentLimiting"
+            defaultMessage="Dadurch, dass dein Vormieter allerdings schon eine höhere Miete gezahlt hat, kannst du allerdings 
+              nur auf {limit, number, currency} € senken."
+            values={{limit: this.props.data.previousRent}} />
+        : <FormattedMessage
+            id="FinalResult.previousRentNotLimiting"
+            defaultMessage="Die Miete deines Vormieters lag auch unter diesem Wert und steht damit einer Mietsenkung nicht im Wege." />;
 
     return <div>
       <p>Du hast es geschafft! Mit den erfassten Merkmalen kann jetzt die ortsübliche Vergleichsmiete für deine Wohnung ermittelt werden:</p>
@@ -159,6 +168,7 @@ class FinalResult extends React.Component {
         </TableBody>
       </Table>
 
+      <h2><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="Ergebnis" /></h2>
       <p>
         {calculationMessage}
       </p>
@@ -188,19 +198,82 @@ class FinalResult extends React.Component {
           }} />
       </p>
 
-      {previousRentCase}
+      <RenovationCase
+        renovationInput={this.props.data.renovation}
+        rent={this.props.data.rent}
+        mpbRent={this.props.data.FinalResult} />
 
-      <p>
-        <FormattedMessage
+      <h3><FormattedMessage id="FinalResult.previousRentTitle" defaultMessage="Vormiete" /></h3>
+      <p>{previousRentCase}</p>
+
+      <section>
+        <h2>
+          <FormattedMessage
+            id="FinalResult.recommendationTitle"
+            defaultMessage="Wie geht es weiter?" />
+        </h2>
+        <p><FormattedMessage
           id="FinalResult.recommendations"
-          defaultMessage="Wie geht es jetzt weiter? Um herauszufinden, wie du mit dieser Information deine Miete senken kannst empfehle ich dir, 
+          defaultMessage="Um herauszufinden, wie du mit dieser Information deine Miete senken kannst empfehle ich dir, 
             den Artikel von {ChristopherStark} zu lesen, der diese Seite inspiriert hat."
           values={{
             ChristopherStark: <a target="_blank" rel="noopener noreferrer" href="https://blog.mietlimbo.de/2017/04/18/mietpreisbremse-betaetigen/">Christopher Stark</a>
-          }} />
-      </p>
+          }} /></p>
+      </section>
     </div>;
   }
 }
+
+type RenovationCaseProps = {
+  renovationInput: string, 
+  rent: number,
+  mpbRent: number,
+  intl: Object
+};
+
+const innerRenovationCase = (props: RenovationCaseProps) => {
+  if (props.renovationInput !== "simple") {
+    return null;
+  } else {
+    const messages = defineMessages({
+      title: {
+        id: "RenovationCase.title",
+        defaultMessage: "Sanierungskosten"
+      },
+      description: {
+        id: "RenovationCase.description",
+        defaultMessage: `Du hast angegeben, dass eine Sanierung bzw. Modernisierung durchgeführt wurde. Der Vermieter darf 
+          pro Jahr 11% der dafür angefallenen Investitionskosten auf die nach Mietpreisbremse _vor_ der Sanierung zulässige Miete aufschlagen:`
+      },
+      formula: {
+        id: "RenovationCase.formula",
+        defaultMessage: "Ortsübliche Vergleichsmiete vor Sanierung + 10% + (11% der Sanierungskosten / 12 Monate) = Zulässige Miete"
+      },
+      calculation: {
+        id: "RenovationCase.calculation",
+        defaultMessage: `Wenn du die Fragen auf dieser Seite dem Zustand der Wohnung vor den Sanierungs-/Modernisierungsarbeiten entsprechend 
+          beantwortet hast, ist deine Miete von {currentRent, number, currency} also gerechtfertigt bei Sanierungskosten von mindestens
+          (Jetzige Miete - (Ortsübliche Vergleichsmiete + 10%)) * 12/0,11 ≈ {renovationCost, number, currency}. Ist das glaubwürdig?`
+      }
+    });
+
+    const calculation = {
+      currentRent: props.rent,
+      mpbRent: props.mpbRent,
+      renovationCost: (props.rent - props.mpbRent) * 12.0 / 0.11
+    };
+
+    return <Card>
+      <CardTitle title={props.intl.formatMessage(messages.title)} />
+      <CardText>
+        <p><FormattedMessage {...messages.description} /></p>
+        <p><FormattedMessage {...messages.formula} /></p>
+        <p><FormattedMessage values={calculation} {...messages.calculation} /></p>
+      </CardText>
+    </Card>;
+  }
+}
+
+const RenovationCase = injectIntl(innerRenovationCase);
 
 export default injectIntl(FinalResult);

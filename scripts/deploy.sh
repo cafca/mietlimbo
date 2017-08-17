@@ -10,4 +10,4 @@ npm run build &&
 rm -rf /var/www/mietlimbo/* &&
 mv build/* /var/www/mietlimbo/ &&
 
-cd -s
+cd -
