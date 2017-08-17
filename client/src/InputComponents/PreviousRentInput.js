@@ -68,7 +68,7 @@ class PreviousRentInput extends React.Component {
     const messages = defineMessages({
       title: {
         id: "PreviousRentInput.title",
-        defaultMessage: "Wieviel Kaltmiete hat der Vormieter bezahlt?"
+        defaultMessage: "Wieviel Kaltmiete hat dein Vormieter bezahlt?"
       },
       description: {
         id: "PreviousRentInput.description",
@@ -117,7 +117,7 @@ class PreviousRentInput extends React.Component {
           hintText={this.props.intl.formatMessage(messages.inputHint)}
           errorText={errors}
           className="textInput"
-          value={this.state.value >= 0 ? this.state.value : ""}
+          value={this.props.value >= 0 ? this.state.value : ""}
           disabled={this.props.value === -1}
           onChange={this.handleChange} />
       </CardText>
