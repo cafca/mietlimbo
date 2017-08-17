@@ -90,7 +90,7 @@ class Progress extends React.Component {
       rentLevel = <div style={this.style.result}>
         <p><FormattedMessage 
           id="Progress.finalResult"
-          defaultMessage="mietlimbo level bis zu {lower, number, currency} unter deiner jetzigen Miete!"
+          defaultMessage="mietlimbo level {lower, number, currency} unter deiner jetzigen Miete!"
           values={{lower: this.props.data.rent - this.props.data.FinalResult}} /></p>
       </div>;
     // eslint-disable-next-line eqeqeq
@@ -102,7 +102,7 @@ class Progress extends React.Component {
       rentLevel = <div style={this.style.result}>
         <p><FormattedMessage 
           id="Progress.intermediateResult"
-          defaultMessage="mietlimbo level {min, number, currency} unter deiner jetzigen Miete!"
+          defaultMessage="mietlimbo level bis zu {min, number, currency} unter deiner jetzigen Miete!"
           values={irValues} /></p>
       </div>;
     }
