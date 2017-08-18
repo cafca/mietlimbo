@@ -6,6 +6,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
 
 import Mietwucher from "./Mietwucher";
 import RenovationCase from "./RenovationCase";
+import {groupBalance} from "../ApartmentFeatureInputs/RangeSelectionGroup";
 
 import {
   Table,
@@ -41,7 +42,6 @@ const groupNameTranslations = defineMessages({
 
 type FinalResultProps = {
   [string]: {
-    balance: number,
     negative: Array<string>,
     positive: Array<string>
   }
@@ -53,7 +53,9 @@ class FinalResult extends React.Component {
 
   state: {
     balance: number,
-    localRentLevel: number
+    localRentLevel: number,
+    mpbRent: number,
+    mpbRentLevel: number
   };
 
   constructor(props: FinalResultProps) {
@@ -70,7 +72,7 @@ class FinalResult extends React.Component {
     // To calculate balance, for every group with predominantly positive features 1 is added,
     // for predominantly negative groups 1 is subtracted
     const balance = this.groups
-      .map(group => this.props.data[group].balance < 0 ? -1 : this.props.data[group].balance === 0 ? 0 : 1)
+      .map(group => groupBalance(this.props.data[group]) < 0 ? -1 : groupBalance(this.props.data[group]) === 0 ? 0 : 1)
       .reduce((a, b) => (a + b), 0);
 
     const localRentLevel = balance >= 0 
@@ -96,8 +98,8 @@ class FinalResult extends React.Component {
         <TableRowColumn><FormattedMessage {...groupNameTranslations[group]} /></TableRowColumn>
         <TableRowColumn>{this.props.data[group].positive.map(n => <p key={n}>{n}</p>)}</TableRowColumn>
         <TableRowColumn>{this.props.data[group].negative.map(n => <p key={n}>{n}</p>)}</TableRowColumn>
-        <TableRowColumn style={{color: (this.props.data[group].balance < 0 ? "green" : this.props.data[group].balance > 0 ? "red" : "black")}}>
-           {(this.props.data[group].balance < 0 ? "Mietsenkend" : (this.props.data[group].balance === 0 ? "Neutral" : "Mietsteigernd"))} ({this.props.data[group].balance})
+        <TableRowColumn style={{color: (groupBalance(this.props.data[group]) < 0 ? "green" : groupBalance(this.props.data[group]) > 0 ? "red" : "black")}}>
+           {(groupBalance(this.props.data[group]) < 0 ? "Mietsenkend" : (groupBalance(this.props.data[group]) === 0 ? "Neutral" : "Mietsteigernd"))} ({groupBalance(this.props.data[group])})
         </TableRowColumn>
       </TableRow>
     );
@@ -105,25 +107,36 @@ class FinalResult extends React.Component {
   }
 
   render() {
-    const calculationMessage = this.state.balance !== 0 ? 
-        <FormattedMessage
-          id="FinalResult.calculation"
-          defaultMessage="Insgesamt überwiegen Gruppen mit {balanceDirection} Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
-            Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Minimalwert abgezogen. Hierdurch ergibt sich
-            die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
-          values={{
-            balance: this.state.balance,
-            balanceDirection: this.state.balance >= 0 ? "positiven" : "negativen",
-            balanceAbs: Math.abs(this.state.balance),
-            correctionPercentage: Math.abs(this.state.balance) * 20,
-            localRentLevel: this.state.localRentLevel
-          }} /> :
-        <FormattedMessage
+    const calculationMessage = this.state.balance === 0
+      ? <FormattedMessage
           id="FinalResult.calculationBalanced"
           defaultMessage="In deinem Fall halten sich positive und negative Merkmalgruppen die Waage. Hierdurch gilt direkt
             die ortsübliche Vergleichsmiete aus Schritt 3 von {localRentLevel, number} € pro Quadratmeter."
           values={{
             localRentLevel: this.state.localRentLevel
+          }} />
+      : this.state.balance < 0
+        ? <FormattedMessage
+            id="FinalResult.calculationNegative"
+            defaultMessage="Insgesamt überwiegen Gruppen mit negativen (mietsenkenden) Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
+              Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Minimalwert der Spanne abgezogen. Hierdurch ergibt sich
+              die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
+            values={{
+              balance: this.state.balance,
+              balanceAbs: Math.abs(this.state.balance),
+              correctionPercentage: Math.abs(this.state.balance) * 20,
+              localRentLevel: this.state.localRentLevel
+          }} />
+        : <FormattedMessage
+            id="FinalResult.calculationPositive"
+            defaultMessage="Insgesamt überwiegen Gruppen mit positiven (mietsteigernden) Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
+              Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Maximalwert der Spanne abgezogen. Hierdurch ergibt sich
+              die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
+            values={{
+              balance: this.state.balance,
+              balanceAbs: Math.abs(this.state.balance),
+              correctionPercentage: Math.abs(this.state.balance) * 20,
+              localRentLevel: this.state.localRentLevel
           }} />;
 
     const isPreviousRentLimiting = this.props.data.previousRent > this.props.data.squareMeters * (this.state.localRentLevel * 1.1);
@@ -164,7 +177,7 @@ class FinalResult extends React.Component {
             </TableRowColumn>
             <TableRowColumn></TableRowColumn>
             <TableRowColumn></TableRowColumn>
-            <TableRowColumn>{(this.state.balance < 0 ? "+" + Math.abs(this.state.balance) + " negative Gruppen" : (this.state.balance > 0 ? "+" + this.state.balance + " positive Gruppen" : "neutral"))}</TableRowColumn>
+            <TableRowColumn>{(this.state.balance < 0 ? "+" + Math.abs(this.state.balance) + " Gruppen" : (this.state.balance > 0 ? "+" + this.state.balance + " Gruppen" : "neutral"))}</TableRowColumn>
           </TableRow>
         </TableBody>
       </Table>
