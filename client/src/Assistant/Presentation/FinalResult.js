@@ -7,6 +7,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
 import Mietwucher from "./Mietwucher";
 import RenovationCase from "./RenovationCase";
 import {groupBalance} from "../ApartmentFeatureInputs/RangeSelectionGroup";
+import FeatureShortnames from "../ApartmentFeatureInputs/FeatureShortnames";
 
 import {
   Table,
@@ -96,10 +97,10 @@ class FinalResult extends React.Component {
   renderTableRows() {
     const rangeFeatures = this.groups.map(group => <TableRow key={group}>
         <TableRowColumn><FormattedMessage {...groupNameTranslations[group]} /></TableRowColumn>
-        <TableRowColumn>{this.props.data[group].positive.map(n => <p key={n}>{n}</p>)}</TableRowColumn>
-        <TableRowColumn>{this.props.data[group].negative.map(n => <p key={n}>{n}</p>)}</TableRowColumn>
-        <TableRowColumn style={{color: (groupBalance(this.props.data[group]) < 0 ? "green" : groupBalance(this.props.data[group]) > 0 ? "red" : "black")}}>
-           {(groupBalance(this.props.data[group]) < 0 ? "Mietsenkend" : (groupBalance(this.props.data[group]) === 0 ? "Neutral" : "Mietsteigernd"))} ({groupBalance(this.props.data[group])})
+        <TableRowColumn>{this.props.data[group].positive.map(n => <p key={n}><FormattedMessage {...FeatureShortnames[n]} /></p>)}</TableRowColumn>
+        <TableRowColumn>{this.props.data[group].negative.map(n => <p key={n}><FormattedMessage {...FeatureShortnames[n]} /></p>)}</TableRowColumn>
+        <TableRowColumn style={{color: (groupBalance(this.props.data[group]) < 0 ? "green" : groupBalance(this.props.data[group]) > 0 ? "red" : "black"), "whiteSpace": "normal"}}>
+           {(groupBalance(this.props.data[group]) < 0 ? "Überwiegend mietsenkend" : (groupBalance(this.props.data[group]) === 0 ? "Neutral" : "Überwiegend mietsteigernd"))} ({groupBalance(this.props.data[group])})
         </TableRowColumn>
       </TableRow>
     );
@@ -157,10 +158,13 @@ class FinalResult extends React.Component {
             defaultMessage="Die Miete deines Vormieters lag auch unter diesem Wert und steht damit einer Mietsenkung nicht im Wege." />;
 
     return <div>
-      <p>Du hast es geschafft! Mit den erfassten Merkmalen kann jetzt die ortsübliche Vergleichsmiete für deine Wohnung ermittelt werden:</p>
-      <p>Für jede der fünf Merkmalgruppen, in der überwiegend positive Merkmale ausgewählt wurden, werden jetzt auf den Mittelwert aus dem Mietspiegel
-      20% der Differenz zum Maximalwert addiert, bzw. umgekehrt für negative Merkmale.</p>
-      <Table selectable={false} style={{border: "1px solid #eee"}}>
+      <h1><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="Ergebnis" /></h1>
+      <p><FormattedMessage
+        id="FinalResult.tableDescription"
+        defaultMessage="In dieser Tabelle siehst du nochmal alle von dir gewählten Merkmale. In der rechten Spalte wird für jede Merkmalgruppe gezeigt, 
+          ob positive oder negative Merkmale überwiegen. Ganz unten rechts wird daraus wiederum die Balance aller Merkmalgruppen berechnet." />
+      </p>
+      <Table selectable={false} style={{border: "1px solid #eee", tableLayout: "fixed"}}>
         <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
           <TableRow>
             <TableHeaderColumn>Merkmalgruppe</TableHeaderColumn>
@@ -177,12 +181,11 @@ class FinalResult extends React.Component {
             </TableRowColumn>
             <TableRowColumn></TableRowColumn>
             <TableRowColumn></TableRowColumn>
-            <TableRowColumn>{(this.state.balance < 0 ? "+" + Math.abs(this.state.balance) + " Gruppen" : (this.state.balance > 0 ? "+" + this.state.balance + " Gruppen" : "neutral"))}</TableRowColumn>
+            <TableRowColumn>{(this.state.balance < 0 ? "-" + Math.abs(this.state.balance) + " Gruppen" : (this.state.balance > 0 ? "+" + this.state.balance + " Gruppen" : "neutral"))}</TableRowColumn>
           </TableRow>
         </TableBody>
       </Table>
 
-      <h2><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="Ergebnis" /></h2>
       <p>
         {calculationMessage}
       </p>

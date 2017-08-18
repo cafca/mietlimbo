@@ -24,7 +24,7 @@ const Mietwucher = (props: {rent: number, mpbRent: number}) => {
   });
 
   const values = {
-    infoPage: <a href="http://www.stadtentwicklung.berlin.de/wohnen/mieterfibel/de/m_miete10.shtml" taget="_blank">
+    infoPage: <a href="http://www.stadtentwicklung.berlin.de/wohnen/mieterfibel/de/m_miete10.shtml" target="_blank" rel="noopener noreferrer">
       Senatsverwaltung: Mietwucher
     </a>,
     rent: props.rent,
