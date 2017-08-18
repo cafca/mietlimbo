@@ -6,26 +6,26 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import Introduction from './Introduction';
-import IntermediateResult from './IntermediateResult';
-import FinalResult from './FinalResult';
+import IntermediateResult from './Presentation/IntermediateResult';
+import FinalResult from './Presentation/FinalResult';
 import Progress from './Progress';
 
-import LeaseCreatedInput from '../InputComponents/LeaseCreatedInput';
-import RenovationInput from '../InputComponents/RenovationInput';
-import RentInput from '../InputComponents/RentInput';
-import PreviousRentInput from '../InputComponents/PreviousRentInput';
-import AddressInput from '../InputComponents/AddressInput';
-import NewBuildingInput from '../InputComponents/NewBuildingInput';
-import ConstructionDateInput from '../InputComponents/ConstructionDateInput';
-import SquareMetersInput from '../InputComponents/SquareMetersInput';
-import BaseFeaturesInput from '../InputComponents/BaseFeaturesInput';
+import LeaseCreatedInput from './GenericInputs/LeaseCreatedInput';
+import RenovationInput from './GenericInputs/RenovationInput';
+import RentInput from './GenericInputs/RentInput';
+import PreviousRentInput from './GenericInputs/PreviousRentInput';
+import AddressInput from './GenericInputs/AddressInput';
+import NewBuildingInput from './GenericInputs/NewBuildingInput';
+import ConstructionDateInput from './GenericInputs/ConstructionDateInput';
+import SquareMetersInput from './GenericInputs/SquareMetersInput';
+import BaseFeaturesInput from './GenericInputs/BaseFeaturesInput';
 
-import RangeSelectionGroup from '../RangeInputComponents/RangeSelectionGroup';
-import * as BathFeatures from '../RangeInputComponents/BathFeatures';
-import * as KitchenFeatures from '../RangeInputComponents/KitchenFeatures';
-import * as ApartmentFeatures from '../RangeInputComponents/ApartmentFeatures';
-import * as BuildingFeatures from '../RangeInputComponents/BuildingFeatures';
-import * as EnvironmentFeatures from '../RangeInputComponents/EnvironmentFeatures';
+import RangeSelectionGroup from './ApartmentFeatureInputs/RangeSelectionGroup';
+import * as BathFeatures from './ApartmentFeatureInputs/BathFeatures';
+import * as KitchenFeatures from './ApartmentFeatureInputs/KitchenFeatures';
+import * as ApartmentFeatures from './ApartmentFeatureInputs/ApartmentFeatures';
+import * as BuildingFeatures from './ApartmentFeatureInputs/BuildingFeatures';
+import * as EnvironmentFeatures from './ApartmentFeatureInputs/EnvironmentFeatures';
 
 import './Assistant.css';
 
@@ -61,30 +61,31 @@ type AssistantProps = {
   intl: {}
 };
 
+const testData = {
+  "BathGroup":{"positive":[],"negative":[]},
+  "KitchenGroup":{"positive":[],"negative":[]},
+  "ApartmentGroup":{"positive":[],"negative":[]},
+  "BuildingGroup":{"positive":[],"negative":[]},
+  "EnvironmentGroup":{"positive":[],"negative":[]},
+  "leaseCreated":"2015-07-31T22:00:00.000Z",
+  "rent":1200,
+  "address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"},
+  baseFeatures: "default",
+  constructionDate: "Pre2002",
+  intermediateResult: {max: 9.27, mid: 8, min: 6.3},
+  newBuilding: false,
+  squareMeters: 90,
+  renovation: "simple",
+  previousRent: -1
+};
+
 class Assistant extends React.Component {
 	state = {
 		stage: 0,
 		serialNumber: "03",
     inputValid: {},
-    inputData: process.env.NODE_ENV === "production" ? {} : {
-      "BathGroup":{"positive":[],"negative":[],"balance":0},
-      "KitchenGroup":{"positive":[],"negative":[],"balance":0},
-      "ApartmentGroup":{"positive":[],"negative":[],"balance":0},
-      "BuildingGroup":{"positive":[],"negative":[],"balance":0},
-      "EnvironmentGroup":{"positive":[],"negative":[],"balance":0},
-      "leaseCreated":"2015-07-31T22:00:00.000Z",
-      "rent":900,
-      "address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"},
-      baseFeatures: "default",
-      constructionDate: "Pre2002",
-      intermediateResult: {max: 9.27, mid: 8, min: 6.3},
-      newBuilding: false,
-      squareMeters: 90,
-      renovation: "simple",
-      previousRent: -1
-    }
+    inputData: process.env.NODE_ENV === "production" ? {} : testData
 	}
-  // inputData: {"BathGroup":{"positive":[],"negative":[],"balance":0},"KitchenGroup":{"positive":[],"negative":[],"balance":0},"ApartmentGroup":{"positive":[],"negative":[],"balance":0},"BuildingGroup":{"positive":[],"negative":[],"balance":0},"EnvironmentGroup":{"positive":[],"negative":[],"balance":0},"leaseCreated":"2015-07-31T22:00:00.000Z","rent":900,"address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"}}}
 
   style = {
     container: {
@@ -124,8 +125,7 @@ class Assistant extends React.Component {
       if (inputData[name] === undefined) {
         inputData[name] = {
           positive: [],
-          negative: [],
-          balance: 0
+          negative: []
         }
       }
     });
@@ -155,7 +155,7 @@ class Assistant extends React.Component {
 	}
 
 	handleInputChanged(newData: Object, cb: () => any) {
-    // This method is called from input components when their internal data is updated
+    // This method is called from input components when their respective data is updated
     this.setState({inputData: Object.assign({}, this.state.inputData, newData)}, cb);
     Object.keys(newData).map(k => console.log(k, newData[k]));
 	}

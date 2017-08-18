@@ -4,7 +4,10 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
 
-import { Card, CardTitle, CardText } from 'material-ui/Card';
+import Mietwucher from "./Mietwucher";
+import RenovationCase from "./RenovationCase";
+import {groupBalance} from "../ApartmentFeatureInputs/RangeSelectionGroup";
+import FeatureShortnames from "../ApartmentFeatureInputs/FeatureShortnames";
 
 import {
   Table,
@@ -40,7 +43,6 @@ const groupNameTranslations = defineMessages({
 
 type FinalResultProps = {
   [string]: {
-    balance: number,
     negative: Array<string>,
     positive: Array<string>
   }
@@ -52,7 +54,9 @@ class FinalResult extends React.Component {
 
   state: {
     balance: number,
-    localRentLevel: number
+    localRentLevel: number,
+    mpbRent: number,
+    mpbRentLevel: number
   };
 
   constructor(props: FinalResultProps) {
@@ -69,7 +73,7 @@ class FinalResult extends React.Component {
     // To calculate balance, for every group with predominantly positive features 1 is added,
     // for predominantly negative groups 1 is subtracted
     const balance = this.groups
-      .map(group => this.props.data[group].balance < 0 ? -1 : this.props.data[group].balance === 0 ? 0 : 1)
+      .map(group => groupBalance(this.props.data[group]) < 0 ? -1 : groupBalance(this.props.data[group]) === 0 ? 0 : 1)
       .reduce((a, b) => (a + b), 0);
 
     const localRentLevel = balance >= 0 
@@ -93,10 +97,10 @@ class FinalResult extends React.Component {
   renderTableRows() {
     const rangeFeatures = this.groups.map(group => <TableRow key={group}>
         <TableRowColumn><FormattedMessage {...groupNameTranslations[group]} /></TableRowColumn>
-        <TableRowColumn>{this.props.data[group].positive.map(n => <p key={n}>{n}</p>)}</TableRowColumn>
-        <TableRowColumn>{this.props.data[group].negative.map(n => <p key={n}>{n}</p>)}</TableRowColumn>
-        <TableRowColumn style={{color: (this.props.data[group].balance < 0 ? "green" : this.props.data[group].balance > 0 ? "red" : "black")}}>
-           {(this.props.data[group].balance < 0 ? "Mietsenkend" : (this.props.data[group].balance === 0 ? "Neutral" : "Mietsteigernd"))} ({this.props.data[group].balance})
+        <TableRowColumn>{this.props.data[group].positive.map(n => <p key={n}><FormattedMessage {...FeatureShortnames[n]} /></p>)}</TableRowColumn>
+        <TableRowColumn>{this.props.data[group].negative.map(n => <p key={n}><FormattedMessage {...FeatureShortnames[n]} /></p>)}</TableRowColumn>
+        <TableRowColumn style={{color: (groupBalance(this.props.data[group]) < 0 ? "green" : groupBalance(this.props.data[group]) > 0 ? "red" : "black"), "whiteSpace": "normal"}}>
+           {(groupBalance(this.props.data[group]) < 0 ? "Überwiegend mietsenkend" : (groupBalance(this.props.data[group]) === 0 ? "Neutral" : "Überwiegend mietsteigernd"))} ({groupBalance(this.props.data[group])})
         </TableRowColumn>
       </TableRow>
     );
@@ -104,25 +108,36 @@ class FinalResult extends React.Component {
   }
 
   render() {
-    const calculationMessage = this.state.balance !== 0 ? 
-        <FormattedMessage
-          id="FinalResult.calculation"
-          defaultMessage="Insgesamt überwiegen Gruppen mit {balanceDirection} Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
-            Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Minimalwert abgezogen. Hierdurch ergibt sich
-            die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
-          values={{
-            balance: this.state.balance,
-            balanceDirection: this.state.balance >= 0 ? "positiven" : "negativen",
-            balanceAbs: Math.abs(this.state.balance),
-            correctionPercentage: Math.abs(this.state.balance) * 20,
-            localRentLevel: this.state.localRentLevel
-          }} /> :
-        <FormattedMessage
+    const calculationMessage = this.state.balance === 0
+      ? <FormattedMessage
           id="FinalResult.calculationBalanced"
           defaultMessage="In deinem Fall halten sich positive und negative Merkmalgruppen die Waage. Hierdurch gilt direkt
             die ortsübliche Vergleichsmiete aus Schritt 3 von {localRentLevel, number} € pro Quadratmeter."
           values={{
             localRentLevel: this.state.localRentLevel
+          }} />
+      : this.state.balance < 0
+        ? <FormattedMessage
+            id="FinalResult.calculationNegative"
+            defaultMessage="Insgesamt überwiegen Gruppen mit negativen (mietsenkenden) Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
+              Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Minimalwert der Spanne abgezogen. Hierdurch ergibt sich
+              die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
+            values={{
+              balance: this.state.balance,
+              balanceAbs: Math.abs(this.state.balance),
+              correctionPercentage: Math.abs(this.state.balance) * 20,
+              localRentLevel: this.state.localRentLevel
+          }} />
+        : <FormattedMessage
+            id="FinalResult.calculationPositive"
+            defaultMessage="Insgesamt überwiegen Gruppen mit positiven (mietsteigernden) Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
+              Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Maximalwert der Spanne abgezogen. Hierdurch ergibt sich
+              die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
+            values={{
+              balance: this.state.balance,
+              balanceAbs: Math.abs(this.state.balance),
+              correctionPercentage: Math.abs(this.state.balance) * 20,
+              localRentLevel: this.state.localRentLevel
           }} />;
 
     const isPreviousRentLimiting = this.props.data.previousRent > this.props.data.squareMeters * (this.state.localRentLevel * 1.1);
@@ -143,10 +158,13 @@ class FinalResult extends React.Component {
             defaultMessage="Die Miete deines Vormieters lag auch unter diesem Wert und steht damit einer Mietsenkung nicht im Wege." />;
 
     return <div>
-      <p>Du hast es geschafft! Mit den erfassten Merkmalen kann jetzt die ortsübliche Vergleichsmiete für deine Wohnung ermittelt werden:</p>
-      <p>Für jede der fünf Merkmalgruppen, in der überwiegend positive Merkmale ausgewählt wurden, werden jetzt auf den Mittelwert aus dem Mietspiegel
-      20% der Differenz zum Maximalwert addiert, bzw. umgekehrt für negative Merkmale.</p>
-      <Table selectable={false} style={{border: "1px solid #eee"}}>
+      <h1><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="Ergebnis" /></h1>
+      <p><FormattedMessage
+        id="FinalResult.tableDescription"
+        defaultMessage="In dieser Tabelle siehst du nochmal alle von dir gewählten Merkmale. In der rechten Spalte wird für jede Merkmalgruppe gezeigt, 
+          ob positive oder negative Merkmale überwiegen. Ganz unten rechts wird daraus wiederum die Balance aller Merkmalgruppen berechnet." />
+      </p>
+      <Table selectable={false} style={{border: "1px solid #eee", tableLayout: "fixed"}}>
         <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
           <TableRow>
             <TableHeaderColumn>Merkmalgruppe</TableHeaderColumn>
@@ -163,12 +181,11 @@ class FinalResult extends React.Component {
             </TableRowColumn>
             <TableRowColumn></TableRowColumn>
             <TableRowColumn></TableRowColumn>
-            <TableRowColumn>{(this.state.balance < 0 ? "+" + Math.abs(this.state.balance) + " negative Gruppen" : (this.state.balance > 0 ? "+" + this.state.balance + " positive Gruppen" : "neutral"))}</TableRowColumn>
+            <TableRowColumn>{(this.state.balance < 0 ? "-" + Math.abs(this.state.balance) + " Gruppen" : (this.state.balance > 0 ? "+" + this.state.balance + " Gruppen" : "neutral"))}</TableRowColumn>
           </TableRow>
         </TableBody>
       </Table>
 
-      <h2><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="Ergebnis" /></h2>
       <p>
         {calculationMessage}
       </p>
@@ -206,6 +223,10 @@ class FinalResult extends React.Component {
       <h3><FormattedMessage id="FinalResult.previousRentTitle" defaultMessage="Vormiete" /></h3>
       <p>{previousRentCase}</p>
 
+      <Mietwucher 
+        rent={this.props.data.rent}
+        mpbRent={this.props.data.FinalResult} />
+
       <section>
         <h2>
           <FormattedMessage
@@ -223,57 +244,5 @@ class FinalResult extends React.Component {
     </div>;
   }
 }
-
-type RenovationCaseProps = {
-  renovationInput: string, 
-  rent: number,
-  mpbRent: number,
-  intl: Object
-};
-
-const innerRenovationCase = (props: RenovationCaseProps) => {
-  if (props.renovationInput !== "simple") {
-    return null;
-  } else {
-    const messages = defineMessages({
-      title: {
-        id: "RenovationCase.title",
-        defaultMessage: "Sanierungskosten"
-      },
-      description: {
-        id: "RenovationCase.description",
-        defaultMessage: `Du hast angegeben, dass eine Sanierung bzw. Modernisierung durchgeführt wurde. Der Vermieter darf 
-          pro Jahr 11% der dafür angefallenen Investitionskosten auf die nach Mietpreisbremse _vor_ der Sanierung zulässige Miete aufschlagen:`
-      },
-      formula: {
-        id: "RenovationCase.formula",
-        defaultMessage: "Ortsübliche Vergleichsmiete vor Sanierung + 10% + (11% der Sanierungskosten / 12 Monate) = Zulässige Miete"
-      },
-      calculation: {
-        id: "RenovationCase.calculation",
-        defaultMessage: `Wenn du die Fragen auf dieser Seite dem Zustand der Wohnung vor den Sanierungs-/Modernisierungsarbeiten entsprechend 
-          beantwortet hast, ist deine Miete von {currentRent, number, currency} also gerechtfertigt bei Sanierungskosten von mindestens
-          (Jetzige Miete - (Ortsübliche Vergleichsmiete + 10%)) * 12/0,11 ≈ {renovationCost, number, currency}. Ist das glaubwürdig?`
-      }
-    });
-
-    const calculation = {
-      currentRent: props.rent,
-      mpbRent: props.mpbRent,
-      renovationCost: (props.rent - props.mpbRent) * 12.0 / 0.11
-    };
-
-    return <Card>
-      <CardTitle title={props.intl.formatMessage(messages.title)} />
-      <CardText>
-        <p><FormattedMessage {...messages.description} /></p>
-        <p><FormattedMessage {...messages.formula} /></p>
-        <p><FormattedMessage values={calculation} {...messages.calculation} /></p>
-      </CardText>
-    </Card>;
-  }
-}
-
-const RenovationCase = injectIntl(innerRenovationCase);
 
 export default injectIntl(FinalResult);

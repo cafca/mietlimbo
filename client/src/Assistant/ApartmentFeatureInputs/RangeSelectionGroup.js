@@ -5,15 +5,17 @@ import { intlShape } from 'react-intl';
 
 import './Styles.css';
 
+type GroupData = {
+  positive: Array<string>,
+  negative: Array<string>
+};
+
 // Properties passed to a RangeSelectionGroup
 type RangeSelectionGroupProps = {
   changed: Object => any,
   inputComponents: Object,
   domain: string,
-  inputData: {
-    positive: Array<string>,
-    negative: Array<string>
-  }
+  inputData: GroupData
 };
 
 // Properties passed by a RangeSelectionGroup to its input components
@@ -24,6 +26,9 @@ export type RangeInputProps = {
   directValue: any,
   directChanged: {[string]: any} => any
 };
+
+export const groupBalance = (props: GroupData) => 
+  props.positive.length - props.negative.length;
 
 class RangeSelectionGroup extends React.Component {
   constructor(props: RangeSelectionGroupProps) {
@@ -55,16 +60,9 @@ class RangeSelectionGroup extends React.Component {
       newFeatureList.splice(position, 1);
     }
 
-    // Balance increases when positive features are added or negative ones
-    // removed and vice verse
-    const balance = positive === value 
-      ? this.props.inputData.balance + 1 
-      : this.props.inputData.balance - 1;
-
     const updatedData = Object.assign({}, this.props.inputData, {
       positive: positive === true ? newFeatureList : this.props.inputData.positive,
-      negative: positive === false ? newFeatureList : this.props.inputData.negative,
-      balance,
+      negative: positive === false ? newFeatureList : this.props.inputData.negative
     });
 
     this.props.changed({[this.props.domain]: updatedData}, cb);
