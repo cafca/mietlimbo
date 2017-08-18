@@ -62,11 +62,11 @@ type AssistantProps = {
 };
 
 const testData = {
-  "BathGroup":{"positive":[],"negative":[],"balance":0},
-  "KitchenGroup":{"positive":[],"negative":[],"balance":0},
-  "ApartmentGroup":{"positive":[],"negative":[],"balance":0},
-  "BuildingGroup":{"positive":[],"negative":[],"balance":0},
-  "EnvironmentGroup":{"positive":[],"negative":[],"balance":0},
+  "BathGroup":{"positive":[],"negative":[]},
+  "KitchenGroup":{"positive":[],"negative":[]},
+  "ApartmentGroup":{"positive":[],"negative":[]},
+  "BuildingGroup":{"positive":[],"negative":[]},
+  "EnvironmentGroup":{"positive":[],"negative":[]},
   "leaseCreated":"2015-07-31T22:00:00.000Z",
   "rent":1200,
   "address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"},
@@ -125,8 +125,7 @@ class Assistant extends React.Component {
       if (inputData[name] === undefined) {
         inputData[name] = {
           positive: [],
-          negative: [],
-          balance: 0
+          negative: []
         }
       }
     });
