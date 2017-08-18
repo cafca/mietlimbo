@@ -164,9 +164,16 @@ class MietspiegelPlace extends React.Component {
 
   componentWillReceiveProps(nextProps: MietspiegelPlaceProps) {
     if(nextProps.query !== this.props.query) {
+      // Wait until four characters have been entered, then show loading
+      // indicator until some results have come in, then only update results
+      // for new query characters without loading indicator.
       this.setState({
         query: nextProps.query,
-        state: nextProps.query.length < 4 ? this.states.WAITING : this.states.REQUESTED
+        state: nextProps.query.length < 4 
+          ? this.states.WAITING 
+          : this.state.places.length === 0 
+            ? this.states.REQUESTED 
+            : this.states.SELECTING
       });
       if (nextProps.query.length >= 4) this.handleQuery(nextProps.query);
     }
