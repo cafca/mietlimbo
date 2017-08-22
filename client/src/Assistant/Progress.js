@@ -2,26 +2,14 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import Sticky from "react-stickynode";
 import Paper from "material-ui/Paper";
 
 import FlatButton from 'material-ui/FlatButton';
-import {
-  Step,
-  Stepper,
-  StepLabel,
-} from 'material-ui/Stepper';
-import Chip from 'material-ui/Chip';
-import {
-  blue500, blue700, blue300, red300, 
-  pinkA200,
-  grey100, grey300, grey400, grey500,
-  white, darkBlack, fullBlack,
-} from 'material-ui/styles/colors';
+import { blue300, pinkA200, grey400 } from 'material-ui/styles/colors';
 
 import { stageNames } from "./Assistant";
-import SectionPicture from './SectionPicture';
 import {groupBalance} from"./ApartmentFeatureInputs/RangeSelectionGroup";
 
 type ProgressProps = {
@@ -92,35 +80,6 @@ class Progress extends React.Component {
       />;}
       );
 
-    let rentLevel = null;
-    // may be undefined or null
-    // eslint-disable-next-line eqeqeq
-    if (this.props.data.FinalResult != undefined) {
-      rentLevel = <div style={this.style.result}>
-        <p><FormattedMessage 
-          id="Progress.finalResult"
-          defaultMessage="mietlimbo level {lower, number, currency} unter deiner jetzigen Miete!"
-          values={{lower: this.props.data.rent - this.props.data.FinalResult}} /></p>
-      </div>;
-    // eslint-disable-next-line eqeqeq
-    } else if (this.props.data.intermediateResult != undefined && this.props.data.intermediateResult.min != undefined) {
-      const irValues = {
-        min: Math.abs(this.props.data.intermediateResult.min * 1.1 * this.props.data.squareMeters - this.props.data.rent)
-      }
-          
-      rentLevel = <div style={this.style.result}>
-        <p><FormattedMessage 
-          id="Progress.intermediateResult"
-          defaultMessage="mietlimbo level bis zu {min, number, currency} unter deiner jetzigen Miete!"
-          values={irValues} /></p>
-      </div>;
-    }
-
-    // <SectionPicture name={stageNames[this.props.stage - 1]} />
-      // <Tabs value={(this.props.stage - 1)} onChange={this.handleClick}>
-        // {tabs}
-      // </Tabs>
-
     return <section style={this.style.main}>
       <Sticky enabled={this.props.stage <= 3} innerZ={4}>
         <Paper className="featureGroups" zDepth={3}>
@@ -149,9 +108,6 @@ class Progress extends React.Component {
           {stageButtons.slice(4)}
         </Paper>
       </Sticky>
-
-      <div className="rangeVisualisation">
-      </div>
     </section>;
   }
 }

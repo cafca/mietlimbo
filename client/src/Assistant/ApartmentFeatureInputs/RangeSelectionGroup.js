@@ -28,6 +28,7 @@ export type RangeInputProps = {
 };
 
 export const groupBalance = (props: GroupData) => 
+  // eslint-disable-next-line eqeqeq
   props == undefined ? 0 : props.positive.length - props.negative.length;
 
 class RangeSelectionGroup extends React.Component {
