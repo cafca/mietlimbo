@@ -15,8 +15,8 @@ const styles = {
     fontSize: 18
   },
   titleWrapper: {
-    padding: 20,
-    marginBottom: "1em"
+    padding: "1em",
+    marginBottom: 5
   }
 };
 

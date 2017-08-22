@@ -40,9 +40,13 @@ class Progress extends React.Component {
       marginBottom: "1em"
     },
     stageButton: {
-      width: "15%", 
       zIndex: 3, 
       borderRadius: 0
+    },
+    activeStageButton: {
+      zIndex: 3, 
+      borderRadius: 0,
+      color: "white"
     },
     result: {
       fontSize: 16
@@ -76,13 +80,13 @@ class Progress extends React.Component {
         disabled={!this.props.isStageEnabled(i)} 
         primary={this.props.stage === (i) ? false : groupBalance(this.props.data[stageKeys[i]]) < 0}
         secondary={this.props.stage === (i) ? false : groupBalance(this.props.data[stageKeys[i]]) > 0}
-        style={this.style.stageButton}
+        style={this.props.stage === (i) ? this.style.activeStageButton : this.style.stageButton}
         backgroundColor={this.props.stage === (i) 
           ? groupBalance(this.props.data[stageKeys[i]]) < 0 
             ? blue300 // group is negative
             : groupBalance(this.props.data[stageKeys[i]]) > 0 
               ? pinkA200  // group is positve
-              : grey300  // group is neutral or button is not for a group
+              : grey400  // group is neutral or button is not for a group
           : null // no backgroundcolor if not active
         }
       />;}
@@ -121,7 +125,7 @@ class Progress extends React.Component {
       <Sticky enabled={this.props.stage <= 3} innerZ={4}>
         <Paper className="featureGroups" zDepth={3}>
           <FlatButton 
-            label="I:" 
+            label="Ⅰ" 
             key={"Stage 1"}
             disabled={true} 
             primary={this.props.stage <= 3}
@@ -136,7 +140,7 @@ class Progress extends React.Component {
       <Sticky enabled={this.props.stage > 3} innerZ={3}>
         <Paper className="featureGroups" zDepth={2}>
           <FlatButton 
-            label="II:" 
+            label="Ⅱ" 
             key={"Stage 2"}
             disabled={true} 
             primary={this.props.stage > 3}
