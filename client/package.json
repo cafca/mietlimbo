@@ -1,6 +1,6 @@
 {
   "name": "mietlimbo",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "dependencies": {
     "intl": "^1.2.5",
