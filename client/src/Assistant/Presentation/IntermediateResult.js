@@ -186,7 +186,7 @@ class IntermediateResult extends React.Component {
       default:
         title = <FormattedMessage {...this.messages.connectionError} />;
         content = <div>
-          <p><RaisedButton label={this.props.intl.formatMessage(this.messages.retry)} onTouchTap={() => this.loadRentData()} /></p>
+          <p><RaisedButton label={this.props.intl.formatMessage(this.messages.retry)} onClick={() => this.loadRentData()} /></p>
         </div>;
         break;
     }
