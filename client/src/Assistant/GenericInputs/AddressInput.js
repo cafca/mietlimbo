@@ -228,7 +228,7 @@ class MietspiegelPlace extends React.Component {
             <MenuItem 
               primaryText={rangeData.name} 
               key={rangeData.id} 
-              onTouchTap={ev => {this.handleSelection(ev, 
+              onClick={ev => {this.handleSelection(ev, 
                 {id: rangeData.id, streetname: placeData.name, range: rangeData.name})}}
               value={{id: rangeData.id, street: placeData.name, range: rangeData.name}} />
           );
@@ -243,7 +243,7 @@ class MietspiegelPlace extends React.Component {
             return <MenuItem
               primaryText={placeData.name} 
               key={placeData.name} 
-              onTouchTap={ev => {this.handleSelection(ev, 
+              onClick={ev => {this.handleSelection(ev, 
                 {
                   id: placeData.ranges[0].id, 
                   streetname: placeData.name, 
@@ -258,7 +258,7 @@ class MietspiegelPlace extends React.Component {
           leftIcon={<ClearIcon />}
           primaryText={this.state.selected.streetname}
           secondaryText={this.state.selected.range}
-          onTouchTap={this.handleReset}
+          onClick={this.handleReset}
           />;
         break;
 
@@ -269,7 +269,7 @@ class MietspiegelPlace extends React.Component {
             defaultMessage={(this.state.errorMsg || "Das hat leider nicht geklappt.") 
               + "\nBitte klicke hier um es nochmal zu versuchen."} />}
           leftIcon={<ErrorIcon />}
-          onTouchTap={ev => this.handleQuery(this.state.query)}
+          onClick={ev => this.handleQuery(this.state.query)}
           />;
         break;
       default:

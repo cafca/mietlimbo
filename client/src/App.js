@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import de from 'react-intl/locale-data/de';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -17,10 +16,6 @@ import About from './Pages/About';
 import Theme from './Theme.js'
 
 addLocaleData([...de]);
-
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
 
 const Navigation = (props) => {
   const style = {

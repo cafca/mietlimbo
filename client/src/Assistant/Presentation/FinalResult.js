@@ -17,6 +17,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import { blue500, pinkA200 } from 'material-ui/styles/colors';
 
 const groupNameTranslations = defineMessages({
   BathGroup: {
@@ -99,7 +100,7 @@ class FinalResult extends React.Component {
         <TableRowColumn><FormattedMessage {...groupNameTranslations[group]} /></TableRowColumn>
         <TableRowColumn>{this.props.data[group].positive.map(n => <p key={n}><FormattedMessage {...FeatureShortnames[n]} /></p>)}</TableRowColumn>
         <TableRowColumn>{this.props.data[group].negative.map(n => <p key={n}><FormattedMessage {...FeatureShortnames[n]} /></p>)}</TableRowColumn>
-        <TableRowColumn style={{color: (groupBalance(this.props.data[group]) < 0 ? "green" : groupBalance(this.props.data[group]) > 0 ? "red" : "black"), "whiteSpace": "normal"}}>
+        <TableRowColumn style={{color: (groupBalance(this.props.data[group]) < 0 ? blue500 : groupBalance(this.props.data[group]) > 0 ? pinkA200 : "black"), "whiteSpace": "normal"}}>
            {(groupBalance(this.props.data[group]) < 0 ? "Überwiegend mietsenkend" : (groupBalance(this.props.data[group]) === 0 ? "Neutral" : "Überwiegend mietsteigernd"))} ({groupBalance(this.props.data[group])})
         </TableRowColumn>
       </TableRow>
@@ -150,8 +151,8 @@ class FinalResult extends React.Component {
       : isPreviousRentLimiting
         ? <FormattedMessage
             id="FinalResult.previousRentLimiting"
-            defaultMessage="Dadurch, dass dein Vormieter allerdings schon eine höhere Miete gezahlt hat, kannst du allerdings 
-              nur auf {limit, number, currency} € senken."
+            defaultMessage="Dadurch, dass deine Vormieter schon eine höhere Miete gezahlt haben, kannst du allerdings 
+              nur auf deren Miete von {limit, number, currency} senken."
             values={{limit: this.props.data.previousRent}} />
         : <FormattedMessage
             id="FinalResult.previousRentNotLimiting"
