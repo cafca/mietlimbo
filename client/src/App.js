@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import de from 'react-intl/locale-data/de';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import { BrowserRouter, Route, NavLink } from 'react-router-dom'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
