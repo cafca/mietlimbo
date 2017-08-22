@@ -18,10 +18,6 @@ import Theme from './Theme.js'
 
 addLocaleData([...de]);
 
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
-
 const Navigation = (props) => {
   const style = {
     main: {
