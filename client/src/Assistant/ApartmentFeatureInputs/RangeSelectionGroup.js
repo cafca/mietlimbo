@@ -28,7 +28,7 @@ export type RangeInputProps = {
 };
 
 export const groupBalance = (props: GroupData) => 
-  props.positive.length - props.negative.length;
+  props == undefined ? 0 : props.positive.length - props.negative.length;
 
 class RangeSelectionGroup extends React.Component {
   constructor(props: RangeSelectionGroupProps) {

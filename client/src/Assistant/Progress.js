@@ -3,26 +3,26 @@
 import React from 'react';
 import autoBind from 'react-autobind';
 import { injectIntl, FormattedMessage } from 'react-intl';
+import Sticky from "react-stickynode";
+import Paper from "material-ui/Paper";
 
-import Coins from '../Graphics/Coins.png';
-import Contract from '../Graphics/Contract.png';
-import Legal from '../Graphics/Legal.png';
-import Bath from '../Graphics/Bath.png';
-import Kitchen from '../Graphics/Kitchen.png';
-import Apartment from '../Graphics/Apartment.png';
-import Building from '../Graphics/Building.png';
-import Energy from '../Graphics/Energy.png';
-import Environment from '../Graphics/Environment.png';
-import Zack from '../Graphics/Zack.png';
-import Logo from '../Graphics/Logo.png';
-
+import FlatButton from 'material-ui/FlatButton';
 import {
   Step,
   Stepper,
   StepLabel,
 } from 'material-ui/Stepper';
+import Chip from 'material-ui/Chip';
+import {
+  blue500, blue700, blue300, red300, 
+  pinkA200,
+  grey100, grey300, grey400, grey500,
+  white, darkBlack, fullBlack,
+} from 'material-ui/styles/colors';
 
 import { stageNames } from "./Assistant";
+import SectionPicture from './SectionPicture';
+import {groupBalance} from"./ApartmentFeatureInputs/RangeSelectionGroup";
 
 type ProgressProps = {
   advance: number => any,
@@ -37,23 +37,12 @@ type ProgressProps = {
 class Progress extends React.Component {
   style = {
     main: {
-      float: "left",
-      width: 170,
-      marginLeft: -190,
-      marginTop: "1em"
+      marginBottom: "1em"
     },
-    items: {
-      marginRight: 5
-    },
-    step: {
-      height: 10
-    },
-    stepLabel: {
-      height: 3,
-      cursor: "pointer"
-    },
-    stepLabelDisabled: {
-      height: 3
+    stageButton: {
+      width: "15%", 
+      zIndex: 3, 
+      borderRadius: 0
     },
     result: {
       fontSize: 16
@@ -70,17 +59,33 @@ class Progress extends React.Component {
   }
 
   render() { 
-    const steps = stageNames.map(
-      (l, i) => {
-        return<Step style={this.style.step} key={l} className="progressBarStep">
-          <StepLabel 
-            onClick={() => this.handleClick(i + 1)} 
-            style={this.props.isStageEnabled(i + 1) ? this.style.stepLabel : this.style.stepLabelDisabled}
-            disabled={!this.props.isStageEnabled(i + 1)}
-            completed={false}
-            className={this.props.isStageEnabled(i + 1) ? "activeStepLabel" : null}
-          >{l}</StepLabel>
-        </Step>}
+    const stageKeys = [null,null,null,null,"BathGroup", "KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnvironmentGroup",null];
+    
+    const ButtonLabel = (props: {stageName: string, index: number}) => {
+      const balance = groupBalance(this.props.data[stageKeys[props.index]]);
+      const isBadgeEnabled = (3 < props.index) && (props.index < 9) && balance !== 0;
+      const badge = isBadgeEnabled ? (balance < 0 ? balance : <span>+{balance}</span>) : null;
+      return <span>{props.stageName} {badge}</span>;
+    }
+
+    const stageButtons = stageNames.map(
+      (l, i) => {return <FlatButton 
+        label={<ButtonLabel stageName={l} index={i} />} 
+        key={l}
+        onClick={() => this.handleClick(i)} 
+        disabled={!this.props.isStageEnabled(i)} 
+        primary={this.props.stage === (i) ? false : groupBalance(this.props.data[stageKeys[i]]) < 0}
+        secondary={this.props.stage === (i) ? false : groupBalance(this.props.data[stageKeys[i]]) > 0}
+        style={this.style.stageButton}
+        backgroundColor={this.props.stage === (i) 
+          ? groupBalance(this.props.data[stageKeys[i]]) < 0 
+            ? blue300 // group is negative
+            : groupBalance(this.props.data[stageKeys[i]]) > 0 
+              ? pinkA200  // group is positve
+              : grey300  // group is neutral or button is not for a group
+          : null // no backgroundcolor if not active
+        }
+      />;}
       );
 
     let rentLevel = null;
@@ -107,60 +112,44 @@ class Progress extends React.Component {
       </div>;
     }
 
+    // <SectionPicture name={stageNames[this.props.stage - 1]} />
+      // <Tabs value={(this.props.stage - 1)} onChange={this.handleClick}>
+        // {tabs}
+      // </Tabs>
 
     return <section style={this.style.main}>
-      <SectionPicture name={stageNames[this.props.stage - 1]} />
-      {rentLevel}
-      <Stepper activeStep={(this.props.stage - 1)} orientation="vertical" >
-        {steps}
-      </Stepper>
+      <Sticky enabled={this.props.stage <= 3} innerZ={4}>
+        <Paper className="featureGroups" zDepth={3}>
+          <FlatButton 
+            label="I:" 
+            key={"Stage 1"}
+            disabled={true} 
+            primary={this.props.stage <= 3}
+            style={{width: 40, minWidth: 40, zIndex: 3, borderRadius: 0}}
+          />
+          {stageButtons.slice(0, 4)}
+        </Paper>
+      </Sticky>
+
+      <div style={{height: 5}} />
+
+      <Sticky enabled={this.props.stage > 3} innerZ={3}>
+        <Paper className="featureGroups" zDepth={2}>
+          <FlatButton 
+            label="II:" 
+            key={"Stage 2"}
+            disabled={true} 
+            primary={this.props.stage > 3}
+            style={{width: 40, minWidth: 40, zIndex: 3, borderRadius: 0}}
+          />
+          {stageButtons.slice(4)}
+        </Paper>
+      </Sticky>
+
+      <div className="rangeVisualisation">
+      </div>
     </section>;
   }
-}
-
-const SectionPicture = (props) => {
-  const style = {
-    width: 170,
-    marginBottom: 20
-  };
-
-  let src = null;
-  switch (props.name) {
-    case "Start":
-      src = Contract;
-      break;
-    case "Eckdaten":
-      src = Legal;
-      break;
-    case "Mietspiegelabfrage":
-      src = Coins;
-      break;
-    case "Bad":
-      src = Bath;
-      break;
-    case "Küche":
-      src = Kitchen;
-      break;
-    case "Wohnung":
-      src = Apartment;
-      break;
-    case "Gebäude":
-      src = Building;
-      break;
-    case "Energie":
-      src = Energy;
-      break;
-    case "Umfeld":
-      src = Environment;
-      break;
-    case "Ergebnis":
-      src = Zack;
-      break;
-    default:
-      src = Logo;
-  }
-  // alt prop left empty as this image is decorative
-  return <img src={src} style={style} alt="" />;
 }
 
 export default injectIntl(Progress);
