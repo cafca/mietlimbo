@@ -5,7 +5,7 @@ import autoBind from 'react-autobind';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import Introduction from './Introduction';
+import {Introduction, Title} from './Introduction';
 import IntermediateResult from './Presentation/IntermediateResult';
 import FinalResult from './Presentation/FinalResult';
 import Progress from './Progress';
@@ -30,9 +30,10 @@ import * as EnvironmentFeatures from './ApartmentFeatureInputs/EnvironmentFeatur
 import './Assistant.css';
 
 export const stageNames = [
-  "Start",
-  "Eckdaten",
-  "Mietspiegelabfrage",
+  "Einleitung",
+  "Ausnahmen",
+  "Basisdaten",
+  "Halbfertig",
   "Bad",
   "Küche",
   "Wohnung",
@@ -45,8 +46,8 @@ export const stageNames = [
 // (all previous conditions are also required, of course)
 export const stageConditions = [
   [],
-  ["leaseCreated", "rent", "previousRent", "address"],
-  ["newBuilding", "constructionDate", "squareMeters", "baseFeatures"],
+  ["leaseCreated", "newBuilding", "renovation", "baseFeatures"],
+  ["address", "squareMeters", "rent", "previousRent", "constructionDate"],
   ["intermediateResult"],
   [],
   [],
@@ -176,6 +177,7 @@ class Assistant extends React.Component {
 
 	render() {
 		let content = "";
+    let title = "";
 
 		const valid = this.handleInputValid;
 		const changed = this.handleInputChanged;
@@ -184,20 +186,20 @@ class Assistant extends React.Component {
 			case 1:
         content = <div key="stage1">
           <LeaseCreatedInput valid={valid} changed={changed} value={this.state.inputData.leaseCreated} />
+          <NewBuildingInput valid={valid} changed={changed} value={this.state.inputData.newBuilding} />
           <RenovationInput valid={valid} changed={changed} value={this.state.inputData.renovation} />
-          <RentInput valid={valid} changed={changed} value={this.state.inputData.rent} />
-          <PreviousRentInput valid={valid} changed={changed} value={this.state.inputData.previousRent} />
-          <AddressInput valid={valid} changed={changed} value={this.state.inputData.address} />
+          <BaseFeaturesInput valid={valid} changed={changed} value={this.state.inputData.baseFeatures} />
         </div>;
 				break;
 
 			case 2:
 				content = <div key="stage2">
-					<NewBuildingInput valid={valid} changed={changed} value={this.state.inputData.newBuilding} />
-					<ConstructionDateInput valid={valid} changed={changed} value={this.state.inputData.constructionDate} />
-					<SquareMetersInput valid={valid} changed={changed} 
+          <AddressInput valid={valid} changed={changed} value={this.state.inputData.address} />
+          <ConstructionDateInput valid={valid} changed={changed} value={this.state.inputData.constructionDate} />
+          <SquareMetersInput valid={valid} changed={changed} 
             exact={this.state.inputData.squareMeters} guessed={this.state.inputData.squareMetersGuessed} />
-          <BaseFeaturesInput valid={valid} changed={changed} value={this.state.inputData.baseFeatures} />
+          <RentInput valid={valid} changed={changed} value={this.state.inputData.rent} />
+          <PreviousRentInput valid={valid} changed={changed} value={this.state.inputData.previousRent} />
 				</div>;
 				break;
 
@@ -304,11 +306,13 @@ class Assistant extends React.Component {
 			case 0:
 			default:
 				content = <Introduction serialNumber={this.state.serialNumber} />;
+        title = <Title />;
 		}
     const debug = process.env.NODE_ENV === "production" ? null : <pre>{JSON.stringify(this.state.inputData, null, 2)}</pre>;
 
     const buttonDisplayStyle = this.state.stage === stageNames.length ? "none" : "initial";
 		return <div className="assistant" style={this.style.container} >
+      {title}
       <Progress 
         serialNumber={this.state.serialNumber} 
         stage={this.state.stage} 

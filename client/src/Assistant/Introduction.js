@@ -2,6 +2,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import {red500} from 'material-ui/styles/colors';
+import Paper from 'material-ui/Paper';
 
 const styles = {
   bigtext: {
@@ -12,19 +13,15 @@ const styles = {
   },
   text: {
     fontSize: 18
+  },
+  titleWrapper: {
+    padding: "1em",
+    marginBottom: 5
   }
 };
 
-const Introduction = (props: {serialNumber: string}) => {
-  return <section style={styles.wrapper} >
-    <p style={styles.bigtext}><FormattedMessage
-      id="Introduction.overview"
-      defaultMessage={`Hey Mieter! Hier findest du in den nächsten 30 Minuten heraus, 
-        wieviel Geld du mit der Mietpreisbremse sparen kannst und was genau 
-        der erste Schritt ist, um damit zu beginnen. Mit etwas Mut und Geduld könntest du einen Haufen Geld 
-        sparen und zugleich deinen Kiez davor schützen, bei explosiven 
-        Mietsteigerungen sein Gesicht zu verlieren.`}
-    /></p>
+export const Introduction = (props: {serialNumber: string}) => {
+  return <section>
     <p style={styles.warning}>
       <FormattedMessage
         id="Introduction.warning"
@@ -97,5 +94,9 @@ const Introduction = (props: {serialNumber: string}) => {
   </section>;
 }
 
-export default Introduction;
-
+export const Title = () => <Paper zDepth={4} style={styles.titleWrapper}><p style={styles.bigtext}><FormattedMessage
+  id="Introduction.overview"
+  defaultMessage={`Mit mietlimbo findest du in 30 Minuten heraus, 
+    wieviel Geld du monatlich mit der Mietpreisbremse sparen könntest und was genau 
+    der erste Schritt ist, um dahin zu kommen.`}
+/></p></Paper>;
