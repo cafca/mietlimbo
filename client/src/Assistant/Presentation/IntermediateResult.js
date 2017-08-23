@@ -30,6 +30,7 @@ class IntermediateResult extends React.Component {
   };
 
   inputName = "intermediateResult"
+  serverURL : string; // set in constructor
 
   states = {
     LOADING: "Requesting rent level data",

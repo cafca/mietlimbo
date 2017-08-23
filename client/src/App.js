@@ -41,8 +41,6 @@ const Navigation = (props) => {
     <div style={style.container}>
       <NavLink style={style.link} activeStyle={style.active} exact={true} to="/">vorwort</NavLink>
       <NavLink style={style.link} activeStyle={style.active} to="/app/">mietlimbo</NavLink>
-      <a style={style.link} href="https://blog.mietlimbo.de/">blog</a>
-      <NavLink style={style.link} activeStyle={style.active} to="/about/">über</NavLink>
     </div>
   </div>;
 }
@@ -52,7 +50,6 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <Navigation />
           <div className="App-main">
             <Route exact path="/" component={Landing} />
             <Route exact path="/app/" component={Assistant} />
