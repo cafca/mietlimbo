@@ -5,7 +5,7 @@ import { intlShape } from 'react-intl';
 
 import './Styles.css';
 
-type GroupData = {
+export type GroupData = {
   positive: Array<string>,
   negative: Array<string>
 };
@@ -15,7 +15,7 @@ type RangeSelectionGroupProps = {
   changed: Object => any,
   inputComponents: Object,
   domain: string,
-  inputData: GroupData
+  data: GroupData
 };
 
 // Properties passed by a RangeSelectionGroup to its input components
@@ -41,7 +41,7 @@ class RangeSelectionGroup extends React.Component {
     const cat = positive === true ? "positive" : "negative";
 
     // If `value` is true, a feature was added, otherwise a feature was removed
-    const newFeatureList = this.props.inputData[cat].slice();
+    const newFeatureList = this.props.data[cat].slice();
     if (value === true) {
       if (newFeatureList.indexOf(name) >= 0) {
         // Don't store the same feature twice
@@ -51,7 +51,7 @@ class RangeSelectionGroup extends React.Component {
       }
       newFeatureList.splice(-1, 0, name);
     } else {
-      const position = this.props.inputData[cat].indexOf(name);
+      const position = this.props.data[cat].indexOf(name);
       if (position < 0) {
         // Stop here if the feature to be removed is not on the list
         // eslint-disable-next-line eqeqeq
@@ -61,9 +61,9 @@ class RangeSelectionGroup extends React.Component {
       newFeatureList.splice(position, 1);
     }
 
-    const updatedData = Object.assign({}, this.props.inputData, {
-      positive: positive === true ? newFeatureList : this.props.inputData.positive,
-      negative: positive === false ? newFeatureList : this.props.inputData.negative
+    const updatedData = Object.assign({}, this.props.data, {
+      positive: positive === true ? newFeatureList : this.props.data.positive,
+      negative: positive === false ? newFeatureList : this.props.data.negative
     });
 
     this.props.changed({[this.props.domain]: updatedData}, cb);
@@ -72,8 +72,8 @@ class RangeSelectionGroup extends React.Component {
   render() {
     // The index of checked fields allows passing in the current value to the input
     // componenet below by checking whether it's included in this index
-    const checkedFields = this.props.inputData === undefined ? [] 
-      : this.props.inputData.negative.concat(this.props.inputData.positive);
+    const checkedFields = this.props.data === undefined ? [] 
+      : this.props.data.negative.concat(this.props.data.positive);
 
     const inputElements = Object.keys(this.props.inputComponents).map(
       k => React.createElement(
@@ -82,7 +82,7 @@ class RangeSelectionGroup extends React.Component {
           changed: this.handleChange, 
           key: k, 
           value: (checkedFields.indexOf(k) >= 0),
-          directValue: this.props.inputData,
+          directValue: this.props.data,
           directChanged: this.props.changed
         }, 
         null)

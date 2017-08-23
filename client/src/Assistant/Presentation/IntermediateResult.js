@@ -135,7 +135,7 @@ class IntermediateResult extends React.Component {
           }
 
           // eslint-disable-next-line
-          this.props.changed({[this.inputName]: data});
+          this.props.changed({["result"]: data});
         }
       })
       .catch(err => {

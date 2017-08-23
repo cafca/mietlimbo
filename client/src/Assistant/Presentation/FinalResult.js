@@ -5,106 +5,45 @@ import autoBind from 'react-autobind';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { stageNameTranslations, featureGroupNames } from "../Assistant";
+import type {Result, Data} from "../Assistant";
 import Mietwucher from "./Mietwucher";
 import RenovationCase from "./RenovationCase";
 import {groupBalance} from "../ApartmentFeatureInputs/RangeSelectionGroup";
 import FeatureShortnames from "../ApartmentFeatureInputs/FeatureShortnames";
+import FeatureTable from "./FeatureTable";
 
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
 import { blue500, pinkA200 } from 'material-ui/styles/colors';
 
 type FinalResultProps = {
-  [string]: {
-    negative: Array<string>,
-    positive: Array<string>
-  }
+  data: Data,
+  changed: Function
 };
 
 class FinalResult extends React.Component {
   inputName: "FinalResult";
 
-  state: {
-    balance: number,
-    localRentLevel: number,
-    mpbRent: number,
-    mpbRentLevel: number
-  };
-
   constructor(props: FinalResultProps) {
     super(props);
     autoBind(this);
-    this.state = this.update(false);
-  }
-
-  componentWillMount() {
-    this.props.changed({"FinalResult": this.props.data.squareMeters * (this.state.localRentLevel * 1.1)})
-  }
-
-  update(passOn=true) {
-    // To calculate balance, for every group with predominantly positive features 1 is added,
-    // for predominantly negative groups 1 is subtracted
-    const balance = featureGroupNames
-      .map(group => groupBalance(this.props.data[group]) < 0 ? -1 : groupBalance(this.props.data[group]) === 0 ? 0 : 1)
-      .reduce((a, b) => (a + b), 0);
-
-    const localRentLevel = balance >= 0 
-      ? this.props.data.intermediateResult.mid + (parseFloat(balance) / 5) * (this.props.data.intermediateResult.max - this.props.data.intermediateResult.mid)
-      : this.props.data.intermediateResult.mid + (parseFloat(balance) / 5) * (this.props.data.intermediateResult.mid - this.props.data.intermediateResult.min);
-
-    // Rent may be 10% above local rent level
-    const mpbRentLevel = localRentLevel * 1.1;
-    const mpbRent = mpbRentLevel * this.props.data.squareMeters;
-
-    if (passOn) this.props.changed({[this.inputName]: mpbRentLevel});
-
-    return {
-      localRentLevel, 
-      mpbRentLevel,
-      mpbRent,
-      balance
-    };
-  }
-
-  renderTableRows() {
-    const rangeFeatures = featureGroupNames.map(group => <TableRow key={group}>
-        <TableRowColumn><FormattedMessage {...stageNameTranslations[group]} /></TableRowColumn>
-        <TableRowColumn>{this.props.data[group].positive.map(n => <p key={n}><FormattedMessage {...FeatureShortnames[n]} /></p>)}</TableRowColumn>
-        <TableRowColumn>{this.props.data[group].negative.map(n => <p key={n}><FormattedMessage {...FeatureShortnames[n]} /></p>)}</TableRowColumn>
-        <TableRowColumn style={{color: (groupBalance(this.props.data[group]) < 0 ? blue500 : groupBalance(this.props.data[group]) > 0 ? pinkA200 : "black"), "whiteSpace": "normal"}}>
-           {(groupBalance(this.props.data[group]) < 0 ? "Überwiegend mietsenkend" : (groupBalance(this.props.data[group]) === 0 ? "Neutral" : "Überwiegend mietsteigernd"))} ({groupBalance(this.props.data[group])})
-        </TableRowColumn>
-      </TableRow>
-    );
-    return rangeFeatures;
   }
 
   render() {
-    const calculationMessage = this.state.balance === 0
+    const calculationMessage = this.props.data.result.featureGroupBalance === 0
       ? <FormattedMessage
           id="FinalResult.calculationBalanced"
           defaultMessage="In deinem Fall halten sich positive und negative Merkmalgruppen die Waage. Hierdurch gilt direkt
             die ortsübliche Vergleichsmiete  aus dem ersten Teil von {localRentLevel, number} € pro Quadratmeter."
-          values={{
-            localRentLevel: this.state.localRentLevel
-          }} />
-      : this.state.balance < 0
+          values={this.props.data.result} />
+      : this.props.data.result.featureGroupBalance < 0
         ? <FormattedMessage
             id="FinalResult.calculationNegative"
             defaultMessage="Insgesamt überwiegen Gruppen mit negativen (mietsenkenden) Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
               Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Minimalwert der Spanne abgezogen. Hierdurch ergibt sich
               die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
             values={{
-              balance: this.state.balance,
-              balanceAbs: Math.abs(this.state.balance),
-              correctionPercentage: Math.abs(this.state.balance) * 20,
-              localRentLevel: this.state.localRentLevel
+              balanceAbs: Math.abs(this.props.data.result.featureGroupBalance),
+              correctionPercentage: Math.abs(this.props.data.result.featureGroupBalance) * 20,
+              ...this.props.data.result
           }} />
         : <FormattedMessage
             id="FinalResult.calculationPositive"
@@ -112,13 +51,12 @@ class FinalResult extends React.Component {
               Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Maximalwert der Spanne abgezogen. Hierdurch ergibt sich
               die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
             values={{
-              balance: this.state.balance,
-              balanceAbs: Math.abs(this.state.balance),
-              correctionPercentage: Math.abs(this.state.balance) * 20,
-              localRentLevel: this.state.localRentLevel
+              balanceAbs: Math.abs(this.props.data.result.featureGroupBalance),
+              correctionPercentage: Math.abs(this.props.data.result.featureGroupBalance) * 20,
+              ...this.props.data.result
           }} />;
 
-    const isPreviousRentLimiting = this.props.data.previousRent > this.props.data.squareMeters * (this.state.localRentLevel * 1.1);
+    const isPreviousRentLimiting = this.props.data.previousRent > this.props.data.squareMeters * (this.props.data.result.localRentLevel * 1.1);
     const previousRentCase = this.props.data.previousRent === -1
       ? <FormattedMessage
           id="FinalResult.previousRentUnkown"
@@ -136,48 +74,26 @@ class FinalResult extends React.Component {
             defaultMessage="Die Miete deines Vormieters lag auch unter diesem Wert und steht damit einer Mietsenkung nicht im Wege." />;
 
     return <div>
-      <h1><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="Dein mietlimbo: {result, number, currency} 😱" values={{result: this.state.mpbRent}} /></h1>
+      <h1><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="Dein mietlimbo: {result, number, currency} 😱" values={{result: this.props.data.result.mietlimbo}} /></h1>
       <p><FormattedMessage
         id="FinalResult.tableDescription"
         defaultMessage="Das könnte deine Miete sein! Aber zunächst von vorne: In dieser Tabelle siehst du nochmal alle von dir gewählten Merkmale. In der rechten Spalte wird für jede Merkmalgruppe gezeigt, 
           ob positive oder negative Merkmale überwiegen. Ganz unten rechts wird daraus wiederum die Balance aller Merkmalgruppen berechnet." />
       </p>
-      <Table selectable={false} style={{border: "1px solid #eee", tableLayout: "fixed"}}>
-        <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-          <TableRow>
-            <TableHeaderColumn><FormattedMessage id="FinalResult.tableHeaderFeatures" defaultMessage="Merkmalgruppe" /></TableHeaderColumn>
-            <TableHeaderColumn><FormattedMessage id="FinalResult.tableHeaderPositive" defaultMessage="Pos. Merkmale" /></TableHeaderColumn>
-            <TableHeaderColumn><FormattedMessage id="FinalResult.tableHeaderNegative" defaultMessage="Neg. Merkmale" /></TableHeaderColumn>
-            <TableHeaderColumn><FormattedMessage id="FinalResult.tableHeaderBalance" defaultMessage="Balance" /></TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-          {this.renderTableRows()}
-          <TableRow style={{backgroundColor: "#f3f3f3"}}>
-            <TableRowColumn>
-              <FormattedMessage id="FinalResult.SummaryTotal" defaultMessage="Zusammen" />
-            </TableRowColumn>
-            <TableRowColumn></TableRowColumn>
-            <TableRowColumn></TableRowColumn>
-            <TableRowColumn>{(this.state.balance < 0 ? "-" + Math.abs(this.state.balance) + " Gruppen" : (this.state.balance > 0 ? "+" + this.state.balance + " Gruppen" : "neutral"))}</TableRowColumn>
-          </TableRow>
-        </TableBody>
-      </Table>
+      
+      <FeatureTable {...this.props.data} />
 
-      <p>
-        {calculationMessage}
-      </p>
+      <p>{calculationMessage}</p>
 
       <p>
         <FormattedMessage 
           id="FinalResult.prediction"
           defaultMessage="Nach einem Zuschlag von 10% auf die örtliche Vergleichsmiete ergibt sich
-            für die beschriebene Wohnung ein maximaler Quadratmeterpreis von {mpbRentLevel, number} €, was bei einer Wohnungsgröße
-            von {squareMeters, number} Quadrametern eine Kaltmiete von {mpbRent, number, currency} Euro ergibt."
+            für die beschriebene Wohnung ein maximaler Quadratmeterpreis von {mietlimboLevel, number} €, was bei einer Wohnungsgröße
+            von {squareMeters, number} Quadrametern eine Kaltmiete von {mietlimbo, number, currency} Euro ergibt."
           values={{
-            mpbRentLevel: this.state.localRentLevel * 1.1,
-            mpbRent: this.props.data.squareMeters * (this.state.localRentLevel * 1.1),
-            squareMeters: this.props.data.squareMeters
+            squareMeters: this.props.data.squareMeters,
+              ...this.props.data.result
           }} />
       </p>
 
@@ -186,24 +102,22 @@ class FinalResult extends React.Component {
           id="FinalResult.comparison"
           defaultMessage="Das sind jeden Monat {diff, number, currency} {diffDir} als du jetzt zahlst."
           values={{
-            mpbRent: this.props.data.squareMeters * (this.state.localRentLevel * 1.1),
-            currentRent: this.props.data.rent,
-            diff: Math.abs(this.props.data.rent - (this.props.data.squareMeters * (this.state.localRentLevel * 1.1))),
-            diffDir: this.props.data.rent - (this.props.data.squareMeters * (this.state.localRentLevel * 1.1)) < 0 ? 'mehr' : 'weniger'
+            diff: Math.abs(this.props.data.rent - this.props.data.result.mietlimbo),
+            diffDir: this.props.data.rent - this.props.data.result.mietlimbo < 0 ? 'mehr' : 'weniger'
           }} />
       </p>
 
       <RenovationCase
         renovationInput={this.props.data.renovation}
         rent={this.props.data.rent}
-        mpbRent={this.props.data.FinalResult} />
+        mpbRent={this.props.data.result.mietlimbo} />
 
       <h3><FormattedMessage id="FinalResult.previousRentTitle" defaultMessage="Vormiete" /></h3>
       <p>{previousRentCase}</p>
 
       <Mietwucher 
         rent={this.props.data.rent}
-        mpbRent={this.props.data.FinalResult} />
+        mpbRent={this.props.data.result.mietlimbo} />
 
       <section>
         <h2>
