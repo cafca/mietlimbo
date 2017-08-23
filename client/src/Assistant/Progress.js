@@ -85,7 +85,7 @@ class Progress extends React.Component {
       />;}
       );
 
-    return <section style={this.style.main}>
+    return <section style={this.style.main} className="navigation">
       <Sticky enabled={this.props.stage <= 3} innerZ={4}>
         <Paper className="featureGroups" zDepth={3}>
           <FlatButton 
