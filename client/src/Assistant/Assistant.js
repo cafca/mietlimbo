@@ -20,7 +20,8 @@ import ConstructionDateInput from './GenericInputs/ConstructionDateInput';
 import SquareMetersInput from './GenericInputs/SquareMetersInput';
 import BaseFeaturesInput from './GenericInputs/BaseFeaturesInput';
 
-import RangeSelectionGroup from './ApartmentFeatureInputs/RangeSelectionGroup';
+import RangeSelectionGroup, { groupBalance } from './ApartmentFeatureInputs/RangeSelectionGroup';
+import type GroupData from './ApartmentFeatureInputs/RangeSelectionGroup';
 import * as BathFeatures from './ApartmentFeatureInputs/BathFeatures';
 import * as KitchenFeatures from './ApartmentFeatureInputs/KitchenFeatures';
 import * as ApartmentFeatures from './ApartmentFeatureInputs/ApartmentFeatures';
@@ -155,18 +156,45 @@ const testData = {
   "address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"},
   baseFeatures: "default",
   constructionDate: "Pre2002",
-  intermediateResult: {max: 9.27, mid: 8, min: 6.3},
   newBuilding: false,
   squareMeters: 90,
   renovation: "simple",
   previousRent: -1
 };
 
+export type Result = {
+  min: number,
+  mid: number,
+  max: number,
+  localRentLevel: number,
+  mietlimboLevel: number,
+  mietlimbo: number,
+  featureGroupBalance: number
+};
+
+export type Data = {
+  Bad: GroupData,
+  Küche: GroupData,
+  Wohnung: GroupData,
+  Gebäude: GroupData,
+  Umfeld: GroupData,
+  leaseCreated: ?string,
+  rent: ?number,
+  address: ?Object,
+  baseFeatures: ?string,
+  constructionDate: ?string,
+  newBuilding: ?boolean,
+  squareMeters: ?number,
+  renovation: ?string,
+  previousRent: ?number,
+  result: Result
+};
+
 class Assistant extends React.Component {
-	state = {
-		stage: 0,
-    inputValid: {},
-    inputData: process.env.NODE_ENV === "production" ? {} : testData
+	state : {
+		stage: number,
+    inputValid: {[string]: boolean},
+    data: {[string]: any}
 	}
 
   style = {
@@ -179,6 +207,11 @@ class Assistant extends React.Component {
 	constructor(props: AssistantProps) {
 		super(props);
 		autoBind(this);
+    this.state = {
+      stage: 0,
+      inputValid: {},
+      data: process.env.NODE_ENV === "production" ? {} : testData
+    }
 	}
 
   componentWillMount() {
@@ -187,7 +220,7 @@ class Assistant extends React.Component {
       if (this.props.match && this.props.match.params.stage) {
         const stage = parseInt(this.props.match.params.stage, 10);
         stage !== undefined && this.requestStage(stage);
-      }
+      } else this.update();
     });
   }
 
@@ -201,11 +234,11 @@ class Assistant extends React.Component {
 
   initializeData() {
     // Fill the dataset with emoty objects in the beginning
-    const inputData = Object.assign({}, this.state.inputData);
+    const data = Object.assign({}, this.state.data);
     // eslint-disable-next-line array-callback-return
     featureGroupNames.map(name => {
-      if (inputData[name] === undefined) {
-        inputData[name] = {
+      if (data[name] === undefined) {
+        data[name] = {
           positive: [],
           negative: []
         }
@@ -215,10 +248,10 @@ class Assistant extends React.Component {
     const inputValid = {};
     // Linter wants arrow functions to always return a value
     // eslint-disable-next-line array-callback-return
-    Object.keys(this.state.inputData).map(k => {
+    Object.keys(this.state.data).map(k => {
       inputValid[k] = true;
     });
-    return { inputData, inputValid };
+    return { data, inputValid };
   }
 
   requestStage(stage: number) {
@@ -236,10 +269,41 @@ class Assistant extends React.Component {
     this.setState({inputValid: newInputValid});
 	}
 
-	handleInputChanged(newData: Object, cb: () => any) {
+	handleInputChanged(newData: Object, cb: ?Function) {
     // This method is called from input components when their respective data is updated
-    this.setState({inputData: Object.assign({}, this.state.inputData, newData)}, cb);
+    this.setState({data: Object.assign({}, this.state.data, newData)}, () => this.update(cb));
 	}
+
+  update(cb: ?Function) {
+    // To calculate balance, for every group with predominantly positive features 1 is added,
+    // for predominantly negative groups 1 is subtracted
+    if (this.isStageEnabled(stageNames.indexOf("mietlimbo!"))) {
+      const featureGroupBalance = featureGroupNames
+        .map(group => groupBalance(this.state.data[group]) < 0 ? -1 : groupBalance(this.state.data[group]) === 0 ? 0 : 1)
+        .reduce((a, b) => (a + b), 0);
+
+      const maxCorrection = featureGroupBalance >= 0 
+        ? (this.state.data.result.max - this.state.data.result.mid)
+        : (this.state.data.result.mid - this.state.data.result.min);
+
+      const localRentLevel = this.state.data.result.mid + (parseFloat(featureGroupBalance) / 5) * maxCorrection;
+
+      // Rent may be 10% above local rent level
+      const mietlimboLevel = localRentLevel * 1.1;
+      const mietlimbo = mietlimboLevel * this.state.data.squareMeters;
+
+      const result = Object.assign({}, this.state.data.result, {
+        localRentLevel, 
+        mietlimboLevel,
+        mietlimbo,
+        featureGroupBalance
+      });
+
+      this.setState({data: Object.assign({}, this.state.data, {result})}, cb);
+    } else {
+      cb && cb();
+    }
+  }
 
   isStageEnabled(stage: number) {
     if (stage > stageNames.length) {
@@ -265,21 +329,21 @@ class Assistant extends React.Component {
 		switch(this.state.stage) {
 			case 1:
         content = <div key="stage1">
-          <LeaseCreatedInput valid={valid} changed={changed} value={this.state.inputData.leaseCreated} />
-          <NewBuildingInput valid={valid} changed={changed} value={this.state.inputData.newBuilding} />
-          <RenovationInput valid={valid} changed={changed} value={this.state.inputData.renovation} />
-          <BaseFeaturesInput valid={valid} changed={changed} value={this.state.inputData.baseFeatures} />
+          <LeaseCreatedInput valid={valid} changed={changed} value={this.state.data.leaseCreated} />
+          <NewBuildingInput valid={valid} changed={changed} value={this.state.data.newBuilding} />
+          <RenovationInput valid={valid} changed={changed} value={this.state.data.renovation} />
+          <BaseFeaturesInput valid={valid} changed={changed} value={this.state.data.baseFeatures} />
         </div>;
 				break;
 
 			case 2:
 				content = <div key="stage2">
-          <AddressInput valid={valid} changed={changed} value={this.state.inputData.address} />
-          <ConstructionDateInput valid={valid} changed={changed} value={this.state.inputData.constructionDate} />
+          <AddressInput valid={valid} changed={changed} value={this.state.data.address} />
+          <ConstructionDateInput valid={valid} changed={changed} value={this.state.data.constructionDate} />
           <SquareMetersInput valid={valid} changed={changed} 
-            exact={this.state.inputData.squareMeters} guessed={this.state.inputData.squareMetersGuessed} />
-          <RentInput valid={valid} changed={changed} value={this.state.inputData.rent} />
-          <PreviousRentInput valid={valid} changed={changed} value={this.state.inputData.previousRent} />
+            exact={this.state.data.squareMeters} guessed={this.state.data.squareMetersGuessed} />
+          <RentInput valid={valid} changed={changed} value={this.state.data.rent} />
+          <PreviousRentInput valid={valid} changed={changed} value={this.state.data.previousRent} />
 				</div>;
 				break;
 
@@ -288,7 +352,7 @@ class Assistant extends React.Component {
         content = <IntermediateResult 
           valid={valid}
           changed={changed}
-          {...this.state.inputData}
+          {...this.state.data}
         />;
         break;
 
@@ -303,7 +367,7 @@ class Assistant extends React.Component {
             domain={stageNames[this.state.stage]}
             key={stageNames[this.state.stage]}
             inputComponents={featureGroupInputs[stageNames[this.state.stage]]}
-            inputData={this.state.inputData[stageNames[this.state.stage]]}
+            data={this.state.data[stageNames[this.state.stage]]}
             changed={changed} 
             />
         </div>;
@@ -311,7 +375,7 @@ class Assistant extends React.Component {
 
       case 9:
         content = <div key="stage11">
-          <FinalResult data={this.state.inputData} changed={changed} />
+          <FinalResult data={this.state.data} changed={changed} />
         </div>;
         break;
 
@@ -322,7 +386,7 @@ class Assistant extends React.Component {
 		}
 
     const debug = process.env.NODE_ENV === "production" ? null 
-      : <pre>{JSON.stringify(this.state.inputData, null, 2)}</pre>;
+      : <pre>{JSON.stringify(this.state.data, null, 2)}</pre>;
 
     // Don't display next button on final assistant page
     const buttonDisplayStyle = this.state.stage === stageNames.indexOf("mietlimbo!") 
@@ -334,7 +398,7 @@ class Assistant extends React.Component {
         stage={this.state.stage} 
         isStageEnabled={this.isStageEnabled}
         requestStage={this.requestStage} 
-        data={this.state.inputData} />
+        data={this.state.data} />
       {content}
       <RaisedButton 
         primary={true} 

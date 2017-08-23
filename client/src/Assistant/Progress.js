@@ -16,10 +16,7 @@ import {groupBalance} from"./ApartmentFeatureInputs/RangeSelectionGroup";
 type ProgressProps = {
   advance: number => any,
   stage: number,
-  isStageEnabled: number => any,
-  intermediateResult: {
-    max: number, mid: number, min: number
-  }
+  isStageEnabled: number => any
 };
 
 class Progress extends React.Component {
