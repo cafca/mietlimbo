@@ -141,7 +141,6 @@ class Progress extends React.Component {
             key={"Über"}
             style={this.style.anchorStageButton}
             containerElement={<NavLink to="/about/" target="_blank" />}
-            linkButton={true}
           />
         </Paper>
       </Sticky>
