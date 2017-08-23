@@ -20,7 +20,7 @@ const styles = {
   }
 };
 
-export const Introduction = (props: {serialNumber: string}) => {
+export const Introduction = () => {
   return <section>
     <p style={styles.warning}>
       <FormattedMessage
