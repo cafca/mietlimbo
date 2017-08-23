@@ -131,7 +131,7 @@ export const stageConditions = [
   [],
   ["leaseCreated", "newBuilding", "renovation", "baseFeatures"],
   ["address", "squareMeters", "rent", "previousRent", "constructionDate"],
-  ["intermediateResult"],
+  ["result"],
   [],
   [],
   [],
@@ -159,7 +159,16 @@ const testData = {
   newBuilding: false,
   squareMeters: 90,
   renovation: "simple",
-  previousRent: -1
+  previousRent: -1,
+  "result": {
+    "max": 9.27,
+    "mid": 8,
+    "min": 6.3,
+    "localRentLevel": 8,
+    "mietlimboLevel": 8.8,
+    "mietlimbo": 792.0000000000001,
+    "featureGroupBalance": 0
+  }
 };
 
 export type Result = {
