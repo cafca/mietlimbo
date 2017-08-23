@@ -78,12 +78,12 @@ class FinalResult extends React.Component {
       .reduce((a, b) => (a + b), 0);
 
     const localRentLevel = balance >= 0 
-      ? this.props.data.intermediateResult.mid + (parseFloat(balance) / 10) * (this.props.data.intermediateResult.max - this.props.data.intermediateResult.mid)
-      : this.props.data.intermediateResult.mid + (parseFloat(balance) / 10) * (this.props.data.intermediateResult.mid - this.props.data.intermediateResult.min);
+      ? this.props.data.intermediateResult.mid + (parseFloat(balance) / 5) * (this.props.data.intermediateResult.max - this.props.data.intermediateResult.mid)
+      : this.props.data.intermediateResult.mid + (parseFloat(balance) / 5) * (this.props.data.intermediateResult.mid - this.props.data.intermediateResult.min);
 
     // Rent may be 10% above local rent level
     const mpbRentLevel = localRentLevel * 1.1;
-    const mpbRent = mpbRentLevel * this.props.squareMeters;
+    const mpbRent = mpbRentLevel * this.props.data.squareMeters;
 
     if (passOn) this.props.changed({[this.inputName]: mpbRentLevel});
 
@@ -159,7 +159,7 @@ class FinalResult extends React.Component {
             defaultMessage="Die Miete deines Vormieters lag auch unter diesem Wert und steht damit einer Mietsenkung nicht im Wege." />;
 
     return <div>
-      <h1><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="mietlimbo: Ergebnis" /></h1>
+      <h1><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="Dein mietlimbo: {result, number, currency}" values={{result: this.state.mpbRent}} /></h1>
       <p><FormattedMessage
         id="FinalResult.tableDescription"
         defaultMessage="In dieser Tabelle siehst du nochmal alle von dir gewählten Merkmale. In der rechten Spalte wird für jede Merkmalgruppe gezeigt, 
