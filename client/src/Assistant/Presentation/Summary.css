@@ -1,0 +1,6 @@
+@media print {
+	.navigation {display: none;}
+	.assistant {padding-left: 20px !important; padding-right: 200px;}
+	.App-main {font-size: 16px;}
+	.summaryExplanation {display: none;}
+};

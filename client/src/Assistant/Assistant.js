@@ -8,6 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Introduction, Title} from './Introduction';
 import IntermediateResult from './Presentation/IntermediateResult';
 import FinalResult from './Presentation/FinalResult';
+import Summary from './Presentation/Summary';
 import Progress from './Progress';
 
 import LeaseCreatedInput from './GenericInputs/LeaseCreatedInput';
@@ -385,6 +386,12 @@ class Assistant extends React.Component {
       case 9:
         content = <div key="stage11">
           <FinalResult data={this.state.data} changed={changed} />
+        </div>;
+        break;
+
+      case 10:
+        content = <div key="stage11">
+          <Summary data={this.state.data} />
         </div>;
         break;
 
