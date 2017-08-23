@@ -10,7 +10,6 @@ export type AssistantInputProps = {
 };
 
 export const constructionDateRange = (year: number) => {
-  console.log("Range for", year);
   if (year <= 1918) {
     return "Pre1918";
   } else if (year <= 1949) {

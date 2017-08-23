@@ -2,12 +2,13 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import {Introduction, Title} from './Introduction';
 import IntermediateResult from './Presentation/IntermediateResult';
 import FinalResult from './Presentation/FinalResult';
+import Summary from './Presentation/Summary';
 import Progress from './Progress';
 
 import LeaseCreatedInput from './GenericInputs/LeaseCreatedInput';
@@ -20,7 +21,8 @@ import ConstructionDateInput from './GenericInputs/ConstructionDateInput';
 import SquareMetersInput from './GenericInputs/SquareMetersInput';
 import BaseFeaturesInput from './GenericInputs/BaseFeaturesInput';
 
-import RangeSelectionGroup from './ApartmentFeatureInputs/RangeSelectionGroup';
+import RangeSelectionGroup, { groupBalance } from './ApartmentFeatureInputs/RangeSelectionGroup';
+import type GroupData from './ApartmentFeatureInputs/RangeSelectionGroup';
 import * as BathFeatures from './ApartmentFeatureInputs/BathFeatures';
 import * as KitchenFeatures from './ApartmentFeatureInputs/KitchenFeatures';
 import * as ApartmentFeatures from './ApartmentFeatureInputs/ApartmentFeatures';
@@ -29,18 +31,100 @@ import * as EnvironmentFeatures from './ApartmentFeatureInputs/EnvironmentFeatur
 
 import './Assistant.css';
 
+export const stageNameTranslations = defineMessages({
+  "Einleitung": {
+    id: "StageNames.Einleitung",
+    defaultMessage: "Einleitung"
+  },
+  "Ausnahmen": {
+    id: "StageNames.Ausnahmen",
+    defaultMessage: "Ausnahmen"
+  },
+  "Basisdaten": {
+    id: "StageNames.Basisdaten",
+    defaultMessage: "Basisdaten"
+  },
+  "Mietspiegel": {
+    id: "StageNames.Mietspiegel",
+    defaultMessage: "Mietspiegel"
+  },
+  "Bad": {
+    id: "StageNames.Bad",
+    defaultMessage: "Bad"
+  },
+  "Küche": {
+    id: "StageNames.Küche",
+    defaultMessage: "Küche"
+  },
+  "Wohnung": {
+    id: "StageNames.Wohnung",
+    defaultMessage: "Wohnung"
+  },
+  "Gebäude": {
+    id: "StageNames.Gebäude",
+    defaultMessage: "Gebäude"
+  },
+  "Umfeld": {
+    id: "StageNames.Umfeld",
+    defaultMessage: "Umfeld"
+  },
+  "Auswertung": {
+    id: "StageNames.Auswertung",
+    defaultMessage: "Auswertung"
+  },
+  "Ausdrucken": {
+    id: "StageNames.Ausdrucken",
+    defaultMessage: "Ausdrucken"
+  }
+});
+
 export const stageNames = [
   "Einleitung",
   "Ausnahmen",
   "Basisdaten",
-  "Halbfertig",
+  "Mietspiegel",
   "Bad",
   "Küche",
   "Wohnung",
   "Gebäude",
   "Umfeld",
-  "Ergebnis"
+  "Auswertung",
+  "Ausdrucken"
 ];
+
+// Stages with feature groups
+export const featureGroupNames = Object.keys(stageNameTranslations).slice(4, 9);
+
+const featureGroupLongNames = defineMessages({
+  "Bad": {
+    id: "StageHeaders.Bad",
+    defaultMessage: "Badezimmer und WC"
+  },
+  "Küche": {
+    id: "StageHeaders.Küche",
+    defaultMessage: "Küche"
+  },
+  "Wohnung": {
+    id: "StageHeaders.Wohnung",
+    defaultMessage: "Wohnung"
+  },
+  "Gebäude": {
+    id: "StageHeaders.Gebäude",
+    defaultMessage: "Gebäude"
+  },
+  "Umfeld": {
+    id: "StageHeaders.Umfeld",
+    defaultMessage: "Wohnumfeld"
+  },
+});
+
+const featureGroupInputs = {
+  "Bad": BathFeatures,
+  "Küche": KitchenFeatures,
+  "Wohnung": ApartmentFeatures,
+  "Gebäude": BuildingFeatures,
+  "Umfeld": EnvironmentFeatures
+};
 
 // These fields are required in order to advance to the next assistant stage
 // (all previous conditions are also required, of course)
@@ -48,7 +132,7 @@ export const stageConditions = [
   [],
   ["leaseCreated", "newBuilding", "renovation", "baseFeatures"],
   ["address", "squareMeters", "rent", "previousRent", "constructionDate"],
-  ["intermediateResult"],
+  ["result"],
   [],
   [],
   [],
@@ -63,29 +147,64 @@ type AssistantProps = {
 };
 
 const testData = {
-  "BathGroup":{"positive":[],"negative":[]},
-  "KitchenGroup":{"positive":[],"negative":[]},
-  "ApartmentGroup":{"positive":[],"negative":[]},
-  "BuildingGroup":{"positive":[],"negative":[]},
-  "EnvironmentGroup":{"positive":[],"negative":[]},
+  "Bad":{"positive":[],"negative":[]},
+  "Küche":{"positive":[],"negative":[]},
+  "Wohnung":{"positive":[],"negative":[]},
+  "Gebäude":{"positive":[],"negative":[]},
+  "Umfeld":{"positive":[],"negative":[]},
   "leaseCreated":"2015-07-31T22:00:00.000Z",
   "rent":1200,
   "address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"},
   baseFeatures: "default",
   constructionDate: "Pre2002",
-  intermediateResult: {max: 9.27, mid: 8, min: 6.3},
   newBuilding: false,
   squareMeters: 90,
   renovation: "simple",
-  previousRent: -1
+  previousRent: -1,
+  "result": {
+    "max": 9.27,
+    "mid": 8,
+    "min": 6.3,
+    "localRentLevel": 8,
+    "mietlimboLevel": 8.8,
+    "mietlimbo": 792.0000000000001,
+    "featureGroupBalance": 0
+  }
+};
+
+export type Result = {
+  min: number,
+  mid: number,
+  max: number,
+  localRentLevel: number,
+  mietlimboLevel: number,
+  mietlimbo: number,
+  featureGroupBalance: number
+};
+
+export type Data = {
+  Bad: GroupData,
+  Küche: GroupData,
+  Wohnung: GroupData,
+  Gebäude: GroupData,
+  Umfeld: GroupData,
+  leaseCreated: ?string,
+  rent: ?number,
+  address: ?Object,
+  baseFeatures: ?string,
+  constructionDate: ?string,
+  newBuilding: ?boolean,
+  squareMeters: ?number,
+  renovation: ?string,
+  previousRent: ?number,
+  result: Result
 };
 
 class Assistant extends React.Component {
-	state = {
-		stage: 0,
-		serialNumber: "03",
-    inputValid: {},
-    inputData: process.env.NODE_ENV === "production" ? {} : testData
+	state : {
+		stage: number,
+    inputValid: {[string]: boolean},
+    data: {[string]: any}
 	}
 
   style = {
@@ -98,15 +217,20 @@ class Assistant extends React.Component {
 	constructor(props: AssistantProps) {
 		super(props);
 		autoBind(this);
+    this.state = {
+      stage: 0,
+      inputValid: {},
+      data: process.env.NODE_ENV === "production" ? {} : testData
+    }
 	}
 
   componentWillMount() {
-    // Fill state with empty data sets
+    // Fill state with empty data sets and activate stage based on URL
     this.setState(this.initializeData(), () => {
       if (this.props.match && this.props.match.params.stage) {
         const stage = parseInt(this.props.match.params.stage, 10);
         stage !== undefined && this.requestStage(stage);
-      }
+      } else this.update();
     });
   }
 
@@ -120,11 +244,11 @@ class Assistant extends React.Component {
 
   initializeData() {
     // Fill the dataset with emoty objects in the beginning
-    const inputData = Object.assign({}, this.state.inputData);
+    const data = Object.assign({}, this.state.data);
     // eslint-disable-next-line array-callback-return
-    ["BathGroup", "KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnvironmentGroup"].map(name => {
-      if (inputData[name] === undefined) {
-        inputData[name] = {
+    featureGroupNames.map(name => {
+      if (data[name] === undefined) {
+        data[name] = {
           positive: [],
           negative: []
         }
@@ -134,10 +258,10 @@ class Assistant extends React.Component {
     const inputValid = {};
     // Linter wants arrow functions to always return a value
     // eslint-disable-next-line array-callback-return
-    Object.keys(this.state.inputData).map(k => {
+    Object.keys(this.state.data).map(k => {
       inputValid[k] = true;
     });
-    return { inputData, inputValid };
+    return { data, inputValid };
   }
 
   requestStage(stage: number) {
@@ -155,11 +279,41 @@ class Assistant extends React.Component {
     this.setState({inputValid: newInputValid});
 	}
 
-	handleInputChanged(newData: Object, cb: () => any) {
+	handleInputChanged(newData: Object, cb: ?Function) {
     // This method is called from input components when their respective data is updated
-    this.setState({inputData: Object.assign({}, this.state.inputData, newData)}, cb);
-    Object.keys(newData).map(k => console.log(k, newData[k]));
+    this.setState({data: Object.assign({}, this.state.data, newData)}, () => this.update(cb));
 	}
+
+  update(cb: ?Function) {
+    // To calculate balance, for every group with predominantly positive features 1 is added,
+    // for predominantly negative groups 1 is subtracted
+    if (this.isStageEnabled(stageNames.indexOf("Auswertung"))) {
+      const featureGroupBalance = featureGroupNames
+        .map(group => groupBalance(this.state.data[group]) < 0 ? -1 : groupBalance(this.state.data[group]) === 0 ? 0 : 1)
+        .reduce((a, b) => (a + b), 0);
+
+      const maxCorrection = featureGroupBalance >= 0 
+        ? (this.state.data.result.max - this.state.data.result.mid)
+        : (this.state.data.result.mid - this.state.data.result.min);
+
+      const localRentLevel = this.state.data.result.mid + (parseFloat(featureGroupBalance) / 5) * maxCorrection;
+
+      // Rent may be 10% above local rent level
+      const mietlimboLevel = localRentLevel * 1.1;
+      const mietlimbo = mietlimboLevel * this.state.data.squareMeters;
+
+      const result = Object.assign({}, this.state.data.result, {
+        localRentLevel, 
+        mietlimboLevel,
+        mietlimbo,
+        featureGroupBalance
+      });
+
+      this.setState({data: Object.assign({}, this.state.data, {result})}, cb);
+    } else {
+      cb && cb();
+    }
+  }
 
   isStageEnabled(stage: number) {
     if (stage > stageNames.length) {
@@ -185,21 +339,21 @@ class Assistant extends React.Component {
 		switch(this.state.stage) {
 			case 1:
         content = <div key="stage1">
-          <LeaseCreatedInput valid={valid} changed={changed} value={this.state.inputData.leaseCreated} />
-          <NewBuildingInput valid={valid} changed={changed} value={this.state.inputData.newBuilding} />
-          <RenovationInput valid={valid} changed={changed} value={this.state.inputData.renovation} />
-          <BaseFeaturesInput valid={valid} changed={changed} value={this.state.inputData.baseFeatures} />
+          <LeaseCreatedInput valid={valid} changed={changed} value={this.state.data.leaseCreated} />
+          <NewBuildingInput valid={valid} changed={changed} value={this.state.data.newBuilding} />
+          <RenovationInput valid={valid} changed={changed} value={this.state.data.renovation} />
+          <BaseFeaturesInput valid={valid} changed={changed} value={this.state.data.baseFeatures} />
         </div>;
 				break;
 
 			case 2:
 				content = <div key="stage2">
-          <AddressInput valid={valid} changed={changed} value={this.state.inputData.address} />
-          <ConstructionDateInput valid={valid} changed={changed} value={this.state.inputData.constructionDate} />
+          <AddressInput valid={valid} changed={changed} value={this.state.data.address} />
+          <ConstructionDateInput valid={valid} changed={changed} value={this.state.data.constructionDate} />
           <SquareMetersInput valid={valid} changed={changed} 
-            exact={this.state.inputData.squareMeters} guessed={this.state.inputData.squareMetersGuessed} />
-          <RentInput valid={valid} changed={changed} value={this.state.inputData.rent} />
-          <PreviousRentInput valid={valid} changed={changed} value={this.state.inputData.previousRent} />
+            exact={this.state.data.squareMeters} guessed={this.state.data.squareMetersGuessed} />
+          <RentInput valid={valid} changed={changed} value={this.state.data.rent} />
+          <PreviousRentInput valid={valid} changed={changed} value={this.state.data.previousRent} />
 				</div>;
 				break;
 
@@ -208,90 +362,22 @@ class Assistant extends React.Component {
         content = <IntermediateResult 
           valid={valid}
           changed={changed}
-          {...this.state.inputData}
+          {...this.state.data}
         />;
         break;
 
       case 4:
-        content = <div>
-          <h1>
-            <FormattedMessage
-              id="Bath.Header"
-              defaultMessage="Badezimmer und WC" />
-          </h1>
-          <RangeSelectionGroup 
-            domain="BathGroup"
-            key="BathGroup"
-            inputComponents={BathFeatures}
-            inputData={this.state.inputData.BathGroup}
-            changed={changed} 
-            />
-        </div>;
-        break;
-
       case 5:
-        content = <div key="stage6">
-          <h1>
-            <FormattedMessage
-              id="Kitchen.Header"
-              defaultMessage="Küche" />
-          </h1>
-          <RangeSelectionGroup 
-            domain="KitchenGroup"
-            key="KitchenGroup"
-            inputComponents={KitchenFeatures}
-            inputData={this.state.inputData.KitchenGroup}
-            changed={changed} 
-            />
-        </div>;
-        break;
-
       case 6:
-        content = <div key="stage7">
-          <h1>
-            <FormattedMessage
-              id="Apartment.Header"
-              defaultMessage="Wohnung" />
-          </h1>
-          <RangeSelectionGroup 
-            domain="ApartmentGroup"
-            key="ApartmentGroup"
-            inputComponents={ApartmentFeatures}
-            inputData={this.state.inputData.ApartmentGroup}
-            changed={changed} 
-            />
-        </div>;
-        break;
-
       case 7:
-        content = <div key="stage8">
-          <h1>
-            <FormattedMessage
-              id="Building.Header"
-              defaultMessage="Gebäude" />
-          </h1>
-          <RangeSelectionGroup 
-            domain="BuildingGroup"
-            key="BuildingGroup"
-            inputComponents={BuildingFeatures}
-            inputData={this.state.inputData.BuildingGroup}
-            changed={changed} 
-            />
-        </div>;
-        break;
-
       case 8:
-        content = <div key="stage10">
-          <h1>
-            <FormattedMessage
-              id="Environment.Header"
-              defaultMessage="Wohnumfeld" />
-          </h1>
+        content = <div>
+          <h1><FormattedMessage {...featureGroupLongNames[stageNames[this.state.stage]]} /></h1>
           <RangeSelectionGroup 
-            domain="EnvironmentGroup"
-            key="EnvironmentGroup"
-            inputComponents={EnvironmentFeatures}
-            inputData={this.state.inputData.EnvironmentGroup}
+            domain={stageNames[this.state.stage]}
+            key={stageNames[this.state.stage]}
+            inputComponents={featureGroupInputs[stageNames[this.state.stage]]}
+            data={this.state.data[stageNames[this.state.stage]]}
             changed={changed} 
             />
         </div>;
@@ -299,26 +385,36 @@ class Assistant extends React.Component {
 
       case 9:
         content = <div key="stage11">
-          <FinalResult data={this.state.inputData} changed={changed} />
+          <FinalResult data={this.state.data} changed={changed} />
+        </div>;
+        break;
+
+      case 10:
+        content = <div key="stage11">
+          <Summary data={this.state.data} />
         </div>;
         break;
 
 			case 0:
 			default:
-				content = <Introduction serialNumber={this.state.serialNumber} />;
+				content = <Introduction />;
         title = <Title />;
 		}
-    const debug = process.env.NODE_ENV === "production" ? null : <pre>{JSON.stringify(this.state.inputData, null, 2)}</pre>;
 
-    const buttonDisplayStyle = this.state.stage === stageNames.length ? "none" : "initial";
+    const debug = process.env.NODE_ENV === "production" ? null 
+      : <pre>{JSON.stringify(this.state.data, null, 2)}</pre>;
+
+    // Don't display next button on final assistant page
+    const buttonDisplayStyle = this.state.stage === stageNames.indexOf("Auswertung") 
+      ? "none" : "initial";
+
 		return <div className="assistant" style={this.style.container} >
       {title}
       <Progress 
-        serialNumber={this.state.serialNumber} 
         stage={this.state.stage} 
         isStageEnabled={this.isStageEnabled}
         requestStage={this.requestStage} 
-        data={this.state.inputData} />
+        data={this.state.data} />
       {content}
       <RaisedButton 
         primary={true} 

@@ -64,9 +64,11 @@ class ConstructionDateInput extends React.Component {
 			value: props.value,
 			errors: []
 		};
-
-    if (props.value !== undefined) this.props.valid(this.inputName, true);
 	}
+
+  componentDidMount() {
+    if(this.props.value !== undefined) this.props.valid(this.inputName, true);
+  }
 
 	handleChange(e: SyntheticInputEvent, value: string) {
     this.props.changed({[this.inputName]: value});

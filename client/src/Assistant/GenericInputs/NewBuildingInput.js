@@ -8,6 +8,25 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 import type {AssistantInputProps} from './Tools';
 
+const messages = defineMessages({
+  title: {
+    id: "Spanneneinordnung.newBuilding",
+    defaultMessage: "Wohnst du in einem Neubau?"
+  },
+  labelTrue: {
+    id: "Spanneneinordnung.newBuildingTrue",
+    defaultMessage: "Ja, das Haus wurde nach 1.10.2014 zuerst vermietet und ich bin Erstmieter."
+  },
+  labelFalse: {
+    id: "Spanneneinordnung.newBuildingFalse",
+    defaultMessage: "Nein, das Haus ist entweder älter oder es gab schon vor mir Mieter."
+  },
+  warning: {
+    id: "Spanneneinordnung.newBuildingWarning",
+    defaultMessage: "Für Neubauten gilt die Mietpreisbremse leider nicht."
+  }
+});
+
 class NewBuildingInput extends React.Component {
 	state: {
 		value: ?boolean
@@ -18,9 +37,12 @@ class NewBuildingInput extends React.Component {
 	constructor(props: AssistantInputProps) {
 		super(props);
 		this.state = {value: props.value};
-    if(props.value !== undefined) props.valid(this.inputName, true);
  		autoBind(this);
 	}
+
+  componentDidMount() {
+    if(this.props.value !== undefined) this.props.valid(this.inputName, true);
+  }
 
 	handleChange(e: SyntheticInputEvent, value: boolean) {
 		this.props.changed({[this.inputName]: value});
@@ -29,25 +51,6 @@ class NewBuildingInput extends React.Component {
 	}
 
 	render() {
-    const messages = defineMessages({
-      title: {
-        id: "Spanneneinordnung.newBuilding",
-        defaultMessage: "Wohnst du in einem Neubau und bist Erstmieter?"
-      },
-      labelTrue: {
-        id: "Spanneneinordnung.newBuildingTrue",
-        defaultMessage: "Ja, das Haus wurde nach 1.10.2014 zuerst vermietet."
-      },
-      labelFalse: {
-        id: "Spanneneinordnung.newBuildingFalse",
-        defaultMessage: "Nein, das Haus ist entweder älter oder es gab schon vor mir Mieter."
-      },
-      warning: {
-        id: "Spanneneinordnung.newBuildingWarning",
-        defaultMessage: "Für Neubauten gilt die Mietpreisbremse leider nicht."
-      }
-    });
-
     const conditionalWarning = this.state.value === true ? <p style={{color: "red"}}>
       <FormattedMessage {...messages.warning} />
     </p> : <span></span>;

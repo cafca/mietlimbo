@@ -30,6 +30,7 @@ class IntermediateResult extends React.Component {
   };
 
   inputName = "intermediateResult"
+  serverURL : string; // set in constructor
 
   states = {
     LOADING: "Requesting rent level data",
@@ -134,7 +135,7 @@ class IntermediateResult extends React.Component {
           }
 
           // eslint-disable-next-line
-          this.props.changed({[this.inputName]: data});
+          this.props.changed({["result"]: data});
         }
       })
       .catch(err => {
