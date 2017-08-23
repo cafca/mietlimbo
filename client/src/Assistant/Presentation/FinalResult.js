@@ -12,6 +12,12 @@ import {groupBalance} from "../ApartmentFeatureInputs/RangeSelectionGroup";
 import FeatureShortnames from "../ApartmentFeatureInputs/FeatureShortnames";
 import FeatureTable from "./FeatureTable";
 
+import { 
+  LocalRentLevel, 
+  Mietpreisbremse,
+  PreviousRentCase 
+} from "./Calculation";
+
 import { blue500, pinkA200 } from 'material-ui/styles/colors';
 
 type FinalResultProps = {
@@ -28,53 +34,11 @@ class FinalResult extends React.Component {
   }
 
   render() {
-    const calculationMessage = this.props.data.result.featureGroupBalance === 0
-      ? <FormattedMessage
-          id="FinalResult.calculationBalanced"
-          defaultMessage="In deinem Fall halten sich positive und negative Merkmalgruppen die Waage. Hierdurch gilt direkt
-            die ortsübliche Vergleichsmiete  aus dem ersten Teil von {localRentLevel, number} € pro Quadratmeter."
-          values={this.props.data.result} />
-      : this.props.data.result.featureGroupBalance < 0
-        ? <FormattedMessage
-            id="FinalResult.calculationNegative"
-            defaultMessage="Insgesamt überwiegen Gruppen mit negativen (mietsenkenden) Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
-              Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Minimalwert der Spanne abgezogen. Hierdurch ergibt sich
-              die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
-            values={{
-              balanceAbs: Math.abs(this.props.data.result.featureGroupBalance),
-              correctionPercentage: Math.abs(this.props.data.result.featureGroupBalance) * 20,
-              ...this.props.data.result
-          }} />
-        : <FormattedMessage
-            id="FinalResult.calculationPositive"
-            defaultMessage="Insgesamt überwiegen Gruppen mit positiven (mietsteigernden) Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
-              Wert der Spanneneinordnung {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum Maximalwert der Spanne abgezogen. Hierdurch ergibt sich
-              die ortsübliche Vergleichsmiete {localRentLevel, number} € pro Quadratmeter."
-            values={{
-              balanceAbs: Math.abs(this.props.data.result.featureGroupBalance),
-              correctionPercentage: Math.abs(this.props.data.result.featureGroupBalance) * 20,
-              ...this.props.data.result
-          }} />;
-
-    const isPreviousRentLimiting = this.props.data.previousRent > this.props.data.squareMeters * (this.props.data.result.localRentLevel * 1.1);
-    const previousRentCase = this.props.data.previousRent === -1
-      ? <FormattedMessage
-          id="FinalResult.previousRentUnkown"
-          defaultMessage="Denk daran, dass du die Miete nicht niedriger senken kannst, als die Miete des Vormieters war. Du hast angegeben,
-            dass du diese nicht kennst, also wäre jetzt ein guter Schritt, zu überlegen, ob es sich bei diesem Ergebnis lohnen 
-            könnte, mal Nachforschungen dazu zu starten." />
-      : isPreviousRentLimiting
-        ? <FormattedMessage
-            id="FinalResult.previousRentLimiting"
-            defaultMessage="Dadurch, dass deine Vormieter schon eine höhere Miete gezahlt haben, kannst du allerdings 
-              nur auf deren Miete von {limit, number, currency} senken."
-            values={{limit: this.props.data.previousRent}} />
-        : <FormattedMessage
-            id="FinalResult.previousRentNotLimiting"
-            defaultMessage="Die Miete deines Vormieters lag auch unter diesem Wert und steht damit einer Mietsenkung nicht im Wege." />;
-
     return <div>
-      <h1><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="Dein mietlimbo: {result, number, currency} 😱" values={{result: this.props.data.result.mietlimbo}} /></h1>
+      <h1><FormattedMessage 
+        id="FinalResult.calculationTitle" 
+        defaultMessage="Dein mietlimbo: {result, number, currency} 😱" 
+        values={{result: Math.max(this.props.data.result.mietlimbo, this.props.data.previousRent)}} /></h1>
       <p><FormattedMessage
         id="FinalResult.tableDescription"
         defaultMessage="Das könnte deine Miete sein! Aber zunächst von vorne: In dieser Tabelle siehst du nochmal alle von dir gewählten Merkmale. In der rechten Spalte wird für jede Merkmalgruppe gezeigt, 
@@ -83,19 +47,9 @@ class FinalResult extends React.Component {
       
       <FeatureTable {...this.props.data} />
 
-      <p>{calculationMessage}</p>
+      <LocalRentLevel {...this.props.data} />
 
-      <p>
-        <FormattedMessage 
-          id="FinalResult.prediction"
-          defaultMessage="Nach einem Zuschlag von 10% auf die örtliche Vergleichsmiete ergibt sich
-            für die beschriebene Wohnung ein maximaler Quadratmeterpreis von {mietlimboLevel, number} €, was bei einer Wohnungsgröße
-            von {squareMeters, number} Quadrametern eine Kaltmiete von {mietlimbo, number, currency} Euro ergibt."
-          values={{
-            squareMeters: this.props.data.squareMeters,
-              ...this.props.data.result
-          }} />
-      </p>
+      <Mietpreisbremse {...this.props.data} />
 
       <p>
         <FormattedMessage
@@ -112,8 +66,7 @@ class FinalResult extends React.Component {
         rent={this.props.data.rent}
         mpbRent={this.props.data.result.mietlimbo} />
 
-      <h3><FormattedMessage id="FinalResult.previousRentTitle" defaultMessage="Vormiete" /></h3>
-      <p>{previousRentCase}</p>
+      <PreviousRentCase {...this.props.data} />
 
       <Mietwucher 
         rent={this.props.data.rent}
