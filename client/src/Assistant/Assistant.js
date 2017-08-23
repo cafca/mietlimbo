@@ -67,9 +67,9 @@ export const stageNameTranslations = defineMessages({
     id: "StageNames.Umfeld",
     defaultMessage: "Umfeld"
   },
-  "mietlimbo!": {
-    id: "StageNames.mietlimbo",
-    defaultMessage: "mietlimbo!"
+  "Auswertung": {
+    id: "StageNames.Auswertung",
+    defaultMessage: "Auswertung"
   },
   "Ausdrucken": {
     id: "StageNames.Ausdrucken",
@@ -87,7 +87,7 @@ export const stageNames = [
   "Wohnung",
   "Gebäude",
   "Umfeld",
-  "mietlimbo!",
+  "Auswertung",
   "Ausdrucken"
 ];
 
@@ -286,7 +286,7 @@ class Assistant extends React.Component {
   update(cb: ?Function) {
     // To calculate balance, for every group with predominantly positive features 1 is added,
     // for predominantly negative groups 1 is subtracted
-    if (this.isStageEnabled(stageNames.indexOf("mietlimbo!"))) {
+    if (this.isStageEnabled(stageNames.indexOf("Auswertung"))) {
       const featureGroupBalance = featureGroupNames
         .map(group => groupBalance(this.state.data[group]) < 0 ? -1 : groupBalance(this.state.data[group]) === 0 ? 0 : 1)
         .reduce((a, b) => (a + b), 0);
@@ -398,7 +398,7 @@ class Assistant extends React.Component {
       : <pre>{JSON.stringify(this.state.data, null, 2)}</pre>;
 
     // Don't display next button on final assistant page
-    const buttonDisplayStyle = this.state.stage === stageNames.indexOf("mietlimbo!") 
+    const buttonDisplayStyle = this.state.stage === stageNames.indexOf("Auswertung") 
       ? "none" : "initial";
 
 		return <div className="assistant" style={this.style.container} >
