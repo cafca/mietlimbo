@@ -2,8 +2,9 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
+import { stageNameTranslations, featureGroupNames } from "../Assistant";
 import Mietwucher from "./Mietwucher";
 import RenovationCase from "./RenovationCase";
 import {groupBalance} from "../ApartmentFeatureInputs/RangeSelectionGroup";
@@ -19,29 +20,6 @@ import {
 } from 'material-ui/Table';
 import { blue500, pinkA200 } from 'material-ui/styles/colors';
 
-const groupNameTranslations = defineMessages({
-  BathGroup: {
-    id: "groupNames.BathGroup",
-    defaultMessage: "Bad und WC"
-  },
-  KitchenGroup: {
-    id: "groupNames.KitchenGroup",
-    defaultMessage: "Küche"
-  },
-  ApartmentGroup: {
-    id: "groupNames.ApartmentGroup",
-    defaultMessage: "Wohnung"
-  },
-  BuildingGroup: {
-    id: "groupNames.BuildingGroup",
-    defaultMessage: "Gebäude"
-  },
-  EnvironmentGroup: {
-    id: "groupNames.EnvironmentGroup",
-    defaultMessage: "Umgebung"
-  },
-});
-
 type FinalResultProps = {
   [string]: {
     negative: Array<string>,
@@ -51,7 +29,6 @@ type FinalResultProps = {
 
 class FinalResult extends React.Component {
   inputName: "FinalResult";
-  groups = ["ApartmentGroup", "BathGroup", "BuildingGroup", "EnvironmentGroup", "KitchenGroup"];
 
   state: {
     balance: number,
@@ -73,7 +50,7 @@ class FinalResult extends React.Component {
   update(passOn=true) {
     // To calculate balance, for every group with predominantly positive features 1 is added,
     // for predominantly negative groups 1 is subtracted
-    const balance = this.groups
+    const balance = featureGroupNames
       .map(group => groupBalance(this.props.data[group]) < 0 ? -1 : groupBalance(this.props.data[group]) === 0 ? 0 : 1)
       .reduce((a, b) => (a + b), 0);
 
@@ -96,8 +73,8 @@ class FinalResult extends React.Component {
   }
 
   renderTableRows() {
-    const rangeFeatures = this.groups.map(group => <TableRow key={group}>
-        <TableRowColumn><FormattedMessage {...groupNameTranslations[group]} /></TableRowColumn>
+    const rangeFeatures = featureGroupNames.map(group => <TableRow key={group}>
+        <TableRowColumn><FormattedMessage {...stageNameTranslations[group]} /></TableRowColumn>
         <TableRowColumn>{this.props.data[group].positive.map(n => <p key={n}><FormattedMessage {...FeatureShortnames[n]} /></p>)}</TableRowColumn>
         <TableRowColumn>{this.props.data[group].negative.map(n => <p key={n}><FormattedMessage {...FeatureShortnames[n]} /></p>)}</TableRowColumn>
         <TableRowColumn style={{color: (groupBalance(this.props.data[group]) < 0 ? blue500 : groupBalance(this.props.data[group]) > 0 ? pinkA200 : "black"), "whiteSpace": "normal"}}>

@@ -10,14 +10,13 @@ import FlatButton from 'material-ui/FlatButton';
 import { blue300, pinkA200, grey400 } from 'material-ui/styles/colors';
 import Paper from "material-ui/Paper";
 
-import { stageNames } from "./Assistant";
+import { stageNames, stageNameTranslations } from "./Assistant";
 import {groupBalance} from"./ApartmentFeatureInputs/RangeSelectionGroup";
 
 type ProgressProps = {
   advance: number => any,
   stage: number,
   isStageEnabled: number => any,
-  serialNumber: string,
   intermediateResult: {
     max: number, mid: number, min: number
   }
@@ -62,13 +61,11 @@ class Progress extends React.Component {
   }
 
   render() { 
-    const stageKeys = [null,null,null,null,"BathGroup", "KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnvironmentGroup",null];
-    
     const ButtonLabel = (props: {stageName: string, index: number}) => {
-      const balance = groupBalance(this.props.data[stageKeys[props.index]]);
+      const balance = groupBalance(this.props.data[stageNames[props.index]]);
       const isBadgeEnabled = (3 < props.index) && (props.index < 9) && balance !== 0;
       const badge = isBadgeEnabled ? (balance < 0 ? balance : <span>+{balance}</span>) : null;
-      return <span>{props.stageName} {badge}</span>;
+      return <span><FormattedMessage {...stageNameTranslations[props.stageName]} /> {badge}</span>;
     }
 
     const stageButtons = stageNames.map(
@@ -77,13 +74,13 @@ class Progress extends React.Component {
         key={l}
         onClick={() => this.handleClick(i)} 
         disabled={!this.props.isStageEnabled(i)} 
-        primary={this.props.stage === (i) ? false : groupBalance(this.props.data[stageKeys[i]]) < 0}
-        secondary={this.props.stage === (i) ? false : groupBalance(this.props.data[stageKeys[i]]) > 0}
+        primary={this.props.stage === (i) ? false : groupBalance(this.props.data[stageNames[i]]) < 0}
+        secondary={this.props.stage === (i) ? false : groupBalance(this.props.data[stageNames[i]]) > 0}
         style={this.props.stage === (i) ? this.style.activeStageButton : this.style.stageButton}
         backgroundColor={this.props.stage === (i) 
-          ? groupBalance(this.props.data[stageKeys[i]]) < 0 
+          ? groupBalance(this.props.data[stageNames[i]]) < 0 
             ? blue300 // group is negative
-            : groupBalance(this.props.data[stageKeys[i]]) > 0 
+            : groupBalance(this.props.data[stageNames[i]]) > 0 
               ? pinkA200  // group is positve
               : grey400  // group is neutral or button is not for a group
           : null // no backgroundcolor if not active

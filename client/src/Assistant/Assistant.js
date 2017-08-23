@@ -2,7 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import {Introduction, Title} from './Introduction';
@@ -29,6 +29,53 @@ import * as EnvironmentFeatures from './ApartmentFeatureInputs/EnvironmentFeatur
 
 import './Assistant.css';
 
+export const stageNameTranslations = defineMessages({
+  "Einleitung": {
+    id: "StageNames.Einleitung",
+    defaultMessage: "Einleitung"
+  },
+  "Ausnahmen": {
+    id: "StageNames.Ausnahmen",
+    defaultMessage: "Ausnahmen"
+  },
+  "Basisdaten": {
+    id: "StageNames.Basisdaten",
+    defaultMessage: "Basisdaten"
+  },
+  "Mietspiegel": {
+    id: "StageNames.Mietspiegel",
+    defaultMessage: "Mietspiegel"
+  },
+  "Bad": {
+    id: "StageNames.Bad",
+    defaultMessage: "Bad"
+  },
+  "Küche": {
+    id: "StageNames.Küche",
+    defaultMessage: "Küche"
+  },
+  "Wohnung": {
+    id: "StageNames.Wohnung",
+    defaultMessage: "Wohnung"
+  },
+  "Gebäude": {
+    id: "StageNames.Gebäude",
+    defaultMessage: "Gebäude"
+  },
+  "Umfeld": {
+    id: "StageNames.Umfeld",
+    defaultMessage: "Umfeld"
+  },
+  "mietlimbo!": {
+    id: "StageNames.mietlimbo",
+    defaultMessage: "mietlimbo!"
+  },
+  "Ausdrucken": {
+    id: "StageNames.Ausdrucken",
+    defaultMessage: "Ausdrucken"
+  }
+});
+
 export const stageNames = [
   "Einleitung",
   "Ausnahmen",
@@ -42,6 +89,40 @@ export const stageNames = [
   "mietlimbo!",
   "Ausdrucken"
 ];
+
+// Stages with feature groups
+export const featureGroupNames = Object.keys(stageNameTranslations).slice(4, 9);
+
+const featureGroupLongNames = defineMessages({
+  "Bad": {
+    id: "StageHeaders.Bad",
+    defaultMessage: "Badezimmer und WC"
+  },
+  "Küche": {
+    id: "StageHeaders.Küche",
+    defaultMessage: "Küche"
+  },
+  "Wohnung": {
+    id: "StageHeaders.Wohnung",
+    defaultMessage: "Wohnung"
+  },
+  "Gebäude": {
+    id: "StageHeaders.Gebäude",
+    defaultMessage: "Gebäude"
+  },
+  "Umfeld": {
+    id: "StageHeaders.Umfeld",
+    defaultMessage: "Wohnumfeld"
+  },
+});
+
+const featureGroupInputs = {
+  "Bad": BathFeatures,
+  "Küche": KitchenFeatures,
+  "Wohnung": ApartmentFeatures,
+  "Gebäude": BuildingFeatures,
+  "Umfeld": EnvironmentFeatures
+};
 
 // These fields are required in order to advance to the next assistant stage
 // (all previous conditions are also required, of course)
@@ -64,11 +145,11 @@ type AssistantProps = {
 };
 
 const testData = {
-  "BathGroup":{"positive":[],"negative":[]},
-  "KitchenGroup":{"positive":[],"negative":[]},
-  "ApartmentGroup":{"positive":[],"negative":[]},
-  "BuildingGroup":{"positive":[],"negative":[]},
-  "EnvironmentGroup":{"positive":[],"negative":[]},
+  "Bad":{"positive":[],"negative":[]},
+  "Küche":{"positive":[],"negative":[]},
+  "Wohnung":{"positive":[],"negative":[]},
+  "Gebäude":{"positive":[],"negative":[]},
+  "Umfeld":{"positive":[],"negative":[]},
   "leaseCreated":"2015-07-31T22:00:00.000Z",
   "rent":1200,
   "address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"},
@@ -84,7 +165,6 @@ const testData = {
 class Assistant extends React.Component {
 	state = {
 		stage: 0,
-		serialNumber: "03",
     inputValid: {},
     inputData: process.env.NODE_ENV === "production" ? {} : testData
 	}
@@ -123,7 +203,7 @@ class Assistant extends React.Component {
     // Fill the dataset with emoty objects in the beginning
     const inputData = Object.assign({}, this.state.inputData);
     // eslint-disable-next-line array-callback-return
-    ["BathGroup", "KitchenGroup", "ApartmentGroup", "BuildingGroup", "EnvironmentGroup"].map(name => {
+    featureGroupNames.map(name => {
       if (inputData[name] === undefined) {
         inputData[name] = {
           positive: [],
@@ -213,85 +293,17 @@ class Assistant extends React.Component {
         break;
 
       case 4:
-        content = <div>
-          <h1>
-            <FormattedMessage
-              id="Bath.Header"
-              defaultMessage="Badezimmer und WC" />
-          </h1>
-          <RangeSelectionGroup 
-            domain="BathGroup"
-            key="BathGroup"
-            inputComponents={BathFeatures}
-            inputData={this.state.inputData.BathGroup}
-            changed={changed} 
-            />
-        </div>;
-        break;
-
       case 5:
-        content = <div key="stage6">
-          <h1>
-            <FormattedMessage
-              id="Kitchen.Header"
-              defaultMessage="Küche" />
-          </h1>
-          <RangeSelectionGroup 
-            domain="KitchenGroup"
-            key="KitchenGroup"
-            inputComponents={KitchenFeatures}
-            inputData={this.state.inputData.KitchenGroup}
-            changed={changed} 
-            />
-        </div>;
-        break;
-
       case 6:
-        content = <div key="stage7">
-          <h1>
-            <FormattedMessage
-              id="Apartment.Header"
-              defaultMessage="Wohnung" />
-          </h1>
-          <RangeSelectionGroup 
-            domain="ApartmentGroup"
-            key="ApartmentGroup"
-            inputComponents={ApartmentFeatures}
-            inputData={this.state.inputData.ApartmentGroup}
-            changed={changed} 
-            />
-        </div>;
-        break;
-
       case 7:
-        content = <div key="stage8">
-          <h1>
-            <FormattedMessage
-              id="Building.Header"
-              defaultMessage="Gebäude" />
-          </h1>
-          <RangeSelectionGroup 
-            domain="BuildingGroup"
-            key="BuildingGroup"
-            inputComponents={BuildingFeatures}
-            inputData={this.state.inputData.BuildingGroup}
-            changed={changed} 
-            />
-        </div>;
-        break;
-
       case 8:
-        content = <div key="stage10">
-          <h1>
-            <FormattedMessage
-              id="Environment.Header"
-              defaultMessage="Wohnumfeld" />
-          </h1>
+        content = <div>
+          <h1><FormattedMessage {...featureGroupLongNames[stageNames[this.state.stage]]} /></h1>
           <RangeSelectionGroup 
-            domain="EnvironmentGroup"
-            key="EnvironmentGroup"
-            inputComponents={EnvironmentFeatures}
-            inputData={this.state.inputData.EnvironmentGroup}
+            domain={stageNames[this.state.stage]}
+            key={stageNames[this.state.stage]}
+            inputComponents={featureGroupInputs[stageNames[this.state.stage]]}
+            inputData={this.state.inputData[stageNames[this.state.stage]]}
             changed={changed} 
             />
         </div>;
@@ -305,16 +317,20 @@ class Assistant extends React.Component {
 
 			case 0:
 			default:
-				content = <Introduction serialNumber={this.state.serialNumber} />;
+				content = <Introduction />;
         title = <Title />;
 		}
-    const debug = process.env.NODE_ENV === "production" ? null : <pre>{JSON.stringify(this.state.inputData, null, 2)}</pre>;
 
-    const buttonDisplayStyle = this.state.stage === stageNames.length ? "none" : "initial";
+    const debug = process.env.NODE_ENV === "production" ? null 
+      : <pre>{JSON.stringify(this.state.inputData, null, 2)}</pre>;
+
+    // Don't display next button on final assistant page
+    const buttonDisplayStyle = this.state.stage === stageNames.indexOf("mietlimbo!") 
+      ? "none" : "initial";
+
 		return <div className="assistant" style={this.style.container} >
       {title}
       <Progress 
-        serialNumber={this.state.serialNumber} 
         stage={this.state.stage} 
         isStageEnabled={this.isStageEnabled}
         requestStage={this.requestStage} 
