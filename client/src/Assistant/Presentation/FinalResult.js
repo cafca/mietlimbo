@@ -83,7 +83,12 @@ class FinalResult extends React.Component {
           defaultMessage="Um herauszufinden, wie du mit dieser Information deine Miete senken kannst empfehle ich dir, 
             den Artikel von {ChristopherStark} zu lesen, der diese Seite inspiriert hat."
           values={{
-            ChristopherStark: <a target="_blank" rel="noopener noreferrer" href="https://blog.mietlimbo.de/2017/04/18/mietpreisbremse-betaetigen/">Christopher Stark</a>
+            ChristopherStark: <a 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              href="https://blog.mietlimbo.de/2017/04/18/mietpreisbremse-betaetigen/">
+                Christopher Stark
+            </a>
           }} /></p>
       </section>
     </div>;
