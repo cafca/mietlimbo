@@ -159,7 +159,7 @@ class FinalResult extends React.Component {
             defaultMessage="Die Miete deines Vormieters lag auch unter diesem Wert und steht damit einer Mietsenkung nicht im Wege." />;
 
     return <div>
-      <h1><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="Ergebnis" /></h1>
+      <h1><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="mietlimbo: Ergebnis" /></h1>
       <p><FormattedMessage
         id="FinalResult.tableDescription"
         defaultMessage="In dieser Tabelle siehst du nochmal alle von dir gewählten Merkmale. In der rechten Spalte wird für jede Merkmalgruppe gezeigt, 
@@ -168,10 +168,10 @@ class FinalResult extends React.Component {
       <Table selectable={false} style={{border: "1px solid #eee", tableLayout: "fixed"}}>
         <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
           <TableRow>
-            <TableHeaderColumn>Merkmalgruppe</TableHeaderColumn>
-            <TableHeaderColumn>Pos. Merkmale</TableHeaderColumn>
-            <TableHeaderColumn>Neg. Merkmale</TableHeaderColumn>
-            <TableHeaderColumn>Balance</TableHeaderColumn>
+            <TableHeaderColumn><FormattedMessage id="FinalResult.tableHeaderFeatures" defaultMessage="Merkmalgruppe" /></TableHeaderColumn>
+            <TableHeaderColumn><FormattedMessage id="FinalResult.tableHeaderPositive" defaultMessage="Pos. Merkmale" /></TableHeaderColumn>
+            <TableHeaderColumn><FormattedMessage id="FinalResult.tableHeaderNegative" defaultMessage="Neg. Merkmale" /></TableHeaderColumn>
+            <TableHeaderColumn><FormattedMessage id="FinalResult.tableHeaderBalance" defaultMessage="Balance" /></TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}>

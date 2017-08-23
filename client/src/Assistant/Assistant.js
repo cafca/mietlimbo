@@ -33,13 +33,14 @@ export const stageNames = [
   "Einleitung",
   "Ausnahmen",
   "Basisdaten",
-  "Halbfertig",
+  "Mietspiegel",
   "Bad",
   "Küche",
   "Wohnung",
   "Gebäude",
   "Umfeld",
-  "Ergebnis"
+  "mietlimbo!",
+  "Ausdrucken"
 ];
 
 // These fields are required in order to advance to the next assistant stage
@@ -101,7 +102,7 @@ class Assistant extends React.Component {
 	}
 
   componentWillMount() {
-    // Fill state with empty data sets
+    // Fill state with empty data sets and activate stage based on URL
     this.setState(this.initializeData(), () => {
       if (this.props.match && this.props.match.params.stage) {
         const stage = parseInt(this.props.match.params.stage, 10);
@@ -158,7 +159,6 @@ class Assistant extends React.Component {
 	handleInputChanged(newData: Object, cb: () => any) {
     // This method is called from input components when their respective data is updated
     this.setState({inputData: Object.assign({}, this.state.inputData, newData)}, cb);
-    Object.keys(newData).map(k => console.log(k, newData[k]));
 	}
 
   isStageEnabled(stage: number) {
