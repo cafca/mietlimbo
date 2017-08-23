@@ -90,7 +90,7 @@ class FinalResult extends React.Component {
       ? <FormattedMessage
           id="FinalResult.calculationBalanced"
           defaultMessage="In deinem Fall halten sich positive und negative Merkmalgruppen die Waage. Hierdurch gilt direkt
-            die ortsübliche Vergleichsmiete aus Schritt 3 von {localRentLevel, number} € pro Quadratmeter."
+            die ortsübliche Vergleichsmiete  aus dem ersten Teil von {localRentLevel, number} € pro Quadratmeter."
           values={{
             localRentLevel: this.state.localRentLevel
           }} />
@@ -136,10 +136,10 @@ class FinalResult extends React.Component {
             defaultMessage="Die Miete deines Vormieters lag auch unter diesem Wert und steht damit einer Mietsenkung nicht im Wege." />;
 
     return <div>
-      <h1><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="Dein mietlimbo: {result, number, currency}" values={{result: this.state.mpbRent}} /></h1>
+      <h1><FormattedMessage id="FinalResult.calculationTitle" defaultMessage="Dein mietlimbo: {result, number, currency} 😱" values={{result: this.state.mpbRent}} /></h1>
       <p><FormattedMessage
         id="FinalResult.tableDescription"
-        defaultMessage="In dieser Tabelle siehst du nochmal alle von dir gewählten Merkmale. In der rechten Spalte wird für jede Merkmalgruppe gezeigt, 
+        defaultMessage="Das könnte deine Miete sein! Aber zunächst von vorne: In dieser Tabelle siehst du nochmal alle von dir gewählten Merkmale. In der rechten Spalte wird für jede Merkmalgruppe gezeigt, 
           ob positive oder negative Merkmale überwiegen. Ganz unten rechts wird daraus wiederum die Balance aller Merkmalgruppen berechnet." />
       </p>
       <Table selectable={false} style={{border: "1px solid #eee", tableLayout: "fixed"}}>
@@ -188,7 +188,7 @@ class FinalResult extends React.Component {
           values={{
             mpbRent: this.props.data.squareMeters * (this.state.localRentLevel * 1.1),
             currentRent: this.props.data.rent,
-            diff: this.props.data.rent - (this.props.data.squareMeters * (this.state.localRentLevel * 1.1)),
+            diff: Math.abs(this.props.data.rent - (this.props.data.squareMeters * (this.state.localRentLevel * 1.1))),
             diffDir: this.props.data.rent - (this.props.data.squareMeters * (this.state.localRentLevel * 1.1)) < 0 ? 'mehr' : 'weniger'
           }} />
       </p>
