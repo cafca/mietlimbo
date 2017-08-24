@@ -188,7 +188,7 @@ export const ColdWaterMetering = injectIntl((props: RangeInputProps) => {
     }
   });
 
-  <Card className="assistantInput">
+  return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="ColdWaterMetering"

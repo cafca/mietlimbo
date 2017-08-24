@@ -1,0 +1,9 @@
+td {
+	white-space: initial !important;
+	overflow: initial !important;
+	padding: 1px 4px !important;
+}
+
+td:first-of-type {
+	padding: 1px 24px !important;
+}

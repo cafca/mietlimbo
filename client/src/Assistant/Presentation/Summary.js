@@ -82,8 +82,8 @@ const styles = {
   },
   rangeTable: {
     borderCollapse: "collapse",
-    width: "100%",
-    marginBottom: "2em"
+    width: "80%",
+    margin: "4em auto"
   },
   rangeTableCell1: {
     width: "33%",
@@ -268,12 +268,12 @@ const MietpreisbremseSummary = (props: Data) => {
           <td style={styles.rangeTable2}><FormattedMessage id="Summary.RangeMid" defaultMessage="< Spanne {lowerRange, number, currency} >" values={values} /></td>
           <td style={styles.rangeTable2}><FormattedMessage id="Summary.RangeMid" defaultMessage="< Spanne {upperRange, number, currency} >" values={values} /></td>
         </tr>
-        <tr>&nbsp;</tr>
+        <tr><td>&nbsp;</td></tr>
         <tr>
           <td><FormattedMessage id="Summary.correction" defaultMessage="Korrektur" />:</td>
           <td>
             {props.result.featureGroupBalance === 0 
-              ? "/"
+              ? "–"
               :<FormattedMessage 
                 id ="Summary.correctionCalc" 
                 defaultMessage="{correctionPercentage, number}% × {range, number, currency} = {correctionAmount, number, longCurrency}" 
@@ -281,6 +281,7 @@ const MietpreisbremseSummary = (props: Data) => {
             }
           </td>
         </tr>
+        <tr><td>&nbsp;</td></tr>
         <tr>
           <td><FormattedMessage id="Summary.localRentLevel" defaultMessage="Örtliche Vergleichsmiete" />:</td>
           <td><FormattedMessage 
@@ -289,11 +290,13 @@ const MietpreisbremseSummary = (props: Data) => {
             values={values} />
           </td>
         </tr>
+        <tr><td>&nbsp;</td></tr>
         <tr>
           <td><FormattedMessage id="Summary.mpbApplied" defaultMessage="Bei Anwendung von Mietpreisbremse" />:</td>
           <td><FormattedMessage id ="Summary.mpbAppliedCalc" values={values}
             defaultMessage="{localRentLevel, number, longCurrency} × 1,1 = {mietlimboLevel, number, longCurrency}" /></td>
         </tr>
+        <tr><td>&nbsp;</td></tr>
         <tr>
           <td><FormattedMessage id="Summary.mpbFinalRent" defaultMessage="Nettokaltmiete für {squareMeters, number} ㎡" values={values} />:</td>
           <td><FormattedMessage id ="Summary.mpbFinalRentCalc" values={values}
