@@ -161,7 +161,7 @@ const Summary = injectIntl((props: SummaryProps) => {
     <Mietspiegel {...props.data} />
 
     <h2><FormattedMessage {...messages.FeatureTableTitle} /></h2>
-    <FeatureTable {...props.data} />
+    <FeatureTable {...props.data} officialNames={true} />
 
     <h2><FormattedMessage {...messages.CalculationTitle} /></h2>
     <MietpreisbremseSummary {...props.data} />
