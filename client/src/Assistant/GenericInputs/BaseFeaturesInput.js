@@ -9,10 +9,6 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import type {AssistantInputProps} from './Tools';
 
 class BaseFeaturesInput extends React.Component {
-	state: {
-		value: ?string
-	};
-
 	inputName: string = "baseFeatures";
 
 	options = ["nobath", "noheating", "both", "default"];
@@ -38,16 +34,15 @@ class BaseFeaturesInput extends React.Component {
 	constructor(props: AssistantInputProps) {
 		super(props);
 		autoBind(this);
-		this.state = {
-			value: props.value
-		}
-    if (props.value !== undefined) this.props.valid(this.inputName, true);
 	}
 
+  componentDidMount() {
+    if (this.props.value !== undefined) this.props.valid(this.inputName, true);
+  }
+
 	handleChange(e: SyntheticInputEvent, value: string) {
-    this.setState({value});
-    this.props.changed({[this.inputName]: value});
-    this.props.valid(this.inputName, true);
+    this.props.changed({[this.inputName]: value}, 
+      () => this.props.valid(this.inputName, true));
 	}
 
 	render() {
@@ -72,7 +67,7 @@ class BaseFeaturesInput extends React.Component {
       }
     })
 
-    const warning = this.state.value === undefined || this.state.value === "default" ? "" : 
+    const warning = this.props.value === undefined || this.props.value === "default" ? "" : 
       <p style={{color: "red"}}><FormattedMessage {...messages.warning} /></p>;
 
 		return <Card className="assistantInput">
@@ -81,7 +76,7 @@ class BaseFeaturesInput extends React.Component {
         <RadioButtonGroup
           name={this.inputName}
           onChange={this.handleChange} 
-          valueSelected={this.state.value} >
+          valueSelected={this.props.value} >
           {radioControls}
         </RadioButtonGroup>
         {warning}

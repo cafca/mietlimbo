@@ -2,17 +2,9 @@
 
 import React from 'react';
 import { injectIntl, FormattedMessage, defineMessages } from 'react-intl';
+import { radioDescriptions } from "../GenericInputs/ConstructionDateInput";
 
-import {isPreviousRentLimiting} from "./Calculation";
-
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
+import { isPreviousRentLimiting } from "./Calculation";
 
 import FeatureTable from "./FeatureTable";
 import type {Data} from "../Assistant";
@@ -56,14 +48,14 @@ const messages = defineMessages({
   Footer: {
     id: "Summary.Footer",
     defaultMessage: "Diese Daten wurden auf mietlimbo.de erfasst - kostenlose Erfassung und Berechnung von Daten für die Mietpreisbremse"
+  },
+  Currency: {
+    id: "Summary.GenericCurrency",
+    defaultMessage: "{value, number, currency}"
   }
 });
 
 const Summary = injectIntl((props: SummaryProps) => {
-  const styles = {
-    table: {border: "1px solid #eee", tableLayout: "fixed"}
-  }
-
   const values = {
     LeaseCreated: props.intl.formatDate(props.data.leaseCreated)
   };
@@ -117,50 +109,53 @@ const Summary = injectIntl((props: SummaryProps) => {
       </li>
     </ul>
 
-    <p>
-      <h2><FormattedMessage {...messages.RangeSelectionTitle} /></h2>
-      <Mietspiegel {...props.data} />
-    </p>
+    <h2><FormattedMessage {...messages.RangeSelectionTitle} /></h2>
+    <Mietspiegel {...props.data} />
 
-    <p>
-      <h2><FormattedMessage {...messages.FeatureTableTitle} /></h2>
-      <FeatureTable {...props.data} />
-    </p>
+    <h2><FormattedMessage {...messages.FeatureTableTitle} /></h2>
+    <FeatureTable {...props.data} />
 
-    <p>
-      <h2><FormattedMessage {...messages.CalculationTitle} /></h2>
+    <h2><FormattedMessage {...messages.CalculationTitle} /></h2>
 
-    </p>
-
-    <p>
-      <FormattedMessage {...messages.Footer} />
-    </p>
+    <FormattedMessage {...messages.Footer} />
   </div>
 });
 
-const Mietspiegel = (props: Data) => {
+const Mietspiegel = injectIntl((props: Data) => {
+  const styles = {
+    td: {paddingRight: 10}
+  };
+
   return <table>
-    <tr>
-      <td><FormattedMessage id="Summary.MietspiegelStreet" defaultMessage="Straße" />:</td>
-      <td>{props.address.streetname}</td>
-    </tr>
-    <tr>
-      <td><FormattedMessage id="Summary.MietspiegelStreetRange" defaultMessage="Hausnummer" />:</td>
-      <td>{props.address.range}</td>
-    </tr>
-    <tr>
-      <td><FormattedMessage id="Summary.MietspiegelConstructionDate" defaultMessage="Gebäudealter" />:</td>
-      <td>{props.constructionDate}</td>
-    </tr>
-    <tr>
-      <td><FormattedMessage id="Summary.MietspiegelSquareMeters" defaultMessage="Wohnfläche" />:</td>
-      <td>{props.squareMeters} qm</td>
-    </tr>
-    <tr>
-      <td><FormattedMessage id="Summary.MietspiegelRentRange" defaultMessage="Nettokaltmiete (Spanne)" />:</td>
-      <td>{props.result.min} - <strong>{props.result.mid}</strong> - {props.result.max}</td>
-    </tr>
+    <tbody>
+      <tr>
+        <td><FormattedMessage id="Summary.MietspiegelStreet" defaultMessage="Straße" />:</td>
+        <td>{props.address.streetname}</td>
+      </tr>
+      <tr>
+        <td><FormattedMessage id="Summary.MietspiegelStreetRange" defaultMessage="Hausnummer" />:</td>
+        <td>{props.address.range}</td>
+      </tr>
+      <tr>
+        <td><FormattedMessage id="Summary.MietspiegelConstructionDate" defaultMessage="Gebäudealter" />:</td>
+        <td><FormattedMessage {...radioDescriptions[props.constructionDate]} /></td>
+      </tr>
+      <tr>
+        <td><FormattedMessage id="Summary.MietspiegelSquareMeters" defaultMessage="Wohnfläche" />:</td>
+        <td>{props.squareMeters} qm</td>
+      </tr>
+      <tr>
+        <td style={styles.td}><FormattedMessage id="Summary.MietspiegelRentRange" defaultMessage="Spanne Nettokaltmiete" />:</td>
+        <td>
+          <FormattedMessage {...messages.Currency} values={{value: props.result.min}} />
+          &nbsp; - &nbsp; 
+          <strong><FormattedMessage {...messages.Currency} values={{value: props.result.mid}} /></strong> 
+          &nbsp; - &nbsp; 
+          <FormattedMessage {...messages.Currency} values={{value: props.result.max}} />
+        </td>
+      </tr>
+    </tbody>
   </table>
-}
+});
 
 export default injectIntl(Summary);
