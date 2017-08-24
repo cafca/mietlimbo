@@ -8,25 +8,44 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 import type {AssistantInputProps} from './Tools';
 
+export const officialDescriptions = defineMessages({
+  "nobath": {
+    id: "BaseFeatures.nobathOfficial",
+    defaultMessage: "mit Sammelheizung oder mit Bad, mit WC in der Wohnung"
+  },
+  "noheating": {
+    id: "BaseFeatures.noheatingOfficial",
+    defaultMessage: "mit Sammelheizung oder mit Bad, mit WC in der Wohnung"
+  },
+  "both": {
+    id: "BaseFeatures.bothOfficial",
+    defaultMessage: "ohne Sammelheizung, ohne Bad, mit WC in der Wohnung"
+  },
+  "default": {
+    id: "BaseFeatures.defaultOfficial",
+    defaultMessage: "Mit Sammelheizung, Bad und WC in der Wohnung"
+  }
+});
+
 class BaseFeaturesInput extends React.Component {
 	inputName: string = "baseFeatures";
 
 	options = ["nobath", "noheating", "both", "default"];
 	optionDescriptions = defineMessages({
 		"nobath": {
-			id: "nobath",
+			id: "BaseFeatures.nobath",
 			defaultMessage: "Ich habe eine Toilette, aber weder Bad noch Dusche in der Wohnung."
 		},
 		"noheating": {
-			id: "noheating",
+			id: "BaseFeatures.noheating",
 			defaultMessage: "Es gibt bei mir keine Sammelheizung, die alle Wohnräume gleichzeitig heizen kann."
 		},
 		"both": {
-			id: "both",
+			id: "BaseFeatures.both",
 			defaultMessage: "Beides! (Oha)"
 		},
 		"default": {
-			id: "default",
+			id: "BaseFeatures.default",
 			defaultMessage: "Nichts davon"
 		}
 	})
@@ -42,7 +61,8 @@ class BaseFeaturesInput extends React.Component {
 
 	handleChange(e: SyntheticInputEvent, value: string) {
     this.props.changed({[this.inputName]: value}, 
-      () => this.props.valid(this.inputName, true));
+      () => this.props.valid(this.inputName, true, 
+        () => this.props.valid("intermediateResult", false)));
 	}
 
 	render() {
