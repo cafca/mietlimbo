@@ -35,10 +35,17 @@ class App extends Component {
 }
 
 const formats = {
-  number: {currency: {
-    style: 'currency',
-    currency: 'EUR'
-  }}
+  number: {
+    currency: {
+      style: 'currency',
+      currency: 'EUR'
+    },
+    longCurrency: {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 6
+    }
+  }
 };
 
 const AppMaterialUI = () => (
