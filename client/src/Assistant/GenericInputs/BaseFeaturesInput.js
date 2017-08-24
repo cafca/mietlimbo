@@ -8,29 +8,44 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 import type {AssistantInputProps} from './Tools';
 
-class BaseFeaturesInput extends React.Component {
-	state: {
-		value: ?string
-	};
+export const officialDescriptions = defineMessages({
+  "nobath": {
+    id: "BaseFeatures.nobathOfficial",
+    defaultMessage: "mit Sammelheizung oder mit Bad, mit WC in der Wohnung"
+  },
+  "noheating": {
+    id: "BaseFeatures.noheatingOfficial",
+    defaultMessage: "mit Sammelheizung oder mit Bad, mit WC in der Wohnung"
+  },
+  "both": {
+    id: "BaseFeatures.bothOfficial",
+    defaultMessage: "ohne Sammelheizung, ohne Bad, mit WC in der Wohnung"
+  },
+  "default": {
+    id: "BaseFeatures.defaultOfficial",
+    defaultMessage: "Mit Sammelheizung, Bad und WC in der Wohnung"
+  }
+});
 
+class BaseFeaturesInput extends React.Component {
 	inputName: string = "baseFeatures";
 
 	options = ["nobath", "noheating", "both", "default"];
 	optionDescriptions = defineMessages({
 		"nobath": {
-			id: "nobath",
+			id: "BaseFeatures.nobath",
 			defaultMessage: "Ich habe eine Toilette, aber weder Bad noch Dusche in der Wohnung."
 		},
 		"noheating": {
-			id: "noheating",
+			id: "BaseFeatures.noheating",
 			defaultMessage: "Es gibt bei mir keine Sammelheizung, die alle Wohnräume gleichzeitig heizen kann."
 		},
 		"both": {
-			id: "both",
+			id: "BaseFeatures.both",
 			defaultMessage: "Beides! (Oha)"
 		},
 		"default": {
-			id: "default",
+			id: "BaseFeatures.default",
 			defaultMessage: "Nichts davon"
 		}
 	})
@@ -38,16 +53,16 @@ class BaseFeaturesInput extends React.Component {
 	constructor(props: AssistantInputProps) {
 		super(props);
 		autoBind(this);
-		this.state = {
-			value: props.value
-		}
-    if (props.value !== undefined) this.props.valid(this.inputName, true);
 	}
 
+  componentDidMount() {
+    if (this.props.value !== undefined) this.props.valid(this.inputName, true);
+  }
+
 	handleChange(e: SyntheticInputEvent, value: string) {
-    this.setState({value});
-    this.props.changed({[this.inputName]: value});
-    this.props.valid(this.inputName, true);
+    this.props.changed({[this.inputName]: value}, 
+      () => this.props.valid(this.inputName, true, 
+        () => this.props.valid("intermediateResult", false)));
 	}
 
 	render() {
@@ -72,7 +87,7 @@ class BaseFeaturesInput extends React.Component {
       }
     })
 
-    const warning = this.state.value === undefined || this.state.value === "default" ? "" : 
+    const warning = this.props.value === undefined || this.props.value === "default" ? "" : 
       <p style={{color: "red"}}><FormattedMessage {...messages.warning} /></p>;
 
 		return <Card className="assistantInput">
@@ -81,7 +96,7 @@ class BaseFeaturesInput extends React.Component {
         <RadioButtonGroup
           name={this.inputName}
           onChange={this.handleChange} 
-          valueSelected={this.state.value} >
+          valueSelected={this.props.value} >
           {radioControls}
         </RadioButtonGroup>
         {warning}

@@ -52,7 +52,7 @@ class Street(db.Model):
     def get_rent(self, year_range, real_size, guessed_size):
         """Return rent data for a given street/range."""
 
-        with open("./data.json") as f:
+        with open("./data.json", "r") as f:
             data = json.load(f)
 
         if guessed_size is None:

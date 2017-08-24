@@ -88,7 +88,7 @@ export const NoHeating = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Bath.NoHeating",
-      defaultMessage: "Heizung im Bad"
+      defaultMessage: "Gibt es in Bad oder WC keine normale Heizung?"
     }
   });
 
@@ -102,11 +102,11 @@ export const NoHeating = injectIntl((props: RangeInputProps) => {
         /></li>
         <li><FormattedMessage 
           id="Bath.NoHeating2" 
-          defaultMessage="Holz/Kohleheizung" 
+          defaultMessage="Nur Holz- oder Kohleheizung" 
         /></li>
         <li><FormattedMessage 
           id="Bath.NoHeating3" 
-          defaultMessage="Elektroheizstrahler" 
+          defaultMessage="Nur Elektroheizstrahler" 
         /></li>
       </ul>
     </CardText>
@@ -165,6 +165,14 @@ export const FixedBathtub = injectIntl((props: RangeInputProps) => {
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
+    <CardText className="cardText">
+      <p>
+        <FormattedMessage 
+          id="Bath.FixedBathtubExplanation" 
+          defaultMessage="Auch eine Badewanne mit Verblendung gilt nicht als fest eingebaut."
+        />
+      </p>
+    </CardText>
   </Card>;
 });
 
@@ -299,11 +307,11 @@ export const HighClassFeatures = injectIntl((props: RangeInputProps) => {
       />} />
     <CardText className="cardText">
       <p>
-      <FormattedMessage 
-        id="Bath.HighClassFeaturesExamples" 
-        defaultMessage="Zum Beispiel hochwertige Sanitärausstattung, hochwertige Badmöbel, Eckwanne, Rundwanne" 
-      />
-    </p>
+        <FormattedMessage 
+          id="Bath.HighClassFeaturesExamples" 
+          defaultMessage="Zum Beispiel hochwertige Sanitärausstattung, hochwertige Badmöbel, Eckwanne, Rundwanne" 
+        />
+      </p>
     </CardText>
   </Card>;
 });

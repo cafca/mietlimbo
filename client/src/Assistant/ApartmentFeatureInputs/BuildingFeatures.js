@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react';
-import { injectIntl, defineMessages } from 'react-intl';
-import { Card, CardTitle } from 'material-ui/Card';
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 
 import CheckboxInput from './CheckboxInput';
 import type {RangeInputProps} from './RangeSelectionGroup';
@@ -34,7 +34,8 @@ export const DoorLock = injectIntl((props: RangeInputProps) => {
       id: "Building.DoorLock",
       defaultMessage: "Die Hauseingangstür ist nicht abschließbar."
     }
-  })
+  });
+
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
@@ -50,9 +51,14 @@ export const RepresentativeEntrance = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Building.RepresentativeEntrance",
-      defaultMessage: "Es gibt einen repräsentativen oder hochwertig sanierten Eingangsbereich, bzw. ein solches Treppenhaus. (z.B. Spiegel, Marmor, exklusive Beleuchtung, hochwertiger Anstrich/Wandbelag, Läufer im gesamten Flur- und Treppenbereich)"
+      defaultMessage: "Eingansbereich oder Treppenhaus hochwertig saniert oder repräsentativ."
+    },
+    explanation: {
+      id: "Building.LowMaintenance",
+      defaultMessage: "z.B. Spiegel, Marmor, exklusive Beleuchtung, hochwertiger Anstrich/Wandbelag, Läufer im gesamten Flur- und Treppenbereich"
     }
-  })
+  });
+
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
@@ -61,6 +67,11 @@ export const RepresentativeEntrance = injectIntl((props: RangeInputProps) => {
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
+    <CardText>
+      <p>
+        <FormattedMessage {...messages.explanation} />
+      </p>
+    </CardText>
   </Card>;
 });
 
@@ -82,11 +93,39 @@ export const WellMaintained = injectIntl((props: RangeInputProps) => {
   </Card>;
 });
 
+export const LowMaintenance = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Building.LowMaintenance",
+      defaultMessage: "Schlechter Instandhaltungszustand "
+    },
+    explanation: {
+      id: "Building.LowMaintenance",
+      defaultMessage: "Z.B. dauernde Durchfeuchtung des Mauerwerks - auch Keller -, große Putzschäden, erhebliche Schäden an der Dacheindeckung."
+    }
+  });
+
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
+        changed={props.changed}
+        name="LowMaintenance"
+        positive={false}
+        message={props.intl.formatMessage(messages.title)}
+        value={props.value}
+      />} />
+    <CardText>
+      <p>
+        <FormattedMessage {...messages.explanation} />
+      </p>
+    </CardText>
+  </Card>;
+});
+
 export const NoStorageRoom = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Building.NoStorageRoom",
-      defaultMessage: "Es gibt keinen nur dem Mieter zugänglichen, bestimmungsgemäß nutzbaren Abstellraum im Gebäude, der außerhalb der Wohnung liegt."
+      defaultMessage: "Kein Mieterkeller oder Kellerersatzraum zur alleinigen Nutzung des Mieters vorhanden"
     }
   })
   return <Card className="assistantInput">
@@ -104,9 +143,15 @@ export const BicycleRoom = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Building.BicycleRoom",
-      defaultMessage: "Es gibt einen abschließbaren Fahrradabstellraum."
+      defaultMessage: "Fahrradabstellraum oder Fahrradabstellplätze"
+    },
+    explanation: {
+      id: "Building.LowMaintenance",
+      defaultMessage: `Ein solcher Raum muss innerhalb des Gebäudes, abschließbar und 
+        leicht zugänglich sein. Fahrradabstellplätze müssen eine Anschließmöglichkeit 
+        bieten und sich außerhalb des Gebäudes auf dem Grundstück befinden.`
     }
-  })
+  });
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
@@ -115,24 +160,11 @@ export const BicycleRoom = injectIntl((props: RangeInputProps) => {
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
-  </Card>;
-});
-
-export const BicycleParking = injectIntl((props: RangeInputProps) => {
-  const messages = defineMessages({
-    title: {
-      id: "Building.BicycleParking",
-      defaultMessage: "Es gibt gar keine Fahrradabstellmöglichkeit."
-    }
-  })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="BicycleParking"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
+    <CardText>
+      <p>
+        <FormattedMessage {...messages.explanation} />
+      </p>
+    </CardText>
   </Card>;
 });
 
@@ -148,42 +180,6 @@ export const CommunalSpace = injectIntl((props: RangeInputProps) => {
         changed={props.changed}
         name="CommunalSpace"
         positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
-});
-
-export const Parking = injectIntl((props: RangeInputProps) => {
-  const messages = defineMessages({
-    title: {
-      id: "Building.Parking",
-      defaultMessage: "Es gibt eine zur Wohnung gehörige Garage oder einen Stellplatz und hierfür fällt auch kein zusätzliches Entgelt an."
-    }
-  })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="Parking"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
-});
-
-export const LowMaintenance = injectIntl((props: RangeInputProps) => {
-  const messages = defineMessages({
-    title: {
-      id: "Building.LowMaintenance",
-      defaultMessage: "Das Gebäude ist in einem schlechten Instandhaltungszustand (z.B. dauernde Durchfeuchtung des Mauerwerks - auch Keller -, große Putzschäden, erhebliche Schäden an der Dacheindeckung)."
-    }
-  })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="LowMaintenance"
-        positive={false}
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
@@ -212,7 +208,7 @@ export const NoLift = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Building.NoLift",
-      defaultMessage: "Die Wohnung liegt im oder über dem fünften Obergeschoss und es gibt keinen Personenaufzug."
+      defaultMessage: "Die Wohnung liegt im 5. Stock oder höher und es gibt keinen Personenaufzug."
     }
   })
   return <Card className="assistantInput">
@@ -266,31 +262,13 @@ export const IntercomVideo = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Building.IntercomVideo",
-      defaultMessage: "Die Gegen-/Wechselsprechanlage bietet Videoübertragung und einen elektrischen Türöffner."
+      defaultMessage: "Die Gegen-/Wechselsprechanlage bietet Videoübertragung und elektrischem Türöffner."
     }
   })
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="IntercomVideo"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
-});
-
-export const AntiBurglary = injectIntl((props: RangeInputProps) => {
-  const messages = defineMessages({
-    title: {
-      id: "Building.AntiBurglary",
-      defaultMessage: "Es gibt zusätzliche moderne Einbruchsicherungsmaßnahmen, also z.B. eine einbruchhemmende Wohnungs- und Haustür"
-    }
-  })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="AntiBurglary"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
         value={props.value}

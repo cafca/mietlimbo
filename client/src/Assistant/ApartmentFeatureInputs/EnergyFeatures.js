@@ -28,10 +28,12 @@ import './Styles.css';
 
 type EnergyInputProps = RangeInputProps & {
   directValue: {
-    endenergiebedarf: boolean,
-    decentralEnergy: boolean,
-    historicSite: boolean,
-    valueSelected: string
+    "Energy": {
+      endenergiebedarf: boolean,
+      decentralEnergy: boolean,
+      historicSite: boolean,
+      valueSelected: string
+    }
   }
 };
 
@@ -175,9 +177,9 @@ export default class EnergyClass extends React.Component {
     const energyValue = this.props.directValue.energyValue !== undefined
       ? Object.assign({}, this.props.directValue.energyValue, {[optionName]: value})
       : {[optionName]: value};
-    const BuildingGroup = Object.assign(
+    const Gebäude = Object.assign(
       {}, this.props.directValue, {energyValue});
-    this.props.directChanged({BuildingGroup}, cb);
+    this.props.directChanged({Gebäude}, cb);
   }
 
   applyFeatures(applicableFeatures: Array<string>) {
@@ -193,6 +195,7 @@ export default class EnergyClass extends React.Component {
     const applyFeaturesRec = () => {
       if (featureList.length > 0) {
         const cur = featureList.pop();
+        console.log("Changing", cur, applicableFeatures.indexOf(cur) >= 0 );
         this.props.changed(
           cur, 
           isPositive(cur), 

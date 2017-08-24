@@ -1,8 +1,8 @@
 // @flow
 
 import React from 'react';
-import {injectIntl, defineMessages} from 'react-intl';
-import {Card, CardTitle} from 'material-ui/Card';
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
+import { Card, CardTitle, CardText} from 'material-ui/Card';
 
 import CheckboxInput from './CheckboxInput';
 import type {RangeInputProps} from './RangeSelectionGroup';
@@ -31,7 +31,7 @@ export const ExtractorHood = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Kitchen.ExtractorHood",
-      defaultMessage: "Es gibt eine Dunstabzugshaube."
+      defaultMessage: "Es gibt einen Dunstabzug."
     }
   })
   return <Card className="assistantInput">
@@ -67,7 +67,7 @@ export const HighGradeFloor = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Kitchen.HighGradeFloor",
-      defaultMessage: "Als Bodenbelag gibt es hochwertige Fliesen, hochwertiges Linoleum, hochwertiges Feuchtraumlaminat, Parkett oder Terrazzo in gutem Zustand."
+      defaultMessage: "Hochwertiger Bodenbelag."
     }
   })
   return <Card className="assistantInput">
@@ -78,6 +78,14 @@ export const HighGradeFloor = injectIntl((props: RangeInputProps) => {
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
+    <CardText className="cardText">
+      <p>
+        <FormattedMessage 
+          id="Kitchen.HighGradeFloorExamples" 
+          defaultMessage="Dazu zählen hochwertige Fliesen, hochwertiges Linoleum, hochwertiges Feuchtraumlaminat, Parkett oder Terrazzo, jeweils in gutem Zustand." 
+        />
+      </p>
+    </CardText>
   </Card>;
 });
 
@@ -103,7 +111,7 @@ export const KitchenLiving = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Kitchen.KitchenLiving",
-      defaultMessage: "Die Küche ist ein separater Raum mit mindestens 14 Quadratmeter Grundfläche und damit eine Wohnküche."
+      defaultMessage: "Die Küche ist ein separater Raum mit mindestens 14 Quadratmeter Grundfläche."
     }
   })
   return <Card className="assistantInput">
@@ -121,31 +129,13 @@ export const NoStove = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Kitchen.NoStove",
-      defaultMessage: "Es gibt keine Kochmöglichkeit."
+      defaultMessage: "Es gibt keine Kochmöglichkeit oder keinen Backofen."
     }
   })
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="NoStove"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
-});
-
-export const NoOven = injectIntl((props: RangeInputProps) => {
-  const messages = defineMessages({
-    title: {
-      id: "Kitchen.NoOven",
-      defaultMessage: "Es gibt einen Gas- oder Elektroherd, aber ohne Backofen."
-    }
-  })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="NoOven"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
@@ -229,7 +219,7 @@ export const InsufficientWarmWater = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Kitchen.InsufficientWarmWater",
-      defaultMessage: "Es gibt keine ausreichende Warmwasserversorgung (keine zentrale Warmwasserversorgung, kein Durchlauferhitzer, kein Boiler an der Spüle)."
+      defaultMessage: "Es gibt keine ausreichende Warmwasserversorgung."
     }
   })
   return <Card className="assistantInput">
@@ -240,6 +230,14 @@ export const InsufficientWarmWater = injectIntl((props: RangeInputProps) => {
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
+    <CardText className="cardText">
+      <p>
+        <FormattedMessage 
+          id="Kitchen.InsufficientWarmWaterExamples" 
+          defaultMessage="Dies kann zum Beispiel bedeuten: Keine zentrale Warmwasserversorgung, kein Durchlauferhitzer, kein Boiler an der Spüle." 
+        />
+      </p>
+    </CardText>
   </Card>;
 });
 
