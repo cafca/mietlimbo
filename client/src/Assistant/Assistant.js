@@ -274,9 +274,9 @@ class Assistant extends React.Component {
     }
   }
 
-	handleInputValid(name: string, valid: boolean) {
+	handleInputValid(name: string, valid: boolean, cb: ?Function) {
     const newInputValid = Object.assign(this.state.inputValid, {[name]: valid});
-    this.setState({inputValid: newInputValid});
+    this.setState({inputValid: newInputValid}, cb);
 	}
 
 	handleInputChanged(newData: Object, cb: ?Function) {
