@@ -8,7 +8,7 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 import type {AssistantInputProps} from './Tools';
 
-const radioOptions = [
+export const radioOptions = [
   "Pre1918",
   "Pre1949", 
   "Pre1964", 

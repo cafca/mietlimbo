@@ -71,14 +71,6 @@ export default defineMessages({
     id: "FeatureShortNames.CeilingDecoration",
     defaultMessage: "Stuck"
   },
-  NoBroadband: {
-    id: "FeatureShortNames.NoBroadband",
-    defaultMessage: "Kein Breitband/Fernsehen"
-  },
-  BidirectionalBroadband: {
-    id: "FeatureShortNames.BidirectionalBroadband",
-    defaultMessage: "Rückkanalfähiger Breitbandanschluss"
-  },
   TinySink: {
     id: "FeatureShortNames.TinySink",
     defaultMessage: "Kleines Waschbecken"
@@ -173,11 +165,11 @@ export default defineMessages({
   },
   NoStorageRoom: {
     id: "FeatureShortNames.NoStorageRoom",
-    defaultMessage: "Kein Abstellraum"
+    defaultMessage: "Kein Keller"
   },
   BicycleRoom: {
     id: "FeatureShortNames.BicycleRoom",
-    defaultMessage: "Fahrradraum"
+    defaultMessage: "Fahrradraum/-platz"
   },
   BicycleParking: {
     id: "FeatureShortNames.BicycleParking",
@@ -217,7 +209,7 @@ export default defineMessages({
   },
   AntiBurglary: {
     id: "FeatureShortNames.AntiBurglary",
-    defaultMessage: "Einbruchschutz"
+    defaultMessage: "Zusätzlicher Einbruchschutz"
   },
   ModernizedHeatingSystem: {
     id: "FeatureShortNames.ModernizedHeatingSystem",
@@ -255,13 +247,13 @@ export default defineMessages({
     id: "FeatureShortNames.QuietStreet",
     defaultMessage: "Ruhige Straße"
   },
-  TrafficNoise: {
-    id: "FeatureShortNames.TrafficNoise",
-    defaultMessage: "Verkehrslärm"
+  Noisy: {
+    id: "FeatureShortNames.Noisy",
+    defaultMessage: "Lärmbelastung"
   },
-  CommercialNoise: {
-    id: "FeatureShortNames.CommercialNoise",
-    defaultMessage: "Gewerbelärm"
+  Smelly: {
+    id: "FeatureShortNames.Smelly",
+    defaultMessage: "Geruchsbelastung"
   },
   PrimeDowntown: {
     id: "FeatureShortNames.PrimeDowntown",
@@ -271,14 +263,6 @@ export default defineMessages({
     id: "FeatureShortNames.NeglectedArea",
     defaultMessage: "Vernachlässigte Gegend"
   },
-  NeatoTrash: {
-    id: "FeatureShortNames.NeatoTrash",
-    defaultMessage: "Müllstandfläche"
-  },
-  NeglectedTrash: {
-    id: "FeatureShortNames.NeglectedTrash",
-    defaultMessage: "Müllstandfläche"
-  },
   NeatoBackyard: {
     id: "FeatureShortNames.NeatoBackyard",
     defaultMessage: "Grundstücksgestaltung"
@@ -286,10 +270,6 @@ export default defineMessages({
   PrivateBackyard: {
     id: "FeatureShortNames.PrivateBackyard",
     defaultMessage: "Garten"
-  },
-  MansionStyle: {
-    id: "FeatureShortNames.MansionStyle",
-    defaultMessage: "Villenartig"
   },
   NoVentilation: {
     id: "FeatureShortNames.NoVentilation",
@@ -313,15 +293,11 @@ export default defineMessages({
   },
   KitchenLiving: {
     id: "FeatureShortNames.KitchenLiving",
-    defaultMessage: "Wohnküche"
+    defaultMessage: "Große Küche"
   },
   NoStove: {
     id: "FeatureShortNames.NoStove",
-    defaultMessage: "Kein Herd"
-  },
-  NoOven: {
-    id: "FeatureShortNames.NoOven",
-    defaultMessage: "Kein Ofen"
+    defaultMessage: "Kein Herd oder Ofen"
   },
   HighGradeStove: {
     id: "FeatureShortNames.HighGradeStove",
