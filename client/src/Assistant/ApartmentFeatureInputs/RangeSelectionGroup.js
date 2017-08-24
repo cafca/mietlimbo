@@ -3,6 +3,9 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { intlShape } from 'react-intl';
 
+import { stageNames } from "../Assistant";
+import type {Data} from "../Assistant";
+
 import './Styles.css';
 
 export type GroupData = {
@@ -15,7 +18,7 @@ type RangeSelectionGroupProps = {
   changed: Object => any,
   inputComponents: Object,
   domain: string,
-  data: GroupData
+  data: Data
 };
 
 // Properties passed by a RangeSelectionGroup to its input components
@@ -23,7 +26,7 @@ export type RangeInputProps = {
   changed: (string, string) => any,
   intl: intlShape,
   value: boolean,
-  directValue: any,
+  directValue: Data,
   directChanged: {[string]: any} => any
 };
 
@@ -32,16 +35,23 @@ export const groupBalance = (props: GroupData) =>
   props == undefined ? 0 : props.positive.length - props.negative.length;
 
 class RangeSelectionGroup extends React.Component {
+  groupData : GroupData;
+
   constructor(props: RangeSelectionGroupProps) {
     super(props);
     autoBind(this);
+    this.groupData = this.props.data[this.props.domain];
+  }
+
+  componentWillReceiveProps(nextProps: RangeSelectionGroupProps) {
+    this.groupData = nextProps.data[this.props.domain];
   }
 
   handleChange(name: string, positive: boolean, value: boolean, cb: ?() => any) {
     const cat = positive === true ? "positive" : "negative";
 
     // If `value` is true, a feature was added, otherwise a feature was removed
-    const newFeatureList = this.props.data[cat].slice();
+    const newFeatureList = this.groupData[cat].slice();
     if (value === true) {
       if (newFeatureList.indexOf(name) >= 0) {
         // Don't store the same feature twice
@@ -51,7 +61,7 @@ class RangeSelectionGroup extends React.Component {
       }
       newFeatureList.splice(-1, 0, name);
     } else {
-      const position = this.props.data[cat].indexOf(name);
+      const position = this.groupData[cat].indexOf(name);
       if (position < 0) {
         // Stop here if the feature to be removed is not on the list
         // eslint-disable-next-line eqeqeq
@@ -61,9 +71,11 @@ class RangeSelectionGroup extends React.Component {
       newFeatureList.splice(position, 1);
     }
 
-    const updatedData = Object.assign({}, this.props.data, {
-      positive: positive === true ? newFeatureList : this.props.data.positive,
-      negative: positive === false ? newFeatureList : this.props.data.negative
+    console.log("Before:", this.groupData[cat], "After:", newFeatureList);
+
+    const updatedData = Object.assign({}, this.groupData, {
+      positive: positive === true ? newFeatureList : this.groupData.positive,
+      negative: positive === false ? newFeatureList : this.groupData.negative
     });
 
     this.props.changed({[this.props.domain]: updatedData}, cb);
@@ -72,8 +84,8 @@ class RangeSelectionGroup extends React.Component {
   render() {
     // The index of checked fields allows passing in the current value to the input
     // componenet below by checking whether it's included in this index
-    const checkedFields = this.props.data === undefined ? [] 
-      : this.props.data.negative.concat(this.props.data.positive);
+    const checkedFields = this.groupData === undefined ? [] 
+      : this.groupData.negative.concat(this.groupData.positive);
 
     const inputElements = Object.keys(this.props.inputComponents).map(
       k => React.createElement(

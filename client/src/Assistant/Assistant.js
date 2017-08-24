@@ -255,7 +255,7 @@ class Assistant extends React.Component {
       }
     });
     // Form validity assumed on first mount
-    const inputValid = {};
+    const inputValid = {"intermediateResult": true};
     // Linter wants arrow functions to always return a value
     // eslint-disable-next-line array-callback-return
     Object.keys(this.state.data).map(k => {
@@ -383,7 +383,7 @@ class Assistant extends React.Component {
             domain={stageNames[this.state.stage]}
             key={stageNames[this.state.stage]}
             inputComponents={featureGroupInputs[stageNames[this.state.stage]]}
-            data={this.state.data[stageNames[this.state.stage]]}
+            data={this.state.data}
             changed={changed} 
             />
         </div>;
