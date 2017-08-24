@@ -411,7 +411,7 @@ class Assistant extends React.Component {
       : <pre>{JSON.stringify(this.state.data, null, 2)}</pre>;
 
     // Don't display next button on final assistant page
-    const buttonDisplayStyle = this.state.stage === stageNames.indexOf("Auswertung") 
+    const buttonDisplayStyle = this.state.stage === stageNames.indexOf("Ausdrucken") 
       ? "none" : "initial";
 
 		return <div className="assistant" style={this.style.container} >

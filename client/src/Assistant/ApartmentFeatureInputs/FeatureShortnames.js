@@ -113,7 +113,7 @@ export default defineMessages({
   },
   TinyBath: {
     id: "FeatureShortNames.TinyBath",
-    defaultMessage: "Kleines bad"
+    defaultMessage: "Kleines Bad"
   },
   LargeSink: {
     id: "FeatureShortNames.LargeSink",
