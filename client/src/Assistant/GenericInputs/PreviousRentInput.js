@@ -78,8 +78,8 @@ class PreviousRentInput extends React.Component {
       },
       recentIncrease: {
         id: "PreviousRentInput.recentIncrease",
-        defaultMessage: `Achtung: Hat sich die Miete des Vormieters in den letzten 12 Monaten des Mietverhältnisses
-          erhöht, zählt hier noch dessen alte Miete!`
+        defaultMessage: `Achtung: Hat sich die Miete der Vormieter in den letzten 12 Monaten ihres Mietverhältnisses
+          erhöht, zählt hier noch die alte Miete vor der Mieterhöhung!`
       },
       inputHint: {
         id: "PreviousRentInput.hint",
@@ -91,14 +91,16 @@ class PreviousRentInput extends React.Component {
       },
       unknownWarning: {
         id: "PreviousRentInput.unknownWarning",
-        defaultMessage: `Um einschätzen zu können, wie deine Chancen auf eine Mietsenkung stehen, musst du die Vormiete
-          unbedingt kennen. Dein Vermieter ist verpflichtet, dir diese mitzuteilen, also kannst du ihn natürlich einfach
-          fragen. Aber was, wenn er das einfach nicht tut? Du könntest natürlich vor Gericht gehen, aber wer will das schon?
-          Bei Pro Mietrecht findest du einige Ideen, wie du vielleicht doch an diese Information kommen kannst: {link}. `
+        defaultMessage: `Wenn du die Vormiete nicht kennst, bleibt dir erstmal nichts anderes übrig, als die nach
+          Mietpreisbremse zulässige Miete zu berechnen und dich dann zu fragen: Kann es sein, dass mein Vormieter schon
+          mehr bezahlt hat? Dein Vermieter ist zwar verpflichtet, dir diese Information mitzuteilen, aber wenn er deine 
+          Anfrage ignoriert, kannst du auch nicht viel mehr tun, als vor Gericht zu gehen – und wer will das schon? 
+          Vielleicht gibt es aber auch noch einen anderen Weg: Mit den Nachbarn sprechen kann zum Beispiel ungemein helfen.
+          Bei Pro Mietrecht findest du einige weitere Ideen, wie du vielleicht doch an diese Information kommen kannst: {link}.`
       },
       unknownEncouragement: {
         id: "PreviousRentInput.unknownEncouragement",
-        defaultMessage: `Ansonsten mach einfach erstmal weiter. Du wirst am Ende dieses Assistenten nochmal daran erinnert.`
+        defaultMessage: `Also mach ruhig erstmal weiter. Du wirst am Ende dieses Assistenten nochmal daran erinnert.`
       }
     });
 
@@ -106,9 +108,9 @@ class PreviousRentInput extends React.Component {
 
     const unknownExplainer = this.props.value === -1 ?
       <div>
-        <p><FormattedMessage {...messages.unknownWarning} values={
-          {link: <a href="https://www.promietrecht.de/Miete/Mietgrenzen/angespannter-Wohnungsmarkt/Neuvermietung/Mietpreisbremse-Auskunft-zur-frueheren-Miete-bekommen-E2805.htm" target="_blank" rel="noopener noreferrer">Mietpreisbremse - Auskunft zur früheren Miete bekommen</a>}
-        }/></p>
+        <p><FormattedMessage {...messages.unknownWarning} values={{
+            link: <a href="https://www.promietrecht.de/Miete/Mietgrenzen/angespannter-Wohnungsmarkt/Neuvermietung/Mietpreisbremse-Auskunft-zur-frueheren-Miete-bekommen-E2805.htm" target="_blank" rel="noopener noreferrer">Mietpreisbremse - Auskunft zur früheren Miete bekommen</a>
+        }}/></p>
         <p><FormattedMessage {...messages.unknownEncouragement} /></p>
       </div> : null;
 

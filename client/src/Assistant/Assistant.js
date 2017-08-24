@@ -130,8 +130,8 @@ const featureGroupInputs = {
 // (all previous conditions are also required, of course)
 export const stageConditions = [
   [],
-  ["leaseCreated", "newBuilding", "renovation", "baseFeatures"],
-  ["address", "squareMeters", "rent", "previousRent", "constructionDate"],
+  ["leaseCreated", "newBuilding", "renovation", "previousRent"],
+  ["address", "rent", "squareMeters", "constructionDate"],
   ["result"],
   [],
   [],
@@ -321,6 +321,7 @@ class Assistant extends React.Component {
     } else {
       // A stage is enabled if the conditions for all stages up to
       // it are keys of the inputValid object
+      console.log(stageConditions, this.state.inputValid);
       return stageConditions
         .slice(0, stage)
         .reduce((acc, cur) => acc.concat(cur), [])
@@ -342,18 +343,24 @@ class Assistant extends React.Component {
           <LeaseCreatedInput valid={valid} changed={changed} value={this.state.data.leaseCreated} />
           <NewBuildingInput valid={valid} changed={changed} value={this.state.data.newBuilding} />
           <RenovationInput valid={valid} changed={changed} value={this.state.data.renovation} />
-          <BaseFeaturesInput valid={valid} changed={changed} value={this.state.data.baseFeatures} />
+          <PreviousRentInput valid={valid} changed={changed} value={this.state.data.previousRent} />
         </div>;
 				break;
 
 			case 2:
+        let optionalInput = "";
+        if (["Pre1918", "Pre1949", "Pre1964"].indexOf(this.state.data.constructionDate) >= 0) {
+          stageConditions[2].push("baseFeatures");
+          optionalInput = <BaseFeaturesInput valid={valid} changed={changed} value={this.state.data.baseFeatures} />;
+        }
+
 				content = <div key="stage2">
           <AddressInput valid={valid} changed={changed} value={this.state.data.address} />
-          <ConstructionDateInput valid={valid} changed={changed} value={this.state.data.constructionDate} />
           <SquareMetersInput valid={valid} changed={changed} 
             exact={this.state.data.squareMeters} guessed={this.state.data.squareMetersGuessed} />
           <RentInput valid={valid} changed={changed} value={this.state.data.rent} />
-          <PreviousRentInput valid={valid} changed={changed} value={this.state.data.previousRent} />
+          <ConstructionDateInput valid={valid} changed={changed} value={this.state.data.constructionDate} />
+          {optionalInput}
 				</div>;
 				break;
 
