@@ -274,17 +274,17 @@ class Assistant extends React.Component {
     }
   }
 
-	handleInputValid(name: string, valid: boolean, cb: ?Function) {
+	handleInputValid(name: string, valid: boolean, cb?: Function) {
     const newInputValid = Object.assign(this.state.inputValid, {[name]: valid});
     this.setState({inputValid: newInputValid}, cb);
 	}
 
-	handleInputChanged(newData: Object, cb: ?Function) {
+	handleInputChanged(newData: Object, cb?: Function) {
     // This method is called from input components when their respective data is updated
     this.setState({data: Object.assign({}, this.state.data, newData)}, () => this.update(cb));
 	}
 
-  update(cb: ?Function) {
+  update(cb?: Function) {
     // To calculate balance, for every group with predominantly positive features 1 is added,
     // for predominantly negative groups 1 is subtracted
     if (this.isStageEnabled(stageNames.indexOf("Auswertung"))) {
