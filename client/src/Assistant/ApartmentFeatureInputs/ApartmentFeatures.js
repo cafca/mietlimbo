@@ -4,6 +4,8 @@ import React from 'react';
 import {injectIntl, defineMessages, FormattedMessage} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 
+import {radioOptions} from "../GenericInputs/ConstructionDateInput";
+
 import CheckboxInput from './CheckboxInput';
 import type {RangeInputProps} from './RangeSelectionGroup';
 
@@ -13,7 +15,7 @@ export const WindowStyleSingle = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Apartment.WindowStyleSingle",
-      defaultMessage: "Mindestens die Hälfte der Fenster haben nur Einfachverglasung."
+      defaultMessage: "Mehr als die Hälfte der Fenster haben nur Einfachverglasung."
     }
   })
   return <Card className="assistantInput">
@@ -31,7 +33,15 @@ export const WindowStyleInsulating = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Apartment.WindowStyleInsulating",
-      defaultMessage: "Mindestens die Hälfte der Fenster haben Isolierverglasung oder Schallschutzfenster."
+      defaultMessage: "Hochwertige Fenster."
+    },
+    explanation1: {
+      id: "Apartment.WindowStyleInsulating",
+      defaultMessage: "Überwiegend Wärmeschutzverglasung (Einbau ab 1995) oder"
+    },
+    explanation2: {
+      id: "Apartment.WindowStyleInsulating",
+      defaultMessage: "Schallschutzfenster für Wohngebäude/Wohnungen, die vor 1995 bezugsfertig geworden sind"
     }
   })
   return <Card className="assistantInput">
@@ -43,7 +53,10 @@ export const WindowStyleInsulating = injectIntl((props: RangeInputProps) => {
         value={props.value}
       />} />
     <CardText className="cardText">
-      <p>Nur moderne Isolierverglasung, welche nach 1987 eingebaut wurde, ist hier gültig.</p>
+      <ul>
+        <li><FormattedMessage {...messages.explanation1} /></li>
+        <li><FormattedMessage {...messages.explanation2} /></li>
+      </ul>
     </CardText>
   </Card>;
 });
@@ -52,7 +65,23 @@ export const HighGradeFlooring = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Apartment.HighGradeFlooring",
-      defaultMessage: "Hochwertiges Parkett, Natur-/Kunststein Fliesen oder gleichwertiger Bodenbelag in der überwiegenden Zahl der Wohnräume"
+      defaultMessage: "Hochwertiger Bodenbelag in der überwiegenden Zahl der Wohnräume"
+    },
+    example1: {
+      id: "Apartment.HighGradeFlooringExample1",
+      defaultMessage: "Hochwertiges Parkett"
+    },
+    example2: {
+      id: "Apartment.HighGradeFlooringExample2",
+      defaultMessage: "Hochwertiger Natur- oder Kunststein"
+    },
+    example3: {
+      id: "Apartment.HighGradeFlooringExample3",
+      defaultMessage: "Hochwertige Fliesen"
+    },
+    example4: {
+      id: "Apartment.HighGradeFlooringExample4",
+      defaultMessage: "Oder gleichwertiger Bodenbelag"
     }
   })
   return <Card className="assistantInput">
@@ -63,6 +92,14 @@ export const HighGradeFlooring = injectIntl((props: RangeInputProps) => {
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
+    <CardText className="cardText">
+      <ul>
+        <li><FormattedMessage {...messages.example1} /></li>
+        <li><FormattedMessage {...messages.example2} /></li>
+        <li><FormattedMessage {...messages.example3} /></li>
+        <li><FormattedMessage {...messages.example4} /></li>
+      </ul>
+    </CardText>
   </Card>;
 });
 
@@ -74,9 +111,8 @@ export const InsufficientPower = injectIntl((props: RangeInputProps) => {
     },
     hint: {
       id: "Apartment.InsufficientPowerHint",
-      defaultMessage: `Kein gleichzeitiger Betrieb von mindestens zwei haushaltsüblichen größeren 
-      Elektrogeräten (z.B. Waschmaschine und Staubsauger) möglich oder weniger 
-      als zwei Steckdosen in Wohnräumen.`
+      defaultMessage: `Zum Beispiel keine ausreichende Elektrosteigleitung und/oder 
+        VDE gerechte Elektroinstallation (z.B. kein FI-Schalter, Potentialausgleich)`
     }
   })
   return <Card className="assistantInput">
@@ -109,7 +145,7 @@ export const WallInstallation = injectIntl((props: RangeInputProps) => {
     },
     heating: {
       id: "Apartment.WallInstallationHeating",
-      defaultMessage: "Heizungsrohre überwiegend _unter_ Putz"
+      defaultMessage: "Heizungsrohre überwiegend _nicht_ sichtbar"
     }
   })
   return <Card className="assistantInput">
@@ -144,10 +180,15 @@ export const ColdWaterMetering = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Apartment.ColdWaterMetering",
-      defaultMessage: "Wohnungsbezogener Kaltwasserzähler, für dessen Miete oder Leasing nicht im Rahmen der Betriebskosten gezahlt wird."
+      defaultMessage: "Wohnungsbezogener Kaltwasserzähler"
+    },
+    explanation: {
+      id: "Apartment.ColdWaterMeteringExplanation",
+      defaultMessage: "Gilt nur, wenn die Wohnung vor 1998 bezugsfertig war, und wenn du Miete oder Leasing des Zählers nicht über die Betriebskosten trägst."
     }
-  })
-  return <Card className="assistantInput">
+  });
+
+  <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
         name="ColdWaterMetering"
@@ -155,6 +196,9 @@ export const ColdWaterMetering = injectIntl((props: RangeInputProps) => {
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
+    <CardText className="cardText">
+      <p><FormattedMessage {...messages.explanation} /></p>
+    </CardText>
   </Card>;
 });
 
@@ -162,9 +206,15 @@ export const BadFlatDesign = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Apartment.BadFlatDesign",
-      defaultMessage: "Schlechter Schnitt (z.B. mehr als ein gefangenes Zimmer)"
+      defaultMessage: "Schlechter Schnitt"
+    },
+    explanation: {
+      id: "Apartment.BadFlatDesignExplanation",
+      defaultMessage: `Gilt zum Beispiel, wenn zur Wohnung ein gefangener Raum 
+        oder ein Durchgangszimmer gehört`
     }
-  })
+  });
+
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
@@ -173,6 +223,9 @@ export const BadFlatDesign = injectIntl((props: RangeInputProps) => {
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
+    <CardText className="cardText">
+      <p><FormattedMessage {...messages.explanation} /></p>
+    </CardText>
   </Card>;
 });
 
@@ -180,7 +233,7 @@ export const StorageCabinet = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Apartment.StorageCabinet",
-      defaultMessage: "Einbauschrank oder Abstellraum mit Sichtschutz innerhalb der Wohnung"
+      defaultMessage: "Einbauschrank oder Abstellraum innerhalb der Wohnung"
     }
   })
   return <Card className="assistantInput">
@@ -234,7 +287,11 @@ export const AccessibleDesign = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Apartment.AccessibleDesign",
-      defaultMessage: "Barrierearme Wohnungsgestaltung (Schwellenfreiheit in der Wohnung, schwellenarmer Übergang zu Balkon/Terrasse, ausreichende Bewegungsfreiheit in der Wohnung und/oder barrierearme Badgestaltung)"
+      defaultMessage: "Barrierearme Wohnungsgestaltung"
+    },
+    explanation: {
+      id: "Apartment.AccessibleDesignExplanation",
+      defaultMessage: "Schwellenfreiheit in der Wohnung, schwellenarmer Übergang zu Balkon/Terrasse, ausreichende Bewegungsfreiheit in der Wohnung und/oder barrierearme Badgestaltung"
     }
   })
   return <Card className="assistantInput">
@@ -245,6 +302,9 @@ export const AccessibleDesign = injectIntl((props: RangeInputProps) => {
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
+    <CardText className="cardText">
+      <p><FormattedMessage {...messages.explanation} /></p>
+    </CardText>
   </Card>;
 });
 
@@ -252,7 +312,11 @@ export const NoBalcony = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Apartment.NoBalcony",
-      defaultMessage: "Es gibt keinen Balkon (das Merkmal gilt nicht, wenn der Balkon aus baulichen und/oder rechtlichen Gründen nicht möglich oder nicht zulässig ist)."
+      defaultMessage: "Es gibt keinen Balkon, (Dach-)Terrasse, Loggia und Winter-/Dachgarten"
+    },
+    explanation: {
+      id: "Apartment.NoBalconyExplanation",
+      defaultMessage: "Gilt nicht, wenn dies aus baulichen und/oder rechtlichen Gründen nicht möglich oder nicht zulässig ist"
     }
   })
   return <Card className="assistantInput">
@@ -324,7 +388,7 @@ export const CeilingDecoration = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Apartment.CeilingDecoration",
-      defaultMessage: "Aufwändige Deckenverkleidung (z.B. Stuck) oder getäfelte Wandverkleidung in gutem Zustand in der überwiegenden Anzahl der Wohnräume"
+      defaultMessage: "Aufwändige Decken- oder Wandverkleidung (z.B. Stuck, Täfelung) in gutem Zustand in der überwiegenden Anzahl der Wohnräume"
     }
   })
   return <Card className="assistantInput">
@@ -338,38 +402,27 @@ export const CeilingDecoration = injectIntl((props: RangeInputProps) => {
   </Card>;
 });
 
-export const NoBroadband = injectIntl((props: RangeInputProps) => {
+export const AntiBurglary = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
-      id: "Apartment.NoBroadband",
-      defaultMessage: "Weder Breitbandanschluss noch Gemeinschaftssatelliten- / Antennenanlage"
+      id: "Apartment.AntiBurglary",
+      defaultMessage: "Verstärkte und zusätzlich vor Einbruch gesicherte Wohnungstür"
+    },
+    explanation: {
+      id: "Apartment.AntiBurglaryExplanation",
+      defaultMessage: "Zusätzlich gesichert zum Beispiel über hochwertige Sperrbügel und/oder Türschlösser mit Mehrfachverriegelung."
     }
   })
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="NoBroadband"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
-});
-
-export const BidirectionalBroadband = injectIntl((props: RangeInputProps) => {
-  const messages = defineMessages({
-    title: {
-      id: "Apartment.BidirectionalBroadband",
-      defaultMessage: "Rückkanalfähiger Breitbandanschluss (Nutzung ohne zusätzliche vertragliche Bindung des Mieters mit Dritten)"
-    }
-  })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="BidirectionalBroadband"
+        name="AntiBurglary"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
+    <CardText className="cardText">
+      <p><FormattedMessage {...messages.explanation} /></p>
+    </CardText>
   </Card>;
 });
