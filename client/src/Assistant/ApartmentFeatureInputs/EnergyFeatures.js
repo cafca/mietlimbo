@@ -177,9 +177,9 @@ export default class EnergyClass extends React.Component {
     const energyValue = this.props.directValue.energyValue !== undefined
       ? Object.assign({}, this.props.directValue.energyValue, {[optionName]: value})
       : {[optionName]: value};
-    const BuildingGroup = Object.assign(
+    const Gebäude = Object.assign(
       {}, this.props.directValue, {energyValue});
-    this.props.directChanged({BuildingGroup}, cb);
+    this.props.directChanged({Gebäude}, cb);
   }
 
   applyFeatures(applicableFeatures: Array<string>) {

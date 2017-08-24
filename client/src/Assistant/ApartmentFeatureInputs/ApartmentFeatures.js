@@ -4,8 +4,6 @@ import React from 'react';
 import {injectIntl, defineMessages, FormattedMessage} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 
-import {radioOptions} from "../GenericInputs/ConstructionDateInput";
-
 import CheckboxInput from './CheckboxInput';
 import type {RangeInputProps} from './RangeSelectionGroup';
 

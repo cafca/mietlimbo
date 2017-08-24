@@ -27,7 +27,7 @@ type FeatureTableProps = Data & {
 };
 
 class FeatureTable extends React.Component {
-  constructor(props: Data) {
+  constructor(props: FeatureTableProps) {
     super(props);
     autoBind(this);
   }
