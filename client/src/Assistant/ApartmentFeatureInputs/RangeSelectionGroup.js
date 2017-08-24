@@ -23,7 +23,7 @@ export type RangeInputProps = {
   changed: (string, string) => any,
   intl: intlShape,
   value: boolean,
-  directValue: any,
+  directValue: GroupData,
   directChanged: {[string]: any} => any
 };
 
@@ -32,6 +32,8 @@ export const groupBalance = (props: GroupData) =>
   props == undefined ? 0 : props.positive.length - props.negative.length;
 
 class RangeSelectionGroup extends React.Component {
+  groupData : GroupData;
+
   constructor(props: RangeSelectionGroupProps) {
     super(props);
     autoBind(this);
@@ -60,6 +62,8 @@ class RangeSelectionGroup extends React.Component {
       }
       newFeatureList.splice(position, 1);
     }
+
+    console.log("Before:", this.props.data[cat], "After:", newFeatureList);
 
     const updatedData = Object.assign({}, this.props.data, {
       positive: positive === true ? newFeatureList : this.props.data.positive,

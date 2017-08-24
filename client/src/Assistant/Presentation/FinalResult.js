@@ -4,12 +4,9 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import { stageNameTranslations, featureGroupNames } from "../Assistant";
-import type {Result, Data} from "../Assistant";
+import type {Data} from "../Assistant";
 import Mietwucher from "./Mietwucher";
 import RenovationCase from "./RenovationCase";
-import {groupBalance} from "../ApartmentFeatureInputs/RangeSelectionGroup";
-import FeatureShortnames from "../ApartmentFeatureInputs/FeatureShortnames";
 import FeatureTable from "./FeatureTable";
 
 import { 
@@ -17,8 +14,6 @@ import {
   Mietpreisbremse,
   PreviousRentCase 
 } from "./Calculation";
-
-import { blue500, pinkA200 } from 'material-ui/styles/colors';
 
 type FinalResultProps = {
   data: Data,
@@ -81,7 +76,8 @@ class FinalResult extends React.Component {
         <p><FormattedMessage
           id="FinalResult.recommendations"
           defaultMessage="Um herauszufinden, wie du mit dieser Information deine Miete senken kannst empfehle ich dir, 
-            den Artikel von {ChristopherStark} zu lesen, der diese Seite inspiriert hat."
+            den Artikel von {ChristopherStark} zu lesen, der diese Seite inspiriert hat. Auf der nächsten Seite findest
+            du noch eine Übersicht aller Daten, die du ausdrucken und zu einer Rechtsberatung mitnehmen kannst."
           values={{
             ChristopherStark: <a 
               target="_blank" 

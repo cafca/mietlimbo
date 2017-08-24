@@ -16,7 +16,8 @@ const styles = {
   },
   titleWrapper: {
     padding: "1em",
-    marginBottom: 5
+    marginBottom: 5,
+    marginTop: 40
   }
 };
 
@@ -97,6 +98,6 @@ export const Introduction = () => {
 export const Title = () => <Paper zDepth={4} style={styles.titleWrapper}><p style={styles.bigtext}><FormattedMessage
   id="Introduction.overview"
   defaultMessage={`Mit mietlimbo findest du in 30 Minuten heraus, 
-    wieviel Geld du monatlich mit der Mietpreisbremse sparen könntest und was genau 
+    wieviel Geld du monatlich mit der Mietpreisbremse sparen kannst und was genau 
     der erste Schritt ist, um dahin zu kommen.`}
 /></p></Paper>;

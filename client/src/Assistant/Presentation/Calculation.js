@@ -1,11 +1,9 @@
 // @flow
 
 import React from 'react';
-import { injectIntl, FormattedMessage, defineMessages } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 
 import type {Data} from "../Assistant";
-
-
 
 export const LocalRentLevel = (props: Data) => {
   const messages = defineMessages({
@@ -47,8 +45,6 @@ export const LocalRentLevel = (props: Data) => {
     }
   });
 
-  let calculation = "";
-
   const result = {
     balanceAbs: Math.abs(props.result.featureGroupBalance),
     correctionPercentage: Math.abs(props.result.featureGroupBalance) * 20,
@@ -89,8 +85,6 @@ export const Mietpreisbremse = (props: Data) => {
         qm ≈ {mietlimbo, number, currency}.`
     }
   });
-
-  let rv = "";
 
   const result = {
     squareMeters: props.squareMeters,

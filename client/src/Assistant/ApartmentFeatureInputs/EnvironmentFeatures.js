@@ -14,7 +14,7 @@ export const QuietStreet = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
       id: "Environment.QuietStreet",
-      defaultMessage: "Lage an einer besonders ruhigen Straße oder besonders ruhige Innenlage."
+      defaultMessage: "Besonders ruhige Lage"
     }
   })
   return <Card className="assistantInput">
@@ -28,57 +28,52 @@ export const QuietStreet = injectIntl((props: RangeInputProps) => {
   </Card>;
 });
 
-export const TrafficNoise = injectIntl((props: RangeInputProps) => {
+export const Noisy = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
-      id: "Environment.TrafficNoiseTitle",
-      defaultMessage: "Verkehrslärm"
+      id: "Environment.NoisyTitle",
+      defaultMessage: "Besonders lärmbelastete Lage"
     },
     hint: {
-      id: "Environment.TrafficNoiseTitleHint",
-      defaultMessage: `Lage der Wohnung an einer Straße oder Schienenstrecke mit hoher Verkehrslärmbelastung 
-      oder Belastung durch Flugverkehr nach Maßgabe der Erläuterungen zur Verkehrslärmbelastung`
+      id: "Environment.NoisyTitleHint",
+      defaultMessage: `Ein Indiz hierfür kann die Ausweisung einer hohen 
+        Verkehrslärmbelastung gemäß {link} sein.
+        (wird automatisch ausgefüllt)`
     }
   });
 
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="TrafficNoise"
+        name="Noisy"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
     <CardText className="cardText">
-      <p><FormattedMessage {...messages.hint} /></p>
+      <p><FormattedMessage {...messages.hint} values={{
+        link: <a href="http://www.stadtentwicklung.berlin.de/wohnen/mietspiegel/de/laermwerte.shtml" target="_blank" rel="noopener noreferrer">Erläuterungen zur Verkehrslärmbelastung</a>
+      }}/></p>
     </CardText>
   </Card>;
 });
 
-export const CommercialNoise = injectIntl((props: RangeInputProps) => {
+export const Smelly = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
-      id: "Environment.CommercialNoiseTitle",
-      defaultMessage: "Gewerbelärm und -gerüche"
-    },
-    hint: {
-      id: "Environment.CommercialNoiseHint",
-      defaultMessage: `Erhebliche, regelmäßige Beeinträchtigung durch 
-        Geräusche oder Gerüche (Gewerbe) z.B. durch Liefer- und Kundenverkehr.`
+      id: "Environment.SmellyTitle",
+      defaultMessage: "Besonders geruchsbelastete Lage"
     }
   });
 
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="CommercialNoise"
+        name="Smelly"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
-    <CardText className="cardText">
-      <p><FormattedMessage {...messages.hint} /></p>
-    </CardText>
   </Card>;
 });
 
@@ -128,44 +123,6 @@ export const NeglectedArea = injectIntl((props: RangeInputProps) => {
   </Card>;
 });
 
-export const NeatoTrash = injectIntl((props: RangeInputProps) => {
-  // WC ohne Lüftungsmöglichkeit oder Entlüftung
-  const messages = defineMessages({
-    title: {
-      id: "Environment.NeatoTrash",
-      defaultMessage: "Gepflegte Müllstandfläche mit sichtbegrenzender Gestaltung, die nur den Mietern zugänglich ist."
-    }
-  })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="NeatoTrash"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
-});
-
-export const NeglectedTrash = injectIntl((props: RangeInputProps) => {
-  // WC ohne Lüftungsmöglichkeit oder Entlüftung
-  const messages = defineMessages({
-    title: {
-      id: "Environment.NeglectedTrash",
-      defaultMessage: "Ungepflegte und offene Müllstandsfläche"
-    }
-  })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="NeglectedTrash"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
-});
-
 export const NeatoBackyard = injectIntl((props: RangeInputProps) => {
   // WC ohne Lüftungsmöglichkeit oder Entlüftung
   const messages = defineMessages({
@@ -175,8 +132,9 @@ export const NeatoBackyard = injectIntl((props: RangeInputProps) => {
     },
     hint: {
       id: "Environment.NeatoBackyardHint",
-      defaultMessage: `Zum Beispiel Sitzbänke oder Ruhezonen, neu angelegte 
-        Wegebefestigung mit Grünflächen.`
+      defaultMessage: `Zum Beispiel Kinderspielplatz – bei Bezugsfertigkeit des Gebäudes 
+        vor 2003, Sitzbänke oder Ruhezonen, gute Gehwegbefestigung mit Grünflächen 
+        und Beleuchtung.`
     }
   })
   return <Card className="assistantInput">
@@ -234,19 +192,36 @@ export const PrivateBackyard = injectIntl((props: RangeInputProps) => {
   </Card>;
 });
 
-export const MansionStyle = injectIntl((props: RangeInputProps) => {
-  // WC ohne Lüftungsmöglichkeit oder Entlüftung
+export const Parking = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
-      id: "Environment.MansionStyle",
-      defaultMessage: "Villenartige Mehrfamilienhäuser"
+      id: "Building.Parking",
+      defaultMessage: "PKW-Parkplatzangebot in der Nähe und vom Vermieter gestellt"
     }
   })
   return <Card className="assistantInput">
     <CardTitle title={<CheckboxInput
         changed={props.changed}
-        name="MansionStyle"
+        name="Parking"
         positive={true}
+        message={props.intl.formatMessage(messages.title)}
+        value={props.value}
+      />} />
+  </Card>;
+});
+
+export const BicycleParking = injectIntl((props: RangeInputProps) => {
+  const messages = defineMessages({
+    title: {
+      id: "Building.BicycleRoom",
+      defaultMessage: "Keine Fahrradabstellmöglichkeit auf dem Grundstück"
+    }
+  });
+  return <Card className="assistantInput">
+    <CardTitle title={<CheckboxInput
+        changed={props.changed}
+        name="BicycleParking"
+        positive={false}
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
       />} />
