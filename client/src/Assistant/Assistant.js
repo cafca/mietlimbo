@@ -132,7 +132,7 @@ export const stageConditions = [
   [],
   ["leaseCreated", "newBuilding", "renovation", "previousRent"],
   ["address", "rent", "squareMeters", "constructionDate"],
-  ["result"],
+  ["intermediateResult"],
   [],
   [],
   [],
@@ -321,7 +321,6 @@ class Assistant extends React.Component {
     } else {
       // A stage is enabled if the conditions for all stages up to
       // it are keys of the inputValid object
-      console.log(stageConditions, this.state.inputValid);
       return stageConditions
         .slice(0, stage)
         .reduce((acc, cur) => acc.concat(cur), [])
