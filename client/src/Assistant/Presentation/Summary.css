@@ -1,6 +1,6 @@
 @media print {
 	.navigation {display: none;}
-	.assistant {padding-left: 20px !important; padding-right: 200px;}
+	.assistant {padding-left: 20px !important;}
 	.App-main {font-size: 16px;}
 	.summaryExplanation {display: none;}
 };

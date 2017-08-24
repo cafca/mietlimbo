@@ -81,7 +81,8 @@ class FinalResult extends React.Component {
         <p><FormattedMessage
           id="FinalResult.recommendations"
           defaultMessage="Um herauszufinden, wie du mit dieser Information deine Miete senken kannst empfehle ich dir, 
-            den Artikel von {ChristopherStark} zu lesen, der diese Seite inspiriert hat."
+            den Artikel von {ChristopherStark} zu lesen, der diese Seite inspiriert hat. Auf der nächsten Seite findest
+            du noch eine Übersicht aller Daten, die du ausdrucken und zu einer Rechtsberatung mitnehmen kannst."
           values={{
             ChristopherStark: <a 
               target="_blank" 

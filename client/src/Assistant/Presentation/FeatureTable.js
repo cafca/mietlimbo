@@ -20,6 +20,8 @@ import { groupBalance} from "../ApartmentFeatureInputs/RangeSelectionGroup";
 import type {Data} from "../Assistant";
 import { stageNameTranslations, featureGroupNames } from "../Assistant";
 
+import "./FeatureTable.css";
+
 type FeatureTableProps = Data & {
   officialNames: ?boolean
 };

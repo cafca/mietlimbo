@@ -149,7 +149,6 @@ export default class EnergyClass extends React.Component {
   }
 
   inputName : string = "Energy"
-  directValueKey = "Gebäude"
 
   constructor(props: EnergyInputProps) {
     super(props);
@@ -163,10 +162,10 @@ export default class EnergyClass extends React.Component {
     // eslint-disable-next-line array-callback-return
     Object.keys(this.baseLimits).map(k => {
       customLimits[k] = this.baseLimits[k] 
-        * (this.props.directValue[this.directValueKey].energyValue !== undefined 
-          && this.props.directValue[this.directValueKey].energyValue.endenergiebedarf ? 1.2 : 1)
-        + (this.props.directValue[this.directValueKey].energyValue !== undefined 
-          && this.props.directValue[this.directValueKey].energyValue.decentralEnergy ? 20 : 0)
+        * (this.props.directValue.energyValue !== undefined 
+          && this.props.directValue.energyValue.endenergiebedarf ? 1.2 : 1)
+        + (this.props.directValue.energyValue !== undefined 
+          && this.props.directValue.energyValue.decentralEnergy ? 20 : 0)
     });
     return customLimits;
   }
@@ -175,12 +174,12 @@ export default class EnergyClass extends React.Component {
     // Save options by merging them into the data object for the Building
     // feature group under the 'energyValue' key. Options that don't affect the end
     // result need to be stored this way.
-    const energyValue = this.props.directValue[this.directValueKey].energyValue !== undefined
-      ? Object.assign({}, this.props.directValue[this.directValueKey].energyValue, {[optionName]: value})
+    const energyValue = this.props.directValue.energyValue !== undefined
+      ? Object.assign({}, this.props.directValue.energyValue, {[optionName]: value})
       : {[optionName]: value};
     const BuildingGroup = Object.assign(
-      {}, this.props.directValue[this.directValueKey], {energyValue});
-    this.props.directChanged({[this.directValueKey]: BuildingGroup}, cb);
+      {}, this.props.directValue, {energyValue});
+    this.props.directChanged({BuildingGroup}, cb);
   }
 
   applyFeatures(applicableFeatures: Array<string>) {
@@ -249,8 +248,8 @@ export default class EnergyClass extends React.Component {
 
   render() {
     if (this.props.directValue === undefined) return <p>Nothing</p>;
-    const energyValue = this.props.directValue[this.directValueKey].energyValue || {};
-    const checkedValues = this.props.directValue[this.directValueKey].negative.concat(this.props.directValue[this.directValueKey].positive);
+    const energyValue = this.props.directValue.energyValue || {};
+    const checkedValues = this.props.directValue.negative.concat(this.props.directValue.positive);
 
     const customLimits = this.getLimits();
     const directOptions = Object.keys(this.baseLimits).map(k => 
