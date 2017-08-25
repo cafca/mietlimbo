@@ -51,13 +51,13 @@ export const Introduction = () => {
       </li>
       <li>
         <FormattedMessage
-          id="Introduction.requirement2"
+          id="Introduction.requirement3"
           defaultMessage={`Kaltmiete des Vormieters`}
         />
       </li>
       <li>
         <FormattedMessage
-          id="Introduction.requirement2"
+          id="Introduction.requirement4"
           defaultMessage={`Die Wohnung selbst! Bei manchen Fragen muss man
             einfach mal eben nachgucken.`}
         />

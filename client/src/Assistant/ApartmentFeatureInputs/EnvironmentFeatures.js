@@ -195,7 +195,7 @@ export const PrivateBackyard = injectIntl((props: RangeInputProps) => {
 export const Parking = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
-      id: "Building.Parking",
+      id: "Environment.Parking",
       defaultMessage: "PKW-Parkplatzangebot in der Nähe und vom Vermieter gestellt"
     }
   })
@@ -213,7 +213,7 @@ export const Parking = injectIntl((props: RangeInputProps) => {
 export const BicycleParking = injectIntl((props: RangeInputProps) => {
   const messages = defineMessages({
     title: {
-      id: "Building.BicycleRoom",
+      id: "Environment.NoBicycleParking",
       defaultMessage: "Keine Fahrradabstellmöglichkeit auf dem Grundstück"
     }
   });
