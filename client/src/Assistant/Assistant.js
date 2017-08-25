@@ -14,7 +14,6 @@ import {
   stageNames,
   featureGroupNames,
   stageConditions,
-  featureGroupInputs,
   testData,
   initialData
 } from "./Config";
@@ -141,6 +140,14 @@ export type Data = {
   renovation: ?string,
   previousRent: ?number,
   result: Result
+};
+
+const featureGroupInputs = {
+  "Bad": BathFeatures,
+  "Küche": KitchenFeatures,
+  "Wohnung": ApartmentFeatures,
+  "Gebäude": BuildingFeatures,
+  "Umfeld": EnvironmentFeatures
 };
 
 class Assistant extends React.Component {
