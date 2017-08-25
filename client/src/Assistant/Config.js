@@ -1,7 +1,6 @@
+// @flow
 // This file contains configuration and constants 
 
-export const initialData = process.env.NODE_ENV === "production" 
-  ? {} : testData;
 
 export const stageNames = [
   "Einleitung",
@@ -18,8 +17,7 @@ export const stageNames = [
 ];
 
 // Stages with feature groups
-export const featureGroupNames = Object.keys(stageNameTranslations)
-  .slice(4, 9);
+export const featureGroupNames = stageNames.slice(4, 9);
 
 // These fields are required in order to advance to the next assistant stage
 // (all previous conditions are also required, of course)
@@ -34,14 +32,6 @@ export const stageConditions = [
   [],
   []
 ];
-
-export const featureGroupInputs = {
-  "Bad": BathFeatures,
-  "Küche": KitchenFeatures,
-  "Wohnung": ApartmentFeatures,
-  "Gebäude": BuildingFeatures,
-  "Umfeld": EnvironmentFeatures
-};
 
 export const testData = {
   "Bad":{"positive":[],"negative":[]},
@@ -72,3 +62,6 @@ export const testData = {
     "featureGroupBalance": 0
   }
 };
+
+export const initialData = process.env.NODE_ENV === "production" 
+  ? {} : testData;

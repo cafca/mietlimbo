@@ -1,21 +1,32 @@
 // @flow
 
 import React, { Component } from 'react';
+import { BrowserRouter, Route } from 'react-router-dom'
+
 import { IntlProvider, addLocaleData } from 'react-intl';
 import de from 'react-intl/locale-data/de';
-import { BrowserRouter, Route } from 'react-router-dom'
+import en from 'react-intl/locale-data/en';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
-import './App.css'; 
 
 import Assistant from './Assistant/Assistant';
 import Landing from './Pages/Landing';
 import About from './Pages/About';
 import Theme from './Theme.js'
+import './App.css'; 
 
-addLocaleData([...de]);
+import messagesDE from './I18n/de.json';
+import messagesEN from './I18n/en.json';
+
+const locale = "en";
+
+addLocaleData([...de, ...en]);
+
+const messages = {
+  de: messagesDE,
+  en: messagesEN
+};
 
 class App extends Component {
   render() {
@@ -58,7 +69,8 @@ const AppIntl = () => {
   return <IntlProvider 
     formats={formats}
     defaultFormats={formats}
-    locale={"de"}
+    locale={locale}
+    messages={messages[locale]}
     defaultLocale={"de"}
   >
     <AppMaterialUI />
