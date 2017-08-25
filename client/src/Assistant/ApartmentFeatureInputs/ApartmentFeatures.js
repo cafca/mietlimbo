@@ -34,11 +34,11 @@ export const WindowStyleInsulating = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Hochwertige Fenster."
     },
     explanation1: {
-      id: "Apartment.WindowStyleInsulating",
+      id: "Apartment.WindowStyleInsulatingExplanation1",
       defaultMessage: "Überwiegend Wärmeschutzverglasung (Einbau ab 1995) oder"
     },
     explanation2: {
-      id: "Apartment.WindowStyleInsulating",
+      id: "Apartment.WindowStyleInsulatingExplanation2",
       defaultMessage: "Schallschutzfenster für Wohngebäude/Wohnungen, die vor 1995 bezugsfertig geworden sind"
     }
   })

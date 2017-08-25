@@ -134,24 +134,24 @@ const Summary = injectIntl((props: SummaryProps) => {
       <li>
         { props.data.renovation === "none"
           ? <FormattedMessage
-              id="Summary.NewBuildingTrue"
+              id="Summary.ModernizationFalse"
               defaultMessage="Keine Umfassende Renovierung oder Sanierung" />
           : <FormattedMessage
-              id="Summary.NewBuildingFalse"
+              id="Summary.ModernizationTrue"
               defaultMessage="Renovierung/Sanierung muss berücksichtigt werden" />
         }
       </li>
       <li>
         { props.data.previousRent === -1 
           ? <FormattedMessage
-                id="Summary.PreviousRentLow"
+                id="Summary.PreviousRentUnknown"
                 defaultMessage="Vorherige Miete unbekannt" />
           : isPreviousRentLimiting(props.data)
             ? <FormattedMessage
-                id="Summary.PreviousRentLow"
+                id="Summary.PreviousRentHigh"
                 defaultMessage="Vorherige Miete liegt über ortsübliche Vergleichsmiete + 10%" />
             : <FormattedMessage
-                id="Summary.NewBuildingFalse"
+                id="Summary.PreviousRentLow"
                 defaultMessage="Vorherige Miete liegt unter ortsübliche Vergleichsmiete + 10%" />
         }
       </li>
@@ -259,14 +259,14 @@ const MietpreisbremseSummary = (props: Data) => {
       <tbody>
         <tr>
           <td colSpan="2" style={styles.rangeTable1}>
-            <span style={styles.rangeTableCell1}><FormattedMessage id="Summary.RangeMid" defaultMessage="Unterwert: {min, number, currency}" values={values} /></span>
+            <span style={styles.rangeTableCell1}><FormattedMessage id="Summary.RangeLow" defaultMessage="Unterwert: {min, number, currency}" values={values} /></span>
             <span style={styles.rangeTableCell2}><FormattedMessage id="Summary.RangeMid" defaultMessage="Mittelwert: {mid, number, currency}" values={values} /></span>
-            <span style={styles.rangeTableCell3}><FormattedMessage id="Summary.RangeMid" defaultMessage="Oberwert: {max, number, currency}" values={values} /></span>
+            <span style={styles.rangeTableCell3}><FormattedMessage id="Summary.RangeHigh" defaultMessage="Oberwert: {max, number, currency}" values={values} /></span>
           </td>
         </tr>
         <tr>
-          <td style={styles.rangeTable2}><FormattedMessage id="Summary.RangeMid" defaultMessage="< Spanne {lowerRange, number, currency} >" values={values} /></td>
-          <td style={styles.rangeTable2}><FormattedMessage id="Summary.RangeMid" defaultMessage="< Spanne {upperRange, number, currency} >" values={values} /></td>
+          <td style={styles.rangeTable2}><FormattedMessage id="Summary.RangeLower" defaultMessage="< Spanne {lowerRange, number, currency} >" values={values} /></td>
+          <td style={styles.rangeTable2}><FormattedMessage id="Summary.RangeUpper" defaultMessage="< Spanne {upperRange, number, currency} >" values={values} /></td>
         </tr>
         <tr><td>&nbsp;</td></tr>
         <tr>

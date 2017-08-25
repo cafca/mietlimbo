@@ -54,7 +54,7 @@ export const RepresentativeEntrance = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Eingansbereich oder Treppenhaus hochwertig saniert oder repräsentativ."
     },
     explanation: {
-      id: "Building.LowMaintenance",
+      id: "Building.RepresentativeEntranceExamples",
       defaultMessage: "z.B. Spiegel, Marmor, exklusive Beleuchtung, hochwertiger Anstrich/Wandbelag, Läufer im gesamten Flur- und Treppenbereich"
     }
   });
@@ -100,7 +100,7 @@ export const LowMaintenance = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Schlechter Instandhaltungszustand "
     },
     explanation: {
-      id: "Building.LowMaintenance",
+      id: "Building.LowMaintenanceExamples",
       defaultMessage: "Z.B. dauernde Durchfeuchtung des Mauerwerks - auch Keller -, große Putzschäden, erhebliche Schäden an der Dacheindeckung."
     }
   });
@@ -146,7 +146,7 @@ export const BicycleRoom = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Fahrradabstellraum oder Fahrradabstellplätze"
     },
     explanation: {
-      id: "Building.LowMaintenance",
+      id: "Building.BicycleRoomExplanation",
       defaultMessage: `Ein solcher Raum muss innerhalb des Gebäudes, abschließbar und 
         leicht zugänglich sein. Fahrradabstellplätze müssen eine Anschließmöglichkeit 
         bieten und sich außerhalb des Gebäudes auf dem Grundstück befinden.`

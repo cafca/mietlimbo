@@ -264,10 +264,10 @@ class MietspiegelPlace extends React.Component {
 
       case this.states.ERROR:
         menuItems = <MenuItem
-          children={<FormattedMessage 
+          children={<span>{this.state.errorMsg} <FormattedMessage 
             id={"AddressInput.errorMessage"}
-            defaultMessage={(this.state.errorMsg || "Das hat leider nicht geklappt.") 
-              + "\nBitte klicke hier um es nochmal zu versuchen."} />}
+            defaultMessage={`Das hat leider nicht geklappt. 
+              Bitte klicke hier um es nochmal zu versuchen.`} /></span>}
           leftIcon={<ErrorIcon />}
           onClick={ev => this.handleQuery(this.state.query)}
           />;
