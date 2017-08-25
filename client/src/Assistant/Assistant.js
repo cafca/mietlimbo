@@ -10,6 +10,14 @@ import IntermediateResult from './Presentation/IntermediateResult';
 import FinalResult from './Presentation/FinalResult';
 import Summary from './Presentation/Summary';
 import Progress from './Progress';
+import {
+  stageNames,
+  featureGroupNames,
+  stageConditions,
+  featureGroupInputs,
+  testData,
+  initialData
+} from "./Config";
 
 import LeaseCreatedInput from './GenericInputs/LeaseCreatedInput';
 import RenovationInput from './GenericInputs/RenovationInput';
@@ -78,23 +86,6 @@ export const stageNameTranslations = defineMessages({
   }
 });
 
-export const stageNames = [
-  "Einleitung",
-  "Ausnahmen",
-  "Basisdaten",
-  "Mietspiegel",
-  "Bad",
-  "Küche",
-  "Wohnung",
-  "Gebäude",
-  "Umfeld",
-  "Auswertung",
-  "Ausdrucken"
-];
-
-// Stages with feature groups
-export const featureGroupNames = Object.keys(stageNameTranslations).slice(4, 9);
-
 const featureGroupLongNames = defineMessages({
   "Bad": {
     id: "StageHeaders.Bad",
@@ -118,58 +109,10 @@ const featureGroupLongNames = defineMessages({
   },
 });
 
-const featureGroupInputs = {
-  "Bad": BathFeatures,
-  "Küche": KitchenFeatures,
-  "Wohnung": ApartmentFeatures,
-  "Gebäude": BuildingFeatures,
-  "Umfeld": EnvironmentFeatures
-};
-
-// These fields are required in order to advance to the next assistant stage
-// (all previous conditions are also required, of course)
-export const stageConditions = [
-  [],
-  ["leaseCreated", "newBuilding", "renovation", "previousRent"],
-  ["address", "rent", "squareMeters", "constructionDate"],
-  ["intermediateResult"],
-  [],
-  [],
-  [],
-  [],
-  []
-];
-
 type AssistantProps = {
   match: {params: {stage: number}},
   location: {},
   intl: {}
-};
-
-const testData = {
-  "Bad":{"positive":[],"negative":[]},
-  "Küche":{"positive":[],"negative":[]},
-  "Wohnung":{"positive":[],"negative":[]},
-  "Gebäude":{"positive":[],"negative":[]},
-  "Umfeld":{"positive":[],"negative":[]},
-  "leaseCreated":"2015-07-31T22:00:00.000Z",
-  "rent":1200,
-  "address":{"id":16086,"streetname":"Hochkalterweg (Tempelhof-Schöneberg)","range":"alle Hausnummern"},
-  baseFeatures: "default",
-  constructionDate: "Pre2002",
-  newBuilding: false,
-  squareMeters: 90,
-  renovation: "simple",
-  previousRent: -1,
-  "result": {
-    "max": 9.27,
-    "mid": 8,
-    "min": 6.3,
-    "localRentLevel": 8,
-    "mietlimboLevel": 8.8,
-    "mietlimbo": 792.0000000000001,
-    "featureGroupBalance": 0
-  }
 };
 
 export type Result = {
@@ -220,7 +163,7 @@ class Assistant extends React.Component {
     this.state = {
       stage: 0,
       inputValid: {},
-      data: process.env.NODE_ENV === "production" ? {} : testData
+      data: initialData
     }
 	}
 
@@ -285,21 +228,35 @@ class Assistant extends React.Component {
 	}
 
   update(cb?: Function) {
-    // To calculate balance, for every group with predominantly positive features 1 is added,
-    // for predominantly negative groups 1 is subtracted
+    // Only update the Mietpreisbremse value when the final result page is accessible
     if (this.isStageEnabled(stageNames.indexOf("Auswertung"))) {
+      // To calculate balance, for every group with predominantly positive features 1 is added,
+      // for predominantly negative groups 1 is subtracted
       const featureGroupBalance = featureGroupNames
-        .map(group => groupBalance(this.state.data[group]) < 0 ? -1 : groupBalance(this.state.data[group]) === 0 ? 0 : 1)
+        .map(group => groupBalance(this.state.data[group]) < 0 
+          ? -1 
+          : groupBalance(this.state.data[group]) === 0 
+            ? 0 
+            : 1
+        )
         .reduce((a, b) => (a + b), 0);
 
+      // Select the range from which the correction amount will be drawn
       const maxCorrection = featureGroupBalance >= 0 
         ? (this.state.data.result.max - this.state.data.result.mid)
         : (this.state.data.result.mid - this.state.data.result.min);
 
-      const localRentLevel = this.state.data.result.mid + (parseFloat(featureGroupBalance) / 5) * maxCorrection;
+      // Calculate the local rent level by applying the correction amount to 
+      // the mid value of the Mietspiegel
+      const localRentLevel = this.state.data.result.mid 
+        + (parseFloat(featureGroupBalance) / featureGroupNames.length) * maxCorrection;
+
+      featureGroupNames.length === 5
 
       // Rent may be 10% above local rent level
       const mietlimboLevel = localRentLevel * 1.1;
+
+      // Calculate acceptable rent for the whole flat
       const mietlimbo = mietlimboLevel * this.state.data.squareMeters;
 
       const result = Object.assign({}, this.state.data.result, {
@@ -347,6 +304,9 @@ class Assistant extends React.Component {
 				break;
 
 			case 2:
+        // BaseFeatures input component is only shown for certain construction dates
+        // where the Mietspiegel mandates a correction of rent levels depending on the
+        // absence or presence of these base features.
         let optionalInput = "";
         if (["Pre1918", "Pre1949", "Pre1964"].indexOf(this.state.data.constructionDate) >= 0) {
           stageConditions[2].push("baseFeatures");

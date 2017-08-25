@@ -10,7 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { blue300, pinkA200, grey400 } from 'material-ui/styles/colors';
 import Paper from "material-ui/Paper";
 
-import { stageNames, stageNameTranslations } from "./Assistant";
+import { stageNames, stageNameTranslations } from "./Config";
 import {groupBalance} from"./ApartmentFeatureInputs/RangeSelectionGroup";
 
 type ProgressProps = {
