@@ -1,124 +1,102 @@
 {
-  "AddressInput.errorMessage": "Das hat leider nicht geklappt. \n              Bitte klicke hier um es nochmal zu versuchen.",
-  "AddressInput.explanation": "Jede Straße in Berlin wurde von der Arbeitsgruppe Mietspiegel einem von drei Bereichen \n          zugeteilt: Einfach, Mittel oder Hoch. Für viele Straßen ist diese Einordnung auch je nach Hausnummer\n          unterschiedlich. In diesem Feld suchst du nach dem Bereich, in den deine Wohnung fällt.",
-  "AddressInput.explanation2": "Wenn deine Straße mehrmals auftaucht und hinter dem Namen jeweils ein unterschiedlicher Bezirk \n          steht, gibt es die Straße entweder tatsächlich mehrmals in Berlin, oder verschiedene Teile davon wurden unterschiedlichen\n          Mietbereichen zugeteilt. Finde dann den Eintrag, der deine Hausnummer umfasst.",
-  "AddressInput.label": "Deine Adresse",
-  "AddressInput.placesLoading": "Lade Straßennamen...",
-  "AddressInput.title": "Wo wohnst du?",
-  "Apartment.AccessibleDesign": "Barrierearme Wohnungsgestaltung",
-  "Apartment.AccessibleDesignExplanation": "Schwellenfreiheit in der Wohnung, schwellenarmer Übergang zu Balkon/Terrasse, ausreichende Bewegungsfreiheit in der Wohnung und/oder barrierearme Badgestaltung",
-  "Apartment.AccessibleDesignOfficial": "Barrierearme Wohnungsgestaltung (Schwellenfreiheit in der Wohnung, schwellenarmer Übergang zu Balkon/Terrasse, ausreichende Bewegungsfreiheit in der Wohnung und/oder barrierearme Badgestaltung)",
-  "Apartment.AccessibleDesignShortname": "Barrierearm",
-  "Apartment.AntiBurglary": "Verstärkte und zusätzlich vor Einbruch gesicherte Wohnungstür",
-  "Apartment.AntiBurglaryExplanation": "Zusätzlich gesichert zum Beispiel über hochwertige Sperrbügel und/oder Türschlösser mit Mehrfachverriegelung.",
-  "Apartment.AntiBurglaryOfficial": "Zusätzliche Einbruchsicherung für die Wohnungstür bei verstärkten Türen",
-  "Apartment.BadFlatDesign": "Schlechter Schnitt",
-  "Apartment.BadFlatDesignExplanation": "Gilt zum Beispiel, wenn zur Wohnung ein gefangener Raum \n        oder ein Durchgangszimmer gehört",
-  "Apartment.BadFlatDesignOfficial": "Schlechter Schnitt (z.B. gefangener Raum und/oder Durchgangsraum)",
-  "Apartment.BadFlatDesignShortname": "Ungünstiger Schnitt",
-  "Apartment.CeilingDecoration": "Aufwändige Decken- oder Wandverkleidung (z.B. Stuck, Täfelung) in gutem Zustand in der überwiegenden Anzahl der Wohnräume",
-  "Apartment.CeilingDecorationOfficial": "Aufwändige Decken- und/oder Wandverkleidung (z.B. Stuck, Täfelung) in gutem Zustand in der überwiegenden Anzahl der Wohnräume",
-  "Apartment.CeilingDecorationShortname": "Stuck",
-  "Apartment.ColdWaterMetering": "Wohnungsbezogener Kaltwasserzähler",
-  "Apartment.ColdWaterMeteringExplanation": "Gilt nur, wenn die Wohnung vor 1998 bezugsfertig war, und wenn du Miete oder Leasing des Zählers nicht über die Betriebskosten trägst.",
-  "Apartment.ColdWaterMeteringOfficial": "Wohnungsbezogener Kaltwasserzähler in vor 1998 bezugsfertigen Gebäuden/Wohnungen, wenn der Mieter nicht die Kosten für Miete oder Leasing im Rahmen der Betriebskosten trägt",
-  "Apartment.ColdWaterMeteringShortname": "Kaltwasserzähler",
+  "AddressInput.errorMessage": "Something failed. Please click to try again.",
+  "AddressInput.explanation": "Jede Straße in Berlin wurde von der Arbeitsgruppe Mietspiegel einem von drei Bereichen 
+    zugeteilt: Einfach, Mittel oder Hoch. Für viele Straßen ist diese Einordnung auch je nach Hausnummer
+    unterschiedlich. In diesem Feld suchst du nach dem Bereich, in den deine Wohnung fällt.",
+  "AddressInput.explanation": "The Mietspiegel Workgroup has assigned one of three levels to each street in Berlin:
+    Basic, Regular, or Superior. For some streets, different levels are assigned to different house number ranges, which are
+    accessible though a pop-up menu on the street entry. If a street name exists multiple times in Berlin you can find the right
+    entry through the borrough name given behind the street name.",
+  "AddressInput.label": "Your street",
+  "AddressInput.placesLoading": "Loading streets...",
+  "AddressInput.title": "Where do you live?",
+  "Apartment.AccessibleDesign": "Accessible flat design",
+  "Apartment.AccessibleDesignExplanation": "Barrier-free flat design, obstacle-free access to balcony/terrace, 
+  sufficient freedom for movement throughout the flat and/or barrier-free bath interior",
+  "Apartment.AccessibleDesignShortname": "Accesible Design",
+  "Apartment.AntiBurglary": "Reinforced apartment door with additional burglary protection",
+  "Apartment.AntiBurglaryExplanation": "Additional protection may be through high-grade safety catches and/or door locks with multi-point locking system",
+  "Apartment.BadFlatDesign": "Problematic floor plan",
+  "Apartment.BadFlatDesignExplanation": "E.g. captive rooms that can only be reached by passing through another room",
+  "Apartment.BadFlatDesignShortname": "Floor plan",
+  "Apartment.CeilingDecoration": "Elaborate ceiling or wall decoration (e.g. stucco, tiling) in good condition in most rooms",
+  "Apartment.CeilingDecorationShortname": "Stucco/etc.",
+  "Apartment.ColdWaterMetering": "Flat-specific cold water metering",
+  "Apartment.ColdWaterMeteringExplanation": "Only applies if apartment was ready for occupancy before 1998 and the metering is not being paid for through mandatory utility expenses",
+  "Apartment.ColdWaterMeteringShortname": "Cold water metering",
   "Apartment.FloorHeating": "Überwiegend Fußbodenheizung",
   "Apartment.HighGradeFlooring": "Hochwertiger Bodenbelag in der überwiegenden Zahl der Wohnräume",
   "Apartment.HighGradeFlooringExample1": "Hochwertiges Parkett",
   "Apartment.HighGradeFlooringExample2": "Hochwertiger Natur- oder Kunststein",
   "Apartment.HighGradeFlooringExample3": "Hochwertige Fliesen",
   "Apartment.HighGradeFlooringExample4": "Oder gleichwertiger Bodenbelag",
-  "Apartment.HighGradeFlooringOfficial": "Hochwertiges Parkett, Natur-/Kunststein, Fliesen oder gleichwertiger Boden/-belag in der überwiegenden Zahl der Wohnräume",
   "Apartment.HighGradeFlooringShortname": "Hochwertiger Boden",
   "Apartment.InsufficientPower": "Unzureichende Elektroinstallation",
-  "Apartment.InsufficientPowerHint": "Zum Beispiel keine ausreichende Elektrosteigleitung und/oder \n        VDE gerechte Elektroinstallation (z.B. kein FI-Schalter, Potentialausgleich)",
-  "Apartment.InsufficientPowerOfficial": "Unzureichende Elektroinstallation, z.B. keine ausreichende Elektrosteigleitung und/oder VDE gerechte Elektroinstallation (z.B. kein FI-Schalter, Potentialausgleich)",
+  "Apartment.InsufficientPowerHint": "Zum Beispiel keine ausreichende Elektrosteigleitung und/oder 
+    VDE gerechte Elektroinstallation (z.B. kein FI-Schalter, Potentialausgleich)",
   "Apartment.InsufficientPowerShortname": "Elektroinstallation ungenügend",
   "Apartment.LargeLiving": "Ein Wohnraum größer als 40 m².",
-  "Apartment.LargeLivingOfficial": "Großer, geräumiger Balkon, (Dach-)Terrasse, Loggia oder Winter-/Dachgarten (ab 4 m²)",
   "Apartment.LargeLivingShortname": "Großer Wohnraum",
   "Apartment.NoBalcony": "Es gibt keinen Balkon, (Dach-)Terrasse, Loggia und Winter-/Dachgarten",
   "Apartment.NoBalconyExplanation": "Gilt nicht, wenn dies aus baulichen und/oder rechtlichen Gründen nicht möglich oder nicht zulässig ist",
-  "Apartment.NoBalconyOfficial": "Kein Balkon, (Dach-)Terrasse, Loggia und Winter-/Dachgarten (gilt nicht, wenn das Merkmal aus baulichen und/oder rechtlichen Gründen nicht möglich oder nicht zulässig ist)",
   "Apartment.NoBalconyShortname": "Balkon",
   "Apartment.NoSpaceForWashing": "Waschmaschine weder in Bad noch Küche stellbar oder nicht anschließbar.",
-  "Apartment.NoSpaceForWashingOfficial": "Waschmaschine weder in Bad noch Küche stellbar oder nicht anschließbar",
   "Apartment.NoSpaceForWashingShortname": "Kein Platz für Waschmaschine",
   "Apartment.RollingShutters": "Rollläden",
-  "Apartment.RollingShuttersOfficial": "Rollläden",
   "Apartment.RollingShuttersShortname": "Rollo",
   "Apartment.SpaciousBalcony": "Großer, geräumiger Balkon, (Dach-)Terrasse, Loggia oder Wintergarten (ab 4 m²)",
-  "Apartment.SpaciousBalconyOfficial": "Großer, geräumiger Balkon, (Dach-)Terrasse, Loggia oder Winter-/Dachgarten (ab 4 m²)",
   "Apartment.SpaciousBalconyShortname": "Großer Balkon",
   "Apartment.StorageCabinet": "Einbauschrank oder Abstellraum innerhalb der Wohnung",
-  "Apartment.StorageCabinetOfficial": "Einbauschrank oder Abstellraum innerhalb der Wohnung",
   "Apartment.StorageCabinetShortname": "Abstellraum",
   "Apartment.WallInstallation": "Versorgungsleitungen",
   "Apartment.WallInstallationDrainage": "Be- und Entwässerungsinstallation überwiegend auf Putz",
-  "Apartment.WallInstallationDrainageOfficial": "Be- und Entwässerungsinstallation überwiegend auf Putz",
   "Apartment.WallInstallationDrainageShortname": "Wasser auf Putz",
   "Apartment.WallInstallationElectrical": "Elektroinstallation überwiegend sichtbar auf Putz",
-  "Apartment.WallInstallationElectricalOfficial": "Elektroinstallation überwiegend sichtbar auf Putz",
   "Apartment.WallInstallationElectricalShortname": "Elektroinstallation auf Putz",
   "Apartment.WallInstallationHeating": "Heizungsrohre überwiegend _nicht_ sichtbar",
-  "Apartment.WallInstallationHeatingOfficial": "Heizungsrohre überwiegend nicht sichtbar",
   "Apartment.WallInstallationHeatingShortname": "Heizung unter Putz",
   "Apartment.WindowStyleInsulating": "Hochwertige Fenster.",
   "Apartment.WindowStyleInsulatingExplanation1": "Überwiegend Wärmeschutzverglasung (Einbau ab 1995) oder",
   "Apartment.WindowStyleInsulatingExplanation2": "Schallschutzfenster für Wohngebäude/Wohnungen, die vor 1995 bezugsfertig geworden sind",
-  "Apartment.WindowStyleInsulatingOfficial": "Überwiegend Wärmeschutzverglasung (Einbau ab 1995) oder Schallschutzfenster für Wohngebäude/Wohnungen, die vor 1995 bezugsfertig geworden sind",
   "Apartment.WindowStyleInsulatingShortname": "Doppelverglasung",
   "Apartment.WindowStyleSingle": "Mehr als die Hälfte der Fenster haben nur Einfachverglasung.",
-  "Apartment.WindowStyleSingleOfficial": "Überwiegend Einfachverglasung",
   "Apartment.WindowStyleSingleShortname": "Einfachverglasung",
   "BaseFeatures.both": "Beides! (Oha)",
-  "BaseFeatures.bothOfficial": "ohne Sammelheizung, ohne Bad, mit WC in der Wohnung",
   "BaseFeatures.default": "Nichts davon",
-  "BaseFeatures.defaultOfficial": "Mit Sammelheizung, Bad und WC in der Wohnung",
   "BaseFeatures.nobath": "Ich habe eine Toilette, aber weder Bad noch Dusche in der Wohnung.",
-  "BaseFeatures.nobathOfficial": "mit Sammelheizung oder mit Bad, mit WC in der Wohnung",
   "BaseFeatures.noheating": "Es gibt bei mir keine Sammelheizung, die alle Wohnräume gleichzeitig heizen kann.",
-  "BaseFeatures.noheatingOfficial": "mit Sammelheizung oder mit Bad, mit WC in der Wohnung",
   "BaseFeaturesInput.label": "Gibt es noch was außergewöhnliches?",
-  "BaseFeaturesInput.warning": "Die Daten im Mietspiegel zu Wohnungen mit einer solchen\n          außergewöhnlichen Ausstattung beruhen auf sehr wenigen Mietwerten und \n          haben daher nur eine geringe Aussagekraft. Für einen solchen Sonderfall\n          empfiehlt Mietlimbo unbedingt, deinen Fall mit einem Mieterverein \n          durchzusprechen.",
+  "BaseFeaturesInput.warning": "Die Daten im Mietspiegel zu Wohnungen mit einer solchen
+    außergewöhnlichen Ausstattung beruhen auf sehr wenigen Mietwerten und 
+    haben daher nur eine geringe Aussagekraft. Für einen solchen Sonderfall
+    empfiehlt Mietlimbo unbedingt, deinen Fall mit einem Mieterverein 
+    durchzusprechen.",
   "Bath.AdditionalShower": "Von der Badewanne getrennte zusätzliche Duschtasse oder -kabine",
-  "Bath.AdditionalShowerOfficial": "Von der Badewanne getrennte zusätzliche Duschtasse oder -kabine",
   "Bath.AdditionalShowerShortname": "Extradusche",
   "Bath.AdditionalWC": "Zweites WC in der Wohnung oder Bad und WC getrennt",
-  "Bath.AdditionalWCOfficial": "Zweites WC in der Wohnung oder Bad und WC getrennt",
   "Bath.AdditionalWCShortname": "Gäste-WC",
   "Bath.BoardFlooring": "Es gibt Dielenfußboden im Bad.",
-  "Bath.BoardFlooringOfficial": "Dielenfußboden im Bad",
   "Bath.BoardFlooringShortname": "Holzboden",
   "Bath.ElectronicVentilation": "Innen liegendes Badezimmer mit moderner, gesteuerter Entlüftung",
   "Bath.ElectronicVentilationDescription": "Gesteuert zum Beispiel über einen Feuchtigkeitssensor. Innen liegend bedeutet, dass das Bad keine Fenster nach außen hat..",
-  "Bath.ElectronicVentilationOfficial": "Innen liegendes Badezimmer mit moderner, gesteuerter Entlüftung",
   "Bath.ElectronicVentilationShortname": "Moderne Entlüftung",
   "Bath.FixedBathtub": "Es gibt weder eine fest eingebaute Badewanne noch eine separate Dusche. Das Bad ist nicht modernisiert.",
   "Bath.FixedBathtubExplanation": "Auch eine Badewanne mit Verblendung gilt nicht als fest eingebaut.",
-  "Bath.FixedBathtubOfficial": "Einbauwanne",
   "Bath.FixedBathtubShortname": "Einbauwanne",
   "Bath.FloorHeating": "Fußbodenheizung",
-  "Bath.FloorHeatingOfficial": "Fußbodenheizung",
   "Bath.FloorHeatingShortname": "Fußbodenheizung",
   "Bath.HighClassFeatures": "Besondere und hochwertige Ausstattung",
   "Bath.HighClassFeaturesExamples": "Zum Beispiel hochwertige Sanitärausstattung, hochwertige Badmöbel, Eckwanne, Rundwanne",
-  "Bath.HighClassFeaturesOfficial": "Besondere und hochwertige Ausstattung",
   "Bath.HighClassFeaturesShortname": "Hochwertig",
   "Bath.HighClassTiling": "Wandbekleidung und Bodenbelag hochwertig",
-  "Bath.HighClassTilingOfficial": "Wandbekleidung und Bodenbelag hochwertig",
   "Bath.HighClassTilingShortname": "Wand- und Bodenbelag",
   "Bath.InsufficientTiling": "Die Wände sind im Spritzwasserbereich von Waschbecken, Badewanne und/oder Dusche nicht ausreichend gefliest.",
-  "Bath.InsufficientTilingOfficial": "Wände nicht ausreichend im Spritzwasserbereich von Waschbecken, Badewanne und/oder Dusche gefliest",
   "Bath.InsufficientTilingShortname": "Fliesen",
   "Bath.LargeBath": "Mindestens ein Bad ist größer als 8 m².",
-  "Bath.LargeBathOfficial": "Mindestens ein Bad größer als 8 m²",
   "Bath.LargeBathShortname": "Großes Bad",
   "Bath.LargeSink1": "Sehr großes Waschbecken (Außenmaß mindestens 80cm breit)",
   "Bath.LargeSink2": "Doppelhandwaschbecken",
   "Bath.LargeSink3": "Zwei getrennte Waschbecken",
-  "Bath.LargeSinkOfficial": "Sehr großes Waschbecken (Außenmaß mindestens 80 cm breit) oder Doppelhandwaschbecken oder zwei getrennte Waschbecken",
   "Bath.LargeSinkShortname": "Großes Waschbecken",
   "Bath.LargeSinkTitle": "Waschbecken",
   "Bath.NoHeating": "Gibt es in Bad oder WC keine normale Heizung?",
@@ -126,49 +104,49 @@
   "Bath.NoHeating2": "Nur Holz- oder Kohleheizung",
   "Bath.NoHeating3": "Nur Elektroheizstrahler",
   "Bath.NoShower": "Keine Duschmöglichkeit",
-  "Bath.NoShowerOfficial": "Keine Duschmöglichkeit",
   "Bath.NoShowerShortname": "Keine Dusche",
   "Bath.NoWindows": "Bad mit WC ohne Fenster",
-  "Bath.NoWindowsOfficial": "Bad mit WC ohne Fenster",
   "Bath.NoWindowsShortname": "Kein Fenster",
   "Bath.TinyBath": "Es gibt nur ein sehr kleines Bad (kleiner als 4 m²).",
-  "Bath.TinyBathOfficial": "Kleines Bad",
   "Bath.TinyBathShortname": "Kleines Bad",
   "Bath.TinySink1": "Es gibt kein Handwaschbecken.",
   "Bath.TinySink2": "Es gibt nur ein kleines Handwaschbecken (Außenmaß 50 x 25 cm oder kleiner).",
-  "Bath.TinySinkOfficial": "Kein Handwaschbecken in Bad oder WC oder im Bad nur ein kleines Handwaschbecken",
   "Bath.TinySinkShortname": "Kleines Waschbecken",
   "Bath.TinySinkTitle": "Was für ein Handwaschbecken gibt es?",
   "Bath.ToiletNoVentilation": "Das WC hat keine Lüftungsmöglichkeit oder Entlüftung.",
-  "Bath.ToiletNoVentilationOfficial": "WC ohne Lüftungsmöglichkeit oder Entlüftung",
   "Bath.ToiletNoVentilationShortname": "Keine Abluft",
   "Bath.TowelHeating": "Strukturheizkörper als Handtuchwärmer",
-  "Bath.TowelHeatingOfficial": "Strukturheizkörper als Handtuchwärmer",
   "Bath.TowelHeatingShortname": "Strukturheizkörper",
   "Bath.WallMountedWC": "Wandhängendes WC mit in der Wand eingelassenem Spülkasten",
-  "Bath.WallMountedWCOfficial": "Wandhängendes WC mit in der Wand eingelassenem Spülkasten",
   "Bath.WallMountedWCShortname": "Wandhängendes WC",
   "Bath.WarmWater": "Keine ausreichende Warmwasserversorgung.",
   "Bath.WarmWaterExamples": "Zum Beispiel: keine zentrale Warmwasserversorgung, kein Durchlauferhitzer, kein Boiler > 60 Liter",
-  "Bath.WarmWaterOfficial": "Keine ausreichende Warmwasserversorgung",
   "Bath.WarmWaterShortname": "Warmwasserversorgung",
   "Building.AntiBurglaryShortname": "Zusätzlicher Einbruchschutz",
   "Building.BicycleParkingShortname": "Fahrradparken",
   "Building.BicycleRoom": "Fahrradabstellraum oder Fahrradabstellplätze",
-  "Building.BicycleRoomExplanation": "Ein solcher Raum muss innerhalb des Gebäudes, abschließbar und \n        leicht zugänglich sein. Fahrradabstellplätze müssen eine Anschließmöglichkeit \n        bieten und sich außerhalb des Gebäudes auf dem Grundstück befinden.",
-  "Building.BicycleRoomOfficial": "Abschließbarer leicht zugänglicher Fahrradabstellraum innerhalb des Gebäudes oder Fahrradabstellplätze mit Anschließmöglichkeit außerhalb des Gebäudes auf dem Grundstück",
+  "Building.BicycleRoomExplanation": "Ein solcher Raum muss innerhalb des Gebäudes, abschließbar und 
+    leicht zugänglich sein. Fahrradabstellplätze müssen eine Anschließmöglichkeit 
+    bieten und sich außerhalb des Gebäudes auf dem Grundstück befinden.",
   "Building.BicycleRoomShortname": "Fahrradraum/-platz",
   "Building.CommunalSpace": "Es gibt zusätzliche und in angemessenem Umfang nutzbare Räume außerhalb der Wohnung in fußläufiger Entfernung (z.B. Partyraum)",
-  "Building.CommunalSpaceOfficial": "Zusätzliche und in angemessenem Umfang nutzbare Räume außerhalb der Wohnung in fußläufiger Entfernung",
   "Building.CommunalSpaceShortname": "Gemeinschaftsraum",
-  "Building.DecentralEnergy": "Wird das Warmwasser dezentral, zum Beispiel über einen \n    Durchlauferhitzer, dort erwärmt, wo es gebraucht wird, statt an einer \n    zentralen Stelle in der Wohnung? In diesem Fall werden auf die \n    Verbrauchsgrenzen pauschal 20 kWh/(m²a) aufgeschlagen.",
+  "Building.DecentralEnergy": "Wird das Warmwasser dezentral, zum Beispiel über einen 
+     Durchlauferhitzer, dort erwärmt, wo es gebraucht wird, statt an einer 
+    zentralen Stelle in der Wohnung? In diesem Fall werden auf die 
+    Verbrauchsgrenzen pauschal 20 kWh/(m²a) aufgeschlagen.",
   "Building.DecentralEnergyLabel": "Dezentrale Warmwasserversorgung",
   "Building.DoorLock": "Die Hauseingangstür ist nicht abschließbar.",
-  "Building.DoorLockOfficial": "Hauseingangstür nicht abschließbar",
   "Building.DoorLockShortname": "Schloss Hauseingang",
-  "Building.Endenergiebedarf": "Kennst du nur den Endenergiebedarf? Wenn du diese Option wählst, \n    erhöhen sich die Einordnungs-Grenzen um 20%",
+  "Building.Endenergiebedarf": "Kennst du nur den Endenergiebedarf? Wenn du diese Option wählst, 
+    erhöhen sich die Einordnungs-Grenzen um 20%",
   "Building.EndenergiebedarfLabel": "Ich kenne nur den Endenergiebedarf",
-  "Building.EnergyIntroduction": "In diesem Merkmal wird der Energieverbrauch des Gebäudes erfasst, \n    welcher sich aus dem Verbrauch für Heizung und Warmwasser zusammensetzt. Du findest\n    den Energieverbrauchskennwert in deinen Heizkostenabrechnungen oder in einem Energieausweis.\n    Leider ist es sehr kompliziert, diesen Wert zu berechnen, wenn du ihn auf diese\n    Weise nicht einfach ablesen kannst. Hierzu hat der Berliner Mieterverein eine \n    umfangreiche Infoseite zusammengestellt ({link}).",
+  "Building.EnergyIntroduction": "In diesem Merkmal wird der Energieverbrauch des Gebäudes erfasst, 
+    welcher sich aus dem Verbrauch für Heizung und Warmwasser zusammensetzt. Du findest
+    den Energieverbrauchskennwert in deinen Heizkostenabrechnungen oder in einem Energieausweis.
+    Leider ist es sehr kompliziert, diesen Wert zu berechnen, wenn du ihn auf diese
+    Weise nicht einfach ablesen kannst. Hierzu hat der Berliner Mieterverein eine 
+    umfangreiche Infoseite zusammengestellt ({link}).",
   "Building.EnergySub100": "Unter {Sub100} kWh/(m²a)",
   "Building.EnergySub120": "Unter {Sub120} kWh/(m²a)",
   "Building.EnergySub80": "Unter {Sub80} kWh/(m²a)",
@@ -177,149 +155,184 @@
   "Building.EnergySuper235": "Über {Super235} kWh/(m²a)",
   "Building.EnergyTitle": "Energieverbrauch",
   "Building.EntranceCondition": "Das Treppenhaus bzw. der Eingangsbereich sind überwiegend in schlechtem Zustand.",
-  "Building.EntranceConditionOfficial": "Treppenhaus/Eingangsbereich überwiegend in schlechtem Zustand",
   "Building.EntranceConditionShortname": "Zustand Hauseingang",
-  "Building.HistoricSite": "Wenn deine Wohnung in einem denkmalgeschützten Gebäude \n    liegt, gilt hier eine Sonderregelung: Wird durch damit verbundene Auflagen\n    nämlich eine energetische Sanierung verhindert, oder unverhältnismäßig teuer,\n    dann wird der Energieverbrauch nicht mehr für die Einordnung berücksichtigt.",
-  "Building.HistoricSiteLabel": "Denkmalschutz verhindert energetische Sanierung oder \n      erschwert diese finanziell erheblich.",
-  "Building.InsufficientInsulationOfficial": "Unzureichende Wärmedämmung oder Heizanlage mit ungünstigem Wirkungsgrad",
+  "Building.HistoricSite": "Wenn deine Wohnung in einem denkmalgeschützten Gebäude 
+    liegt, gilt hier eine Sonderregelung: Wird durch damit verbundene Auflagen
+    nämlich eine energetische Sanierung verhindert, oder unverhältnismäßig teuer,
+    dann wird der Energieverbrauch nicht mehr für die Einordnung berücksichtigt.",
+  "Building.HistoricSiteLabel": "Denkmalschutz verhindert energetische Sanierung oder 
+    erschwert diese finanziell erheblich.",
   "Building.InsufficientInsulationShortname": "Wärmedämmung/Heizanlage",
   "Building.IntercomVideo": "Die Gegen-/Wechselsprechanlage bietet Videoübertragung und elektrischem Türöffner.",
-  "Building.IntercomVideoOfficial": "Gegen-/Wechselsprechanlage mit Videokontakt und elektrischem Türöffner",
   "Building.IntercomVideoShortname": "Video-Gegensprechanlage",
   "Building.Lift": "Es gibt einen Personenaufzug bei weniger als fünf Obergeschossen.",
-  "Building.LiftOfficial": "Personenaufzug bei weniger als fünf Obergeschossen",
   "Building.LiftShortname": "Aufzug",
   "Building.LowMaintenance": "Schlechter Instandhaltungszustand",
   "Building.LowMaintenanceExamples": "Z.B. dauernde Durchfeuchtung des Mauerwerks - auch Keller -, große Putzschäden, erhebliche Schäden an der Dacheindeckung.",
-  "Building.LowMaintenanceOfficial": "Schlechter Instandhaltungszustand",
   "Building.LowMaintenanceShortname": "Instandhaltungszustand",
-  "Building.ModernizedHeatingSystemOfficial": "Wärmedämmung zusätzlich zur vorhandenen Bausubstanz oder Einbau/Installation einer modernen Heizanlage ab 01.01.2003",
   "Building.ModernizedHeatingSystemShortname": "Heizanlage",
   "Building.NoIntercom": "Es gibt keine Gegen-/Wechselsprechanlage mit elektrischem Türöffner.",
-  "Building.NoIntercomOfficial": "Keine Gegen-/Wechselsprechanlage mit elektrischem Türöffner",
   "Building.NoIntercomShortname": "Keine Gegensprechanlage",
   "Building.NoLift": "Die Wohnung liegt im 5. Stock oder höher und es gibt keinen Personenaufzug.",
-  "Building.NoLiftOfficial": "Wohnung ab fünftem Obergeschoss ohne Personenaufzug",
   "Building.NoLiftShortname": "Kein Aufzug",
   "Building.NoStorageRoom": "Kein Mieterkeller oder Kellerersatzraum zur alleinigen Nutzung des Mieters vorhanden",
-  "Building.NoStorageRoomOfficial": "Kein Mieterkeller oder Kellerersatzraum zur alleinigen Nutzung des Mieters vorhanden",
   "Building.NoStorageRoomShortname": "Kein Keller",
   "Building.ParkingShortname": "Parkmöglichkeiten",
   "Building.RadiobuttonGroupTitle": "Der Energieverbrauch beträgt:",
   "Building.RepresentativeEntrance": "Eingansbereich oder Treppenhaus hochwertig saniert oder repräsentativ.",
   "Building.RepresentativeEntranceExamples": "z.B. Spiegel, Marmor, exklusive Beleuchtung, hochwertiger Anstrich/Wandbelag, Läufer im gesamten Flur- und Treppenbereich",
-  "Building.RepresentativeEntranceOfficial": "Repräsentativer/s oder hochwertig sanierter/s Eingangsbereich/Treppenhaus",
   "Building.RepresentativeEntranceShortname": "Repräsentativer Hauseingang",
   "Building.SideWing": "Lage im Seitenflügel oder Quergebäude bei verdichteter Bebauung.",
-  "Building.SideWingOfficial": "Lage im Seitenflügel oder Quergebäude bei verdichteter Bebauung",
   "Building.SideWingShortname": "Seitenflügel",
-  "Building.Sub100Official": "Energieverbrauchskennwert < 100 kWh/(m²a)",
   "Building.Sub100Shortname": "Energiebedarf < 100",
-  "Building.Sub120Official": "Energieverbrauchskennwert < 120 kWh/(m²a)",
   "Building.Sub120Shortname": "Energiebedarf < 120",
-  "Building.Sub80Official": "Energieverbrauchskennwert < 80 kWh/(m²a)",
   "Building.Sub80Shortname": "Energiebedarf < 80",
-  "Building.Super155Official": "Energieverbrauchskennwert > 155 kWh/(m²a)",
   "Building.Super155Shortname": "Energiebedarf > 155",
-  "Building.Super195Official": "Energieverbrauchskennwert > 195 kWh/(m²a)",
   "Building.Super195Shortname": "Energiebedarf > 195",
-  "Building.Super235Official": "Energieverbrauchskennwert > 235 kWh/(m²a)",
   "Building.Super235Shortname": "Energiebedarf > 235",
   "Building.WellMaintained": "Das Gebäude, bzw. der Teil davon, in dem sich die Wohnung befindet, ist in einem überdurchschnittlichen Instandhaltungszustand (z.B. erneuerte Fassade, Dach).",
-  "Building.WellMaintainedOfficial": "Überdurchschnittlich guter Instandhaltungszustand des Gebäude (-teil-)s, in dem sich die Wohnung befindet",
   "Building.WellMaintainedShortname": "Instandhaltungszustand",
-  "Calculation.FeatureGroupsBalanced": "In deinem Fall halten sich positive und negative \n      Merkmalgruppen die Waage. Hierdurch gilt der Mittelwert der Spanne von \n      {localRentLevel, number} € pro Quadratmeter direkt als örtliche \n      Vergleichsmiete.",
-  "Calculation.FeatureGroupsNegative": "Insgesamt überwiegen bei dir Gruppen mit negativen \n        (mietsenkenden) Merkmalen um {balanceAbs}. Deshalb werden vom mittleren \n        Wert der Spanne {balanceAbs} * 20% = {correctionPercentage, number}% \n        der Differenz zum Minimalwert der Spanne abgezogen. Hierdurch ergibt \n        sich die ortsübliche Vergleichsmiete {localRentLevel, number} € pro \n        Quadratmeter.",
-  "Calculation.FeatureGroupsPositive": "Insgesamt überwiegen Gruppen mit positiven (mietsteigernden) \n        Merkmalen um {balanceAbs}. Deshalb werden vom mittleren Wert der Spanne \n        {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum \n        Maximalwert der Spanne abgezogen. Hierdurch ergibt sich die ortsübliche \n        Vergleichsmiete {localRentLevel, number} € pro Quadratmeter.",
-  "Calculation.LocalRentLevelDescription": "Zur Berechnung der örtlichen Vergleichsmiete wird auf \n        den mittleren Wert der Spanne ({mid, number, currency}) ein Betrag \n        aufgerechnet oder abgezogen, der davon abhängt, wieviele der fünf \n        Merkmalgruppen bei dir überwiegend mietsteigernd, und wieviele \n        mietsenkend sind.",
+  "Calculation.FeatureGroupsBalanced": "In deinem Fall halten sich positive und negative 
+    Merkmalgruppen die Waage. Hierdurch gilt der Mittelwert der Spanne von 
+    {localRentLevel, number} € pro Quadratmeter direkt als örtliche 
+    Vergleichsmiete.",
+  "Calculation.FeatureGroupsNegative": "Insgesamt überwiegen bei dir Gruppen mit negativen 
+    (mietsenkenden) Merkmalen um {balanceAbs}. Deshalb werden vom mittleren 
+    Wert der Spanne {balanceAbs} * 20% = {correctionPercentage, number}% 
+    der Differenz zum Minimalwert der Spanne abgezogen. Hierdurch ergibt 
+    sich die ortsübliche Vergleichsmiete {localRentLevel, number} € pro 
+    Quadratmeter.",
+  "Calculation.FeatureGroupsPositive": "Insgesamt überwiegen Gruppen mit positiven (mietsteigernden) 
+    Merkmalen um {balanceAbs}. Deshalb werden vom mittleren Wert der Spanne 
+    {balanceAbs} * 20% = {correctionPercentage, number}% der Differenz zum 
+    Maximalwert der Spanne abgezogen. Hierdurch ergibt sich die ortsübliche 
+    Vergleichsmiete {localRentLevel, number} € pro Quadratmeter.",
+  "Calculation.LocalRentLevelDescription": "Zur Berechnung der örtlichen Vergleichsmiete wird auf 
+    den mittleren Wert der Spanne ({mid, number, currency}) ein Betrag 
+    aufgerechnet oder abgezogen, der davon abhängt, wieviele der fünf 
+    Merkmalgruppen bei dir überwiegend mietsteigernd, und wieviele 
+    mietsenkend sind.",
   "Calculation.LocalRentLevelTitle": "Örtliche Vergleichsmiete",
-  "Calculation.mietlimboCalculation": "Die höchstzulässige Miete bei Anwendung der Mietpreisbremse \n        liegt genau 10% über der ortsüblichen Vergleichsmiete. Das sind in diesem \n        Fall {localRentLevel, number} €/qm + 10% = {mietlimboLevel, number} €/qm. \n        Für eine Wohnfläche von {squareMeters, number} qm ist als Kaltmiete also \n        zulässig:",
-  "Calculation.mietlimboResult": "{mietlimboLevel, number} €/qm * {squareMeters, number} \n        qm ≈ {mietlimbo, number, currency}.",
+  "Calculation.mietlimboCalculation": "Die höchstzulässige Miete bei Anwendung der Mietpreisbremse 
+    liegt genau 10% über der ortsüblichen Vergleichsmiete. Das sind in diesem 
+    Fall {localRentLevel, number} €/qm + 10% = {mietlimboLevel, number} €/qm. 
+    Für eine Wohnfläche von {squareMeters, number} qm ist als Kaltmiete also 
+    zulässig:",
+  "Calculation.mietlimboResult": "{mietlimboLevel, number} €/qm * {squareMeters, number} 
+    qm ≈ {mietlimbo, number, currency}.",
   "Calculation.mietlimboTitle": "Mietpreisbremse",
-  "Calculation.previousRentLimiting": "Dadurch, dass deine Vormieter schon eine höhere Miete \n        gezahlt haben, kannst du allerdings nur auf deren Miete von \n        {previousRent, number, currency} senken.",
-  "Calculation.previousRentNotLimiting": "Die Miete deines Vormieters lag auch unter diesem Wert \n        und steht damit einer Mietsenkung nicht im Wege.",
+  "Calculation.previousRentLimiting": "Dadurch, dass deine Vormieter schon eine höhere Miete 
+    gezahlt haben, kannst du allerdings nur auf deren Miete von 
+    {previousRent, number, currency} senken.",
+  "Calculation.previousRentNotLimiting": "Die Miete deines Vormieters lag auch unter diesem Wert 
+    und steht damit einer Mietsenkung nicht im Wege.",
   "Calculation.previousRentTitle": "Vormiete",
-  "Calculation.previousRentUnknown": "Denk daran, dass du die Miete nicht niedriger senken \n        kannst, als die Miete des Vormieters war. Du hast angegeben, dass du diese \n        nicht kennst, also wäre jetzt ein guter Schritt, zu überlegen, ob es sich \n        bei diesem Ergebnis lohnen könnte, mal Nachforschungen dazu zu starten.",
+  "Calculation.previousRentUnknown": "Denk daran, dass du die Miete nicht niedriger senken 
+    kannst, als die Miete des Vormieters war. Du hast angegeben, dass du diese 
+    nicht kennst, also wäre jetzt ein guter Schritt, zu überlegen, ob es sich 
+    bei diesem Ergebnis lohnen könnte, mal Nachforschungen dazu zu starten.",
   "EnergyFeatures.InsufficientInsulationHint": "(Einbau vor 1988)",
   "EnergyFeatures.InsufficientInsulationLabel": "Unzureichende Wärmedämmung oder Heizanlage mit ungünstigem Wirkungsgrad",
   "EnergyFeatures.ModernizedHeatingSystemHint": "Heizanlagen sind modern, wenn sie ab 1.1.2003 eingebaut wurden und das Haus/Gebäude schon vorher bezugsfertig war.",
   "EnergyFeatures.ModernizedHeatingSystemLabel": "Wärmedämmung zusätzlich zur Bausubstanz oder modernisierte Anlage",
   "EnergyFeatures.UnknownHeatingLabel": "Ich weiß überhaupt nichts über den Energieverbrauch und möchte dieses Merkmal überspringen.",
-  "Environment.BicycleParkingOfficial": "Keine Fahrradabstellmöglichkeit auf dem Grundstück",
   "Environment.NeatoBackyard": "Aufwändig gestaltetes Wohnumfeld auf dem Grundstück",
-  "Environment.NeatoBackyardHint": "Zum Beispiel Kinderspielplatz – bei Bezugsfertigkeit des Gebäudes \n        vor 2003, Sitzbänke oder Ruhezonen, gute Gehwegbefestigung mit Grünflächen \n        und Beleuchtung.",
-  "Environment.NeatoBackyardOfficial": "Aufwändig gestaltetes Wohnumfeld auf dem Grundstück",
+  "Environment.NeatoBackyardHint": "Zum Beispiel Kinderspielplatz – bei Bezugsfertigkeit des Gebäudes 
+    vor 2003, Sitzbänke oder Ruhezonen, gute Gehwegbefestigung mit Grünflächen 
+    und Beleuchtung.",
   "Environment.NeatoBackyardShortname": "Grundstücksgestaltung",
   "Environment.NeglectedArea": "Lage in stark vernachlässigter Umgebung in einfacher Wohnlage.",
-  "Environment.NeglectedAreaOfficial": "Lage in stark vernachlässigter Umgebung in einfacher Wohnlage",
   "Environment.NeglectedAreaShortname": "Vernachlässigte Gegend",
   "Environment.NoBicycleParking": "Keine Fahrradabstellmöglichkeit auf dem Grundstück",
-  "Environment.NoisyOfficial": "Besonders lärmbelastete Lage",
   "Environment.NoisyShortname": "Lärmbelastung",
   "Environment.NoisyTitle": "Besonders lärmbelastete Lage",
-  "Environment.NoisyTitleHint": "Ein Indiz hierfür kann die Ausweisung einer hohen \n        Verkehrslärmbelastung gemäß {link} sein.\n        (wird automatisch ausgefüllt)",
+  "Environment.NoisyTitleHint": "Ein Indiz hierfür kann die Ausweisung einer hohen 
+    Verkehrslärmbelastung gemäß {link} sein.
+    (wird automatisch ausgefüllt)",
   "Environment.Parking": "PKW-Parkplatzangebot in der Nähe und vom Vermieter gestellt",
-  "Environment.ParkingOfficial": "Vom Vermieter zur Verfügung gestelltes PKW-Parkplatzangebot in der Nähe",
   "Environment.PrimeDowntown": "Bevorzugte Citylage",
-  "Environment.PrimeDowntownHint": "Nahe repräsentativen, überregional ausstrahlenden Einkaufs-, \n        Dienstleistungs- und Wohnstandorten.",
-  "Environment.PrimeDowntownOfficial": "Bevorzugte Citylage",
+  "Environment.PrimeDowntownHint": "Nahe repräsentativen, überregional ausstrahlenden Einkaufs-, 
+    Dienstleistungs- und Wohnstandorten.",
   "Environment.PrimeDowntownShortname": "Citylage",
   "Environment.PrivateBackyard1": "Garten zur alleinigen Nutzung",
   "Environment.PrivateBackyard2": "Mietergarten ohne Entgelt",
   "Environment.PrivateBackyard3": "Zur Wohnung gehörender Garten mit direktem Zugang",
-  "Environment.PrivateBackyardOfficial": "Garten zur alleinigen Nutzung/Mietergarten ohne Entgelt oder zur Wohnung gehörender Garten mit direktem Zugang",
   "Environment.PrivateBackyardShortname": "Garten",
   "Environment.PrivateBackyardTitle": "Garten",
   "Environment.QuietStreet": "Besonders ruhige Lage",
-  "Environment.QuietStreetOfficial": "Besonders ruhige Lage",
   "Environment.QuietStreetShortname": "Ruhige Straße",
-  "Environment.SmellyOfficial": "Besonders geruchsbelastete Lage",
   "Environment.SmellyShortname": "Geruchsbelastung",
   "Environment.SmellyTitle": "Besonders geruchsbelastete Lage",
-  "FeatureOfficialNames.ExtractorHoodOfficial": "Dunstabzug",
-  "FeatureOfficialNames.FittedKitchenOfficial": "Einbauküche mit Ober- und Unterschränken sowie Herd und Spüle",
-  "FeatureOfficialNames.FreezerProvidedOfficial": "Kühlschrank",
-  "FeatureOfficialNames.HighGradeFloorOfficial": "Hochwertige Fliesen, hochwertiges Linoleum, hochwertiges Feuchtraumlaminat, Parkett, Terrazzo als Bodenbelag jeweils in gutem Zustand",
-  "FeatureOfficialNames.HighGradeStoveOfficial": "Ceran-Kochfeld oder Induktions-Kochfeld",
-  "FeatureOfficialNames.InsufficientWarmWaterOfficial": "Keine ausreichende Warmwasserversorgung",
-  "FeatureOfficialNames.KitchenLivingOfficial": "Separate Küche mit mind. 14 m² Grundfläche",
-  "FeatureOfficialNames.NoDishwasherSpaceOfficial": "Geschirrspüler in der Küche nicht stellbar oder anschließbar",
-  "FeatureOfficialNames.NoHeatingOfficial": "Küche nicht beheizbar oder Holz-/Kohleheizung",
-  "FeatureOfficialNames.NoSinkOfficial": "Keine Spüle",
-  "FeatureOfficialNames.NoStoveOfficial": "Keine Kochmöglichkeit oder Gas-/Elektroherd ohne Backofen",
-  "FeatureOfficialNames.NoVentilationOfficial": "Küche ohne Fenster und ohne ausreichende Entlüftung",
-  "FinalResult.MietwucherCalculation": "Deine Miete von {rent, number, currency} überschreitet die örtliche Vergleichsmiete von \n        {mpbRent, number, currency} um {percentage, number} %.",
-  "FinalResult.MietwucherExplanation": "Mietwucher liegt unter bestimmten Umständen vor, wenn die ortsübliche Vergleichsmiete \n        um mehr als 50% überschritten wird. Im Gegensatz zu einer Überschreitung der nach Mietpreisbremse zulässigen\n        Miete, steht Mietwucher unter Strafe! Auch eine Überschreitung von mehr als 20% wird unter bestimmten\n        Umständen als unzulässige Mietpreisüberhöhung mit einer Geldbuße belegt. Zu Details hierzu siehe {infoPage}.",
+  "FinalResult.MietwucherCalculation": "Deine Miete von {rent, number, currency} überschreitet die örtliche Vergleichsmiete von 
+    {mpbRent, number, currency} um {percentage, number} %.",
+  "FinalResult.MietwucherExplanation": "Mietwucher liegt unter bestimmten Umständen vor, wenn die ortsübliche Vergleichsmiete 
+    um mehr als 50% überschritten wird. Im Gegensatz zu einer Überschreitung der nach Mietpreisbremse zulässigen
+    Miete, steht Mietwucher unter Strafe! Auch eine Überschreitung von mehr als 20% wird unter bestimmten
+    Umständen als unzulässige Mietpreisüberhöhung mit einer Geldbuße belegt. Zu Details hierzu siehe {infoPage}.",
   "FinalResult.MietwucherTitle": "Mietwucher",
   "FinalResult.SummaryTotal": "Zusammen",
   "FinalResult.calculationTitle": "Dein mietlimbo: {result, number, currency} 😱",
   "FinalResult.comparison": "Das sind jeden Monat {diff, number, currency} {diffDir} als du jetzt zahlst.",
   "FinalResult.recommendationTitle": "Wie geht es weiter?",
-  "FinalResult.recommendations": "Um herauszufinden, wie du mit dieser Information deine Miete senken kannst empfehle ich dir, \n            den Artikel von {ChristopherStark} zu lesen, der diese Seite inspiriert hat. Auf der nächsten Seite findest\n            du noch eine Übersicht aller Daten, die du ausdrucken und zu einer Rechtsberatung mitnehmen kannst.",
-  "FinalResult.tableDescription": "Das könnte deine Miete sein! Aber zunächst von vorne: In dieser Tabelle siehst du nochmal alle von dir gewählten Merkmale. In der rechten Spalte wird für jede Merkmalgruppe gezeigt, \n          ob positive oder negative Merkmale überwiegen. Ganz unten rechts wird daraus wiederum die Balance aller Merkmalgruppen berechnet.",
+  "FinalResult.recommendations": "Um herauszufinden, wie du mit dieser Information deine Miete senken kannst empfehle ich dir, 
+    den Artikel von {ChristopherStark} zu lesen, der diese Seite inspiriert hat. Auf der nächsten Seite findest
+    du noch eine Übersicht aller Daten, die du ausdrucken und zu einer Rechtsberatung mitnehmen kannst.",
+  "FinalResult.tableDescription": "Das könnte deine Miete sein! Aber zunächst von vorne: In dieser Tabelle siehst du nochmal alle von dir gewählten Merkmale. In der rechten Spalte wird für jede Merkmalgruppe gezeigt, 
+    ob positive oder negative Merkmale überwiegen. Ganz unten rechts wird daraus wiederum die Balance aller Merkmalgruppen berechnet.",
   "FinalResult.tableHeaderBalance": "Balance",
   "FinalResult.tableHeaderFeatures": "Merkmalgruppe",
   "FinalResult.tableHeaderNegative": "Neg. Merkmale",
   "FinalResult.tableHeaderPositive": "Pos. Merkmale",
-  "IntermediateResult.connectionError": "Es gab leider einen Fehler beim Laden der Daten. Bitte \n        überprüfe deine Internetverbindung oder warte eine Weile.",
-  "IntermediateResult.encouragement": "Lass uns das rausfinden! Hierfür frage ich dich 82 \n      Fragen. Klingt viel, ist es auch. Macht nix, los!",
-  "IntermediateResult.info": "Die ortsübliche Vergleichsmiete beträgt demnach \n      {mid, number, currency}. Je nachdem, wie gut deine Wohnung ausgestattet \n      ist, wird von diesem Wert noch etwas abgezogen oder dazugerechnet. \n      Dadurch kann der angemessene Mietpreis für eine Wohnung wie deine zwischen \n      {min, number, currency} und {max, number, currency} pro Quadratmeter \n      liegen.",
-  "IntermediateResult.insufficientData": "Leider gibt es im aktuellen Berliner Mietspiegel nicht \n        genug Daten über Wohnungen wie deine. Ohne Daten aus dem Mietspiegel \n        kann dir dieser Assistent leider nicht genau bei der Einordnung deiner Wohnung \n        weiterhelfen. Je nach individueller Situation kann ein Mieterverein \n        mit einer persönlichen Beratung weiterhelfen.",
+  "IntermediateResult.connectionError": "Es gab leider einen Fehler beim Laden der Daten. Bitte 
+    überprüfe deine Internetverbindung oder warte eine Weile.",
+  "IntermediateResult.encouragement": "Lass uns das rausfinden! Hierfür frage ich dich 82 
+    Fragen. Klingt viel, ist es auch. Macht nix, los!",
+  "IntermediateResult.info": "Die ortsübliche Vergleichsmiete beträgt demnach 
+    {mid, number, currency}. Je nachdem, wie gut deine Wohnung ausgestattet 
+    ist, wird von diesem Wert noch etwas abgezogen oder dazugerechnet. 
+    Dadurch kann der angemessene Mietpreis für eine Wohnung wie deine zwischen 
+    {min, number, currency} und {max, number, currency} pro Quadratmeter 
+    liegen.",
+  "IntermediateResult.insufficientData": "Leider gibt es im aktuellen Berliner Mietspiegel nicht 
+    genug Daten über Wohnungen wie deine. Ohne Daten aus dem Mietspiegel 
+    kann dir dieser Assistent leider nicht genau bei der Einordnung deiner Wohnung 
+    weiterhelfen. Je nach individueller Situation kann ein Mieterverein 
+    mit einer persönlichen Beratung weiterhelfen.",
   "IntermediateResult.insufficientDataTitle": "Nicht genug Daten im Mietspiegel",
   "IntermediateResult.loading": "Mietspiegelabfrage...",
-  "IntermediateResult.rangeApplied": "Bei {squareMeters, number} Quadratmeter Grundfläche \n      entspricht dies einer Kaltmiete zwischen {minApplied, number, currency} \n      und {maxApplied, number, currency}.",
+  "IntermediateResult.rangeApplied": "Bei {squareMeters, number} Quadratmeter Grundfläche 
+    entspricht dies einer Kaltmiete zwischen {minApplied, number, currency} 
+    und {maxApplied, number, currency}.",
   "IntermediateResult.retry": "Nochmal probieren, los!",
   "IntermediateResult.success": "Erster Teil fertig!",
-  "Introduction.legalNote": "Wenn du \n        noch unsicher bist und eine Rechtsberatung zu deiner individuellen \n        Situation möchtest, kannst du mit dem Ergebnis auch einfach zu einem \n        Mieterbund gehen, wo dir beim weiteren Vorgehen geholfen wird. Beachte \n        bitte, dass Mietlimbo keine Rechtsberatung ist und eine Rechtsberatung \n        auch nicht ersetzen kann. Ich stelle dir hier kostenfrei nach meinen Möglichkeiten \n        korrekte und vollständige Informationen über die Mietpreisbremse zur Verfügung. \n        Ich übernehme allerdings keine Gewähr für die Richtigkeit, Vollständigkeit \n        und Aktualität der Informationen.",
-  "Introduction.nextSteps": "Am Ende dieses Assistenten hast du die wichtigsten \n        Informationen für eine Mietpreisbremse zusammen. Hiermit kannst du ein\n        Schreiben an deinen Vermieter senden (die sogenannte 'qualifizierte\n        Mietrüge'), mit dem du ihn aufforderst, deine Miete zu senken.",
-  "Introduction.overview": "Mit mietlimbo findest du in 30 Minuten heraus, \n    wieviel Geld du monatlich mit der Mietpreisbremse sparen kannst und was genau \n    der erste Schritt ist, um dahin zu kommen.",
+  "Introduction.legalNote": "Wenn du 
+    noch unsicher bist und eine Rechtsberatung zu deiner individuellen 
+    Situation möchtest, kannst du mit dem Ergebnis auch einfach zu einem 
+    Mieterbund gehen, wo dir beim weiteren Vorgehen geholfen wird. Beachte 
+    bitte, dass Mietlimbo keine Rechtsberatung ist und eine Rechtsberatung 
+    auch nicht ersetzen kann. Ich stelle dir hier kostenfrei nach meinen Möglichkeiten 
+    korrekte und vollständige Informationen über die Mietpreisbremse zur Verfügung. 
+    Ich übernehme allerdings keine Gewähr für die Richtigkeit, Vollständigkeit 
+    und Aktualität der Informationen.",
+  "Introduction.nextSteps": "Am Ende dieses Assistenten hast du die wichtigsten 
+    Informationen für eine Mietpreisbremse zusammen. Hiermit kannst du ein
+    Schreiben an deinen Vermieter senden (die sogenannte 'qualifizierte
+    Mietrüge'), mit dem du ihn aufforderst, deine Miete zu senken.",
+  "Introduction.overview": "Mit mietlimbo findest du in 30 Minuten heraus, 
+    wieviel Geld du monatlich mit der Mietpreisbremse sparen kannst und was genau 
+    der erste Schritt ist, um dahin zu kommen.",
   "Introduction.requirement1": "Mietvertrag",
   "Introduction.requirement2": "Heizkostenabrechnung",
   "Introduction.requirement3": "Kaltmiete des Vormieters",
-  "Introduction.requirement4": "Die Wohnung selbst! Bei manchen Fragen muss man\n            einfach mal eben nachgucken.",
-  "Introduction.requirements": "Um möglichst schnell und einfach zum Ergebnis zu kommen\n          helfen einige Dinge enorm:",
-  "Introduction.requirementsUnavailable": "Wenn nicht alles zur Hand ist, dann ist das auch nicht schlimm, du kannst auch \n          erstmal schätzen und die Antwort des Vermieters abwarten. Wenn der \n          anderer Meinung ist, kannst du immernoch genauer nachforschen.",
-  "Introduction.warning": "Achtung! Mietlimbo wird gerade noch gestestet und ist definitiv noch nicht fehlerfrei. \n          Die Informationen auf dieser Seite solltest du nicht direkt für bare Münze nehmen.",
+  "Introduction.requirement4": "Die Wohnung selbst! Bei manchen Fragen muss man
+    einfach mal eben nachgucken.",
+  "Introduction.requirements": "Um möglichst schnell und einfach zum Ergebnis zu kommen
+    helfen einige Dinge enorm:",
+  "Introduction.requirementsUnavailable": "Wenn nicht alles zur Hand ist, dann ist das auch nicht schlimm, du kannst auch 
+    erstmal schätzen und die Antwort des Vermieters abwarten. Wenn der 
+    anderer Meinung ist, kannst du immernoch genauer nachforschen.",
+  "Introduction.warning": "Achtung! Mietlimbo wird gerade noch gestestet und ist definitiv noch nicht fehlerfrei. 
+    Die Informationen auf dieser Seite solltest du nicht direkt für bare Münze nehmen.",
   "Kitchen.ExtractorHood": "Es gibt einen Dunstabzug.",
   "Kitchen.ExtractorHoodShortname": "Dunstabzugshaube",
   "Kitchen.FittedKitchen": "Es gibt eine Einbauküche mit Ober- und Unterschränken sowie Herd und Spüle.",
@@ -350,28 +363,46 @@
   "LeaseCreatedInput.cancel": "Zurück",
   "LeaseCreatedInput.inputLabel": "Vertragsabschluss",
   "LeaseCreatedInput.title": "Wann wurde dein Mietvertrag abgeschlossen?",
-  "PreviousRentInput.description": "Egal, was bei dieser ganzen Berechnung herauskommt: Mit der Mietpreisbremse kannst du die \n          Miete nicht weiter senken, als auf die Miete des Vormieters. Auch in diesem Betrag sind keine Heizkosten oder \n          Nebenkosten enthalten.",
+  "PreviousRentInput.description": "Egal, was bei dieser ganzen Berechnung herauskommt: Mit der Mietpreisbremse kannst du die 
+    Miete nicht weiter senken, als auf die Miete des Vormieters. Auch in diesem Betrag sind keine Heizkosten oder 
+    Nebenkosten enthalten.",
   "PreviousRentInput.errorDecSeparator": "Bitte benutze einen Punkt, um Nachkommastellen zu trennen. Also z.B. '460.80'.",
   "PreviousRentInput.errorNotANumber": "Bitte gib die Vormiete als Zahl an.",
   "PreviousRentInput.errorRentTooLow": "Das ist zu wenig. Bitte gib die Vormiete an.",
   "PreviousRentInput.hint": "Zum Beispiel: 460.80",
-  "PreviousRentInput.recentIncrease": "Achtung: Hat sich die Miete der Vormieter in den letzten 12 Monaten ihres Mietverhältnisses\n          erhöht, zählt hier noch die alte Miete vor der Mieterhöhung!",
+  "PreviousRentInput.recentIncrease": "Achtung: Hat sich die Miete der Vormieter in den letzten 12 Monaten ihres Mietverhältnisses
+    erhöht, zählt hier noch die alte Miete vor der Mieterhöhung!",
   "PreviousRentInput.title": "Wieviel Kaltmiete hat dein Vormieter bezahlt?",
   "PreviousRentInput.unknown": "Keine Ahnung!",
   "PreviousRentInput.unknownEncouragement": "Also mach ruhig erstmal weiter. Du wirst am Ende dieses Assistenten nochmal daran erinnert.",
-  "PreviousRentInput.unknownWarning": "Wenn du die Vormiete nicht kennst, bleibt dir erstmal nichts anderes übrig, als die nach\n          Mietpreisbremse zulässige Miete zu berechnen und dich dann zu fragen: Kann es sein, dass mein Vormieter schon\n          mehr bezahlt hat? Dein Vermieter ist zwar verpflichtet, dir diese Information mitzuteilen, aber wenn er deine \n          Anfrage ignoriert, kannst du auch nicht viel mehr tun, als vor Gericht zu gehen – und wer will das schon? \n          Vielleicht gibt es aber auch noch einen anderen Weg: Mit den Nachbarn sprechen kann zum Beispiel ungemein helfen.\n          Bei Pro Mietrecht findest du einige weitere Ideen, wie du vielleicht doch an diese Information kommen kannst: {link}.",
+  "PreviousRentInput.unknownWarning": "Wenn du die Vormiete nicht kennst, bleibt dir erstmal nichts anderes übrig, als die nach
+    Mietpreisbremse zulässige Miete zu berechnen und dich dann zu fragen: Kann es sein, dass mein Vormieter schon
+    mehr bezahlt hat? Dein Vermieter ist zwar verpflichtet, dir diese Information mitzuteilen, aber wenn er deine 
+    Anfrage ignoriert, kannst du auch nicht viel mehr tun, als vor Gericht zu gehen – und wer will das schon? 
+    Vielleicht gibt es aber auch noch einen anderen Weg: Mit den Nachbarn sprechen kann zum Beispiel ungemein helfen.
+    Bei Pro Mietrecht findest du einige weitere Ideen, wie du vielleicht doch an diese Information kommen kannst: {link}.",
   "Rangeinput.AtleastOneFeatureApplies": "Mindestens eins trifft zu",
   "Rangeinput.FeatureApplies": "Trifft zu",
-  "RenovationCase.calculation": "Wenn du die Fragen auf dieser Seite dem Zustand der Wohnung vor den Sanierungs-/Modernisierungsarbeiten entsprechend \n          beantwortet hast, ist deine Miete von {currentRent, number, currency} also gerechtfertigt bei Sanierungskosten von mindestens\n          (Jetzige Miete - (Ortsübliche Vergleichsmiete + 10%)) * 12/0,11 ≈ {renovationCost, number, currency}. Ist das glaubwürdig?",
-  "RenovationCase.description": "Du hast angegeben, dass eine Sanierung bzw. Modernisierung durchgeführt wurde. Der Vermieter darf \n          pro Jahr 11% der dafür angefallenen Investitionskosten auf die nach Mietpreisbremse _vor_ der Sanierung zulässige Miete aufschlagen:",
+  "RenovationCase.calculation": "Wenn du die Fragen auf dieser Seite dem Zustand der Wohnung vor den Sanierungs-/Modernisierungsarbeiten entsprechend 
+    beantwortet hast, ist deine Miete von {currentRent, number, currency} also gerechtfertigt bei Sanierungskosten von mindestens
+    (Jetzige Miete - (Ortsübliche Vergleichsmiete + 10%)) * 12/0,11 ≈ {renovationCost, number, currency}. Ist das glaubwürdig?",
+  "RenovationCase.description": "Du hast angegeben, dass eine Sanierung bzw. Modernisierung durchgeführt wurde. Der Vermieter darf 
+    pro Jahr 11% der dafür angefallenen Investitionskosten auf die nach Mietpreisbremse _vor_ der Sanierung zulässige Miete aufschlagen:",
   "RenovationCase.formula": "Ortsübliche Vergleichsmiete vor Sanierung + 10% + (11% der Sanierungskosten / 12 Monate) = Zulässige Miete",
   "RenovationCase.title": "Sanierungskosten",
-  "RenovationInput.description": "Um zu verhindern, dass Vermieter Kosten sparen, indem sie Wohnungen nicht mehr sanieren,\n          dürfen Vermieter einen Teil der Sanierungs- bzw. Modernisierungskosten auf die Miete umlegen. Bei \n          umfassenden Sanierungen wird die Mietpreisbremse sogar komplett ausgeschaltet.",
-  "RenovationInput.extendedLabel": "Umfassende Modernisierung seit der letzten Vermietung, deren Kosten mindestens 1/3 der \n          Kosten eines entsprechenden Neubaus umfassen.",
+  "RenovationInput.description": "Um zu verhindern, dass Vermieter Kosten sparen, indem sie Wohnungen nicht mehr sanieren,
+    dürfen Vermieter einen Teil der Sanierungs- bzw. Modernisierungskosten auf die Miete umlegen. Bei 
+    umfassenden Sanierungen wird die Mietpreisbremse sogar komplett ausgeschaltet.",
+  "RenovationInput.extendedLabel": "Umfassende Modernisierung seit der letzten Vermietung, deren Kosten mindestens 1/3 der 
+    Kosten eines entsprechenden Neubaus umfassen.",
   "RenovationInput.extendedWarning": "Leider gilt die Mietpreisbremse nicht nach einer umfassenden Sanierung.",
   "RenovationInput.noneLabel": "Nicht saniert oder modernisiert.",
-  "RenovationInput.simpleLabel": "Wohnung wurde entweder seit der letzten Vermietung saniert/modernisiert, oder während der\n          letzten Vermietung saniert, ohne, dass damals eine Mieterhöhung durchgeführt wurde.",
-  "RenovationInput.simpleNotic": "In diesem Fall kannst du die folgenden Fragen so ausfüllen, als wäre die Modernisierung/Sanierung\n          nicht durchgeführt worden. Am Ende berechnet Mietlimbo dann die minimalen Sanierungskosten, mit denen deine jetzige\n          Miete zu rechtfertigen wäre. Dann kannst du abschätzen, ob du glaubst, dass die Kosten in Wirklichkeit niedriger\n          gewesen sind.",
+  "RenovationInput.simpleLabel": "Wohnung wurde entweder seit der letzten Vermietung saniert/modernisiert, oder während der
+    letzten Vermietung saniert, ohne, dass damals eine Mieterhöhung durchgeführt wurde.",
+  "RenovationInput.simpleNotic": "In diesem Fall kannst du die folgenden Fragen so ausfüllen, als wäre die Modernisierung/Sanierung
+    nicht durchgeführt worden. Am Ende berechnet Mietlimbo dann die minimalen Sanierungskosten, mit denen deine jetzige
+    Miete zu rechtfertigen wäre. Dann kannst du abschätzen, ob du glaubst, dass die Kosten in Wirklichkeit niedriger
+    gewesen sind.",
   "RenovationInput.title": "Wurde die Wohnung seit der letzten Vermietung saniert?",
   "RentInput.description": "In diesem Betrag sind keine Heizkosten oder Nebenkosten enthalten.",
   "RentInput.errorDecSeparator": "Bitte benutze einen Punkt, um Nachkommastellen zu trennen. Also z.B. '460.80'.",
@@ -393,8 +424,11 @@
   "Spanneneinordnung.newBuildingTrue": "Ja, das Haus wurde nach 1.10.2014 zuerst vermietet und ich bin Erstmieter.",
   "Spanneneinordnung.newBuildingWarning": "Für Neubauten gilt die Mietpreisbremse leider nicht.",
   "Spanneneinordnung.squareMetersError": "Bitte gib hier eine Quadratmeterzahl ein. Du findest die Fläche in deinem Mietvertrag.",
-  "SquareMeters.description": "Dieser Wert wird benutzt um vom Quadratmeterpreis auf die Gesamtmiete \n          zu kommen und entscheidet zugleich darüber, welche Vergleichsmiete gilt. Dafür kommt\n          es darauf an, ob folgende Grenzen überschritten wurden: Ab 40qm, ab 60qm und ab 90qm.",
-  "SquareMeters.hint": "Du kannst auch erstmal schätzen, wenn du es nicht genau weißt. \n          Denk dann später daran, den genauen Wert in deinem Mietvertrag nachzuschlagen.",
+  "SquareMeters.description": "Dieser Wert wird benutzt um vom Quadratmeterpreis auf die Gesamtmiete 
+    zu kommen und entscheidet zugleich darüber, welche Vergleichsmiete gilt. Dafür kommt
+    es darauf an, ob folgende Grenzen überschritten wurden: Ab 40qm, ab 60qm und ab 90qm.",
+  "SquareMeters.hint": "Du kannst auch erstmal schätzen, wenn du es nicht genau weißt. 
+    Denk dann später daran, den genauen Wert in deinem Mietvertrag nachzuschlagen.",
   "SquareMeters.textBoxHint": "Wohnfläche in Quadratmeter",
   "SquareMeters.title": "Wieviele Quadratmeter hat die Wohnung?",
   "StageHeaders.Bad": "Badezimmer und WC",
@@ -419,7 +453,12 @@
   "Summary.Footer": "Diese Daten wurden mit mietlimbo.de erfasst - der kostenlose Online-Assistent für die Mietpreisbremse.",
   "Summary.GenericCurrency": "{value, number, currency}",
   "Summary.LeaseCreated": "Mietvertrag abgeschlossen: {LeaseCreated}",
-  "Summary.LegalNote": "Beachte \n        bitte, dass Mietlimbo keine Rechtsberatung ist und eine Rechtsberatung \n        auch nicht ersetzen kann. Ich stelle dir hier kostenfrei nach meinen Möglichkeiten \n        korrekte und vollständige Informationen über die Mietpreisbremse zur Verfügung. \n        Ich übernehme allerdings keine Gewähr für die Richtigkeit, Vollständigkeit \n        und Aktualität der Informationen.",
+  "Summary.LegalNote": "Beachte 
+    bitte, dass Mietlimbo keine Rechtsberatung ist und eine Rechtsberatung 
+    auch nicht ersetzen kann. Ich stelle dir hier kostenfrei nach meinen Möglichkeiten 
+    korrekte und vollständige Informationen über die Mietpreisbremse zur Verfügung. 
+    Ich übernehme allerdings keine Gewähr für die Richtigkeit, Vollständigkeit 
+    und Aktualität der Informationen.",
   "Summary.MietspiegelConstructionDate": "Gebäudealter",
   "Summary.MietspiegelRentRange": "Spanne Nettokaltmiete",
   "Summary.MietspiegelSquareMeters": "Wohnfläche",
@@ -427,7 +466,9 @@
   "Summary.MietspiegelStreetRange": "Hausnummer",
   "Summary.ModernizationFalse": "Keine Umfassende Renovierung oder Sanierung",
   "Summary.ModernizationTrue": "Renovierung/Sanierung muss berücksichtigt werden",
-  "Summary.ModifiedRangeNotice": "Spanne wurde aufgrund von Bezugsfertigkeit {constructionDate} \n            und Ausstattung {baseFeatures} reduziert (siehe Anmerkungen im \n            Berliner Mietspiegel 2017, Seite 12).",
+  "Summary.ModifiedRangeNotice": "Spanne wurde aufgrund von Bezugsfertigkeit {constructionDate} 
+    und Ausstattung {baseFeatures} reduziert (siehe Anmerkungen im 
+    Berliner Mietspiegel 2017, Seite 12).",
   "Summary.NewBuildingFalse": "Erstmieter in Neubau",
   "Summary.NewBuildingTrue": "Kein Erstmieter in Neubau",
   "Summary.PreviousRentHigh": "Vorherige Miete liegt über ortsübliche Vergleichsmiete + 10%",
@@ -441,7 +482,10 @@
   "Summary.RangeUpper": "< Spanne {upperRange, number, currency} >",
   "Summary.correction": "Korrektur",
   "Summary.correctionCalc": "{correctionPercentage, number}% × {range, number, currency} = {correctionAmount, number, longCurrency}",
-  "Summary.description": "Auf dieser Seite sind alle Daten zusammengefasst, die für\n      deine Mietpreisbremse relevant sind. Du kannst diese ausdrucken und hiermit \n      zu einem Mieterverein oder Anwalt gehen, um dich zu deiner Situation beraten \n      zu lassen oder selbst eine qualifizierte Mietrüge verfassen und an deinen Vermieter schicken.",
+  "Summary.description": "Auf dieser Seite sind alle Daten zusammengefasst, die für
+    deine Mietpreisbremse relevant sind. Du kannst diese ausdrucken und hiermit 
+    zu einem Mieterverein oder Anwalt gehen, um dich zu deiner Situation beraten 
+    zu lassen oder selbst eine qualifizierte Mietrüge verfassen und an deinen Vermieter schicken.",
   "Summary.localRentLevel": "Örtliche Vergleichsmiete",
   "Summary.localRentLevelCalc": "{mid, number, currency} {sign} {correctionAmount, number, longCurrency} = {localRentLevel, number, longCurrency}",
   "Summary.mpbApplied": "Bei Anwendung von Mietpreisbremse",
