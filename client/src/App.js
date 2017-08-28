@@ -16,15 +16,13 @@ import About from './Pages/About';
 import Theme from './Theme.js'
 import './App.css'; 
 
-import messagesDE from './I18n/de.json';
 import messagesEN from './I18n/en.json';
 
-const locale = "en";
+const locale = "de";
 
 addLocaleData([...de, ...en]);
 
 const messages = {
-  de: messagesDE,
   en: messagesEN
 };
 
