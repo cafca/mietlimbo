@@ -5,6 +5,7 @@ import autoBind from 'react-autobind';
 import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 
 import type {AssistantInputProps} from '../GenericInputs/Tools';
+import MietspiegelTable from "./MietspiegelTable";
 
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -23,6 +24,62 @@ type RentDataSet = {
   either: ?RentData
 };
 
+const messages = defineMessages({
+  loading: {
+    id: "Mietspiegel.loading",
+    defaultMessage: "Mietspiegelabfrage..." 
+  },
+  success: {
+    id: "Mietspiegel.success",
+    defaultMessage: `Erster Teil fertig!`
+  },
+  info: {
+    id: "Mietspiegel.info",
+    defaultMessage: `Die mittlere ortsübliche Vergleichsmiete beträgt 
+    {mid, number, currency}. Je nach Ausstattung von Wohnung, Gebäude und Umfeld 
+    wird zu diesem Mittelwert noch etwas aufgerechnet oder abgezogen. 
+    Dadurch kann die örtliche Vergleichsmiete zu deiner Wohnung zwischen 
+    {min, number, currency} und {max, number, currency} pro Quadratmeter 
+    liegen.`
+  },
+  infoApplied: {
+    id: "Mietspiegel.rangeApplied",
+    defaultMessage: `Bei {squareMeters, number} Quadratmeter Grundfläche 
+    entspricht dies nach Anwendung der Mietpreisbremse einer Kaltmiete 
+    zwischen {minApplied, number, currency} und maximal {maxApplied, number, currency}.`
+  },
+  encouragement: {
+    id: "Mietspiegel.encouragement",
+    defaultMessage: `Um herauszufinden wo genau du auf dieser Spanne liegst,
+      kannst du jetzt im zweiten Schritt dieses Assistenten Fragen aus 
+      fünf Kategorien beantworten. Mit den Antworten wird eine genaue Einordnung
+      im Mietspiegelfeld ermöglicht. Du kannst jederzeit oben auf AUSWERTUNG klicken,
+      um das Ergebnis der Berechnung zu sehen und danach mit Klick auf eine der 
+      fünf Kategorien mit der Beantwortung der Fragen weitermachen.`
+  },
+  insufficientData: {
+    id: "Mietspiegel.insufficientData",
+    defaultMessage: `Leider gibt es im aktuellen Berliner Mietspiegel nicht 
+      genug Daten über Wohnungen wie deine. Ohne Daten aus dem Mietspiegel 
+      kann dir dieser Assistent leider nicht genau bei der Einordnung deiner Wohnung 
+      weiterhelfen. Je nach individueller Situation kann ein Mieterverein 
+      mit einer persönlichen Beratung weiterhelfen.`
+  },
+  insufficientDataTitle: {
+    id: "Mietspiegel.insufficientDataTitle",
+    defaultMessage: "Nicht genug Daten im Mietspiegel"
+  },
+  connectionError: {
+    id: "Mietspiegel.connectionError",
+    defaultMessage: `Es gab leider einen Fehler beim Laden der Daten. Bitte 
+      überprüfe deine Internetverbindung oder warte eine Weile.`
+  },
+  retry: {
+    id: "Mietspiegel.retry",
+    defaultMessage: "Nochmal probieren, los!"
+  }
+});
+
 class Mietspiegel extends React.Component {
   state: {
     data: ?RentData,
@@ -39,58 +96,6 @@ class Mietspiegel extends React.Component {
     ERROR: "There was an error retrieving results"
   }
 
-  messages = defineMessages({
-    loading: {
-      id: "Mietspiegel.loading",
-      defaultMessage: "Mietspiegelabfrage..." 
-    },
-    success: {
-      id: "Mietspiegel.success",
-      defaultMessage: `Erster Teil fertig!`
-    },
-    info: {
-      id: "Mietspiegel.info",
-      defaultMessage: `Die ortsübliche Vergleichsmiete beträgt demnach 
-      {mid, number, currency}. Je nachdem, wie gut deine Wohnung ausgestattet 
-      ist, wird von diesem Wert noch etwas abgezogen oder dazugerechnet. 
-      Dadurch kann der angemessene Mietpreis für eine Wohnung wie deine zwischen 
-      {min, number, currency} und {max, number, currency} pro Quadratmeter 
-      liegen.`
-    },
-    infoApplied: {
-      id: "Mietspiegel.rangeApplied",
-      defaultMessage: `Bei {squareMeters, number} Quadratmeter Grundfläche 
-      entspricht dies einer Kaltmiete zwischen {minApplied, number, currency} 
-      und {maxApplied, number, currency}.`
-    },
-    encouragement: {
-      id: "Mietspiegel.encouragement",
-      defaultMessage: `Lass uns das rausfinden! Hierfür frage ich dich 82 
-      Fragen. Klingt viel, ist es auch. Macht nix, los!`
-    },
-    insufficientData: {
-      id: "Mietspiegel.insufficientData",
-      defaultMessage: `Leider gibt es im aktuellen Berliner Mietspiegel nicht 
-        genug Daten über Wohnungen wie deine. Ohne Daten aus dem Mietspiegel 
-        kann dir dieser Assistent leider nicht genau bei der Einordnung deiner Wohnung 
-        weiterhelfen. Je nach individueller Situation kann ein Mieterverein 
-        mit einer persönlichen Beratung weiterhelfen.`
-    },
-    insufficientDataTitle: {
-      id: "Mietspiegel.insufficientDataTitle",
-      defaultMessage: "Nicht genug Daten im Mietspiegel"
-    },
-    connectionError: {
-      id: "Mietspiegel.connectionError",
-      defaultMessage: `Es gab leider einen Fehler beim Laden der Daten. Bitte 
-        überprüfe deine Internetverbindung oder warte eine Weile.`
-    },
-    retry: {
-      id: "Mietspiegel.retry",
-      defaultMessage: "Nochmal probieren, los!"
-    }
-  })
-
   constructor(props: AssistantInputProps) {
     super(props);
     autoBind(this);
@@ -98,7 +103,8 @@ class Mietspiegel extends React.Component {
       state: this.states.LOADING,
       data: null
     }
-    this.serverURL = process.env.NODE_ENV === "production" ? "https://mietlimbo.de:8000" : "http://localhost:8000";
+    this.serverURL = process.env.NODE_ENV === "production" 
+      ? "https://mietlimbo.de:8000" : "http://localhost:8000";
   }
 
   componentDidMount() {
@@ -159,35 +165,36 @@ class Mietspiegel extends React.Component {
 
     switch (this.state.state) {
       case this.states.LOADING:
-        title = <p><FormattedMessage {...this.messages.loading} /></p>;
+        title = <p><FormattedMessage {...messages.loading} /></p>;
         content = <LinearProgress />;
         break;
 
       case this.states.SUCCESS:
         const rentData = {
           squareMeters: this.props.squareMeters,
-          minApplied: this.props.squareMeters * this.state.data.min,
-          maxApplied: this.props.squareMeters * this.state.data.max
+          minApplied: this.props.squareMeters * this.state.data.min * 1.1,
+          maxApplied: this.props.squareMeters * this.state.data.max * 1.1
         };
 
-        title = <FormattedMessage {...this.messages.success} />;
+        title = <FormattedMessage {...messages.success} />;
         content = <div>
-          <p><FormattedMessage {...this.messages.info} values={this.state.data} /></p>
-          <p><FormattedMessage {...this.messages.infoApplied} values={rentData} /></p>
-          <p><FormattedMessage {...this.messages.encouragement} /></p>
+          <MietspiegelTable {...this.props} />
+          <p><FormattedMessage {...messages.info} values={this.state.data} /></p>
+          <p><FormattedMessage {...messages.infoApplied} values={rentData} /></p>
+          <p><FormattedMessage {...messages.encouragement} /></p>
         </div>;
         break;
 
       case this.states.INSUFFICIENT_DATA:
-        title = <FormattedMessage {...this.messages.insufficientDataTitle} />;
-        content = <p><FormattedMessage {...this.messages.insufficientData} /></p>;
+        title = <FormattedMessage {...messages.insufficientDataTitle} />;
+        content = <p><FormattedMessage {...messages.insufficientData} /></p>;
         break;
 
       case this.states.ERROR:
       default:
-        title = <FormattedMessage {...this.messages.connectionError} />;
+        title = <FormattedMessage {...messages.connectionError} />;
         content = <div>
-          <p><RaisedButton label={this.props.intl.formatMessage(this.messages.retry)} onClick={() => this.loadRentData()} /></p>
+          <p><RaisedButton label={this.props.intl.formatMessage(messages.retry)} onClick={() => this.loadRentData()} /></p>
         </div>;
         break;
     }
