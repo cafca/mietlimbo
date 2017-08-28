@@ -10,8 +10,6 @@ import en from 'react-intl/locale-data/en';
 import messagesEN from './I18n/en.json';
 import { deIcon, enIcon } from "./LocaleIcons";
 
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
