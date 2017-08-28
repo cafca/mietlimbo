@@ -132,10 +132,10 @@ class Progress extends React.Component {
             style={this.style.anchorStageButton}
           />
           <FlatButton 
-            label="Über" 
+            label="Impressum" 
             key={"Über"}
             style={this.style.anchorStageButton}
-            containerElement={<NavLink to="/about/" target="_blank" />}
+            containerElement={<NavLink to="/about/" />}
           />
         </Paper>
       </Sticky>

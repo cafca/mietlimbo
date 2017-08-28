@@ -26,7 +26,7 @@ export const Introduction = () => {
     <p style={styles.warning}>
       <FormattedMessage
         id="Introduction.warning"
-        defaultMessage="Achtung! Mietlimbo wird gerade noch gestestet und ist definitiv noch nicht fehlerfrei. 
+        defaultMessage="Achtung! Mietlimbo wird gerade noch gestestet und ist noch nicht fehlerfrei. 
           Die Informationen auf dieser Seite solltest du nicht direkt für bare Münze nehmen." />
     </p>
     <p style={styles.text}>
