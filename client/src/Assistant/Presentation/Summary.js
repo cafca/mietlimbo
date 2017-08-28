@@ -2,8 +2,6 @@
 
 import React from 'react';
 import { injectIntl, FormattedMessage, defineMessages } from 'react-intl';
-import { radioDescriptions } from "../GenericInputs/ConstructionDateInput";
-import { officialDescriptions } from "../GenericInputs/BaseFeaturesInput";
 
 import { isPreviousRentLimiting } from "./Calculation";
 
