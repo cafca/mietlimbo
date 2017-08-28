@@ -25,7 +25,7 @@ export const stageConditions = [
   [],
   ["leaseCreated", "newBuilding", "renovation", "previousRent"],
   ["address", "rent", "squareMeters", "constructionDate"],
-  ["intermediateResult"],
+  ["mietspiegel"],
   [],
   [],
   [],

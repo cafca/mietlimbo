@@ -6,7 +6,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import {Introduction, Title} from './Introduction';
-import IntermediateResult from './Presentation/IntermediateResult';
+import Mietspiegel from './Presentation/Mietspiegel';
 import FinalResult from './Presentation/FinalResult';
 import Summary from './Presentation/Summary';
 import Progress from './Progress';
@@ -332,7 +332,7 @@ class Assistant extends React.Component {
 
       case 3:
         // Mietspiegelabfrage, ob genug Daten vorhanden sind
-        content = <IntermediateResult 
+        content = <Mietspiegel 
           valid={valid}
           changed={changed}
           {...this.state.data}
