@@ -8,9 +8,9 @@ import { officialDescriptions } from "../GenericInputs/BaseFeaturesInput";
 import type {Data} from "../Assistant";
 
 const messages = defineMessages({
-  Currency: {
-    id: "Summary.GenericCurrency",
-    defaultMessage: "{value, number, currency}"
+  perSquareMeter: {
+    id: "Summary.GenericPerSquareMeter",
+    defaultMessage: "{value, number, currency}/㎡"
   }
 });
 
@@ -59,11 +59,11 @@ const MietspiegelTable = (props: Data) => {
         <tr>
           <td style={styles.td}><FormattedMessage id="Summary.MietspiegelRentRange" defaultMessage="Spanne Nettokaltmiete" />:</td>
           <td>
-            <FormattedMessage {...messages.Currency} values={{value: props.result.min}} />
+            <FormattedMessage {...messages.perSquareMeter} values={{value: props.result.min}} />
             &nbsp; - &nbsp; 
-            <strong><FormattedMessage {...messages.Currency} values={{value: props.result.mid}} /></strong> 
+            <strong><FormattedMessage {...messages.perSquareMeter} values={{value: props.result.mid}} /></strong> 
             &nbsp; - &nbsp; 
-            <FormattedMessage {...messages.Currency} values={{value: props.result.max}} />
+            <FormattedMessage {...messages.perSquareMeter} values={{value: props.result.max}} />
           </td>
         </tr>
       </tbody>

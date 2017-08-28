@@ -11,6 +11,7 @@ import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 
 import FeatureTable from "./FeatureTable";
+import MietspiegelTable from "./MietspiegelTable";
 import type {Data} from "../Assistant";
 
 // Hide certain elements when printing
@@ -158,7 +159,7 @@ const Summary = injectIntl((props: SummaryProps) => {
     </ul>
 
     <h2><FormattedMessage {...messages.RangeSelectionTitle} /></h2>
-    <Mietspiegel {...props.data} />
+    <MietspiegelTable {...props.data} />
 
     <h2><FormattedMessage {...messages.FeatureTableTitle} /></h2>
     <FeatureTable {...props.data} officialNames={true} />
@@ -171,64 +172,6 @@ const Summary = injectIntl((props: SummaryProps) => {
     <p><FormattedMessage {...messages.Footer} /></p>
     <p><FormattedMessage {...messages.legalNote} /></p>
   </Paper>
-});
-
-const Mietspiegel = injectIntl((props: Data) => {
-  const styles = {
-    td: {paddingRight: 10}
-  };
-
-  const rangeIsModified = (props.baseFeatures !== "default" )
-    && (["Pre1918", "Pre1949", "Pre1964"].indexOf(props.constructionDate) >= 0);
-
-  const modifiedRangeNotice = rangeIsModified
-    ? <p>
-        <FormattedMessage 
-          id="Summary.ModifiedRangeNotice"
-          defaultMessage="Spanne wurde aufgrund von Bezugsfertigkeit {constructionDate} 
-            und Ausstattung {baseFeatures} reduziert (siehe Anmerkungen im 
-            Berliner Mietspiegel 2017, Seite 12)."
-          values={{
-            constructionDate: <em><FormattedMessage {...radioDescriptions[props.constructionDate]} /></em>,
-            baseFeatures: <em><FormattedMessage {...officialDescriptions[props.baseFeatures]} /></em>
-          }} 
-        />
-      </p>
-    : null;
-
-  return <div>
-    <table>
-      <tbody>
-        <tr>
-          <td><FormattedMessage id="Summary.MietspiegelStreet" defaultMessage="Straße" />:</td>
-          <td>{props.address.streetname}</td>
-        </tr>
-        <tr>
-          <td><FormattedMessage id="Summary.MietspiegelStreetRange" defaultMessage="Hausnummer" />:</td>
-          <td>{props.address.range}</td>
-        </tr>
-        <tr>
-          <td><FormattedMessage id="Summary.MietspiegelConstructionDate" defaultMessage="Gebäudealter" />:</td>
-          <td><FormattedMessage {...radioDescriptions[props.constructionDate]} /></td>
-        </tr>
-        <tr>
-          <td><FormattedMessage id="Summary.MietspiegelSquareMeters" defaultMessage="Wohnfläche" />:</td>
-          <td>{props.squareMeters} qm</td>
-        </tr>
-        <tr>
-          <td style={styles.td}><FormattedMessage id="Summary.MietspiegelRentRange" defaultMessage="Spanne Nettokaltmiete" />:</td>
-          <td>
-            <FormattedMessage {...messages.Currency} values={{value: props.result.min}} />
-            &nbsp; - &nbsp; 
-            <strong><FormattedMessage {...messages.Currency} values={{value: props.result.mid}} /></strong> 
-            &nbsp; - &nbsp; 
-            <FormattedMessage {...messages.Currency} values={{value: props.result.max}} />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    {modifiedRangeNotice}
-  </div>
 });
 
 const MietpreisbremseSummary = (props: Data) => {
@@ -268,7 +211,7 @@ const MietpreisbremseSummary = (props: Data) => {
           <td style={styles.rangeTable2}><FormattedMessage id="Summary.RangeLower" defaultMessage="< Spanne {lowerRange, number, currency} >" values={values} /></td>
           <td style={styles.rangeTable2}><FormattedMessage id="Summary.RangeUpper" defaultMessage="< Spanne {upperRange, number, currency} >" values={values} /></td>
         </tr>
-        <tr><td>&nbsp;</td></tr>
+        <tr className="hidePrint"><td>&nbsp;</td></tr>
         <tr>
           <td><FormattedMessage id="Summary.correction" defaultMessage="Korrektur" />:</td>
           <td>
@@ -281,7 +224,7 @@ const MietpreisbremseSummary = (props: Data) => {
             }
           </td>
         </tr>
-        <tr><td>&nbsp;</td></tr>
+        <tr className="hidePrint"><td>&nbsp;</td></tr>
         <tr>
           <td><FormattedMessage id="Summary.localRentLevel" defaultMessage="Örtliche Vergleichsmiete" />:</td>
           <td><FormattedMessage 
@@ -290,13 +233,13 @@ const MietpreisbremseSummary = (props: Data) => {
             values={values} />
           </td>
         </tr>
-        <tr><td>&nbsp;</td></tr>
+        <tr className="hidePrint"><td>&nbsp;</td></tr>
         <tr>
           <td><FormattedMessage id="Summary.mpbApplied" defaultMessage="Bei Anwendung von Mietpreisbremse" />:</td>
           <td><FormattedMessage id ="Summary.mpbAppliedCalc" values={values}
             defaultMessage="{localRentLevel, number, longCurrency} × 1,1 = {mietlimboLevel, number, longCurrency}" /></td>
         </tr>
-        <tr><td>&nbsp;</td></tr>
+        <tr className="hidePrint"><td>&nbsp;</td></tr>
         <tr>
           <td><FormattedMessage id="Summary.mpbFinalRent" defaultMessage="Nettokaltmiete für {squareMeters, number} ㎡" values={values} />:</td>
           <td><FormattedMessage id ="Summary.mpbFinalRentCalc" values={values}
