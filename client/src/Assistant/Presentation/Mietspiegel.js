@@ -4,7 +4,7 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 
-import type {AssistantInputProps} from '../InputComponents/Tools';
+import type {AssistantInputProps} from '../GenericInputs/Tools';
 
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -23,13 +23,13 @@ type RentDataSet = {
   either: ?RentData
 };
 
-class IntermediateResult extends React.Component {
+class Mietspiegel extends React.Component {
   state: {
     data: ?RentData,
     state: string
   };
 
-  inputName = "intermediateResult"
+  inputName = "mietspiegel"
   serverURL : string; // set in constructor
 
   states = {
@@ -41,15 +41,15 @@ class IntermediateResult extends React.Component {
 
   messages = defineMessages({
     loading: {
-      id: "IntermediateResult.loading",
+      id: "Mietspiegel.loading",
       defaultMessage: "Mietspiegelabfrage..." 
     },
     success: {
-      id: "IntermediateResult.success",
+      id: "Mietspiegel.success",
       defaultMessage: `Erster Teil fertig!`
     },
     info: {
-      id: "IntermediateResult.info",
+      id: "Mietspiegel.info",
       defaultMessage: `Die ortsübliche Vergleichsmiete beträgt demnach 
       {mid, number, currency}. Je nachdem, wie gut deine Wohnung ausgestattet 
       ist, wird von diesem Wert noch etwas abgezogen oder dazugerechnet. 
@@ -58,18 +58,18 @@ class IntermediateResult extends React.Component {
       liegen.`
     },
     infoApplied: {
-      id: "IntermediateResult.rangeApplied",
+      id: "Mietspiegel.rangeApplied",
       defaultMessage: `Bei {squareMeters, number} Quadratmeter Grundfläche 
       entspricht dies einer Kaltmiete zwischen {minApplied, number, currency} 
       und {maxApplied, number, currency}.`
     },
     encouragement: {
-      id: "IntermediateResult.encouragement",
+      id: "Mietspiegel.encouragement",
       defaultMessage: `Lass uns das rausfinden! Hierfür frage ich dich 82 
       Fragen. Klingt viel, ist es auch. Macht nix, los!`
     },
     insufficientData: {
-      id: "IntermediateResult.insufficientData",
+      id: "Mietspiegel.insufficientData",
       defaultMessage: `Leider gibt es im aktuellen Berliner Mietspiegel nicht 
         genug Daten über Wohnungen wie deine. Ohne Daten aus dem Mietspiegel 
         kann dir dieser Assistent leider nicht genau bei der Einordnung deiner Wohnung 
@@ -77,16 +77,16 @@ class IntermediateResult extends React.Component {
         mit einer persönlichen Beratung weiterhelfen.`
     },
     insufficientDataTitle: {
-      id: "IntermediateResult.insufficientDataTitle",
+      id: "Mietspiegel.insufficientDataTitle",
       defaultMessage: "Nicht genug Daten im Mietspiegel"
     },
     connectionError: {
-      id: "IntermediateResult.connectionError",
+      id: "Mietspiegel.connectionError",
       defaultMessage: `Es gab leider einen Fehler beim Laden der Daten. Bitte 
         überprüfe deine Internetverbindung oder warte eine Weile.`
     },
     retry: {
-      id: "IntermediateResult.retry",
+      id: "Mietspiegel.retry",
       defaultMessage: "Nochmal probieren, los!"
     }
   })
@@ -203,4 +203,4 @@ class IntermediateResult extends React.Component {
   }
 }
 
-export default injectIntl(IntermediateResult);
+export default injectIntl(Mietspiegel);
