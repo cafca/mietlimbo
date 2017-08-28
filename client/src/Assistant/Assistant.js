@@ -258,8 +258,6 @@ class Assistant extends React.Component {
       const localRentLevel = this.state.data.result.mid 
         + (parseFloat(featureGroupBalance) / featureGroupNames.length) * maxCorrection;
 
-      featureGroupNames.length === 5
-
       // Rent may be 10% above local rent level
       const mietlimboLevel = localRentLevel * 1.1;
 
