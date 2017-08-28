@@ -4,319 +4,319 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
   WindowStyleSingle: {
-    id: "FeatureShortNames.WindowStyleSingle",
+    id: "Apartment.WindowStyleSingleShortname",
     defaultMessage: "Einfachverglasung"
   },
   WindowStyleInsulating: {
-    id: "FeatureShortNames.WindowStyleInsulating",
+    id: "Apartment.WindowStyleInsulatingShortname",
     defaultMessage: "Doppelverglasung"
   },
   HighGradeFlooring: {
-    id: "FeatureShortNames.HighGradeFlooring",
+    id: "Apartment.HighGradeFlooringShortname",
     defaultMessage: "Hochwertiger Boden"
   },
   InsufficientPower: {
-    id: "FeatureShortNames.InsufficientPower",
+    id: "Apartment.InsufficientPowerShortname",
     defaultMessage: "Elektroinstallation ungenügend"
   },
   WallInstallationElectrical: {
-    id: "FeatureShortNames.WallInstallationElectrical",
+    id: "Apartment.WallInstallationElectricalShortname",
     defaultMessage: "Elektroinstallation auf Putz"
   },
   WallInstallationDrainage: {
-    id: "FeatureShortNames.WallInstallationDrainage",
+    id: "Apartment.WallInstallationDrainageShortname",
     defaultMessage: "Wasser auf Putz"
   },
   WallInstallationHeating: {
-    id: "FeatureShortNames.WallInstallationHeating",
+    id: "Apartment.WallInstallationHeatingShortname",
     defaultMessage: "Heizung unter Putz"
   },
   ColdWaterMetering: {
-    id: "FeatureShortNames.ColdWaterMetering",
+    id: "Apartment.ColdWaterMeteringShortname",
     defaultMessage: "Kaltwasserzähler"
   },
   BadFlatDesign: {
-    id: "FeatureShortNames.BadFlatDesign",
+    id: "Apartment.BadFlatDesignShortname",
     defaultMessage: "Ungünstiger Schnitt"
   },
   StorageCabinet: {
-    id: "FeatureShortNames.StorageCabinet",
+    id: "Apartment.StorageCabinetShortname",
     defaultMessage: "Abstellraum"
   },
   NoSpaceForWashing: {
-    id: "FeatureShortNames.NoSpaceForWashing",
+    id: "Apartment.NoSpaceForWashingShortname",
     defaultMessage: "Kein Platz für Waschmaschine"
   },
   LargeLiving: {
-    id: "FeatureShortNames.LargeLiving",
+    id: "Apartment.LargeLivingShortname",
     defaultMessage: "Großer Wohnraum"
   },
   AccessibleDesign: {
-    id: "FeatureShortNames.AccessibleDesign",
+    id: "Apartment.AccessibleDesignShortname",
     defaultMessage: "Barrierearm"
   },
   NoBalcony: {
-    id: "FeatureShortNames.NoBalcony",
+    id: "Apartment.NoBalconyShortname",
     defaultMessage: "Balkon"
   },
   SpaciousBalcony: {
-    id: "FeatureShortNames.SpaciousBalcony",
+    id: "Apartment.SpaciousBalconyShortname",
     defaultMessage: "Großer Balkon"
   },
   RollingShutters: {
-    id: "FeatureShortNames.RollingShutters",
+    id: "Apartment.RollingShuttersShortname",
     defaultMessage: "Rollo"
   },
   CeilingDecoration: {
-    id: "FeatureShortNames.CeilingDecoration",
+    id: "Apartment.CeilingDecorationShortname",
     defaultMessage: "Stuck"
   },
   TinySink: {
-    id: "FeatureShortNames.TinySink",
+    id: "Bath.TinySinkShortname",
     defaultMessage: "Kleines Waschbecken"
   },
   ToiletNoVentilation: {
-    id: "FeatureShortNames.ToiletNoVentilation",
+    id: "Bath.ToiletNoVentilationShortname",
     defaultMessage: "Keine Abluft"
   },
   BoardFlooring: {
-    id: "FeatureShortNames.BoardFlooring",
+    id: "Bath.BoardFlooringShortname",
     defaultMessage: "Holzboden"
   },
   WarmWater: {
-    id: "FeatureShortNames.WarmWater",
+    id: "Bath.WarmWaterShortname",
     defaultMessage: "Warmwasserversorgung"
   },
   FixedBathtub: {
-    id: "FeatureShortNames.FixedBathtub",
+    id: "Bath.FixedBathtubShortname",
     defaultMessage: "Einbauwanne"
   },
   InsufficientTiling: {
-    id: "FeatureShortNames.InsufficientTiling",
+    id: "Bath.InsufficientTilingShortname",
     defaultMessage: "Fliesen"
   },
   NoWindows: {
-    id: "FeatureShortNames.NoWindows",
+    id: "Bath.NoWindowsShortname",
     defaultMessage: "Kein Fenster"
   },
   NoShower: {
-    id: "FeatureShortNames.NoShower",
+    id: "Bath.NoShowerShortname",
     defaultMessage: "Keine Dusche"
   },
   TinyBath: {
-    id: "FeatureShortNames.TinyBath",
+    id: "Bath.TinyBathShortname",
     defaultMessage: "Kleines Bad"
   },
   LargeSink: {
-    id: "FeatureShortNames.LargeSink",
+    id: "Bath.LargeSinkShortname",
     defaultMessage: "Großes Waschbecken"
   },
   HighClassFeatures: {
-    id: "FeatureShortNames.HighClassFeatures",
+    id: "Bath.HighClassFeaturesShortname",
     defaultMessage: "Hochwertig"
   },
   ElectronicVentilation: {
-    id: "FeatureShortNames.ElectronicVentilation",
+    id: "Bath.ElectronicVentilationShortname",
     defaultMessage: "Moderne Entlüftung"
   },
   AdditionalWC: {
-    id: "FeatureShortNames.AdditionalWC",
+    id: "Bath.AdditionalWCShortname",
     defaultMessage: "Gäste-WC"
   },
   LargeBath: {
-    id: "FeatureShortNames.LargeBath",
+    id: "Bath.LargeBathShortname",
     defaultMessage: "Großes Bad"
   },
   FloorHeating: {
-    id: "FeatureShortNames.FloorHeating",
+    id: "Bath.FloorHeatingShortname",
     defaultMessage: "Fußbodenheizung"
   },
   HighClassTiling: {
-    id: "FeatureShortNames.HighClassTiling",
+    id: "Bath.HighClassTilingShortname",
     defaultMessage: "Wand- und Bodenbelag"
   },
   WallMountedWC: {
-    id: "FeatureShortNames.WallMountedWC",
+    id: "Bath.WallMountedWCShortname",
     defaultMessage: "Wandhängendes WC"
   },
   TowelHeating: {
-    id: "FeatureShortNames.TowelHeating",
+    id: "Bath.TowelHeatingShortname",
     defaultMessage: "Strukturheizkörper"
   },
   AdditionalShower: {
-    id: "FeatureShortNames.AdditionalShower",
+    id: "Bath.AdditionalShowerShortname",
     defaultMessage: "Extradusche"
   },
   EntranceCondition: {
-    id: "FeatureShortNames.EntranceCondition",
+    id: "Building.EntranceConditionShortname",
     defaultMessage: "Zustand Hauseingang"
   },
   DoorLock: {
-    id: "FeatureShortNames.DoorLock",
+    id: "Building.DoorLockShortname",
     defaultMessage: "Schloss Hauseingang"
   },
   RepresentativeEntrance: {
-    id: "FeatureShortNames.RepresentativeEntrance",
+    id: "Building.RepresentativeEntranceShortname",
     defaultMessage: "Repräsentativer Hauseingang"
   },
   WellMaintained: {
-    id: "FeatureShortNames.WellMaintained",
+    id: "Building.WellMaintainedShortname",
     defaultMessage: "Instandhaltungszustand"
   },
   NoStorageRoom: {
-    id: "FeatureShortNames.NoStorageRoom",
+    id: "Building.NoStorageRoomShortname",
     defaultMessage: "Kein Keller"
   },
   BicycleRoom: {
-    id: "FeatureShortNames.BicycleRoom",
+    id: "Building.BicycleRoomShortname",
     defaultMessage: "Fahrradraum/-platz"
   },
   BicycleParking: {
-    id: "FeatureShortNames.BicycleParking",
+    id: "Building.BicycleParkingShortname",
     defaultMessage: "Fahrradparken"
   },
   CommunalSpace: {
-    id: "FeatureShortNames.CommunalSpace",
+    id: "Building.CommunalSpaceShortname",
     defaultMessage: "Gemeinschaftsraum"
   },
   Parking: {
-    id: "FeatureShortNames.Parking",
+    id: "Building.ParkingShortname",
     defaultMessage: "Parkmöglichkeiten"
   },
   LowMaintenance: {
-    id: "FeatureShortNames.LowMaintenance",
+    id: "Building.LowMaintenanceShortname",
     defaultMessage: "Instandhaltungszustand"
   },
   SideWing: {
-    id: "FeatureShortNames.SideWing",
+    id: "Building.SideWingShortname",
     defaultMessage: "Seitenflügel"
   },
   NoLift: {
-    id: "FeatureShortNames.NoLift",
+    id: "Building.NoLiftShortname",
     defaultMessage: "Kein Aufzug"
   },
   Lift: {
-    id: "FeatureShortNames.Lift",
+    id: "Building.LiftShortname",
     defaultMessage: "Aufzug"
   },
   NoIntercom: {
-    id: "FeatureShortNames.NoIntercom",
+    id: "Building.NoIntercomShortname",
     defaultMessage: "Keine Gegensprechanlage"
   },
   IntercomVideo: {
-    id: "FeatureShortNames.IntercomVideo",
+    id: "Building.IntercomVideoShortname",
     defaultMessage: "Video-Gegensprechanlage"
   },
   AntiBurglary: {
-    id: "FeatureShortNames.AntiBurglary",
+    id: "Building.AntiBurglaryShortname",
     defaultMessage: "Zusätzlicher Einbruchschutz"
   },
   ModernizedHeatingSystem: {
-    id: "FeatureShortNames.ModernizedHeatingSystem",
+    id: "Building.ModernizedHeatingSystemShortname",
     defaultMessage: "Heizanlage"
   },
   InsufficientInsulation: {
-    id: "FeatureShortNames.InsufficientInsulation",
+    id: "Building.InsufficientInsulationShortname",
     defaultMessage: "Wärmedämmung/Heizanlage"
   },
   Sub80: {
-    id: "FeatureShortNames.Sub80",
+    id: "Building.Sub80Shortname",
     defaultMessage: "Energiebedarf < 80"
   },
   Sub100: {
-    id: "FeatureShortNames.Sub100",
+    id: "Building.Sub100Shortname",
     defaultMessage: "Energiebedarf < 100"
   },
   Sub120: {
-    id: "FeatureShortNames.Sub120",
+    id: "Building.Sub120Shortname",
     defaultMessage: "Energiebedarf < 120"
   },
   Super155: {
-    id: "FeatureShortNames.Super155",
+    id: "Building.Super155Shortname",
     defaultMessage: "Energiebedarf > 155"
   },
   Super195: {
-    id: "FeatureShortNames.Super195",
+    id: "Building.Super195Shortname",
     defaultMessage: "Energiebedarf > 195"
   },
   Super235: {
-    id: "FeatureShortNames.Super235",
+    id: "Building.Super235Shortname",
     defaultMessage: "Energiebedarf > 235"
   },
   QuietStreet: {
-    id: "FeatureShortNames.QuietStreet",
+    id: "Environment.QuietStreetShortname",
     defaultMessage: "Ruhige Straße"
   },
   Noisy: {
-    id: "FeatureShortNames.Noisy",
+    id: "Environment.NoisyShortname",
     defaultMessage: "Lärmbelastung"
   },
   Smelly: {
-    id: "FeatureShortNames.Smelly",
+    id: "Environment.SmellyShortname",
     defaultMessage: "Geruchsbelastung"
   },
   PrimeDowntown: {
-    id: "FeatureShortNames.PrimeDowntown",
+    id: "Environment.PrimeDowntownShortname",
     defaultMessage: "Citylage"
   },
   NeglectedArea: {
-    id: "FeatureShortNames.NeglectedArea",
+    id: "Environment.NeglectedAreaShortname",
     defaultMessage: "Vernachlässigte Gegend"
   },
   NeatoBackyard: {
-    id: "FeatureShortNames.NeatoBackyard",
+    id: "Environment.NeatoBackyardShortname",
     defaultMessage: "Grundstücksgestaltung"
   },
   PrivateBackyard: {
-    id: "FeatureShortNames.PrivateBackyard",
+    id: "Environment.PrivateBackyardShortname",
     defaultMessage: "Garten"
   },
   NoVentilation: {
-    id: "FeatureShortNames.NoVentilation",
+    id: "Kitchen.NoVentilationShortname",
     defaultMessage: "Keine Abluft"
   },
   ExtractorHood: {
-    id: "FeatureShortNames.ExtractorHood",
+    id: "Kitchen.ExtractorHoodShortname",
     defaultMessage: "Dunstabzugshaube"
   },
   NoHeating: {
-    id: "FeatureShortNames.NoHeating",
+    id: "Kitchen.NoHeatingShortname",
     defaultMessage: "Heizung"
   },
   HighGradeFloor: {
-    id: "FeatureShortNames.HighGradeFloor",
+    id: "Kitchen.HighGradeFloorShortname",
     defaultMessage: "Bodenbelag"
   },
   FittedKitchen: {
-    id: "FeatureShortNames.FittedKitchen",
+    id: "Kitchen.FittedKitchenShortname",
     defaultMessage: "EBK"
   },
   KitchenLiving: {
-    id: "FeatureShortNames.KitchenLiving",
+    id: "Kitchen.KitchenLivingShortname",
     defaultMessage: "Große Küche"
   },
   NoStove: {
-    id: "FeatureShortNames.NoStove",
+    id: "Kitchen.NoStoveShortname",
     defaultMessage: "Kein Herd oder Ofen"
   },
   HighGradeStove: {
-    id: "FeatureShortNames.HighGradeStove",
+    id: "Kitchen.HighGradeStoveShortname",
     defaultMessage: "Ceran/Induktion"
   },
   NoSink: {
-    id: "FeatureShortNames.NoSink",
+    id: "Kitchen.NoSinkShortname",
     defaultMessage: "Kein Waschbecken"
   },
   NoDishwasherSpace: {
-    id: "FeatureShortNames.NoDishwasherSpace",
+    id: "Kitchen.NoDishwasherSpaceShortname",
     defaultMessage: "Keine Spülmaschine möglich"
   },
   FreezerProvided: {
-    id: "FeatureShortNames.FreezerProvided",
+    id: "Kitchen.FreezerProvidedShortname",
     defaultMessage: "Kühlschrank"
   },
   InsufficientWarmWater: {
-    id: "FeatureShortNames.InsufficientWarmWater",
+    id: "Kitchen.InsufficientWarmWaterShortname",
     defaultMessage: "Warmwasserversorgung"
   }
 });

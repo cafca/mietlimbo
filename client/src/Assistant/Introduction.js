@@ -16,8 +16,7 @@ const styles = {
   },
   titleWrapper: {
     padding: "1em",
-    marginBottom: 5,
-    marginTop: 40
+    marginBottom: 5
   }
 };
 
@@ -26,7 +25,7 @@ export const Introduction = () => {
     <p style={styles.warning}>
       <FormattedMessage
         id="Introduction.warning"
-        defaultMessage="Achtung! Mietlimbo wird gerade noch gestestet und ist definitiv noch nicht fehlerfrei. 
+        defaultMessage="Achtung! Mietlimbo wird gerade noch gestestet und ist noch nicht fehlerfrei. 
           Die Informationen auf dieser Seite solltest du nicht direkt für bare Münze nehmen." />
     </p>
     <p style={styles.text}>
@@ -51,13 +50,13 @@ export const Introduction = () => {
       </li>
       <li>
         <FormattedMessage
-          id="Introduction.requirement2"
+          id="Introduction.requirement3"
           defaultMessage={`Kaltmiete des Vormieters`}
         />
       </li>
       <li>
         <FormattedMessage
-          id="Introduction.requirement2"
+          id="Introduction.requirement4"
           defaultMessage={`Die Wohnung selbst! Bei manchen Fragen muss man
             einfach mal eben nachgucken.`}
         />

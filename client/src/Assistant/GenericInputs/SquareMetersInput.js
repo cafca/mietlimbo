@@ -54,7 +54,7 @@ class SquareMetersInput extends React.Component {
       });
 			// don't save date while user is typing
 			if (intValue > 10) this.props.valid(this.inputName, true);
-      this.props.valid("intermediateResult", false);
+      this.props.valid("mietspiegel", false);
 		}
 
 		this.setState({

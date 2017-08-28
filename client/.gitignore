@@ -17,3 +17,6 @@ yarn-debug.log*
 yarn-error.log*
 
 parser.log
+
+# intermediate translation representations
+translations/messages/**/*
