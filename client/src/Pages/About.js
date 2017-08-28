@@ -39,6 +39,10 @@ const Landing = () => <div style={style.container}>
     <img alt="Gefört von Open Knowledge Foundation Germany" src={logoOkf} />
   </p>
 
+  <p>Ländericons für Sprachumstellung von:</p>
+  <p>Germany free icon - Icon made by Freepik from www.flaticon.com </p>
+  <p>United Kingdom free icon - Icon made by Freepik from www.flaticon.com </p>
+
   <h2>Impressum</h2>
   <p>Angaben gemäß § 5 TMG</p>
   <img alt="Impressum" style={style.img}  src={Impressum} />
