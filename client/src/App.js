@@ -8,9 +8,11 @@ import { IntlProvider, addLocaleData } from 'react-intl';
 import de from 'react-intl/locale-data/de';
 import en from 'react-intl/locale-data/en';
 import messagesEN from './I18n/en.json';
+import { deIcon, enIcon } from "./LocaleIcons";
 
-import DropDownMenu from 'material-ui/DropDownMenu';
+import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -32,18 +34,15 @@ type AppProps = {
   changeLocale: string => any
 };
 
+
 const App = (props: AppProps) => {
+  const switchLocaleIcon = props.locale === "de" ? enIcon : deIcon;
+  const switchLocaleStyle = {position: "absolute", right: "20px"};
+
   return (
     <BrowserRouter>
       <div className="App">
-        <DropDownMenu 
-          style={{float: "right", marginRight: -10}} 
-          underlineStyle={{display: "none"}}
-          value={props.locale} 
-          onChange={(e,k,locale) => props.changeLocale(locale)}>
-          <MenuItem label="🇩🇪" primaryText="Deutsch" value="de" />
-          <MenuItem label="🇬🇧" primaryText="English" value="en" />
-        </DropDownMenu>
+        <IconButton onClick={props.changeLocale} children={switchLocaleIcon} style={switchLocaleStyle} />
         <div className="App-main">
           <Route exact path="/" component={Landing} />
           <Route exact path="/app/" component={Assistant} />
@@ -88,6 +87,11 @@ class AppIntl extends Component {
     autoBind(this);
   }
 
+  changeLocale() {
+    const locale = this.state.locale === "de" ? "en" : "de";
+    this.setState({locale});
+  }
+
   render() {
     return <IntlProvider 
       formats={formats}
@@ -97,7 +101,7 @@ class AppIntl extends Component {
       defaultLocale={"de"}
     >
       <AppMaterialUI 
-        changeLocale={locale => this.setState({locale})}
+        changeLocale={this.changeLocale}
         locale={this.state.locale} />
     </IntlProvider>;
   }

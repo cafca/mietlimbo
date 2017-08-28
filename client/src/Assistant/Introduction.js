@@ -16,8 +16,7 @@ const styles = {
   },
   titleWrapper: {
     padding: "1em",
-    marginBottom: 5,
-    marginTop: 40
+    marginBottom: 5
   }
 };
 
