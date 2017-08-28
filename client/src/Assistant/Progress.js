@@ -10,7 +10,8 @@ import FlatButton from 'material-ui/FlatButton';
 import { blue300, pinkA200, grey400 } from 'material-ui/styles/colors';
 import Paper from "material-ui/Paper";
 
-import { stageNames, stageNameTranslations } from "./Assistant";
+import { stageNames } from "./Config";
+import { stageNameTranslations } from "./Assistant";
 import {groupBalance} from"./ApartmentFeatureInputs/RangeSelectionGroup";
 
 type ProgressProps = {
@@ -131,10 +132,10 @@ class Progress extends React.Component {
             style={this.style.anchorStageButton}
           />
           <FlatButton 
-            label="Über" 
+            label="Impressum" 
             key={"Über"}
             style={this.style.anchorStageButton}
-            containerElement={<NavLink to="/about/" target="_blank" />}
+            containerElement={<NavLink to="/about/" />}
           />
         </Paper>
       </Sticky>

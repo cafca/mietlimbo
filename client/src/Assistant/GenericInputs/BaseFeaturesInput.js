@@ -62,7 +62,7 @@ class BaseFeaturesInput extends React.Component {
 	handleChange(e: SyntheticInputEvent, value: string) {
     this.props.changed({[this.inputName]: value}, 
       () => this.props.valid(this.inputName, true, 
-        () => this.props.valid("intermediateResult", false)));
+        () => this.props.valid("mietspiegel", false)));
 	}
 
 	render() {
