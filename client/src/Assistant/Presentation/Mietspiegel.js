@@ -136,12 +136,11 @@ class Mietspiegel extends React.Component {
             this.setState({data: null, state: this.states.INSUFFICIENT_DATA})
             this.props.valid(this.inputName, false);
           } else {
-            this.setState({data, state: this.states.SUCCESS})
-            this.props.valid(this.inputName, true);
+            this.props.changed({result: data}, () => {
+              this.setState({data, state: this.states.SUCCESS})
+              this.props.valid(this.inputName, true);
+            });
           }
-
-          // eslint-disable-next-line
-          this.props.changed({["result"]: data});
         }
       })
       .catch(err => {
@@ -155,7 +154,7 @@ class Mietspiegel extends React.Component {
     // props.baseFeatures determines the selected set.
     const baseConfiguration = ["noheating", "nobath"].indexOf(this.props.baseFeatures) >= 0 
       ? "either" : this.props.baseFeatures;
-    return data != null && Object.keys(data).indexOf(baseConfiguration) >= 0 
+    return Object.keys(data).indexOf(baseConfiguration) >= 0 
       ? data[baseConfiguration] : data["default"];
   }
 
