@@ -177,7 +177,7 @@ class Assistant extends React.Component {
   componentWillMount() {
     // Fill state with empty data sets and activate stage based on URL
     this.setState(this.initializeData(), () => {
-      if (this.props.match && this.props.match.params.stage) {
+      if (this.props.match && this.props.match.params.stage && this.props.match.params.stage !== this.state.stage) {
         const stage = parseInt(this.props.match.params.stage, 10);
         stage !== undefined && this.requestStage(stage);
       } else this.update();
@@ -222,6 +222,7 @@ class Assistant extends React.Component {
         // Callback to prevent race condition in this.componentWillReceiveProps
         this.props.history.push("/app/" + stage + "/");
         window.scrollTo(0, 0);
+        this.update();
       });
     }
   }
@@ -256,7 +257,7 @@ class Assistant extends React.Component {
 
   update(cb?: Function) {
     // Only update the Mietpreisbremse value when the final result page is accessible
-    if (this.isStageEnabled(stageNames.indexOf("Auswertung"))) {
+    if (this.state.inputValid["mietspiegel"]) {
       // To calculate balance, for every group with predominantly positive features 1 is added,
       // for predominantly negative groups 1 is subtracted
       const featureGroupBalance = featureGroupNames
@@ -290,7 +291,6 @@ class Assistant extends React.Component {
         mietlimbo,
         featureGroupBalance
       });
-
       this.setState({data: Object.assign({}, this.state.data, {result})}, cb);
     } else {
       cb && cb();
@@ -321,10 +321,22 @@ class Assistant extends React.Component {
 		switch(this.state.stage) {
 			case 1:
         content = <div key="stage1">
-          <LeaseCreatedInput valid={valid} changed={changed} value={this.state.data.leaseCreated} />
-          <NewBuildingInput valid={valid} changed={changed} value={this.state.data.newBuilding} />
-          <RenovationInput valid={valid} changed={changed} value={this.state.data.renovation} />
-          <PreviousRentInput valid={valid} changed={changed} value={this.state.data.previousRent} />
+          <LeaseCreatedInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.leaseCreated} />
+          <NewBuildingInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.newBuilding} />
+          <RenovationInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.renovation} />
+          <PreviousRentInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.previousRent} />
         </div>;
 				break;
 
@@ -335,15 +347,30 @@ class Assistant extends React.Component {
         let optionalInput = "";
         if (["Pre1918", "Pre1949", "Pre1964"].indexOf(this.state.data.constructionDate) >= 0) {
           stageConditions[2].push("baseFeatures");
-          optionalInput = <BaseFeaturesInput valid={valid} changed={changed} value={this.state.data.baseFeatures} />;
+          optionalInput = <BaseFeaturesInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.baseFeatures} />;
         }
 
 				content = <div key="stage2">
-          <AddressInput valid={valid} changed={changed} value={this.state.data.address} />
-          <SquareMetersInput valid={valid} changed={changed} 
-            exact={this.state.data.squareMeters} guessed={this.state.data.squareMetersGuessed} />
-          <RentInput valid={valid} changed={changed} value={this.state.data.rent} />
-          <ConstructionDateInput valid={valid} changed={changed} value={this.state.data.constructionDate} />
+          <AddressInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.address} />
+          <SquareMetersInput 
+            valid={valid} 
+            changed={changed} 
+            exact={this.state.data.squareMeters} 
+            guessed={this.state.data.squareMetersGuessed} />
+          <RentInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.rent} />
+          <ConstructionDateInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.constructionDate} />
           {optionalInput}
 				</div>;
 				break;
@@ -353,8 +380,7 @@ class Assistant extends React.Component {
         content = <Mietspiegel 
           valid={valid}
           changed={changed}
-          {...this.state.data}
-        />;
+          {...this.state.data} />;
         break;
 
       case 4:
@@ -369,14 +395,15 @@ class Assistant extends React.Component {
             key={stageNames[this.state.stage]}
             inputComponents={featureGroupInputs[stageNames[this.state.stage]]}
             data={this.state.data[stageNames[this.state.stage]]}
-            changed={changed} 
-            />
+            changed={changed} />
         </div>;
         break;
 
       case 9:
         content = <div key="stage11">
-          <FinalResult data={this.state.data} changed={changed} />
+          <FinalResult 
+            data={this.state.data} 
+            changed={changed} />
         </div>;
         break;
 
