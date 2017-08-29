@@ -65,4 +65,4 @@ export const testData = {
 };
 
 export const initialData = process.env.NODE_ENV === "production" 
-  ? {} : {};
+  ? {} : testData;
