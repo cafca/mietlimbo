@@ -6,6 +6,7 @@ import {red500} from 'material-ui/styles/colors';
 import Paper from 'material-ui/Paper';
 import {RadioButtonGroup, RadioButton} from "material-ui/RadioButton";
 import { Card, CardText, CardTitle } from "material-ui/Card";
+import RaisedButton from "material-ui/RaisedButton";
 
 const styles = {
   bigtext: {
@@ -23,11 +24,34 @@ const styles = {
   }
 };
 
+const testLocalStorage = () => {
+  try {
+    localStorage.setItem("test", "test");
+    localStorage.removeItem("test");
+    return true;
+  } catch(e) {
+    debugger;
+    return false;
+  }
+}
+
 export const Introduction = (props: {saveEnabled: boolean, changed: Function, valid: Function }) => {
   const handleChange = (ev: SyntheticInputEvent, value: boolean) => {
     props.changed({saveEnabled: value});
     props.valid("saveEnabled", true);
   };
+
+  const deleteOption = props.saveEnabled === true ?
+    <CardText>
+      <RaisedButton 
+        label={<FormattedMessage 
+          id="Introduction.savingOptionClear"
+          defaultMessage="Gespeicherte Daten wieder löschen" />}
+        secondary={true}
+        onClick={() => {localStorage.clear()}} />
+    </CardText> : null;
+
+  const localStorageAvailable = testLocalStorage();
 
   return <section>
     <p style={styles.warning}>
@@ -102,22 +126,28 @@ export const Introduction = (props: {saveEnabled: boolean, changed: Function, va
     <Card>
       <CardTitle title={<FormattedMessage id="Introduction.savingOptionTitle" defaultMessage="Automatisch speichern?" />} />
       <CardText>
-        <FormattedMessage
+        <p><FormattedMessage
           id="Introduction.savingOption"
           defaultMessage={`Möchtest du, dass alle deine Eingaben in diesem Browser gespeichert
             werden, so dass nichts verloren geht, wenn du das Fenster schließt? Deine persönlichen
-            Daten werden so oder so nicht auf unserem Server gespeichert.`} />
+            Daten werden so oder so nicht auf unserem Server gespeichert.`} /></p>
       </CardText>
       <CardText>
-          <RadioButtonGroup onChange={handleChange} value={props.saveEnabled} name="saveEnabled">
-            <RadioButton value={true} label={<FormattedMessage 
-              id="Introduction.savingOptionTrue"
-              defaultMessage="Ja, bitte speichern." />} />
-            <RadioButton value={false} label={<FormattedMessage 
-              id="Introduction.savingOptionFalse"
-              defaultMessage="Nein, ich lebe gerne gefährlich." />} />
-          </RadioButtonGroup>
+        <RadioButtonGroup onChange={handleChange} value={props.saveEnabled} name="saveEnabled">
+          <RadioButton value={true} label={<FormattedMessage 
+            id="Introduction.savingOptionTrue"
+            defaultMessage="Ja, bitte speichern." />} 
+            disabled={localStorageAvailable === false} />
+          <RadioButton value={false} label={<FormattedMessage 
+            id="Introduction.savingOptionFalse"
+            defaultMessage="Nein, ich lebe gerne gefährlich." />} />
+        </RadioButtonGroup>
+        {localStorageAvailable === true ? null : <p style={{color: "red"}}><FormattedMessage
+          id="Introduction.savingOptionUnavailable"
+          defaultMessage="Leider unterstützt ihr Web-Browser keine Datenspeicherung."
+        /></p>}
       </CardText>
+      {deleteOption}
     </Card>
   </section>;
 }
