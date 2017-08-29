@@ -74,7 +74,7 @@ class AutoSave extends React.Component {
         /></p>}
       </CardText>
 
-      { this.props.autoSave &&
+      { this.props.autoSave === true &&
         <CardText>
           <RaisedButton 
             icon={<DeleteIcon />}
