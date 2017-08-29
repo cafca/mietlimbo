@@ -78,7 +78,7 @@ class RenovationInput extends React.Component {
       ? <p><FormattedMessage {...messages.simpleNotice} /></p>
       : null;
 
-    return <Card className="assistantInput">
+    return <Card className="assistantInput" id={this.inputName}>
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
         <p><FormattedMessage {...messages.description} /></p>

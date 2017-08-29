@@ -4,6 +4,7 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 
 import {Introduction, Title} from './Introduction';
 import Mietspiegel from './Presentation/Mietspiegel';
@@ -108,6 +109,53 @@ const featureGroupLongNames = defineMessages({
   },
 });
 
+const genericInputNameTranslations = defineMessages({
+  "autoSave": {
+    id: "GenericInputName.autoSave",
+    defaultMessage: "automatisches Speichern"
+  },
+  "leaseCreated": {
+    id: "GenericInputName.leaseCreated",
+    defaultMessage: "Vertragsdatum"
+  },
+  "newBuilding" : {
+    id: "GenericInputName.newBuilding",
+    defaultMessage: "Neubau"
+  },
+  "renovation" : {
+    id: "GenericInputName.renovation",
+    defaultMessage: "Renovierung"
+  },
+  "previousRent": {
+    id: "GenericInputName.previousRent",
+    defaultMessage: "Vormiete"
+  },
+  "address" : {
+    id: "GenericInputName.address",
+    defaultMessage: "Adresse"
+  },
+  "rent" : {
+    id: "GenericInputName.rent",
+    defaultMessage: "Nettokaltmiete"
+  },
+  "squareMeters" : {
+    id: "GenericInputName.squareMeters",
+    defaultMessage: "Größe der Wohnung"
+  },
+  "constructionDate": {
+    id: "GenericInputName.constructionDate",
+    defaultMessage: "Datum der Bezugsfertigkeit"
+  },
+  "mietspiegel": {
+    id: "GenericInputName.mietspiegel",
+    defaultMessage: "Mietspiegelabfrage"
+  },
+  baseFeatures: {
+    id: "GenericInputName.baseFeatures",
+    defaultMessage: "besondere Ausstattung"
+  }
+});
+
 type AssistantProps = {
   match: {params: {stage: number}},
   location: {},
@@ -154,7 +202,9 @@ class Assistant extends React.Component {
 	state : {
 		stage: number,
     inputValid: {[string]: boolean},
-    data: {[string]: any}
+    data: {[string]: any},
+    snackbarOpen: boolean,
+    snackbarMsg: string
 	}
 
   style = {
@@ -170,14 +220,16 @@ class Assistant extends React.Component {
     this.state = {
       stage: 0,
       inputValid: {},
-      data: initialData
+      data: initialData,
+      snackbarMsg: "",
+      snackbarOpen: false
     }
 	}
 
   componentWillMount() {
     // Fill state with empty data sets and activate stage based on URL
     this.setState(this.initializeData(), () => {
-      if (this.props.match && this.props.match.params.stage) {
+      if (this.props.match && this.props.match.params.stage && this.props.match.params.stage !== this.state.stage) {
         const stage = parseInt(this.props.match.params.stage, 10);
         stage !== undefined && this.requestStage(stage);
       } else this.update();
@@ -198,21 +250,15 @@ class Assistant extends React.Component {
     if (storedState) {
       return storedState
     } else {
-      // Fill the dataset with emoty objects in the beginning
+      // Fill the dataset with empty objects in the beginning
       const data = Object.assign({}, this.state.data);
       // eslint-disable-next-line array-callback-return
       featureGroupNames.map(name => {
         if (data[name] === undefined) {
-          data[name] = { positive: [], negative: [] }
+          data[name] = { positive: [], negative: [] };
         }
       });
-      // Form validity assumed on first mount
-      const inputValid = {};
-      // eslint-disable-next-line array-callback-return
-      Object.keys(this.state.data).map(k => {
-        inputValid[k] = true;
-      });
-      return { data, inputValid };
+      return { data };
     }
   }
 
@@ -222,6 +268,7 @@ class Assistant extends React.Component {
         // Callback to prevent race condition in this.componentWillReceiveProps
         this.props.history.push("/app/" + stage + "/");
         window.scrollTo(0, 0);
+        this.update();
       });
     }
   }
@@ -235,9 +282,33 @@ class Assistant extends React.Component {
     // This method is called from input components when their respective data is updated
     this.setState({data: Object.assign({}, this.state.data, newData)}, () => {
       this.update(cb);
-      this.state.data.saveEnabled && this.save();
+      this.state.data.autoSave && this.save();
     });
 	}
+
+  handleNext() {
+    if (this.isStageEnabled(this.state.stage + 1)) {
+      this.requestStage(this.state.stage + 1)
+    } else {
+      const nextMissingName = this.missingFields()[0];
+      const nextMissingElem = document.getElementById(nextMissingName);
+      nextMissingElem && nextMissingElem.scrollIntoView();
+      this.setState({
+        snackbarOpen: true,
+        snackbarMsg: this.props.intl.formatMessage({
+          id: "Assistant.missingFieldMessage",
+          defaultMessage: "Es fehlt noch eine Antwort zu {fieldname}"
+        }, {
+          fieldname: this.props.intl.formatMessage(
+            {...genericInputNameTranslations[nextMissingName]})
+        })
+      })
+    }
+  }
+
+  handleSnackbarClose() {
+    this.setState({snackbarOpen: false});
+  }
 
   save() {
     localStorage.setItem("data", JSON.stringify(this.state.data));
@@ -245,8 +316,14 @@ class Assistant extends React.Component {
   }
 
   load() {
-    const dataJSON = localStorage.getItem("data");
-    const validJSON = localStorage.getItem("inputValid");
+    let dataJSON = null, validJSON = null;
+
+    try {
+      dataJSON = localStorage.getItem("data");
+      validJSON = localStorage.getItem("inputValid");
+    } catch(e) {
+      console.log("Browser does not support local storage.")
+    }
 
     return (dataJSON && validJSON) ? {
         data: JSON.parse(dataJSON),
@@ -256,7 +333,7 @@ class Assistant extends React.Component {
 
   update(cb?: Function) {
     // Only update the Mietpreisbremse value when the final result page is accessible
-    if (this.isStageEnabled(stageNames.indexOf("Auswertung"))) {
+    if (this.state.inputValid["mietspiegel"]) {
       // To calculate balance, for every group with predominantly positive features 1 is added,
       // for predominantly negative groups 1 is subtracted
       const featureGroupBalance = featureGroupNames
@@ -290,7 +367,6 @@ class Assistant extends React.Component {
         mietlimbo,
         featureGroupBalance
       });
-
       this.setState({data: Object.assign({}, this.state.data, {result})}, cb);
     } else {
       cb && cb();
@@ -311,6 +387,19 @@ class Assistant extends React.Component {
     }
   }
 
+  missingFields(stage?: number) {
+    if (stage === undefined) stage = this.state.stage + 1;
+    return stageConditions
+      .slice(0, stage)
+      .reduce((acc, cur) => acc.concat(cur), [])
+      .reduce((acc, cur) => 
+        this.state.inputValid[cur] !== true
+          ? acc.concat(cur) 
+          : acc, 
+        []
+      );
+  }
+
 	render() {
 		let content = "";
     let title = "";
@@ -321,10 +410,22 @@ class Assistant extends React.Component {
 		switch(this.state.stage) {
 			case 1:
         content = <div key="stage1">
-          <LeaseCreatedInput valid={valid} changed={changed} value={this.state.data.leaseCreated} />
-          <NewBuildingInput valid={valid} changed={changed} value={this.state.data.newBuilding} />
-          <RenovationInput valid={valid} changed={changed} value={this.state.data.renovation} />
-          <PreviousRentInput valid={valid} changed={changed} value={this.state.data.previousRent} />
+          <LeaseCreatedInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.leaseCreated} />
+          <NewBuildingInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.newBuilding} />
+          <RenovationInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.renovation} />
+          <PreviousRentInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.previousRent} />
         </div>;
 				break;
 
@@ -335,15 +436,30 @@ class Assistant extends React.Component {
         let optionalInput = "";
         if (["Pre1918", "Pre1949", "Pre1964"].indexOf(this.state.data.constructionDate) >= 0) {
           stageConditions[2].push("baseFeatures");
-          optionalInput = <BaseFeaturesInput valid={valid} changed={changed} value={this.state.data.baseFeatures} />;
+          optionalInput = <BaseFeaturesInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.baseFeatures} />;
         }
 
 				content = <div key="stage2">
-          <AddressInput valid={valid} changed={changed} value={this.state.data.address} />
-          <SquareMetersInput valid={valid} changed={changed} 
-            exact={this.state.data.squareMeters} guessed={this.state.data.squareMetersGuessed} />
-          <RentInput valid={valid} changed={changed} value={this.state.data.rent} />
-          <ConstructionDateInput valid={valid} changed={changed} value={this.state.data.constructionDate} />
+          <AddressInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.address} />
+          <SquareMetersInput 
+            valid={valid} 
+            changed={changed} 
+            exact={this.state.data.squareMeters} 
+            guessed={this.state.data.squareMetersGuessed} />
+          <RentInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.rent} />
+          <ConstructionDateInput 
+            valid={valid} 
+            changed={changed} 
+            value={this.state.data.constructionDate} />
           {optionalInput}
 				</div>;
 				break;
@@ -353,8 +469,7 @@ class Assistant extends React.Component {
         content = <Mietspiegel 
           valid={valid}
           changed={changed}
-          {...this.state.data}
-        />;
+          {...this.state.data} />;
         break;
 
       case 4:
@@ -369,14 +484,15 @@ class Assistant extends React.Component {
             key={stageNames[this.state.stage]}
             inputComponents={featureGroupInputs[stageNames[this.state.stage]]}
             data={this.state.data[stageNames[this.state.stage]]}
-            changed={changed} 
-            />
+            changed={changed} />
         </div>;
         break;
 
       case 9:
         content = <div key="stage11">
-          <FinalResult data={this.state.data} changed={changed} />
+          <FinalResult 
+            data={this.state.data} 
+            changed={changed} />
         </div>;
         break;
 
@@ -389,7 +505,7 @@ class Assistant extends React.Component {
 			case 0:
 			default:
 				content = <Introduction 
-          saveEnabled={this.state.data.saveEnabled} 
+          autoSave={this.state.data.autoSave} 
           valid={valid}
           changed={changed} />;
         title = <Title />;
@@ -411,14 +527,23 @@ class Assistant extends React.Component {
         data={this.state.data} />
       {content}
       <RaisedButton 
-        primary={true} 
+        primary={true}
         style={{display: buttonDisplayStyle}}
-        onClick={() => this.requestStage(this.state.stage + 1)} 
-        disabled={!this.isStageEnabled(this.state.stage + 1)}
-        label={this.props.intl.formatMessage({
-          id: "Assistant.continue",
-          defaultMessage: "Weiter"
-        })} />
+        onClick={this.handleNext} 
+        label={this.isStageEnabled(this.state.stage + 1)
+          ? <FormattedMessage
+              id="Assistant.continue"
+              defaultMessage="Weiter"
+            />
+          : <FormattedMessage
+              id="Assistant.missingFields"
+              defaultMessage="Alle Fragen beantwortet?"
+            />} />
+      <Snackbar
+        open={this.state.snackbarOpen}
+        message={this.state.snackbarMsg}
+        autoHideDuration={4000}
+        onRequestClose={this.handleSnackbarClose} />
       {debug}
 		</div>;
 	}

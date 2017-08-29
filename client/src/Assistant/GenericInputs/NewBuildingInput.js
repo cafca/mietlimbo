@@ -55,7 +55,7 @@ class NewBuildingInput extends React.Component {
       <FormattedMessage {...messages.warning} />
     </p> : <span></span>;
 
-		return <Card className="assistantInput">
+		return <Card className="assistantInput" id={this.inputName}>
 			<CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
         <RadioButtonGroup 
