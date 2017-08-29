@@ -1,6 +1,6 @@
 {
   "name": "mietlimbo",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "private": true,
   "dependencies": {
     "intl": "^1.2.5",
@@ -28,6 +28,6 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "flow": "flow",
-    "translate": "NODE_ENV=production babel ./src >/dev/null && NODE_ENV=production babel ./translations/collectTranslations.js | node"
+    "translate": "rm -rf ./translations/messages && NODE_ENV=production babel ./src >/dev/null && NODE_ENV=production babel ./translations/collectTranslations.js | node"
   }
 }

@@ -71,7 +71,7 @@ class RentInput extends React.Component {
 
     const errors = this.state.errors.length === 0 ? null : <ErrorList errors={this.state.errors} />;
 
-    return <Card className="assistantInput">
+    return <Card className="assistantInput" id={this.inputName}>
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
         <p><FormattedMessage
@@ -79,7 +79,6 @@ class RentInput extends React.Component {
           defaultMessage="In diesem Betrag sind keine Heizkosten oder Nebenkosten enthalten." />
         </p>
         <TextField 
-          id={this.inputName}
           name={this.inputName}
           hintText={this.props.intl.formatMessage(messages.inputHint)}
           errorText={errors}

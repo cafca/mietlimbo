@@ -114,18 +114,17 @@ class PreviousRentInput extends React.Component {
         <p><FormattedMessage {...messages.unknownEncouragement} /></p>
       </div> : null;
 
-    return <Card className="assistantInput">
+    return <Card className="assistantInput" id={this.inputName}>
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
         <p><FormattedMessage {...messages.description} /></p>
         <p><FormattedMessage {...messages.recentIncrease} /></p>
         <TextField 
-          id={this.inputName}
           name={this.inputName}
           hintText={this.props.intl.formatMessage(messages.inputHint)}
           errorText={errors}
           className="textInput"
-          value={this.props.value >= 0 ? this.state.value : ""}
+          value={this.props.value >= 0 && this.state.value !== null ? this.state.value : ""}
           disabled={this.props.value === -1}
           onChange={this.handleChange} />
       </CardText>

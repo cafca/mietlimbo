@@ -15,7 +15,7 @@ import {
 import { blue500, pinkA200 } from 'material-ui/styles/colors';
 
 import Shortnames from "../ApartmentFeatureInputs/FeatureShortnames";
-import OfficialNames from "../ApartmentFeatureInputs/FeatureOfficialNames";
+import officialNames from "../ApartmentFeatureInputs/FeatureOfficialNames";
 import { groupBalance} from "../ApartmentFeatureInputs/RangeSelectionGroup";
 import type {Data} from "../Assistant";
 import { stageNameTranslations } from "../Assistant";
@@ -34,7 +34,9 @@ class FeatureTable extends React.Component {
   }
 
   renderTableRows() {
-    const featureNames = this.props.officialNames === true ? OfficialNames : Shortnames;
+    const featureName = n => this.props.officialNames === true
+      ? officialNames[n]
+      : <FormattedMessage {...Shortnames[n]} />;
 
     return featureGroupNames.map(group => <TableRow key={group}>
       <TableRowColumn>
@@ -42,12 +44,12 @@ class FeatureTable extends React.Component {
       </TableRowColumn>
       <TableRowColumn>
         {this.props[group].positive.map(n => 
-          <p key={n}><FormattedMessage {...featureNames[n]} /></p>
+          <p key={n}>{featureName(n)}</p>
         )}
       </TableRowColumn>
       <TableRowColumn>
         {this.props[group].negative.map(n => 
-          <p key={n}><FormattedMessage {...featureNames[n]} /></p>
+          <p key={n}>{featureName(n)}</p>
         )}
       </TableRowColumn>
       <TableRowColumn style={{color: (groupBalance(this.props[group]) < 0 ? blue500 : groupBalance(this.props[group]) > 0 ? pinkA200 : "black"), "whiteSpace": "normal"}}>
