@@ -198,21 +198,15 @@ class Assistant extends React.Component {
     if (storedState) {
       return storedState
     } else {
-      // Fill the dataset with emoty objects in the beginning
+      // Fill the dataset with empty objects in the beginning
       const data = Object.assign({}, this.state.data);
       // eslint-disable-next-line array-callback-return
       featureGroupNames.map(name => {
         if (data[name] === undefined) {
-          data[name] = { positive: [], negative: [] }
+          data[name] = { positive: [], negative: [] };
         }
       });
-      // Form validity assumed on first mount
-      const inputValid = {};
-      // eslint-disable-next-line array-callback-return
-      Object.keys(this.state.data).map(k => {
-        inputValid[k] = true;
-      });
-      return { data, inputValid };
+      return { data };
     }
   }
 
@@ -246,8 +240,14 @@ class Assistant extends React.Component {
   }
 
   load() {
-    const dataJSON = localStorage.getItem("data");
-    const validJSON = localStorage.getItem("inputValid");
+    let dataJSON = null, validJSON = null;
+
+    try {
+      dataJSON = localStorage.getItem("data");
+      validJSON = localStorage.getItem("inputValid");
+    } catch(e) {
+      console.log("Browser does not support local storage.")
+    }
 
     return (dataJSON && validJSON) ? {
         data: JSON.parse(dataJSON),
@@ -417,6 +417,7 @@ class Assistant extends React.Component {
 			default:
 				content = <Introduction 
           autoSave={this.state.data.autoSave} 
+          reset={this.reset}
           valid={valid}
           changed={changed} />;
         title = <Title />;

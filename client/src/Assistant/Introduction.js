@@ -27,7 +27,7 @@ const styles = {
   }
 };
 
-export const Introduction = (props: AutoSaveProps) => {
+export const Introduction = (props) => {
   return <section>
     <p style={styles.warning}>
       <FormattedMessage
@@ -96,7 +96,7 @@ export const Introduction = (props: AutoSaveProps) => {
         Ich übernehme allerdings keine Gewähr für die Richtigkeit, Vollständigkeit 
         und Aktualität der Informationen.`}
     /></p>
-    <AutoSave autoSave={props.autoSave} changed={props.changed} valid={props.valid} />
+    <AutoSave {...props} />
   </section>;
 }
 
