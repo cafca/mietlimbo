@@ -22,7 +22,7 @@ export const featureGroupNames = stageNames.slice(4, 9);
 // These fields are required in order to advance to the next assistant stage
 // (all previous conditions are also required, of course)
 export const stageConditions = [
-  [],
+  ["saveEnabled"],
   ["leaseCreated", "newBuilding", "renovation", "previousRent"],
   ["address", "rent", "squareMeters", "constructionDate"],
   ["mietspiegel"],

@@ -1,8 +1,11 @@
 // @flow
+
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import {red500} from 'material-ui/styles/colors';
 import Paper from 'material-ui/Paper';
+import {RadioButtonGroup, RadioButton} from "material-ui/RadioButton";
+import { Card, CardText, CardTitle } from "material-ui/Card";
 
 const styles = {
   bigtext: {
@@ -20,7 +23,12 @@ const styles = {
   }
 };
 
-export const Introduction = () => {
+export const Introduction = (props: {saveEnabled: boolean, changed: Function, valid: Function }) => {
+  const handleChange = (ev: SyntheticInputEvent, value: boolean) => {
+    props.changed({saveEnabled: value});
+    props.valid("saveEnabled", true);
+  };
+
   return <section>
     <p style={styles.warning}>
       <FormattedMessage
@@ -91,6 +99,26 @@ export const Introduction = () => {
         und Aktualität der Informationen. 
 `}
     /></p>
+    <Card>
+      <CardTitle title={<FormattedMessage id="Introduction.savingOptionTitle" defaultMessage="Automatisch speichern?" />} />
+      <CardText>
+        <FormattedMessage
+          id="Introduction.savingOption"
+          defaultMessage={`Möchtest du, dass alle deine Eingaben in diesem Browser gespeichert
+            werden, so dass nichts verloren geht, wenn du das Fenster schließt? Deine persönlichen
+            Daten werden so oder so nicht auf unserem Server gespeichert.`} />
+      </CardText>
+      <CardText>
+          <RadioButtonGroup onChange={handleChange} value={props.saveEnabled} name="saveEnabled">
+            <RadioButton value={true} label={<FormattedMessage 
+              id="Introduction.savingOptionTrue"
+              defaultMessage="Ja, bitte speichern." />} />
+            <RadioButton value={false} label={<FormattedMessage 
+              id="Introduction.savingOptionFalse"
+              defaultMessage="Nein, ich lebe gerne gefährlich." />} />
+          </RadioButtonGroup>
+      </CardText>
+    </Card>
   </section>;
 }
 
