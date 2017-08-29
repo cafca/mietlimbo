@@ -24,7 +24,7 @@ export const featureGroupNames = stageNames.slice(4, 9);
 export const stageConditions = [
   ["autoSave"],
   ["leaseCreated", "newBuilding", "renovation", "previousRent"],
-  ["address", "rent", "squareMeters", "constructionDate"],
+  ["address", "squareMeters", "rent", "constructionDate"],
   ["mietspiegel"],
   [],
   [],
@@ -65,4 +65,4 @@ export const testData = {
 };
 
 export const initialData = process.env.NODE_ENV === "production" 
-  ? {} : testData;
+  ? {} : {};

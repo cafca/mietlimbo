@@ -4,8 +4,7 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { FormattedMessage } from 'react-intl';
 
-import {red500} from 'material-ui/styles/colors';
-import Paper from 'material-ui/Paper';
+import { red500 } from 'material-ui/styles/colors';
 import {RadioButtonGroup, RadioButton} from "material-ui/RadioButton";
 import { Card, CardText, CardTitle } from "material-ui/Card";
 import RaisedButton from "material-ui/RaisedButton";
@@ -34,7 +33,9 @@ class AutoSave extends React.Component {
 
   resetEverything() {
     localStorage.clear(); 
-    this.props.changed({[this.inputName]: null})
+    this.props.changed({[this.inputName]: null}, () => {
+      this.props.valid(this.inputName, false);
+    });
   };
 
   isLocalStorageAvailable() {
@@ -48,7 +49,7 @@ class AutoSave extends React.Component {
   }
 
   render() {
-    return <Card>
+    return <Card className="assistantInput" id={this.inputName}>
       <CardTitle title={<FormattedMessage id="Introduction.savingOptionTitle" defaultMessage="Automatisch speichern?" />} />
       <CardText>
         <p><FormattedMessage
@@ -67,7 +68,7 @@ class AutoSave extends React.Component {
             id="Introduction.savingOptionFalse"
             defaultMessage="Nein, ich lebe gerne gefährlich." />} />
         </RadioButtonGroup>
-        {this.isLocalStorageAvailable() ? null : <p style={{color: "red"}}><FormattedMessage
+        {this.isLocalStorageAvailable() ? null : <p style={{color: red500}}><FormattedMessage
           id="Introduction.savingOptionUnavailable"
           defaultMessage="Leider unterstützt ihr Web-Browser keine Datenspeicherung."
         /></p>}

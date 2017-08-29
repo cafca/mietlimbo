@@ -4,6 +4,7 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
+import Snackbar from 'material-ui/Snackbar';
 
 import {Introduction, Title} from './Introduction';
 import Mietspiegel from './Presentation/Mietspiegel';
@@ -108,6 +109,53 @@ const featureGroupLongNames = defineMessages({
   },
 });
 
+const genericInputNameTranslations = defineMessages({
+  "autoSave": {
+    id: "GenericInputName.autoSave",
+    defaultMessage: "automatisches Speichern"
+  },
+  "leaseCreated": {
+    id: "GenericInputName.leaseCreated",
+    defaultMessage: "Vertragsdatum"
+  },
+  "newBuilding" : {
+    id: "GenericInputName.newBuilding",
+    defaultMessage: "Neubau"
+  },
+  "renovation" : {
+    id: "GenericInputName.renovation",
+    defaultMessage: "Renovierung"
+  },
+  "previousRent": {
+    id: "GenericInputName.previousRent",
+    defaultMessage: "Vormiete"
+  },
+  "address" : {
+    id: "GenericInputName.address",
+    defaultMessage: "Adresse"
+  },
+  "rent" : {
+    id: "GenericInputName.rent",
+    defaultMessage: "Nettokaltmiete"
+  },
+  "squareMeters" : {
+    id: "GenericInputName.squareMeters",
+    defaultMessage: "Größe der Wohnung"
+  },
+  "constructionDate": {
+    id: "GenericInputName.constructionDate",
+    defaultMessage: "Datum der Bezugsfertigkeit"
+  },
+  "mietspiegel": {
+    id: "GenericInputName.mietspiegel",
+    defaultMessage: "Mietspiegelabfrage"
+  },
+  baseFeatures: {
+    id: "GenericInputName.baseFeatures",
+    defaultMessage: "besondere Ausstattung"
+  }
+});
+
 type AssistantProps = {
   match: {params: {stage: number}},
   location: {},
@@ -154,7 +202,9 @@ class Assistant extends React.Component {
 	state : {
 		stage: number,
     inputValid: {[string]: boolean},
-    data: {[string]: any}
+    data: {[string]: any},
+    snackbarOpen: boolean,
+    snackbarMsg: string
 	}
 
   style = {
@@ -170,7 +220,9 @@ class Assistant extends React.Component {
     this.state = {
       stage: 0,
       inputValid: {},
-      data: initialData
+      data: initialData,
+      snackbarMsg: "",
+      snackbarOpen: false
     }
 	}
 
@@ -233,6 +285,30 @@ class Assistant extends React.Component {
       this.state.data.autoSave && this.save();
     });
 	}
+
+  handleNext() {
+    if (this.isStageEnabled(this.state.stage + 1)) {
+      this.requestStage(this.state.stage + 1)
+    } else {
+      const nextMissingName = this.missingFields()[0];
+      const nextMissingElem = document.getElementById(nextMissingName);
+      nextMissingElem && nextMissingElem.scrollIntoView();
+      this.setState({
+        snackbarOpen: true,
+        snackbarMsg: this.props.intl.formatMessage({
+          id: "Assistant.missingFieldMessage",
+          defaultMessage: "Es fehlt noch eine Antwort zu {fieldname}"
+        }, {
+          fieldname: this.props.intl.formatMessage(
+            {...genericInputNameTranslations[nextMissingName]})
+        })
+      })
+    }
+  }
+
+  handleSnackbarClose() {
+    this.setState({snackbarOpen: false});
+  }
 
   save() {
     localStorage.setItem("data", JSON.stringify(this.state.data));
@@ -309,6 +385,19 @@ class Assistant extends React.Component {
         .map(condition => this.state.inputValid[condition] === true)
         .every(v => v === true);
     }
+  }
+
+  missingFields(stage?: number) {
+    if (stage === undefined) stage = this.state.stage + 1;
+    return stageConditions
+      .slice(0, stage)
+      .reduce((acc, cur) => acc.concat(cur), [])
+      .reduce((acc, cur) => 
+        this.state.inputValid[cur] !== true
+          ? acc.concat(cur) 
+          : acc, 
+        []
+      );
   }
 
 	render() {
@@ -417,7 +506,6 @@ class Assistant extends React.Component {
 			default:
 				content = <Introduction 
           autoSave={this.state.data.autoSave} 
-          reset={this.reset}
           valid={valid}
           changed={changed} />;
         title = <Title />;
@@ -439,14 +527,23 @@ class Assistant extends React.Component {
         data={this.state.data} />
       {content}
       <RaisedButton 
-        primary={true} 
+        primary={true}
         style={{display: buttonDisplayStyle}}
-        onClick={() => this.requestStage(this.state.stage + 1)} 
-        disabled={!this.isStageEnabled(this.state.stage + 1)}
-        label={this.props.intl.formatMessage({
-          id: "Assistant.continue",
-          defaultMessage: "Weiter"
-        })} />
+        onClick={this.handleNext} 
+        label={this.isStageEnabled(this.state.stage + 1)
+          ? this.props.intl.formatMessage({
+              id: "Assistant.continue",
+              defaultMessage: "Weiter"
+            })
+          : this.props.intl.formatMessage({
+              id: "Assistant.missingFields",
+              defaultMessage: "Alle Fragen beantwortet?"
+            })} />
+      <Snackbar
+        open={this.state.snackbarOpen}
+        message={this.state.snackbarMsg}
+        autoHideDuration={4000}
+        onRequestClose={this.handleSnackbarClose} />
       {debug}
 		</div>;
 	}
