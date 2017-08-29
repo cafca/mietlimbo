@@ -30,7 +30,6 @@ const testLocalStorage = () => {
     localStorage.removeItem("test");
     return true;
   } catch(e) {
-    debugger;
     return false;
   }
 }
@@ -133,7 +132,7 @@ export const Introduction = (props: {saveEnabled: boolean, changed: Function, va
             Daten werden so oder so nicht auf unserem Server gespeichert.`} /></p>
       </CardText>
       <CardText>
-        <RadioButtonGroup onChange={handleChange} value={props.saveEnabled} name="saveEnabled">
+        <RadioButtonGroup onChange={handleChange} valueSelected={props.saveEnabled} name="saveEnabled">
           <RadioButton value={true} label={<FormattedMessage 
             id="Introduction.savingOptionTrue"
             defaultMessage="Ja, bitte speichern." />} 
