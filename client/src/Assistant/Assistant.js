@@ -236,7 +236,7 @@ class Assistant extends React.Component {
     // This method is called from input components when their respective data is updated
     this.setState({data: Object.assign({}, this.state.data, newData)}, () => {
       this.update(cb);
-      this.state.data.saveEnabled && this.save();
+      this.state.data.autoSave && this.save();
     });
 	}
 
@@ -416,7 +416,7 @@ class Assistant extends React.Component {
 			case 0:
 			default:
 				content = <Introduction 
-          saveEnabled={this.state.data.saveEnabled} 
+          autoSave={this.state.data.autoSave} 
           valid={valid}
           changed={changed} />;
         title = <Title />;
