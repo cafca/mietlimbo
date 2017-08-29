@@ -531,14 +531,14 @@ class Assistant extends React.Component {
         style={{display: buttonDisplayStyle}}
         onClick={this.handleNext} 
         label={this.isStageEnabled(this.state.stage + 1)
-          ? this.props.intl.formatMessage({
-              id: "Assistant.continue",
-              defaultMessage: "Weiter"
-            })
-          : this.props.intl.formatMessage({
-              id: "Assistant.missingFields",
-              defaultMessage: "Alle Fragen beantwortet?"
-            })} />
+          ? <FormattedMessage
+              id="Assistant.continue"
+              defaultMessage="Weiter"
+            />
+          : <FormattedMessage
+              id="Assistant.missingFields"
+              defaultMessage="Alle Fragen beantwortet?"
+            />} />
       <Snackbar
         open={this.state.snackbarOpen}
         message={this.state.snackbarMsg}
