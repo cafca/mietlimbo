@@ -52,6 +52,7 @@ export const testData = {
   squareMeters: 90,
   renovation: "simple",
   previousRent: -1,
+  saveEnabled: true,
   "result": {
     "max": 9.27,
     "mid": 8,
