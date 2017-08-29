@@ -5,9 +5,6 @@ import { FormattedMessage } from 'react-intl';
 
 import {red500} from 'material-ui/styles/colors';
 import Paper from 'material-ui/Paper';
-import {RadioButtonGroup, RadioButton} from "material-ui/RadioButton";
-import { Card, CardText, CardTitle } from "material-ui/Card";
-import RaisedButton from "material-ui/RaisedButton";
 
 import AutoSave from "./GenericInputs/AutoSave";
 

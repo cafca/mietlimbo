@@ -68,13 +68,12 @@ class LeaseCreatedInput extends React.Component {
       }
     });
 
-    return <Card className="assistantInput">
+    return <Card className="assistantInput" id={this.inputName}>
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
         <p>Bitte gib hier das Vertragsdatum an.</p>
         <p>Leider erlaubt die Mietpreisbremse in Berlin nur Mietsenkungen für Verträge ab 1.Juni 2015.</p>
         <DatePicker 
-          id={this.inputName}
           name={this.inputName} 
           hintText={this.props.intl.formatMessage(messages.inputLabel)}
           cancelLabel={this.props.intl.formatMessage(messages.cancel)}

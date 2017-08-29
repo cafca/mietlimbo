@@ -80,7 +80,7 @@ class ConstructionDateInput extends React.Component {
 			value={rangeName}
       label={this.props.intl.formatMessage(radioDescriptions[rangeName])} />)
 
-		return <Card className="assistantInput">
+		return <Card className="assistantInput" id={this.inputName}>
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
         <RadioButtonGroup 

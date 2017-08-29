@@ -86,7 +86,7 @@ class SquareMetersInput extends React.Component {
       }
     });
 
-		return <Card className="assistantInput">
+		return <Card className="assistantInput" id={this.inputName}>
       <CardTitle 
         title={this.props.intl.formatMessage(messages.title)} 
         actAsExpander={true}
