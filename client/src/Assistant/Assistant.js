@@ -193,25 +193,27 @@ class Assistant extends React.Component {
   }
 
   initializeData() {
-    // Fill the dataset with emoty objects in the beginning
-    const data = Object.assign({}, this.state.data);
-    // eslint-disable-next-line array-callback-return
-    featureGroupNames.map(name => {
-      if (data[name] === undefined) {
-        data[name] = {
-          positive: [],
-          negative: []
+    const storedState = this.load();
+
+    if (storedState) {
+      return storedState
+    } else {
+      // Fill the dataset with emoty objects in the beginning
+      const data = Object.assign({}, this.state.data);
+      // eslint-disable-next-line array-callback-return
+      featureGroupNames.map(name => {
+        if (data[name] === undefined) {
+          data[name] = { positive: [], negative: [] }
         }
-      }
-    });
-    // Form validity assumed on first mount
-    const inputValid = {};
-    // Linter wants arrow functions to always return a value
-    // eslint-disable-next-line array-callback-return
-    Object.keys(this.state.data).map(k => {
-      inputValid[k] = true;
-    });
-    return { data, inputValid };
+      });
+      // Form validity assumed on first mount
+      const inputValid = {};
+      // eslint-disable-next-line array-callback-return
+      Object.keys(this.state.data).map(k => {
+        inputValid[k] = true;
+      });
+      return { data, inputValid };
+    }
   }
 
   requestStage(stage: number) {
@@ -231,8 +233,26 @@ class Assistant extends React.Component {
 
 	handleInputChanged(newData: Object, cb?: Function) {
     // This method is called from input components when their respective data is updated
-    this.setState({data: Object.assign({}, this.state.data, newData)}, () => this.update(cb));
+    this.setState({data: Object.assign({}, this.state.data, newData)}, () => {
+      this.update(cb);
+      this.save();
+    });
 	}
+
+  save() {
+    localStorage.setItem("data", JSON.stringify(this.state.data));
+    localStorage.setItem("inputValid", JSON.stringify(this.state.inputValid));
+  }
+
+  load() {
+    const dataJSON = localStorage.getItem("data");
+    const validJSON = localStorage.getItem("inputValid");
+
+    return (dataJSON && validJSON) ? {
+        data: JSON.parse(dataJSON),
+        inputValid: JSON.parse(validJSON)
+      } : undefined;
+  }
 
   update(cb?: Function) {
     // Only update the Mietpreisbremse value when the final result page is accessible
