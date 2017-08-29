@@ -3,20 +3,24 @@
 import React from 'react';
 import autoBind from 'react-autobind';
 import { FormattedMessage } from 'react-intl';
+
 import {red500} from 'material-ui/styles/colors';
 import Paper from 'material-ui/Paper';
 import {RadioButtonGroup, RadioButton} from "material-ui/RadioButton";
 import { Card, CardText, CardTitle } from "material-ui/Card";
 import RaisedButton from "material-ui/RaisedButton";
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 export type AutoSaveProps = {
   autoSave: boolean, 
   changed: Function, 
-  valid: Function 
+  valid: Function ,
+  initializeData: Function
 };
 
 class AutoSave extends React.Component {
   inputName = "autoSave";
+  state : Object;
 
   constructor(props: AutoSaveProps) {
     super(props);
@@ -30,8 +34,7 @@ class AutoSave extends React.Component {
 
   resetEverything() {
     localStorage.clear(); 
-    // eslint-disable-next-line no-restricted-globals
-    location.reload();
+    this.props.changed({[this.inputName]: null})
   };
 
   isLocalStorageAvailable() {
@@ -69,16 +72,33 @@ class AutoSave extends React.Component {
           defaultMessage="Leider unterstützt ihr Web-Browser keine Datenspeicherung."
         /></p>}
       </CardText>
-      {this.props.autoSave &&
+
+      { this.props.autoSave &&
         <CardText>
-        <RaisedButton 
-          label={<FormattedMessage 
-            id="Introduction.savingOptionClear"
-            defaultMessage="Gespeicherte Daten wieder löschen" />}
-          secondary={true}
-          onClick={this.resetEverything} />
-      </CardText> 
+          <RaisedButton 
+            icon={<DeleteIcon />}
+            label={<FormattedMessage 
+              id="Introduction.savingOptionClear"
+              defaultMessage="Gespeicherte Daten wieder löschen" />}
+            onClick={this.resetEverything} />
+        </CardText> 
       }
+
+      { this.props.autoSave === null &&
+        <CardText>
+          <RaisedButton 
+            icon={<DeleteIcon />}
+            label={<FormattedMessage 
+              id="Introduction.savingOptionClearConfirmation"
+              defaultMessage="Seite neu laden zum endgültig löschen" />}
+            secondary={true}
+            onClick={() => {
+              // eslint-disable-next-line
+              location.reload();
+            }} />
+        </CardText> 
+      }
+
     </Card>;
   }
 }
