@@ -3,8 +3,9 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import {red500} from 'material-ui/styles/colors';
+import {pinkA200} from 'material-ui/styles/colors';
 import Paper from 'material-ui/Paper';
+import { Card, CardText, CardTitle } from "material-ui/Card";
 
 import AutoSave from "./GenericInputs/AutoSave";
 
@@ -13,7 +14,8 @@ const styles = {
     fontSize: 28
   },
   warning: {
-    color: red500
+    color: pinkA200,
+    fontSize: 16
   },
   text: {
     fontSize: 18
@@ -26,12 +28,6 @@ const styles = {
 
 export const Introduction = (props) => {
   return <section>
-    <p style={styles.warning}>
-      <FormattedMessage
-        id="Introduction.warning"
-        defaultMessage="Achtung! Mietlimbo wird gerade noch gestestet und ist noch nicht fehlerfrei. 
-          Die Informationen auf dieser Seite solltest du nicht direkt für bare Münze nehmen." />
-    </p>
     <p style={styles.text}>
       <FormattedMessage
         id="Introduction.requirements"
@@ -93,6 +89,16 @@ export const Introduction = (props) => {
         Ich übernehme allerdings keine Gewähr für die Richtigkeit, Vollständigkeit 
         und Aktualität der Informationen.`}
     /></p>
+    <Card className="assistantInput">
+      <CardTitle title={<FormattedMessage id="Introduction.warningTitle" defaultMessage="Wichtiger Hinweis" />} />
+      <CardText>
+        <p style={styles.warning}>
+          <FormattedMessage
+            id="Introduction.warning"
+            defaultMessage="Mietlimbo ist noch in Entwicklung und sollte im Moment noch als technischer Prototyp behandelt werden. Bitte nimm die Informationen auf dieser Seite nicht direkt für bare Münze." />
+        </p>
+      </CardText>
+    </Card>
     <AutoSave {...props} />
   </section>;
 }
