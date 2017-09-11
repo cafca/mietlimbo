@@ -51,7 +51,7 @@ class NewBuildingInput extends React.Component {
 	}
 
 	render() {
-    const conditionalWarning = this.state.value === true ? <p style={{color: "red"}}>
+    const conditionalWarning = this.state.value === true ? <p className="errorDesc">
       <FormattedMessage {...messages.warning} />
     </p> : <span></span>;
 

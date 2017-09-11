@@ -88,7 +88,7 @@ class BaseFeaturesInput extends React.Component {
     })
 
     const warning = this.props.value === undefined || this.props.value === "default" ? "" : 
-      <p style={{color: "red"}}><FormattedMessage {...messages.warning} /></p>;
+      <p className="errorDesc"><FormattedMessage {...messages.warning} /></p>;
 
 		return <Card className="assistantInput" id={this.inputName}>
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
