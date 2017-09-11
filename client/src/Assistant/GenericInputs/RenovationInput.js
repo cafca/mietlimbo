@@ -6,7 +6,6 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
 
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import {RadioButtonGroup, RadioButton} from 'material-ui/RadioButton';
-import {red500} from 'material-ui/styles/colors';
 
 import type { AssistantInputProps } from '../Types';
 
