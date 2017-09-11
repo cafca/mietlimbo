@@ -71,7 +71,7 @@ class RenovationInput extends React.Component {
     });
 
     const extendedWarning = this.props.value === "extended" 
-      ? <p style={{color: red500}}><FormattedMessage {...messages.extendedWarning} /></p>
+      ? <p className="errorDesc"><FormattedMessage {...messages.extendedWarning} /></p>
       : null;
 
     const simpleNotice = this.props.value === "simple" 
