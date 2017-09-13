@@ -211,6 +211,7 @@
   "Environment.QuietStreetShortname": "Ruhige Straße",
   "Environment.SmellyShortname": "Geruchsbelastung",
   "Environment.SmellyTitle": "Besonders geruchsbelastete Lage",
+  "FeatureInput.button": "Mehr Wissen im Forum",
   "FinalResult.MietwucherCalculation": "Deine Miete von {rent, number, currency} überschreitet die örtliche Vergleichsmiete von \n        {mpbRent, number, currency} um {percentage, number} %.",
   "FinalResult.MietwucherExplanation": "Mietwucher liegt unter bestimmten Umständen vor, wenn die ortsübliche Vergleichsmiete \n        um mehr als 50% überschritten wird. Im Gegensatz zu einer Überschreitung der nach Mietpreisbremse zulässigen\n        Miete, steht Mietwucher unter Strafe! Auch eine Überschreitung von mehr als 20% wird unter bestimmten\n        Umständen als unzulässige Mietpreisüberhöhung mit einer Geldbuße belegt. Zu Details hierzu siehe {infoPage}.",
   "FinalResult.MietwucherTitle": "Mietwucher",
