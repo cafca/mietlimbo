@@ -72,7 +72,7 @@ class FeatureTable extends React.Component {
         {this.renderTableRows()}
         <TableRow style={{backgroundColor: "#f3f3f3"}}>
           <TableRowColumn>
-            <FormattedMessage id="FinalResult.SummaryTotal" defaultMessage="Zusammen" />
+            <FormattedMessage id="FinalResult.SummaryTotal" defaultMessage="Zusammen" description="Table row label for feature group summary" />
           </TableRowColumn>
           <TableRowColumn></TableRowColumn>
           <TableRowColumn></TableRowColumn>
