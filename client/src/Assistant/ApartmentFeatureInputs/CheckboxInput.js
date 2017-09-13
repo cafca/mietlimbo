@@ -45,7 +45,11 @@ class CheckboxInput extends React.Component {
 
   render() {
     let message;
-    const style = {};
+    const style = {
+      width: "-webkit-fill-available -moz-available",
+      marginRight: 50,
+      display: "block"
+    };
     switch (this.props.message) {
       case "applies":
         message = this.props.intl.formatMessage(messages["applies"]);
