@@ -10,47 +10,51 @@ Die mietlimbo-app wird Mieter dabei unterstützen, selbst eine Mietminderung auf
 
 In der Gestaltung des Angebots möchte ich einen Fokus auf Nutzerfreundlichkeit setzen, da rechtliche Angelegenheiten an sich auf viele Menschen abschreckend und einschüchternd wirken. Das Angebot wird Nutzern ein Gefühl von Machbarkeit und Ermächtigung vermitteln, ein Faktor, der einer flächendeckenden Wahrnehmung der Möglichkeiten der Mietpreisbremse bisher im Wege steht.
 
-Gefördert vom Bundesministerium für Bildung und Forschung
-
 ## Installation
 
 Mietlimbo ist eine mit dem React-Framework geschriebene Web App mit einem Python Backend. Hier möchte ich beschreiben, wie ihr alle Komponenten installieren und bauen könnt.
 
 1. Falls noch nicht vorhanden, Python3, PIP, Node.js und Virtualenv mit einem Package Manager installieren. Für Homebrew auf Mac zum Beispiel:
 
-	$ brew install python3 pip node
-	$ pip install virtualenv
+    `$ brew install python3 pip node`
+    
+    `$ pip install virtualenv`
 
 2. Legt ein Virtual Environment für das Backend an. Alle Quelldateien liegen später in dieser Umgebung. 
 
-	$ virtualenv -p python3 mietlimbo-env
+	`$ virtualenv -p python3 mietlimbo-env`
 
 3. Jetzt können die Quellen in die Umgebung geklont werden.
 
-	$ cd mietlimbo-env
-	$ git clone git@github.com:ciex/mietlimbo.git src
+	`$ cd mietlimbo-env`
+	
+	`$ git clone git@github.com:ciex/mietlimbo.git src`
 
 4. Python Requirements installieren
 
-	$ source bin/activate
-	$ cd src
-	$ pip install -r requirements.txt
+	`$ source bin/activate`
+	
+	`$ cd src`
+	
+	`$ pip install -r requirements.txt`
 
 5. Das Backend ist jetzt fertig installiert. Um es zu starten muss auch in Zukunft zunächst mit `source bin/activate` die Umgebung aktiviert werden, bevor der Entwicklungs-Server gestartet wird.
 
-	$ cd api
-	$ python main.py
+	`$ cd api`
+	
+	`$ python main.py`
 
 Der Entwicklungs-Server ist nun über `http://localhost:8000/` erreichbar und kann im Hintergrund weiterlaufen.
 
 6. Um jetzt auch die Web App nutzen zu können, zunächst ein neues Terminal öffnen und dort in den `client`-Ordner wechseln.
 
-	$ cd ../client
-	$ npm install
+	`$ cd ../client`
+	
+	`$ npm install`
 
 7. Jetzt kann auch der Entwicklungs-Server für das Frontend gestartet werden.
 
-	$ npm start
+	`$ npm start`
 
 Die Entwicklungs-Version von mietlimbo öffnet sich jetzt in eurem Webbrowser.
 
@@ -88,23 +92,23 @@ Das zentrale Modul für mietlimbo ist `src/Assistant/Assistant.js`. Hierin finde
 
 In diesen Wrapper werden je nach aktueller Stage weitere Eingabe- oder Präsentationskomponenten gerendert. Diese finden sich in den drei Unter-Verzeichnissen von `src/Assistant/`.
 
-	├── build							Statische Build-Dateien, die 
-	│   └── static 							auf dem Webserver öffentlich gemacht
-	│       ├── css 						werden können => `npm run build`
+	├── build					Statische Build-Dateien, die 
+	│   └── static 					auf dem Webserver öffentlich gemacht
+	│       ├── css 				werden können => `npm run build`
 	│       ├── js
 	│       └── media
-	├── public 							Statische Dateien für Entwicklung
+	├── public 					Statische Dateien für Entwicklung
 	├── src
-	│   ├── Assistant 						Hauptkomponente Online-Assistent
-	│   │   ├── ApartmentFeatureInputs 				Zur Abfrage von Wohnungs-Merkmalen
-	│   │   ├── GenericInputs 					Zur Abfrage von allgemeinen Fragen
-	│   │   └── Presentation 					Zur Ergebnis-Darstellung
-	│   ├── Graphics 						Illustrationen, etc.
-	│   ├── I18n 							Übersetzungen als JSON-Datei
-	│   └── Pages 							Inhalte, die nicht direkt Teil des
-	│										Assistenten sind.
-	└── translations 						Hilfs-Ordner zur Erstellung der
-	    └── messages 						Übersetzungs-Dateien
+	│   ├── Assistant 				Hauptkomponente Online-Assistent
+	│   │   ├── ApartmentFeatureInputs 		Zur Abfrage von Wohnungs-Merkmalen
+	│   │   ├── GenericInputs 			Zur Abfrage von allgemeinen Fragen
+	│   │   └── Presentation 			Zur Ergebnis-Darstellung
+	│   ├── Graphics 				Illustrationen, etc.
+	│   ├── I18n 					Übersetzungen als JSON-Datei
+	│   └── Pages 					Inhalte, die nicht direkt Teil des
+	│						Assistenten sind.
+	└── translations 				Hilfs-Ordner zur Erstellung der
+	    └── messages 				Übersetzungs-Dateien
 	        └── src
 
 ### API-Backend
@@ -113,29 +117,34 @@ Das API-Backend ist als Flask-Server in `main.py` implementiert, der JSON-codier
 
 Kann eine Anfrage an den Server nicht mit den genannten Daten aus dem Model beantwortet werden, geht der Server in ein Fallback über und versucht, über den Crawler ein aktuelles Ergebnis von der Seite der Senatsverwaltung einzuholen.
 
-	├── crawler 					Strassenverzeichnis von Senatsverwaltung laden
+	├── crawler 			Strassenverzeichnis von Senatsverwaltung laden
 	│   ├── README.md
 	│   ├── crawler.py
 	│   └── parser.py
 	├── data 							
 	│   ├── README.md
-	│   ├── mietspiegel.json 			Mietspiegeltabelle, per Hand erstellt
-	│   └── strassenverzeichnis.sqlite 		Automatisch erstelltes Strassenverzeichnis
+	│   ├── mietspiegel.json 	Mietspiegeltabelle, per Hand erstellt
+	│   └── strassenverzeichnis.sqlite 	Automatisch erstelltes Strassenverzeichnis
 	├── development_config.py
 	├── logger.py
-	├── main.py 					Backend-Server
-	├── model.py 					Datenmodell für Mietspiegel und Strassen
+	├── main.py 			Backend-Server
+	├── model.py 			Datenmodell für Mietspiegel und Strassen
 	├── production_config.py
 	├── tests
 	│   ├── test_flask.py
 	│   └── test_parser.py
-	├── uwsgi.ini 					Konfiguration für uWSGI-Server. Pfade anpassen!
-	└── wsgi.py 					WSGI entry script
+	├── uwsgi.ini 			Konfiguration für uWSGI-Server. Pfade anpassen!
+	└── wsgi.py 			WSGI entry script
 
 # Anmerkungen
 
 Zum Erstellen des Straßenverzeichnis-Datensatzes wurde der Datensatz 
-["Straßenverzeichnis"](1) verwendet, welcher von Berlin Open Data unter 
-Creative Commons-Lizenz mit Namensnennung angeboten wird.
+["Straßenverzeichnis"](https://daten.berlin.de/datensaetze/stra%C3%9Fenverzeichnis) 
+verwendet, welcher von Berlin Open Data unter Creative Commons-Lizenz mit 
+Namensnennung angeboten wird.
 
-[1:] https://daten.berlin.de/datensaetze/stra%C3%9Fenverzeichnis
+
+Gefördert vom Bundesministerium für Bildung und Forschung
+
+![](https://raw.githubusercontent.com/ciex/mietlimbo/master/client/src/Graphics/logo-bmbf.svg?sanitize=true)
+![](https://raw.githubusercontent.com/ciex/mietlimbo/master/client/src/Graphics/logo-okfn.svg?sanitize=true)
