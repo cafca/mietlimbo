@@ -137,6 +137,13 @@ class Progress extends React.Component {
             style={this.style.anchorStageButton}
             containerElement={<NavLink to="/about/" />}
           />
+          <FlatButton 
+            label="Community" 
+            key={"Community"}
+            style={this.style.anchorStageButton}
+            href="https://community.mietlimbo.de/"
+            target="_blank"
+          />
         </Paper>
       </Sticky>
     </section>;
