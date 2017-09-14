@@ -88,17 +88,17 @@ Das zentrale Modul für mietlimbo ist `src/Assistant/Assistant.js`. Hierin finde
 
 In diesen Wrapper werden je nach aktueller Stage weitere Eingabe- oder Präsentationskomponenten gerendert. Diese finden sich in den drei Unter-Verzeichnissen von `src/Assistant/`.
 
-	├── build								Statische Build-Dateien, die 
+	├── build							Statische Build-Dateien, die 
 	│   └── static 							auf dem Webserver öffentlich gemacht
 	│       ├── css 						werden können => `npm run build`
 	│       ├── js
 	│       └── media
-	├── public 								Statische Dateien für Entwicklung
+	├── public 							Statische Dateien für Entwicklung
 	├── src
 	│   ├── Assistant 						Hauptkomponente Online-Assistent
-	│   │   ├── ApartmentFeatureInputs 		Zur Abfrage von Wohnungs-Merkmalen
-	│   │   ├── GenericInputs 				Zur Abfrage von allgemeinen Fragen
-	│   │   └── Presentation 				Zur Ergebnis-Darstellung
+	│   │   ├── ApartmentFeatureInputs 				Zur Abfrage von Wohnungs-Merkmalen
+	│   │   ├── GenericInputs 					Zur Abfrage von allgemeinen Fragen
+	│   │   └── Presentation 					Zur Ergebnis-Darstellung
 	│   ├── Graphics 						Illustrationen, etc.
 	│   ├── I18n 							Übersetzungen als JSON-Datei
 	│   └── Pages 							Inhalte, die nicht direkt Teil des
@@ -113,24 +113,24 @@ Das API-Backend ist als Flask-Server in `main.py` implementiert, der JSON-codier
 
 Kann eine Anfrage an den Server nicht mit den genannten Daten aus dem Model beantwortet werden, geht der Server in ein Fallback über und versucht, über den Crawler ein aktuelles Ergebnis von der Seite der Senatsverwaltung einzuholen.
 
-	├── crawler 						Strassenverzeichnis von Senatsverwaltung laden
+	├── crawler 					Strassenverzeichnis von Senatsverwaltung laden
 	│   ├── README.md
 	│   ├── crawler.py
 	│   └── parser.py
 	├── data 							
 	│   ├── README.md
 	│   ├── mietspiegel.json 			Mietspiegeltabelle, per Hand erstellt
-	│   └── strassenverzeichnis.sqlite 	Automatisch erstelltes Strassenverzeichnis
+	│   └── strassenverzeichnis.sqlite 		Automatisch erstelltes Strassenverzeichnis
 	├── development_config.py
 	├── logger.py
-	├── main.py 						Backend-Server
-	├── model.py 						Datenmodell für Mietspiegel und Strassen
+	├── main.py 					Backend-Server
+	├── model.py 					Datenmodell für Mietspiegel und Strassen
 	├── production_config.py
 	├── tests
 	│   ├── test_flask.py
 	│   └── test_parser.py
-	├── uwsgi.ini 						Konfiguration für uWSGI-Server. Pfade anpassen!
-	└── wsgi.py 						WSGI entry script
+	├── uwsgi.ini 					Konfiguration für uWSGI-Server. Pfade anpassen!
+	└── wsgi.py 					WSGI entry script
 
 # Anmerkungen
 
