@@ -62,6 +62,10 @@ Die Entwicklungs-Version von mietlimbo öffnet sich jetzt in eurem Webbrowser.
 
 Es gibt verschiedene Möglichkeiten, mietlimbo über einen Server laufen zu lassen. Je nachdem, was auf eurem Server schon installiert ist werden sich die Schritte zur Einrichtung unterscheiden. Vor allem braucht ihr einen Webserver wie Nginx, der statische Ressourcen zur Verfügung stellt und über WSGI auch den Backend-Server verfügbar macht. Im Weiteren empfehle ich ein SSL-Zertifikat von einem Anbieter wie LetsEncrypt, da über mietlimbo auch persönliche Daten übertragen werden.
 
+Außerdem sollten für den Server-Betrieb zwei Umgebungs-Variablen gesetzt sein:
+`MIETSPIEGEL_SECRET` sollte einen zufälligen Wert enhtalten und `MIETSPIEGEL_CONFIG`
+den absoluten Pfad der Datei `src/api/production_config.py`.
+
 Für beides kann ich die Anleitungen von DigitalOcean empfehlen:
 
 - [How To Secure Nginx with Let's Encrypt on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
@@ -148,3 +152,4 @@ Gefördert vom Bundesministerium für Bildung und Forschung
 
 ![](https://raw.githubusercontent.com/ciex/mietlimbo/master/client/src/Graphics/logo-bmbf.svg?sanitize=true)
 ![](https://raw.githubusercontent.com/ciex/mietlimbo/master/client/src/Graphics/logo-okfn.svg?sanitize=true)
+
