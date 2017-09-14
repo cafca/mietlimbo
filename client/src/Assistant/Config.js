@@ -33,7 +33,7 @@ export const stageConditions = [
   []
 ];
 
-export const testData = {
+const testData = {
   "Bad":{"positive":[],"negative":[]},
   "Küche":{"positive":[],"negative":[]},
   "Wohnung":{"positive":[],"negative":[]},

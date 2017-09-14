@@ -8,8 +8,7 @@ import areIntlLocalesSupported from 'intl-locales-supported';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import DatePicker from 'material-ui/DatePicker';
 
-import {ErrorList} from './Tools';
-import type {AssistantInputProps} from './Tools';
+import type { AssistantInputProps } from '../Types';
 
 /**
  * Use the native Intl.DateTimeFormat if available, or a polyfill if not.
@@ -25,8 +24,7 @@ if (areIntlLocalesSupported(['de'])) {
 
 class LeaseCreatedInput extends React.Component {
   state: {
-    value: ?Date,
-    errors: Array<any>
+    value: ?Date
   };
 
   inputName = "leaseCreated";
@@ -46,9 +44,8 @@ class LeaseCreatedInput extends React.Component {
   }
 
   handleChange(e, value) {
-    const errors = [];
     this.props.changed({[this.inputName]: value});
-    this.setState({errors, value});
+    this.setState({value});
     this.props.valid(this.inputName, true);
   }
 
@@ -87,7 +84,6 @@ class LeaseCreatedInput extends React.Component {
           hideCalendarDate={true}
           value={this.state.value}
           onChange={this.handleChange} />
-        <ErrorList errors={this.state.errors} />
       </CardText>
     </Card>;
   }

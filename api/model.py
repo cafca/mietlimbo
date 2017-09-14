@@ -9,6 +9,8 @@ from main import db, create_app, logger
 from flask_sqlalchemy import SQLAlchemy
 import pickle
 
+MIETSPIEGEL = "data/mietspiegel.json"
+
 
 class Street(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -52,7 +54,7 @@ class Street(db.Model):
     def get_rent(self, year_range, real_size, guessed_size):
         """Return rent data for a given street/range."""
 
-        with open("./data.json", "r") as f:
+        with open(MIETSPIEGEL, "r") as f:
             data = json.load(f)
 
         if guessed_size is None:

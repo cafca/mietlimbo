@@ -4,8 +4,8 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import { FormattedMessage } from 'react-intl';
 
-import { red500 } from 'material-ui/styles/colors';
-import {RadioButtonGroup, RadioButton} from "material-ui/RadioButton";
+import { pinkA200 } from 'material-ui/styles/colors';
+import { RadioButtonGroup, RadioButton } from "material-ui/RadioButton";
 import { Card, CardText, CardTitle } from "material-ui/Card";
 import RaisedButton from "material-ui/RaisedButton";
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
@@ -68,7 +68,7 @@ class AutoSave extends React.Component {
             id="Introduction.savingOptionFalse"
             defaultMessage="Nein, ich lebe gerne gefährlich." />} />
         </RadioButtonGroup>
-        {this.isLocalStorageAvailable() ? null : <p style={{color: red500}}><FormattedMessage
+        {this.isLocalStorageAvailable() ? null : <p style={{color: pinkA200}}><FormattedMessage
           id="Introduction.savingOptionUnavailable"
           defaultMessage="Leider unterstützt ihr Web-Browser keine Datenspeicherung."
         /></p>}

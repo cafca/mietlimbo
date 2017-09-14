@@ -3,7 +3,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import {pinkA200} from 'material-ui/styles/colors';
+import { pinkA200 } from 'material-ui/styles/colors';
 import Paper from 'material-ui/Paper';
 import { Card, CardText, CardTitle } from "material-ui/Card";
 

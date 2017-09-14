@@ -9,7 +9,7 @@ import Checkbox from 'material-ui/Checkbox';
 import RadioButtonChecked from 'material-ui/svg-icons/toggle/radio-button-checked';
 import RadioButtonUnchecked from 'material-ui/svg-icons/toggle/radio-button-unchecked';
 
-import type {RangeInputProps} from './RangeSelectionGroup';
+import type { RangeInputProps } from './RangeSelectionGroup';
 
 import './Styles.css';
 

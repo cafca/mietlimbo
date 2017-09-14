@@ -6,9 +6,8 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
 
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import {RadioButtonGroup, RadioButton} from 'material-ui/RadioButton';
-import {red500} from 'material-ui/styles/colors';
 
-import type {AssistantInputProps} from './Tools';
+import type { AssistantInputProps } from '../Types';
 
 class RenovationInput extends React.Component {
   inputName: string = "renovation";
@@ -71,7 +70,7 @@ class RenovationInput extends React.Component {
     });
 
     const extendedWarning = this.props.value === "extended" 
-      ? <p style={{color: red500}}><FormattedMessage {...messages.extendedWarning} /></p>
+      ? <p className="errorDesc"><FormattedMessage {...messages.extendedWarning} /></p>
       : null;
 
     const simpleNotice = this.props.value === "simple" 

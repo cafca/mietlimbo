@@ -7,9 +7,9 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
+import { ErrorList } from './RentInput';
 
-import {ErrorList} from './Tools';
-import type {AssistantInputProps} from './Tools';
+import type { AssistantInputProps } from '../Types';
 
 class PreviousRentInput extends React.Component {
   state: {

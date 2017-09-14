@@ -63,8 +63,6 @@ class RangeSelectionGroup extends React.Component {
       newFeatureList.splice(position, 1);
     }
 
-    console.log("Before:", this.props.data[cat], "After:", newFeatureList);
-
     const updatedData = Object.assign({}, this.props.data, {
       positive: positive === true ? newFeatureList : this.props.data.positive,
       negative: positive === false ? newFeatureList : this.props.data.negative

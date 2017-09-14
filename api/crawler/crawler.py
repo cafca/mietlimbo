@@ -3,18 +3,16 @@
 import csv
 import json
 import logging
-from logger import setup_logger
-from parser import MietspiegelParser
 from datetime import datetime, timedelta
 from time import sleep
 
+from parser import MietspiegelParser
+from logger import setup_logger
+
 logger = setup_logger(level=logging.DEBUG)
 
-LETTERS = "abcdefghiklmnopqrstuvwxyzäöüß-"
-STARTING_QUERY = "aaaa"
-QLEN = 4
-STREET_NAMES = "../streetnames.csv"
-JSON_STREETS = "../streets.json"
+STREET_NAMES = "../data/streetnames.csv"
+JSON_STREETS = "../data/streets.json"
 
 class Limiter(object):
 	# Minimum time that should have passed between calls to self.wait
@@ -28,20 +26,11 @@ class Limiter(object):
 		now = datetime.now()
 		dt = now - self.last
 		if dt < self.limit:
-			sleep_time = (self.limit - dt).seconds + float(0.000001) * (self.limit - dt).microseconds
+			sleep_time = (self.limit - dt).seconds 
+				+ float(0.000001) * (self.limit - dt).microseconds
 			sleep(sleep_time)
 		self.last = datetime.now()
 		return dt
-
-
-def next_query(q):
-	# Produces next permutation of q
-	for pos in range(QLEN):
-		nxt = (LETTERS.find(q[pos]) + 1) % len(LETTERS)
-		q = q[:pos] + LETTERS[nxt] + q[pos + 1:]
-		if nxt != LETTERS[0]:
-			break
-	return q
 
 def load_street_names():
 	"""Convert CSV street names to JSON encoded list.
@@ -98,7 +87,8 @@ def crawl_street_names():
 
 			last = q
 			dt = limiter.wait()
-			logger.info("Finished {}/{} ({} %)".format(i, numstreets, round((100.0 * i) / numstreets, 2)))
+			logger.info("Finished {}/{} ({} %)".format(
+				i, numstreets, round((100.0 * i) / numstreets, 2)))
 
 
 def crawl_street_data():
@@ -129,7 +119,8 @@ def crawl_street_data():
 			import pdb
 			pdb.set_trace()
 		dt = limiter.wait()
-		logger.info("Loaded {} % - {} left - {}".format(round((100.0 * i) / numstreets, 2), numstreets - i, street))
+		logger.info("Loaded {} % - {} left - {}".format(
+			round((100.0 * i) / numstreets, 2), numstreets - i, street))
 
 
 

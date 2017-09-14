@@ -1,11 +1,12 @@
 // @flow
 
 import React from 'react';
-import {injectIntl, defineMessages, FormattedMessage} from 'react-intl';
-import {Card, CardTitle, CardText, CardActions} from 'material-ui/Card';
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
+import { CardText, CardActions} from 'material-ui/Card';
 
+import FeatureInput from './FeatureInput';
 import CheckboxInput from './CheckboxInput';
-import type {RangeInputProps} from './RangeSelectionGroup';
+import type { RangeInputProps } from './RangeSelectionGroup';
 
 import './Styles.css';
 
@@ -17,15 +18,14 @@ export const QuietStreet = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Besonders ruhige Lage"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="QuietStreet"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="QuietStreet"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const Noisy = injectIntl((props: RangeInputProps) => {
@@ -42,20 +42,19 @@ export const Noisy = injectIntl((props: RangeInputProps) => {
     }
   });
 
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="Noisy"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="Noisy"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} >
     <CardText className="cardText">
       <p><FormattedMessage {...messages.hint} values={{
         link: <a href="http://www.stadtentwicklung.berlin.de/wohnen/mietspiegel/de/laermwerte.shtml" target="_blank" rel="noopener noreferrer">Erläuterungen zur Verkehrslärmbelastung</a>
       }}/></p>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const Smelly = injectIntl((props: RangeInputProps) => {
@@ -66,15 +65,14 @@ export const Smelly = injectIntl((props: RangeInputProps) => {
     }
   });
 
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="Smelly"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="Smelly"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const PrimeDowntown = injectIntl((props: RangeInputProps) => {
@@ -90,18 +88,17 @@ export const PrimeDowntown = injectIntl((props: RangeInputProps) => {
         Dienstleistungs- und Wohnstandorten.`
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
+  return <FeatureInput title={<CheckboxInput
         changed={props.changed}
         name="PrimeDowntown"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
-      />} />
+      />} >
     <CardText>
       <p><FormattedMessage {...messages.hint} /></p>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const NeglectedArea = injectIntl((props: RangeInputProps) => {
@@ -112,15 +109,14 @@ export const NeglectedArea = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Lage in stark vernachlässigter Umgebung in einfacher Wohnlage."
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="NeglectedArea"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="NeglectedArea"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const NeatoBackyard = injectIntl((props: RangeInputProps) => {
@@ -137,18 +133,17 @@ export const NeatoBackyard = injectIntl((props: RangeInputProps) => {
         und Beleuchtung.`
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
+  return <FeatureInput title={<CheckboxInput
         changed={props.changed}
         name="NeatoBackyard"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
-      />} />
+      />} >
     <CardText>
       <p><FormattedMessage {...messages.hint} /></p>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const PrivateBackyard = injectIntl((props: RangeInputProps) => {
@@ -171,8 +166,7 @@ export const PrivateBackyard = injectIntl((props: RangeInputProps) => {
     }
   });
 
-  return <Card className="assistantInput">
-    <CardTitle title={props.intl.formatMessage(messages.title)} />
+  return <FeatureInput title={props.intl.formatMessage(messages.title)}>
     <CardText className="cardText">
       <ul>
         <li><FormattedMessage {...messages.option1} /></li>
@@ -189,7 +183,7 @@ export const PrivateBackyard = injectIntl((props: RangeInputProps) => {
         value={props.value}
       />
     </CardActions>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const Parking = injectIntl((props: RangeInputProps) => {
@@ -199,15 +193,14 @@ export const Parking = injectIntl((props: RangeInputProps) => {
       defaultMessage: "PKW-Parkplatzangebot in der Nähe und vom Vermieter gestellt"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="Parking"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="Parking"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const BicycleParking = injectIntl((props: RangeInputProps) => {
@@ -217,13 +210,12 @@ export const BicycleParking = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Keine Fahrradabstellmöglichkeit auf dem Grundstück"
     }
   });
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="BicycleParking"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="BicycleParking"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });

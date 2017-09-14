@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
-import { Card, CardTitle, CardText } from 'material-ui/Card';
+import { CardText } from 'material-ui/Card';
 
+import FeatureInput from './FeatureInput';
 import CheckboxInput from './CheckboxInput';
-import type {RangeInputProps} from './RangeSelectionGroup';
+import type { RangeInputProps } from './RangeSelectionGroup';
 import EnergyClass from './EnergyFeatures';
 
 import './Styles.css';
@@ -17,15 +18,14 @@ export const EntranceCondition = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Das Treppenhaus bzw. der Eingangsbereich sind überwiegend in schlechtem Zustand."
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="EntranceCondition"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="EntranceCondition"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const DoorLock = injectIntl((props: RangeInputProps) => {
@@ -36,15 +36,14 @@ export const DoorLock = injectIntl((props: RangeInputProps) => {
     }
   });
 
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="DoorLock"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="DoorLock"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const RepresentativeEntrance = injectIntl((props: RangeInputProps) => {
@@ -59,20 +58,19 @@ export const RepresentativeEntrance = injectIntl((props: RangeInputProps) => {
     }
   });
 
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
+  return <FeatureInput title={<CheckboxInput
         changed={props.changed}
         name="RepresentativeEntrance"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
-      />} />
+      />} >
     <CardText>
       <p>
         <FormattedMessage {...messages.explanation} />
       </p>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const WellMaintained = injectIntl((props: RangeInputProps) => {
@@ -82,15 +80,14 @@ export const WellMaintained = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Das Gebäude, bzw. der Teil davon, in dem sich die Wohnung befindet, ist in einem überdurchschnittlichen Instandhaltungszustand (z.B. erneuerte Fassade, Dach)."
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="WellMaintained"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="WellMaintained"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const LowMaintenance = injectIntl((props: RangeInputProps) => {
@@ -105,20 +102,19 @@ export const LowMaintenance = injectIntl((props: RangeInputProps) => {
     }
   });
 
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
+  return <FeatureInput title={<CheckboxInput
         changed={props.changed}
         name="LowMaintenance"
         positive={false}
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
-      />} />
+      />} >
     <CardText>
       <p>
         <FormattedMessage {...messages.explanation} />
       </p>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const NoStorageRoom = injectIntl((props: RangeInputProps) => {
@@ -128,15 +124,14 @@ export const NoStorageRoom = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Kein Mieterkeller oder Kellerersatzraum zur alleinigen Nutzung des Mieters vorhanden"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="NoStorageRoom"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="NoStorageRoom"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const BicycleRoom = injectIntl((props: RangeInputProps) => {
@@ -152,20 +147,19 @@ export const BicycleRoom = injectIntl((props: RangeInputProps) => {
         bieten und sich außerhalb des Gebäudes auf dem Grundstück befinden.`
     }
   });
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
+  return <FeatureInput title={<CheckboxInput
         changed={props.changed}
         name="BicycleRoom"
         positive={true}
         message={props.intl.formatMessage(messages.title)}
         value={props.value}
-      />} />
+      />} >
     <CardText>
       <p>
         <FormattedMessage {...messages.explanation} />
       </p>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const CommunalSpace = injectIntl((props: RangeInputProps) => {
@@ -175,15 +169,14 @@ export const CommunalSpace = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Es gibt zusätzliche und in angemessenem Umfang nutzbare Räume außerhalb der Wohnung in fußläufiger Entfernung (z.B. Partyraum)"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="CommunalSpace"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="CommunalSpace"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const SideWing = injectIntl((props: RangeInputProps) => {
@@ -193,15 +186,14 @@ export const SideWing = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Lage im Seitenflügel oder Quergebäude bei verdichteter Bebauung."
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="SideWing"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="SideWing"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const NoLift = injectIntl((props: RangeInputProps) => {
@@ -211,15 +203,14 @@ export const NoLift = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Die Wohnung liegt im 5. Stock oder höher und es gibt keinen Personenaufzug."
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="NoLift"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="NoLift"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const Lift = injectIntl((props: RangeInputProps) => {
@@ -229,15 +220,14 @@ export const Lift = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Es gibt einen Personenaufzug bei weniger als fünf Obergeschossen."
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="Lift"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="Lift"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const NoIntercom = injectIntl((props: RangeInputProps) => {
@@ -247,15 +237,14 @@ export const NoIntercom = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Es gibt keine Gegen-/Wechselsprechanlage mit elektrischem Türöffner."
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="NoIntercom"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="NoIntercom"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const IntercomVideo = injectIntl((props: RangeInputProps) => {
@@ -265,15 +254,14 @@ export const IntercomVideo = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Die Gegen-/Wechselsprechanlage bietet Videoübertragung und elektrischem Türöffner."
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="IntercomVideo"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="IntercomVideo"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const Energy = injectIntl(EnergyClass)

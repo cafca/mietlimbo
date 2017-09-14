@@ -1,6 +1,8 @@
+import os
+
 DEBUG = True
-SECRET_KEY="development secret key"
-SQLALCHEMY_DATABASE_URI = 'sqlite:///../mietspiegel.sqlite'
+SECRET_KEY="server development secret key"
+SQLALCHEMY_DATABASE_URI = 'sqlite:///data/strassenverzeichnis.sqlite'
 
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 SQLALCHEMY_ECHO = False

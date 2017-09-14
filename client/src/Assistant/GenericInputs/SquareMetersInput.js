@@ -8,11 +8,11 @@ import TextField from 'material-ui/TextField';
 import HelpIcon from 'material-ui/svg-icons/action/help-outline'
 import {blue500} from 'material-ui/styles/colors';
 
-import type {AssistantInputProps} from './Tools';
+import type { AssistantInputProps } from '../Types';
 
 type SquareMetersProps = AssistantInputProps & {
-  exact: ?string,
-  guessed: ?string
+  exact?: string,
+  guessed?: string
 };
 
 class SquareMetersInput extends React.Component {
