@@ -149,6 +149,11 @@ Zum Erstellen des Straßenverzeichnis-Datensatzes wurde der Datensatz
 verwendet, welcher von Berlin Open Data unter Creative Commons-Lizenz mit 
 Namensnennung angeboten wird.
 
+Ländericons für Sprachumstellung von:
+
+- Germany free icon - Icon made by Freepik from flaticon.com
+- United Kingdom free icon - Icon made by Freepik from flaticon.com
+
 
 Gefördert vom Bundesministerium für Bildung und Forschung
 
