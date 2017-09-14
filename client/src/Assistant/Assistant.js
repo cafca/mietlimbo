@@ -15,7 +15,6 @@ import {
   stageNames,
   featureGroupNames,
   stageConditions,
-  testData,
   initialData
 } from "./Config";
 

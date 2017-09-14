@@ -157,8 +157,11 @@ class MietspiegelPlace extends React.Component {
       errorMsg: null
     };
 
+    // eslint-disable-next-line eqeqeq
     if (props.value != undefined) {
+      // eslint-disable-next-line react/no-direct-mutation-state
       this.state["selected"] = props.value;
+      // eslint-disable-next-line react/no-direct-mutation-state
       this.state["state"] = this.states.FINISHED;
     }
 
