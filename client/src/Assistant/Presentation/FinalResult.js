@@ -74,19 +74,60 @@ class FinalResult extends React.Component {
             id="FinalResult.recommendationTitle"
             defaultMessage="Wie geht es weiter?" />
         </h2>
-        <p><FormattedMessage
-          id="FinalResult.recommendations"
-          defaultMessage="Um herauszufinden, wie du mit dieser Information deine Miete senken kannst empfehle ich dir, 
-            den Artikel von {ChristopherStark} zu lesen, der diese Seite inspiriert hat. Auf der nächsten Seite findest
-            du noch eine Übersicht aller Daten, die du ausdrucken und zu einer Rechtsberatung mitnehmen kannst."
-          values={{
-            ChristopherStark: <a 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              href="https://blog.mietlimbo.de/2017/04/18/mietpreisbremse-betaetigen/">
-                Christopher Stark
-            </a>
-          }} /></p>
+        <p>
+          <FormattedMessage
+            id="FinalResult.recommendations"
+            defaultMessage="Um herauszufinden, wie du mit dieser Information deine Miete senken kannst empfehle ich dir, 
+              den Artikel von {ChristopherStark} zu lesen, der diese Seite inspiriert hat. Um es kurz zusammenzufassen,
+              die Schritte sind üblicherweise:"
+            values={{
+              ChristopherStark: <a 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                href="https://blog.mietlimbo.de/2017/04/18/mietpreisbremse-betaetigen/">
+                  Christopher Stark
+              </a>
+            }} />
+        </p>
+        <p>
+          <ul>
+            <li><FormattedMessage 
+              id="FinalResult.recommendationStep1"
+              defaultMessage="Mieterverein beitreten für Rückfragen und individuelle Enschätzung"
+            /></li>
+            <li><FormattedMessage 
+              id="FinalResult.recommendationStep2"
+              defaultMessage="Termin vereinbaren, mietlimbo Ergebnis ausgedruckt mitbringen (nächste Seite)"
+            /></li>
+            <li><FormattedMessage 
+              id="FinalResult.recommendationStep3"
+              defaultMessage="Dem Vermieter eine qualifizierte Rüge schicken"
+            /></li>
+            <li><FormattedMessage 
+              id="FinalResult.recommendationStep4"
+              defaultMessage="Antwort abwarten und dann damit zum Mieterverein gehen"
+            /></li>
+            <li><FormattedMessage 
+              id="FinalResult.recommendationStep5"
+              defaultMessage="Weiter mit Vermieter verhandeln"
+            /></li>
+            <li><FormattedMessage 
+              id="FinalResult.recommendationStep6"
+              defaultMessage="Ggf. mit Mieterverein-Anwalt drohen und den Fall übergeben"
+            /></li>
+            <li><FormattedMessage 
+              id="FinalResult.recommendationStep7"
+              defaultMessage="Nach Einigung Anhang zum Mietvertrag unterschreiben und weniger Miete zahlen"
+            /></li>
+          </ul>
+        </p>
+        
+        <p>
+          <FormattedMessage
+            id="FinalResult.transition"
+            defaultMessage="Auf der nächsten Seite findest
+            du noch eine Übersicht aller Daten, die du ausdrucken und zu einer Rechtsberatung mitnehmen kannst." />
+        </p>
       </section>
     </div>;
   }

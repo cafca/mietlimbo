@@ -136,7 +136,7 @@ class MietspiegelPlace extends React.Component {
     query: string,
     state: string,
     places: Array<{name: string, ranges: Array<{name: string, id: string}>}>,
-    selected: ?Address,
+    selected?: Address,
     errorMsg: ?string
   }
 
@@ -152,11 +152,16 @@ class MietspiegelPlace extends React.Component {
     super(props);
     this.state = {
       query: props.query,
-      state: props.value === undefined ? this.states.WAITING : this.states.FINISHED,
+      state: this.states.WAITING,
       places: [],
-      selected: props.value,
       errorMsg: null
     };
+
+    if (props.value != undefined) {
+      this.state["selected"] = props.value;
+      this.state["state"] = this.states.FINISHED;
+    }
+
     this.serverURL = process.env.NODE_ENV === "production" 
       ? "https://mietlimbo.de:8000" : "http://localhost:8000";
     autoBind(this);
