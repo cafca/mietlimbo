@@ -11,7 +11,7 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from logger import setup_logger
-from parser import MietspiegelParser
+from crawler.parser import MietspiegelParser
 from pprint import pformat
 
 from requests.exceptions import ConnectionError
@@ -46,6 +46,7 @@ def create_app(config=None):
             street_data = Street.find(street_name)
 
             if len(street_data) > 0:
+                logger.info("Returning {} results".format(len(street_data)))
                 rv["data"] = street_data
             else:
                 # Fallback to querying the actual Mietspiegel site
@@ -81,7 +82,6 @@ def create_app(config=None):
         if street is not None:
             rv["data"] = street.get_rent(year_range, real_size, guessed_size)
         else:
-            import pdb; pdb.set_trace()
             logger.info("Fallback to remote Mietspiegel")
             ps = MietspiegelParser()
             rv["data"] = ps.get_range(street_id, year_range, real_size, guessed_size)
