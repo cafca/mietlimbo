@@ -73,6 +73,8 @@ Für beides kann ich die Anleitungen von DigitalOcean empfehlen:
 
 Mit dem Script `scripts/deploy.sh` lässt sich, falls mietlimbo aus dem Ordner `/var/www/mietlimbo/` vom Webserver geladen wird, die neuste Version installieren und dabei die alte überschreiben.
 
+Auf [community.mietlimbo.de](https://community.mietlimbo.de/) läuft außerdem eine [Discourse](https://www.discourse.org/)-Instanz, auf die von den Eingabekomponenten für die Merkmale aus verlinkt wird.
+
 ## Mitmachen
 
 mietlimbo ist offen für Verbesserungen, Vorschläge, Pull Requests. Kontaktiert mich auch gerne unter [hallo@mietlimbo.de](mailto:hallo@mietlimbo.de), wenn ihr Fragen oder Anmerkungen habt.
