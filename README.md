@@ -53,3 +53,89 @@ Der Entwicklungs-Server ist nun über `http://localhost:8000/` erreichbar und ka
 	$ npm start
 
 Die Entwicklungs-Version von mietlimbo öffnet sich jetzt in eurem Webbrowser.
+
+### Installation auf einem Server
+
+Es gibt verschiedene Möglichkeiten, mietlimbo über einen Server laufen zu lassen. Je nachdem, was auf eurem Server schon installiert ist werden sich die Schritte zur Einrichtung unterscheiden. Vor allem braucht ihr einen Webserver wie Nginx, der statische Ressourcen zur Verfügung stellt und über WSGI auch den Backend-Server verfügbar macht. Im Weiteren empfehle ich ein SSL-Zertifikat von einem Anbieter wie LetsEncrypt, da über mietlimbo auch persönliche Daten übertragen werden.
+
+Für beides kann ich die Anleitungen von DigitalOcean empfehlen:
+
+- [How To Secure Nginx with Let's Encrypt on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
+- [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 16.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-16-04)
+
+Mit dem Script `scripts/deploy.sh` lässt sich, falls mietlimbo aus dem Ordner `/var/www/mietlimbo/` vom Webserver geladen wird, die neuste Version installieren und dabei die alte überschreiben.
+
+## Mitmachen
+
+mietlimbo ist offen für Verbesserungen, Vorschläge, Pull Requests. Kontaktiert mich auch gerne unter [hallo@mietlimbo.de](mailto:hallo@mietlimbo.de), wenn ihr Fragen oder Anmerkungen habt.
+
+### Struktur des Projekts
+
+Wie auch in der Installations-Anleitung oben zu sehen ist das Projekt in Client und Server aufgeteilt. 
+
+#### Client
+
+In den Dateien `src/App.js` und `src/index.js` findet ihr das Setup, mit dem sich der Client später im Browser-DOM installiert. 
+
+Das zentrale Modul für mietlimbo ist `src/Assistant/Assistant.js`. Hierin findet ihr den Wrapper, der den Zustand des Assistent auf höchster Ebene verwaltet:
+
+- Dateninitialisierung und Datenspeicherung in Local Storage
+- Aktuelle Stage (Seite des Assistenten-Formulars)
+- Übergang zwischen Stages
+- Neue Eingaben speichern
+- Overflächliche Datenvalidierung (existiert ein benötigter Wert?)
+- Update des Endergebnisses
+
+In diesen Wrapper werden je nach aktueller Stage weitere Eingabe- oder Präsentationskomponenten gerendert. Diese finden sich in den drei Unter-Verzeichnissen von `src/Assistant/`.
+
+	├── build								Statische Build-Dateien, die 
+	│   └── static 							auf dem Webserver öffentlich gemacht
+	│       ├── css 						werden können => `npm run build`
+	│       ├── js
+	│       └── media
+	├── public 								Statische Dateien für Entwicklung
+	├── src
+	│   ├── Assistant 						Hauptkomponente Online-Assistent
+	│   │   ├── ApartmentFeatureInputs 		Zur Abfrage von Wohnungs-Merkmalen
+	│   │   ├── GenericInputs 				Zur Abfrage von allgemeinen Fragen
+	│   │   └── Presentation 				Zur Ergebnis-Darstellung
+	│   ├── Graphics 						Illustrationen, etc.
+	│   ├── I18n 							Übersetzungen als JSON-Datei
+	│   └── Pages 							Inhalte, die nicht direkt Teil des
+	│										Assistenten sind.
+	└── translations 						Hilfs-Ordner zur Erstellung der
+	    └── messages 						Übersetzungs-Dateien
+	        └── src
+
+### API-Backend
+
+Das API-Backend ist als Flask-Server in `main.py` implementiert, der JSON-codierte Daten über HTTP-Endpunkte anbietet. Die Datei `model.py` lädt entsprechende Daten aus `data/mietspiegel.json` und `data/strassenverzeichnis.sqlite`. Diese wurden mit den Skripten im Verzeichnis `Crawler` erstellt. 
+
+Kann eine Anfrage an den Server nicht mit den genannten Daten aus dem Model beantwortet werden, geht der Server in ein Fallback über und versucht, über den Crawler ein aktuelles Ergebnis von der Seite der Senatsverwaltung einzuholen.
+
+	├── crawler 						Strassenverzeichnis von Senatsverwaltung laden
+	│   ├── README.md
+	│   ├── crawler.py
+	│   └── parser.py
+	├── data 							
+	│   ├── README.md
+	│   ├── mietspiegel.json 			Mietspiegeltabelle, per Hand erstellt
+	│   └── strassenverzeichnis.sqlite 	Automatisch erstelltes Strassenverzeichnis
+	├── development_config.py
+	├── logger.py
+	├── main.py 						Backend-Server
+	├── model.py 						Datenmodell für Mietspiegel und Strassen
+	├── production_config.py
+	├── tests
+	│   ├── test_flask.py
+	│   └── test_parser.py
+	├── uwsgi.ini 						Konfiguration für uWSGI-Server. Pfade anpassen!
+	└── wsgi.py 						WSGI entry script
+
+# Anmerkungen
+
+Zum Erstellen des Straßenverzeichnis-Datensatzes wurde der Datensatz 
+["Straßenverzeichnis"](1) verwendet, welcher von Berlin Open Data unter 
+Creative Commons-Lizenz mit Namensnennung angeboten wird.
+
+[1:] https://daten.berlin.de/datensaetze/stra%C3%9Fenverzeichnis
