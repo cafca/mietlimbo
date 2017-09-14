@@ -1,11 +1,12 @@
 // @flow
 
 import React from 'react';
-import {injectIntl, defineMessages, FormattedMessage} from 'react-intl';
-import {Card, CardTitle, CardText} from 'material-ui/Card';
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
+import { CardText } from 'material-ui/Card';
 
 import CheckboxInput from './CheckboxInput';
-import type {RangeInputProps} from './RangeSelectionGroup';
+import type { RangeInputProps } from './RangeSelectionGroup';
+import FeatureInput from './FeatureInput';
 
 import './Styles.css';
 
@@ -16,15 +17,14 @@ export const WindowStyleSingle = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Mehr als die Hälfte der Fenster haben nur Einfachverglasung."
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="WindowStyleSingle"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="WindowStyleSingle"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const WindowStyleInsulating = injectIntl((props: RangeInputProps) => {
@@ -42,21 +42,19 @@ export const WindowStyleInsulating = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Schallschutzfenster für Wohngebäude/Wohnungen, die vor 1995 bezugsfertig geworden sind"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="WindowStyleInsulating"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
+  return <FeatureInput title={<CheckboxInput
+    changed={props.changed}
+    name="WindowStyleInsulating"
+    positive={true}
+    message={props.intl.formatMessage(messages.title)}
+    value={props.value} />} >
     <CardText className="cardText">
       <ul>
         <li><FormattedMessage {...messages.explanation1} /></li>
         <li><FormattedMessage {...messages.explanation2} /></li>
       </ul>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const HighGradeFlooring = injectIntl((props: RangeInputProps) => {
@@ -82,14 +80,12 @@ export const HighGradeFlooring = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Oder gleichwertiger Bodenbelag"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="HighGradeFlooring"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
+  return <FeatureInput title={<CheckboxInput
+    changed={props.changed}
+    name="HighGradeFlooring"
+    positive={true}
+    message={props.intl.formatMessage(messages.title)}
+    value={props.value} />} >
     <CardText className="cardText">
       <ul>
         <li><FormattedMessage {...messages.example1} /></li>
@@ -98,7 +94,7 @@ export const HighGradeFlooring = injectIntl((props: RangeInputProps) => {
         <li><FormattedMessage {...messages.example4} /></li>
       </ul>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const InsufficientPower = injectIntl((props: RangeInputProps) => {
@@ -113,18 +109,16 @@ export const InsufficientPower = injectIntl((props: RangeInputProps) => {
         VDE gerechte Elektroinstallation (z.B. kein FI-Schalter, Potentialausgleich)`
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="InsufficientPower"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
+  return <FeatureInput title={<CheckboxInput
+    changed={props.changed}
+    name="InsufficientPower"
+    positive={false}
+    message={props.intl.formatMessage(messages.title)}
+    value={props.value} />} >
     <CardText className="cardText">
       <p><FormattedMessage {...messages.hint} /></p>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const WallInstallation = injectIntl((props: RangeInputProps) => {
@@ -146,8 +140,7 @@ export const WallInstallation = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Heizungsrohre überwiegend _nicht_ sichtbar"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={props.intl.formatMessage(messages.title)} />
+  return <FeatureInput title={props.intl.formatMessage(messages.title)}>
     <CardText className="cardText">
       <CheckboxInput
         changed={props.changed}
@@ -171,7 +164,7 @@ export const WallInstallation = injectIntl((props: RangeInputProps) => {
         value={props.value}
       />
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const ColdWaterMetering = injectIntl((props: RangeInputProps) => {
@@ -186,18 +179,16 @@ export const ColdWaterMetering = injectIntl((props: RangeInputProps) => {
     }
   });
 
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="ColdWaterMetering"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
+  return <FeatureInput title={<CheckboxInput
+    changed={props.changed}
+    name="ColdWaterMetering"
+    positive={true}
+    message={props.intl.formatMessage(messages.title)}
+    value={props.value} />} >
     <CardText className="cardText">
       <p><FormattedMessage {...messages.explanation} /></p>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const BadFlatDesign = injectIntl((props: RangeInputProps) => {
@@ -213,18 +204,16 @@ export const BadFlatDesign = injectIntl((props: RangeInputProps) => {
     }
   });
 
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="BadFlatDesign"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
+  return <FeatureInput title={<CheckboxInput
+    changed={props.changed}
+    name="BadFlatDesign"
+    positive={false}
+    message={props.intl.formatMessage(messages.title)}
+    value={props.value} />} >
     <CardText className="cardText">
       <p><FormattedMessage {...messages.explanation} /></p>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const StorageCabinet = injectIntl((props: RangeInputProps) => {
@@ -234,15 +223,14 @@ export const StorageCabinet = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Einbauschrank oder Abstellraum innerhalb der Wohnung"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="StorageCabinet"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="StorageCabinet"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value} 
+    />} 
+  />;
 });
 
 export const NoSpaceForWashing = injectIntl((props: RangeInputProps) => {
@@ -252,15 +240,14 @@ export const NoSpaceForWashing = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Waschmaschine weder in Bad noch Küche stellbar oder nicht anschließbar."
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="NoSpaceForWashing"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="NoSpaceForWashing"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value} 
+    />} 
+  />;
 });
 
 export const LargeLiving = injectIntl((props: RangeInputProps) => {
@@ -270,15 +257,14 @@ export const LargeLiving = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Ein Wohnraum größer als 40 m²."
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="LargeLiving"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="LargeLiving"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const AccessibleDesign = injectIntl((props: RangeInputProps) => {
@@ -292,18 +278,16 @@ export const AccessibleDesign = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Schwellenfreiheit in der Wohnung, schwellenarmer Übergang zu Balkon/Terrasse, ausreichende Bewegungsfreiheit in der Wohnung und/oder barrierearme Badgestaltung"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="AccessibleDesign"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
+  return <FeatureInput title={<CheckboxInput
+    changed={props.changed}
+    name="AccessibleDesign"
+    positive={true}
+    message={props.intl.formatMessage(messages.title)}
+    value={props.value} />} >
     <CardText className="cardText">
       <p><FormattedMessage {...messages.explanation} /></p>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });
 
 export const NoBalcony = injectIntl((props: RangeInputProps) => {
@@ -317,15 +301,14 @@ export const NoBalcony = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Gilt nicht, wenn dies aus baulichen und/oder rechtlichen Gründen nicht möglich oder nicht zulässig ist"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="NoBalcony"
-        positive={false}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="NoBalcony"
+      positive={false}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const SpaciousBalcony = injectIntl((props: RangeInputProps) => {
@@ -335,15 +318,14 @@ export const SpaciousBalcony = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Großer, geräumiger Balkon, (Dach-)Terrasse, Loggia oder Wintergarten (ab 4 m²)"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="SpaciousBalcony"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="SpaciousBalcony"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const RollingShutters = injectIntl((props: RangeInputProps) => {
@@ -353,15 +335,14 @@ export const RollingShutters = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Rollläden"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="RollingShutters"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="RollingShutters"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const FloorHeating = injectIntl((props: RangeInputProps) => {
@@ -371,15 +352,14 @@ export const FloorHeating = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Überwiegend Fußbodenheizung"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="FloorHeating"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="FloorHeating"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const CeilingDecoration = injectIntl((props: RangeInputProps) => {
@@ -389,15 +369,14 @@ export const CeilingDecoration = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Aufwändige Decken- oder Wandverkleidung (z.B. Stuck, Täfelung) in gutem Zustand in der überwiegenden Anzahl der Wohnräume"
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="CeilingDecoration"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
-  </Card>;
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="CeilingDecoration"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} 
+  />;
 });
 
 export const AntiBurglary = injectIntl((props: RangeInputProps) => {
@@ -411,16 +390,15 @@ export const AntiBurglary = injectIntl((props: RangeInputProps) => {
       defaultMessage: "Zusätzlich gesichert zum Beispiel über hochwertige Sperrbügel und/oder Türschlösser mit Mehrfachverriegelung."
     }
   })
-  return <Card className="assistantInput">
-    <CardTitle title={<CheckboxInput
-        changed={props.changed}
-        name="AntiBurglary"
-        positive={true}
-        message={props.intl.formatMessage(messages.title)}
-        value={props.value}
-      />} />
+  return <FeatureInput title={<CheckboxInput
+      changed={props.changed}
+      name="AntiBurglary"
+      positive={true}
+      message={props.intl.formatMessage(messages.title)}
+      value={props.value}
+    />} >
     <CardText className="cardText">
       <p><FormattedMessage {...messages.explanation} /></p>
     </CardText>
-  </Card>;
+  </FeatureInput>;
 });

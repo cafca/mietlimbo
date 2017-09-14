@@ -6,7 +6,7 @@ import {injectIntl, defineMessages, FormattedMessage} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
-import type {AssistantInputProps} from './Tools';
+import type { AssistantInputProps } from '../Types';
 
 export const officialDescriptions = defineMessages({
   "nobath": {
@@ -88,7 +88,7 @@ class BaseFeaturesInput extends React.Component {
     })
 
     const warning = this.props.value === undefined || this.props.value === "default" ? "" : 
-      <p style={{color: "red"}}><FormattedMessage {...messages.warning} /></p>;
+      <p className="errorDesc"><FormattedMessage {...messages.warning} /></p>;
 
 		return <Card className="assistantInput" id={this.inputName}>
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />

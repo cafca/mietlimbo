@@ -6,7 +6,7 @@ import {injectIntl, defineMessages, FormattedMessage} from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
-import type {AssistantInputProps} from './Tools';
+import type { AssistantInputProps } from '../Types';
 
 const messages = defineMessages({
   title: {
@@ -51,7 +51,7 @@ class NewBuildingInput extends React.Component {
 	}
 
 	render() {
-    const conditionalWarning = this.state.value === true ? <p style={{color: "red"}}>
+    const conditionalWarning = this.state.value === true ? <p className="errorDesc">
       <FormattedMessage {...messages.warning} />
     </p> : <span></span>;
 

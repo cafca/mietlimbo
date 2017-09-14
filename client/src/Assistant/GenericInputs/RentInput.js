@@ -7,8 +7,14 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
 import {Card, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 
-import {ErrorList} from './Tools';
-import type {AssistantInputProps} from './Tools';
+import type { AssistantInputProps } from '../Types';
+
+export const ErrorList = (props: {errors: Array<string>}) => {
+  const el = props.errors.map(
+    (e, i) => <p key={i} className="errorDesc">{e}</p>
+  );
+  return props.errors.length === 0 ? null : <span>{el}</span>;
+}
 
 class RentInput extends React.Component {
   state: {

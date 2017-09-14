@@ -2,11 +2,11 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {injectIntl, defineMessages} from 'react-intl';
-import {Card, CardTitle, CardText} from 'material-ui/Card';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import { injectIntl, defineMessages } from 'react-intl';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
-import type {AssistantInputProps} from './Tools';
+import type { AssistantInputProps } from '../Types';
 
 export const radioOptions = [
   "Pre1918",

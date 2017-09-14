@@ -7,7 +7,7 @@ input {
 }
 
 .errorDesc {
-	color: red;
+	color: rgb(255, 64, 129);
 }
 
 .textInput {
