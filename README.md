@@ -83,9 +83,9 @@ Wie auch in der Installations-Anleitung oben zu sehen ist das Projekt in Client 
 
 #### Client
 
-In den Dateien `src/App.js` und `src/index.js` findet ihr das Setup, mit dem sich der Client später im Browser-DOM installiert. 
+In den Dateien [`src/App.js`](https://github.com/ciex/mietlimbo/blob/master/client/src/App.js) und [`src/index.js`](https://github.com/ciex/mietlimbo/blob/master/client/src/index.js) findet ihr das Setup, mit dem sich der Client später im Browser-DOM installiert. 
 
-Das zentrale Modul für mietlimbo ist `src/Assistant/Assistant.js`. Hierin findet ihr den Wrapper, der den Zustand des Assistent auf höchster Ebene verwaltet:
+Das zentrale Modul für mietlimbo ist ]`src/Assistant/Assistant.js`](https://github.com/ciex/mietlimbo/blob/master/client/src/Assistant/Assistant.js). Hierin findet ihr den Wrapper, der den Zustand des Assistent auf höchster Ebene verwaltet:
 
 - Dateninitialisierung und Datenspeicherung in Local Storage
 - Aktuelle Stage (Seite des Assistenten-Formulars)
@@ -117,7 +117,7 @@ In diesen Wrapper werden je nach aktueller Stage weitere Eingabe- oder Präsenta
 
 ### API-Backend
 
-Das API-Backend ist als Flask-Server in `main.py` implementiert, der JSON-codierte Daten über HTTP-Endpunkte anbietet. Die Datei `model.py` lädt entsprechende Daten aus `data/mietspiegel.json` und `data/strassenverzeichnis.sqlite`. Diese wurden mit den Skripten im Verzeichnis `Crawler` erstellt. 
+Das API-Backend ist als Flask-Server in [`main.py`](https://github.com/ciex/mietlimbo/blob/master/api/main.py) implementiert, der JSON-codierte Daten über HTTP-Endpunkte anbietet. Die Datei [`model.py`](https://github.com/ciex/mietlimbo/blob/master/api/model.py)  lädt entsprechende Daten aus `data/mietspiegel.json` und `data/strassenverzeichnis.sqlite`. Diese wurden mit den Skripten im Verzeichnis `Crawler` erstellt. 
 
 Kann eine Anfrage an den Server nicht mit den genannten Daten aus dem Model beantwortet werden, geht der Server in ein Fallback über und versucht, über den Crawler ein aktuelles Ergebnis von der Seite der Senatsverwaltung einzuholen.
 
