@@ -16,7 +16,8 @@ from pprint import pformat
 
 from requests.exceptions import ConnectionError
 
-logger = setup_logger(logfile="../mietlimbo-api.log", level=logging.INFO)
+logfile = os.getenv("MIETLIMBO_API_LOGFILE", "../mietlimbo-api.log")
+logger = setup_logger(logfile=logfile, level=logging.INFO)
 
 db = SQLAlchemy()
 
