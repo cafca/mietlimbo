@@ -85,7 +85,7 @@ Wie auch in der Installations-Anleitung oben zu sehen ist das Projekt in Client 
 
 In den Dateien [`src/App.js`](https://github.com/ciex/mietlimbo/blob/master/client/src/App.js) und [`src/index.js`](https://github.com/ciex/mietlimbo/blob/master/client/src/index.js) findet ihr das Setup, mit dem sich der Client später im Browser-DOM installiert. 
 
-Das zentrale Modul für mietlimbo ist ]`src/Assistant/Assistant.js`](https://github.com/ciex/mietlimbo/blob/master/client/src/Assistant/Assistant.js). Hierin findet ihr den Wrapper, der den Zustand des Assistent auf höchster Ebene verwaltet:
+Das zentrale Modul für mietlimbo ist [`src/Assistant/Assistant.js`](https://github.com/ciex/mietlimbo/blob/master/client/src/Assistant/Assistant.js). Hierin findet ihr den Wrapper, der den Zustand des Assistent auf höchster Ebene verwaltet:
 
 - Dateninitialisierung und Datenspeicherung in Local Storage
 - Aktuelle Stage (Seite des Assistenten-Formulars)
