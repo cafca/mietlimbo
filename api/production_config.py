@@ -2,7 +2,7 @@ import os
 
 DEBUG = False
 SECRET_KEY=os.environ.get("MIETLIMBO_SECRET", "server secret")
-SQLALCHEMY_DATABASE_URI = 'sqlite:///data/strassenverzeichnis.sqlite'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///./data/strassenverzeichnis.sqlite'
 
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 SQLALCHEMY_ECHO = False
