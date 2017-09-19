@@ -5,6 +5,7 @@ Diese Datei enthält die Mietspiegel-Tabelle aus dem Berliner Mietspiegel von
 
 - Schlüssel auf oberster Ebene entsprechen den Bezeichnungen für Baudatum-Bereiche,
 wie sie auch im Frontend verwendet werden
+- Schlüssel auf zweitoberster Ebene entsrprechen den Grenzen für die Einordnung der Wohnungsgröße (Unter 40 Quadratmeter, unter 60 Quadratmeter, etc.).
 - Mietspiegel-Bereiche werden als Liste von 3 Floats angegeben, die dem unteren,
 mittleren und oberen Wert des Mietspiegels entsprechen. Als viertes Element 
 findet sich optional ein oder mehrere Sternchen-Zeichen. Diese entsprechen den 
