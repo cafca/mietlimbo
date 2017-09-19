@@ -16,12 +16,14 @@ finden.
 
 Eine SQLITE-Datenbank mit Inhalten der Seite der Berliner Senatsverwaltung.
 
-id: Identifikationsnummer eines Straßenbereichs
-name: Name der Straße mit abgekürztem Stadtteil in Klammern
-number_range: Hausnummerbereich des Eintrags
+Felder:
+
+id: Identifikationsnummer eines Straßenbereichs  
+name: Name der Straße mit abgekürztem Stadtteil in Klammern  
+number_range: Hausnummerbereich des Eintrags  
 area_rating: Gebietseinstufung des Berliner Mietspiegels in drei Kategorien 
-	'Einfach', 'Mittel' und 'Gut'
+	'Einfach', 'Mittel' und 'Gut'  
 noise_impact: Optionale Einstufung der Geräuschbelastung durch Verkehrslärm am
-	Standort
-bezirk: Name des Bezirks
-stadtgebiet: Eins aus 'Berlin Weest' und 'Berlin Ost'
+	Standort  
+bezirk: Name des Bezirks  
+stadtgebiet: Eins aus 'Berlin Weest' und 'Berlin Ost'  
