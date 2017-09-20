@@ -4,7 +4,7 @@ import React from 'react';
 import autoBind from 'react-autobind';
 import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 
-import type {AssistantInputProps} from '../GenericInputs/Tools';
+import type {AssistantInputProps} from '../Types';
 import MietspiegelTable from "./MietspiegelTable";
 
 import { Card, CardTitle, CardText } from 'material-ui/Card';
@@ -127,14 +127,23 @@ class Mietspiegel extends React.Component {
       .then(resp => {console.log(resp); return resp.json()})
       .then(respData => {
         if (respData.errors != null && respData.errors.length > 0) {
+          // Handle error response
           console.error(respData.errors);
           this.setState({state: this.states.ERROR})
           this.props.valid(this.inputName, false);
         } else {
+          // Select the right dataset from the API response depending on the
+          // apartment's base configuration
           const data = this.selectDataset(respData.data)
-          if (respData.data.default.warnings && respData.data.default.warnings.indexOf("***") >= 0) {
+
+          // Case where Mietspiegel does not provide sufficient data
+          if (respData.data.default.warnings 
+              && respData.data.default.warnings.indexOf("***") >= 0) 
+          {
             this.setState({data: null, state: this.states.INSUFFICIENT_DATA})
             this.props.valid(this.inputName, false);
+
+          // Update state on success
           } else {
             this.props.changed({result: data}, () => {
               this.setState({data, state: this.states.SUCCESS})
@@ -193,7 +202,10 @@ class Mietspiegel extends React.Component {
       default:
         title = <FormattedMessage {...messages.connectionError} />;
         content = <div>
-          <p><RaisedButton label={this.props.intl.formatMessage(messages.retry)} onClick={() => this.loadRentData()} /></p>
+          <p><RaisedButton 
+            label={this.props.intl.formatMessage(messages.retry)} 
+            onClick={() => this.loadRentData()} />
+          </p>
         </div>;
         break;
     }

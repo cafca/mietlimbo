@@ -44,6 +44,7 @@ class AddressInput extends React.Component {
   }
 
   componentDidMount() {
+    // eslint-disable-next-line eqeqeq
     if (this.props.value != undefined) this.props.valid(this.inputName, true);
   }
 
