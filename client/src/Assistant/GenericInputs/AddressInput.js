@@ -44,7 +44,7 @@ class AddressInput extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.value !== undefined) this.props.valid(this.inputName, true);
+    if (this.props.value != undefined) this.props.valid(this.inputName, true);
   }
 
   handleChange(ev: SyntheticInputEvent, value: string) {
@@ -89,7 +89,7 @@ class AddressInput extends React.Component {
       },
       inputLabel: {
         id: "AddressInput.label",
-        defaultMessage: "Deine Adresse"
+        defaultMessage: "Deine Straße"
       }
     });
 
