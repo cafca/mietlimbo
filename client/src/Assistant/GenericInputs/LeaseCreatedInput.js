@@ -2,10 +2,10 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import {injectIntl, defineMessages} from 'react-intl';
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
 import areIntlLocalesSupported from 'intl-locales-supported';
 
-import {Card, CardTitle, CardText} from 'material-ui/Card';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 import DatePicker from 'material-ui/DatePicker';
 
 import type { AssistantInputProps } from '../Types';
@@ -62,14 +62,22 @@ class LeaseCreatedInput extends React.Component {
       cancel: {
         id: "LeaseCreatedInput.cancel",
         defaultMessage: "Zurück"
+      },
+      description1: {
+        id: "LeaseCreatedInput.description1",
+        defaultMessage: "Bitte gib hier das Vertragsdatum an."
+      },
+      description2: {
+        id: "LeaseCreatedInput.description2",
+        defaultMessage: "Leider erlaubt die Mietpreisbremse in Berlin nur Mietsenkungen für Verträge ab 1.Juni 2015."
       }
     });
 
     return <Card className="assistantInput" id={this.inputName}>
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
       <CardText>
-        <p>Bitte gib hier das Vertragsdatum an.</p>
-        <p>Leider erlaubt die Mietpreisbremse in Berlin nur Mietsenkungen für Verträge ab 1.Juni 2015.</p>
+        <p><FormattedMessage {...messages.description1} /></p>
+        <p><FormattedMessage {...messages.description2} /></p>
         <DatePicker 
           name={this.inputName} 
           hintText={this.props.intl.formatMessage(messages.inputLabel)}
