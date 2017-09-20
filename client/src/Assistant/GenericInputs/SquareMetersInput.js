@@ -71,9 +71,9 @@ class SquareMetersInput extends React.Component {
       },
       description: {
         id: "SquareMeters.description",
-        defaultMessage: `Dieser Wert wird benutzt um vom Quadratmeterpreis auf die Gesamtmiete 
-          zu kommen und entscheidet zugleich darüber, welche Vergleichsmiete gilt. Dafür kommt
-          es darauf an, ob folgende Grenzen überschritten wurden: Ab 40qm, ab 60qm und ab 90qm.`
+        defaultMessage: `Mit diesem Wert wird nicht nur aus dem Quadratmeterpreis die
+        Gesamtmiete berechnet, sondern auch die örtliche Vergleichsmiete ändert sich,
+        je nachdem wie groß eine Wohnung ist.`
       },
       hint: {
         id: "SquareMeters.textBoxHint",
