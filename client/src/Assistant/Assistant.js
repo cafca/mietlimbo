@@ -511,7 +511,10 @@ class Assistant extends React.Component {
 		}
 
     const debug = process.env.NODE_ENV === "production" ? null 
-      : <pre>{JSON.stringify(this.state.data, null, 2)}</pre>;
+      : <span>
+          <pre>{JSON.stringify(this.state.data, null, 2)}</pre>
+          <pre>{JSON.stringify(this.state.inputValid, null, 2)}</pre>
+        </span>;
 
     // Don't display next button on final assistant page
     const buttonDisplayStyle = this.state.stage === stageNames.indexOf("Ausdrucken") 
