@@ -6,6 +6,7 @@ import { injectIntl, defineMessages } from 'react-intl';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
+import { constructionDateOptionsTranslations } from "../GenericTranslations";
 import type { AssistantInputProps } from '../Types';
 
 export const radioOptions = [
@@ -17,37 +18,6 @@ export const radioOptions = [
   "Pre2002", 
   "Pre2015"
 ];
-
-export const radioDescriptions = defineMessages({
-  Pre1918: {
-    id: "Spanneneinordnung.constructionDateGuessedPre1918",
-    defaultMessage: "bezugsfertig bis 1918 (Altbau)"
-  },
-  Pre1949: {
-    id: "Spanneneinordnung.constructionDateGuessedPre1949",
-    defaultMessage: "1919 - 1949 (Altbau)"
-  }, 
-  Pre1964: {
-    id: "Spanneneinordnung.constructionDateGuessedPre1964",
-    defaultMessage: "1950 - 1964"
-  }, 
-  Pre1972: {
-    id: "Spanneneinordnung.constructionDateGuessedPre1972",
-    defaultMessage: "1965 - 1972"
-  }, 
-  Pre1990: {
-    id: "Spanneneinordnung.constructionDateGuessedPre1990",
-    defaultMessage: "1973 - 1990"
-  }, 
-  Pre2002: {
-    id: "Spanneneinordnung.constructionDateGuessedPre2002",
-    defaultMessage: "1991 - 2002"
-  }, 
-  Pre2015: {
-    id: "Spanneneinordnung.constructionDateGuessedPre2015",
-    defaultMessage: "2003 - 31.12.2015"
-  } 
-});
 
 const messages = defineMessages({
   title: {
@@ -75,10 +45,13 @@ class ConstructionDateInput extends React.Component {
 	}
 
 	render() {
-		const radioControls = radioOptions.map((rangeName, i) => <RadioButton
-      key={"constructionDateOption-" + i}
-			value={rangeName}
-      label={this.props.intl.formatMessage(radioDescriptions[rangeName])} />)
+		const radioControls = radioOptions.map(
+      (rangeName, i) => <RadioButton
+        key={"constructionDateOption-" + i}
+  			value={rangeName}
+        label={this.props.intl.formatMessage(
+          constructionDateOptionsTranslations[rangeName])} />
+    );
 
 		return <Card className="assistantInput" id={this.inputName}>
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />

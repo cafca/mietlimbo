@@ -36,7 +36,10 @@ class LeaseCreatedInput extends React.Component {
     super(props);
     autoBind(this);
 
-    const initialDate = props.value === undefined ? null : new Date(props.value);
+    const initialDate = props.value === undefined 
+      ? null 
+      : new Date(props.value);
+      
     this.state = {
       value: initialDate,
       errors: []

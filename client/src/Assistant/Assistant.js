@@ -2,7 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 
@@ -11,12 +11,18 @@ import Mietspiegel from './Presentation/Mietspiegel';
 import FinalResult from './Presentation/FinalResult';
 import Summary from './Presentation/Summary';
 import Progress from './Progress';
+
 import {
   stageNames,
   featureGroupNames,
   stageConditions,
   initialData
 } from "./Config";
+
+import {
+  featureGroupLongTranslations,
+  genericInputTranslations
+} from "./GenericTranslations";
 
 import LeaseCreatedInput from './GenericInputs/LeaseCreatedInput';
 import RenovationInput from './GenericInputs/RenovationInput';
@@ -38,122 +44,6 @@ import * as EnvironmentFeatures from './ApartmentFeatureInputs/EnvironmentFeatur
 
 import './Assistant.css';
 
-export const stageNameTranslations = defineMessages({
-  "Einleitung": {
-    id: "StageNames.Einleitung",
-    defaultMessage: "Einleitung"
-  },
-  "Ausnahmen": {
-    id: "StageNames.Ausnahmen",
-    defaultMessage: "Ausnahmen"
-  },
-  "Basisdaten": {
-    id: "StageNames.Basisdaten",
-    defaultMessage: "Basisdaten"
-  },
-  "Mietspiegel": {
-    id: "StageNames.Mietspiegel",
-    defaultMessage: "Mietspiegel"
-  },
-  "Bad": {
-    id: "StageNames.Bad",
-    defaultMessage: "Bad"
-  },
-  "Küche": {
-    id: "StageNames.Küche",
-    defaultMessage: "Küche"
-  },
-  "Wohnung": {
-    id: "StageNames.Wohnung",
-    defaultMessage: "Wohnung"
-  },
-  "Gebäude": {
-    id: "StageNames.Gebäude",
-    defaultMessage: "Gebäude"
-  },
-  "Umfeld": {
-    id: "StageNames.Umfeld",
-    defaultMessage: "Umfeld"
-  },
-  "Auswertung": {
-    id: "StageNames.Auswertung",
-    defaultMessage: "Auswertung"
-  },
-  "Ausdrucken": {
-    id: "StageNames.Ausdrucken",
-    defaultMessage: "Ausdrucken"
-  }
-});
-
-const featureGroupLongNames = defineMessages({
-  "Bad": {
-    id: "StageHeaders.Bad",
-    defaultMessage: "Badezimmer und WC"
-  },
-  "Küche": {
-    id: "StageHeaders.Küche",
-    defaultMessage: "Küche"
-  },
-  "Wohnung": {
-    id: "StageHeaders.Wohnung",
-    defaultMessage: "Wohnung"
-  },
-  "Gebäude": {
-    id: "StageHeaders.Gebäude",
-    defaultMessage: "Gebäude"
-  },
-  "Umfeld": {
-    id: "StageHeaders.Umfeld",
-    defaultMessage: "Wohnumfeld"
-  },
-});
-
-const genericInputNameTranslations = defineMessages({
-  "autoSave": {
-    id: "GenericInputName.autoSave",
-    defaultMessage: "automatisches Speichern"
-  },
-  "leaseCreated": {
-    id: "GenericInputName.leaseCreated",
-    defaultMessage: "Vertragsdatum"
-  },
-  "newBuilding" : {
-    id: "GenericInputName.newBuilding",
-    defaultMessage: "Neubau"
-  },
-  "renovation" : {
-    id: "GenericInputName.renovation",
-    defaultMessage: "Renovierung"
-  },
-  "previousRent": {
-    id: "GenericInputName.previousRent",
-    defaultMessage: "Vormiete"
-  },
-  "address" : {
-    id: "GenericInputName.address",
-    defaultMessage: "Adresse"
-  },
-  "rent" : {
-    id: "GenericInputName.rent",
-    defaultMessage: "Nettokaltmiete"
-  },
-  "squareMeters" : {
-    id: "GenericInputName.squareMeters",
-    defaultMessage: "Größe der Wohnung"
-  },
-  "constructionDate": {
-    id: "GenericInputName.constructionDate",
-    defaultMessage: "Datum der Bezugsfertigkeit"
-  },
-  "mietspiegel": {
-    id: "GenericInputName.mietspiegel",
-    defaultMessage: "Mietspiegelabfrage"
-  },
-  baseFeatures: {
-    id: "GenericInputName.baseFeatures",
-    defaultMessage: "besondere Ausstattung"
-  }
-});
 
 type AssistantProps = {
   match: {params: {stage: number}},
@@ -299,7 +189,7 @@ class Assistant extends React.Component {
           defaultMessage: "Es fehlt noch eine Antwort zu {fieldname}"
         }, {
           fieldname: this.props.intl.formatMessage(
-            {...genericInputNameTranslations[nextMissingName]})
+            {...genericInputTranslations[nextMissingName]})
         })
       })
     }
@@ -477,7 +367,9 @@ class Assistant extends React.Component {
       case 7:
       case 8:
         content = <div>
-          <h1><FormattedMessage {...featureGroupLongNames[stageNames[this.state.stage]]} /></h1>
+          <h1><FormattedMessage 
+            {...featureGroupLongTranslations[stageNames[this.state.stage]]} />
+          </h1>
           <RangeSelectionGroup 
             domain={stageNames[this.state.stage]}
             key={stageNames[this.state.stage]}
