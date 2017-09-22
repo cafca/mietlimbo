@@ -27,9 +27,18 @@ export type RangeInputProps = {
   directChanged: {[string]: any} => any
 };
 
+
+/**
+ * Return numeric balance between pos and neg feature groups
+ * 
+ * @param  {[type]} props: GroupData     Group data set
+ * @return {number}        Balance
+ */
 export const groupBalance = (props: GroupData) => 
   // eslint-disable-next-line eqeqeq
   props == undefined ? 0 : props.positive.length - props.negative.length;
+
+
 
 class RangeSelectionGroup extends React.Component {
   groupData : GroupData;
@@ -39,6 +48,15 @@ class RangeSelectionGroup extends React.Component {
     autoBind(this);
   }
 
+  /**
+   * Handler to be called from input components when their data changes.
+   * 
+   * @param  {[type]} name:     string        Field name
+   * @param  {[type]} positive: boolean       True if positive feature
+   * @param  {[type]} value:    boolean       True if feature applies
+   * @param  {[type]} cb:       ?(            Optional callback
+   * @return {[type]}           [description]
+   */
   handleChange(name: string, positive: boolean, value: boolean, cb: ?() => any) {
     const cat = positive === true ? "positive" : "negative";
 
@@ -71,6 +89,11 @@ class RangeSelectionGroup extends React.Component {
     this.props.changed({[this.props.domain]: updatedData}, cb);
   }
 
+  /**
+   * Render the input group 
+   * 
+   * @return {[type]} [description]
+   */
   render() {
     // The index of checked fields allows passing in the current value to the input
     // componenet below by checking whether it's included in this index

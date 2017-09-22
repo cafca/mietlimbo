@@ -25,6 +25,7 @@ const messages = defineMessages({
   }
 })
 
+
 class CheckboxInput extends React.Component {
   state: {
     value: ?boolean
@@ -48,7 +49,9 @@ class CheckboxInput extends React.Component {
     const style = {
       width: "-webkit-fill-available -moz-available",
       marginRight: 50,
-      display: "block"
+      marginLeft: undefined,
+      display: "block",
+      fontSize: "initial"
     };
     switch (this.props.message) {
       case "applies":
