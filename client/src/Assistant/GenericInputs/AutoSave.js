@@ -50,7 +50,11 @@ class AutoSave extends React.Component {
 
   render() {
     return <Card className="assistantInput" id={this.inputName}>
-      <CardTitle title={<FormattedMessage id="Introduction.savingOptionTitle" defaultMessage="Automatisch speichern?" />} />
+      <CardTitle title={
+        <FormattedMessage 
+          id="Introduction.savingOptionTitle" 
+          defaultMessage="Automatisch speichern?" 
+      />} />
       <CardText>
         <p><FormattedMessage
           id="Introduction.savingOption"
