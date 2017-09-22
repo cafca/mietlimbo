@@ -18,7 +18,7 @@ import Shortnames from "../ApartmentFeatureInputs/FeatureShortnames";
 import officialNames from "../ApartmentFeatureInputs/FeatureOfficialNames";
 import { groupBalance} from "../ApartmentFeatureInputs/RangeSelectionGroup";
 import type {Data} from "../Assistant";
-import { stageNameTranslations } from "../Assistant";
+import { stageNameTranslations } from "../GenericTranslations";
 import { featureGroupNames } from "../Config";
 
 import "./FeatureTable.css";
