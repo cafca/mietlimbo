@@ -54,7 +54,6 @@ class FinalResult extends React.Component {
             diff: Math.abs(this.props.data.rent - this.props.data.result.mietlimbo),
             diffDir: this.props.data.rent - this.props.data.result.mietlimbo < 0 ? 'mehr' : 'weniger'
           }} />
-        }
       </p>
 
       <RenovationCase

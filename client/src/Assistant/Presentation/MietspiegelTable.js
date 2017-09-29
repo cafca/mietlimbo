@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { injectIntl, FormattedMessage, defineMessages } from 'react-intl';
-import { radioDescriptions } from "../GenericInputs/ConstructionDateInput";
+import { constructionDateOptionsTranslations } from "../GenericTranslations";
 import { officialDescriptions } from "../GenericInputs/BaseFeaturesInput";
 
-import type {Data} from "../Assistant";
+import type { Data } from "../Assistant";
 
 const messages = defineMessages({
   perSquareMeter: {
@@ -30,7 +30,7 @@ const MietspiegelTable = (props: Data) => {
             und Ausstattung {baseFeatures} reduziert (siehe Anmerkungen im 
             Berliner Mietspiegel 2017, Seite 12)."
           values={{
-            constructionDate: <em><FormattedMessage {...radioDescriptions[props.constructionDate]} /></em>,
+            constructionDate: <em><FormattedMessage {...constructionDateOptionsTranslations[props.constructionDate]} /></em>,
             baseFeatures: <em><FormattedMessage {...officialDescriptions[props.baseFeatures]} /></em>
           }} 
         />
@@ -50,7 +50,7 @@ const MietspiegelTable = (props: Data) => {
         </tr>
         <tr>
           <td><FormattedMessage id="Summary.MietspiegelConstructionDate" defaultMessage="Gebäudealter" />:</td>
-          <td><FormattedMessage {...radioDescriptions[props.constructionDate]} /></td>
+          <td><FormattedMessage {...constructionDateOptionsTranslations[props.constructionDate]} /></td>
         </tr>
         <tr>
           <td><FormattedMessage id="Summary.MietspiegelSquareMeters" defaultMessage="Wohnfläche" />:</td>

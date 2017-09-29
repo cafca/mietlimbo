@@ -2,7 +2,7 @@
 
 import React from 'react';
 import autoBind from 'react-autobind';
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 
@@ -11,12 +11,18 @@ import Mietspiegel from './Presentation/Mietspiegel';
 import FinalResult from './Presentation/FinalResult';
 import Summary from './Presentation/Summary';
 import Progress from './Progress';
+
 import {
   stageNames,
   featureGroupNames,
   stageConditions,
   initialData
 } from "./Config";
+
+import {
+  featureGroupLongTranslations,
+  genericInputTranslations
+} from "./GenericTranslations";
 
 import LeaseCreatedInput from './GenericInputs/LeaseCreatedInput';
 import RenovationInput from './GenericInputs/RenovationInput';
@@ -38,122 +44,6 @@ import * as EnvironmentFeatures from './ApartmentFeatureInputs/EnvironmentFeatur
 
 import './Assistant.css';
 
-export const stageNameTranslations = defineMessages({
-  "Einleitung": {
-    id: "StageNames.Einleitung",
-    defaultMessage: "Einleitung"
-  },
-  "Ausnahmen": {
-    id: "StageNames.Ausnahmen",
-    defaultMessage: "Ausnahmen"
-  },
-  "Basisdaten": {
-    id: "StageNames.Basisdaten",
-    defaultMessage: "Basisdaten"
-  },
-  "Mietspiegel": {
-    id: "StageNames.Mietspiegel",
-    defaultMessage: "Mietspiegel"
-  },
-  "Bad": {
-    id: "StageNames.Bad",
-    defaultMessage: "Bad"
-  },
-  "Küche": {
-    id: "StageNames.Küche",
-    defaultMessage: "Küche"
-  },
-  "Wohnung": {
-    id: "StageNames.Wohnung",
-    defaultMessage: "Wohnung"
-  },
-  "Gebäude": {
-    id: "StageNames.Gebäude",
-    defaultMessage: "Gebäude"
-  },
-  "Umfeld": {
-    id: "StageNames.Umfeld",
-    defaultMessage: "Umfeld"
-  },
-  "Auswertung": {
-    id: "StageNames.Auswertung",
-    defaultMessage: "Auswertung"
-  },
-  "Ausdrucken": {
-    id: "StageNames.Ausdrucken",
-    defaultMessage: "Ausdrucken"
-  }
-});
-
-const featureGroupLongNames = defineMessages({
-  "Bad": {
-    id: "StageHeaders.Bad",
-    defaultMessage: "Badezimmer und WC"
-  },
-  "Küche": {
-    id: "StageHeaders.Küche",
-    defaultMessage: "Küche"
-  },
-  "Wohnung": {
-    id: "StageHeaders.Wohnung",
-    defaultMessage: "Wohnung"
-  },
-  "Gebäude": {
-    id: "StageHeaders.Gebäude",
-    defaultMessage: "Gebäude"
-  },
-  "Umfeld": {
-    id: "StageHeaders.Umfeld",
-    defaultMessage: "Wohnumfeld"
-  },
-});
-
-const genericInputNameTranslations = defineMessages({
-  "autoSave": {
-    id: "GenericInputName.autoSave",
-    defaultMessage: "automatisches Speichern"
-  },
-  "leaseCreated": {
-    id: "GenericInputName.leaseCreated",
-    defaultMessage: "Vertragsdatum"
-  },
-  "newBuilding" : {
-    id: "GenericInputName.newBuilding",
-    defaultMessage: "Neubau"
-  },
-  "renovation" : {
-    id: "GenericInputName.renovation",
-    defaultMessage: "Renovierung"
-  },
-  "previousRent": {
-    id: "GenericInputName.previousRent",
-    defaultMessage: "Vormiete"
-  },
-  "address" : {
-    id: "GenericInputName.address",
-    defaultMessage: "Adresse"
-  },
-  "rent" : {
-    id: "GenericInputName.rent",
-    defaultMessage: "Nettokaltmiete"
-  },
-  "squareMeters" : {
-    id: "GenericInputName.squareMeters",
-    defaultMessage: "Größe der Wohnung"
-  },
-  "constructionDate": {
-    id: "GenericInputName.constructionDate",
-    defaultMessage: "Datum der Bezugsfertigkeit"
-  },
-  "mietspiegel": {
-    id: "GenericInputName.mietspiegel",
-    defaultMessage: "Mietspiegelabfrage"
-  },
-  baseFeatures: {
-    id: "GenericInputName.baseFeatures",
-    defaultMessage: "besondere Ausstattung"
-  }
-});
 
 type AssistantProps = {
   match: {params: {stage: number}},
@@ -225,8 +115,13 @@ class Assistant extends React.Component {
     }
 	}
 
+  /**
+   * Generate initial (empty) data set or load from localstorage, then update
+   * page URL and end result.
+   * 
+   * @return {void}
+   */
   componentWillMount() {
-    // Fill state with empty data sets and activate stage based on URL
     this.setState(this.initializeData(), () => {
       if (this.props.match && this.props.match.params.stage && this.props.match.params.stage !== this.state.stage) {
         const stage = parseInt(this.props.match.params.stage, 10);
@@ -235,14 +130,24 @@ class Assistant extends React.Component {
     });
   }
 
+  /**
+   * Process route passed in through URL if the requested stage is available
+   * 
+   * @param  {void} nextProps: AssistantProps 
+   * @return {void}
+   */
   componentWillReceiveProps(nextProps: AssistantProps) {
-    // Process route passed in through URL if the requested stage is available
     if (nextProps.match && nextProps.match.params.stage !== this.props.match.params.stage) {
       const stage = parseInt(nextProps.match.params.stage, 10);
       stage !== undefined && this.requestStage(stage);
     }
   }
 
+  /**
+   * Load data from localstorage or generate empty data set
+   * 
+   * @return {Data}
+   */
   initializeData() {
     const storedState = this.load();
 
@@ -261,6 +166,12 @@ class Assistant extends React.Component {
     }
   }
 
+  /**
+   * Try navigating to the requested stage number
+   * 
+   * @param stage: number    Integer for the stage number to navigate to
+   * @return {void}.         [description]
+   */
   requestStage(stage: number) {
     if (stage !== undefined && stage !== this.state.stage && this.isStageEnabled(stage)) {
       this.setState({stage}, () => {
@@ -272,11 +183,28 @@ class Assistant extends React.Component {
     }
   }
 
+  /**
+   * Handler to be called when an input field becomes valid/invalid
+   * 
+   * @param  {[type]} name:  string        Name of the input field
+   * @param  {[type]} valid: boolean       New validity state
+   * @param  {[type]} cb?:   Function      Optional callback
+   * @return {void}        [description]
+   */
 	handleInputValid(name: string, valid: boolean, cb?: Function) {
     const newInputValid = Object.assign(this.state.inputValid, {[name]: valid});
     this.setState({inputValid: newInputValid}, cb);
 	}
 
+
+  /**
+   * Handler to be called when an input field's data has changed. Autosaves.
+   * 
+   * @param  {[type]} newData: Object        Object with all data fields to be 
+   *                                         updated
+   * @param  {[type]} cb?:     Function      Optional callback
+   * @return {void}          [description]
+   */
 	handleInputChanged(newData: Object, cb?: Function) {
     // This method is called from input components when their respective data is updated
     this.setState({data: Object.assign({}, this.state.data, newData)}, () => {
@@ -285,6 +213,14 @@ class Assistant extends React.Component {
     });
 	}
 
+  /**
+   * Handler to be called when user clicks the next button on the bottom.
+   *
+   * Proceeds to the next stage if enabled or alerts the user of fields, which
+   * still need to be filled out.
+   * 
+   * @return {[type]} [description]
+   */
   handleNext() {
     if (this.isStageEnabled(this.state.stage + 1)) {
       this.requestStage(this.state.stage + 1)
@@ -299,21 +235,37 @@ class Assistant extends React.Component {
           defaultMessage: "Es fehlt noch eine Antwort zu {fieldname}"
         }, {
           fieldname: this.props.intl.formatMessage(
-            {...genericInputNameTranslations[nextMissingName]})
+            {...genericInputTranslations[nextMissingName]})
         })
       })
     }
   }
 
+  /**
+   * Handler to be called when user closes alert (snackbar)
+   * 
+   * @return {[type]} [description]
+   */
   handleSnackbarClose() {
     this.setState({snackbarOpen: false});
   }
 
+  /**
+   * Serialize data and data validity to HTML5 local storage
+   * 
+   * @return {void} [description]
+   */
   save() {
     localStorage.setItem("data", JSON.stringify(this.state.data));
     localStorage.setItem("inputValid", JSON.stringify(this.state.inputValid));
   }
 
+  /**
+   * Deserialize data from HTML5 local storage. Fails on old browsers
+   * 
+   * @return {undefined} For old browsers
+   * @return {{data: Data, inputValid, {[string]: boolean}}} Saved data
+   */
   load() {
     let dataJSON = null, validJSON = null;
 
@@ -330,8 +282,20 @@ class Assistant extends React.Component {
       } : undefined;
   }
 
+  /**
+   * Update the final result if mietspiegel data is already available
+   *
+   * Makes available the keys 
+   *         localRentLevel, 
+   *         mietlimboLevel,
+   *         mietlimbo,
+   *         featureGroupBalance
+   * under this.state.data.result
+   * 
+   * @param  {[type]} cb?: Function      Optional callback
+   * @return {void}      [description]
+   */
   update(cb?: Function) {
-    // Only update the Mietpreisbremse value when the final result page is accessible
     if (this.state.inputValid["mietspiegel"]) {
       // To calculate balance, for every group with predominantly positive features 1 is added,
       // for predominantly negative groups 1 is subtracted
@@ -372,6 +336,13 @@ class Assistant extends React.Component {
     }
   }
 
+  /**
+   * Return true if all data required for proceeding to param stage is marked
+   * valid in this.state.inputValid
+   * 
+   * @param  {[type]}  stage: number        Requested stage number
+   * @return {Boolean}        True if enabled
+   */
   isStageEnabled(stage: number) {
     if (stage > stageNames.length) {
       return false;
@@ -386,6 +357,12 @@ class Assistant extends React.Component {
     }
   }
 
+  /**
+   * Returns a list of missing field names for completing this stage
+   * 
+   * @param  {[type]} stage?: number        Target stage, defaults to next stage
+   * @return {[string]}         List of input names that are missing
+   */
   missingFields(stage?: number) {
     if (stage === undefined) stage = this.state.stage + 1;
     return stageConditions
@@ -399,6 +376,15 @@ class Assistant extends React.Component {
       );
   }
 
+  /**
+   * Render the assistant in current state. 
+   *
+   * Basically a big switch with a case for each stage. Feature group stages
+   * are handled by the same switch as they are basically the same, just have
+   * different inputs.
+   * 
+   * @return {[type]} [description]
+   */
 	render() {
 		let content = "";
     let title = "";
@@ -477,7 +463,9 @@ class Assistant extends React.Component {
       case 7:
       case 8:
         content = <div>
-          <h1><FormattedMessage {...featureGroupLongNames[stageNames[this.state.stage]]} /></h1>
+          <h1><FormattedMessage 
+            {...featureGroupLongTranslations[stageNames[this.state.stage]]} />
+          </h1>
           <RangeSelectionGroup 
             domain={stageNames[this.state.stage]}
             key={stageNames[this.state.stage]}
@@ -511,7 +499,10 @@ class Assistant extends React.Component {
 		}
 
     const debug = process.env.NODE_ENV === "production" ? null 
-      : <pre>{JSON.stringify(this.state.data, null, 2)}</pre>;
+      : <span>
+          <pre>{JSON.stringify(this.state.data, null, 2)}</pre>
+          <pre>{JSON.stringify(this.state.inputValid, null, 2)}</pre>
+        </span>;
 
     // Don't display next button on final assistant page
     const buttonDisplayStyle = this.state.stage === stageNames.indexOf("Ausdrucken") 
