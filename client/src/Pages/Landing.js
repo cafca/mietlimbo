@@ -35,7 +35,7 @@ const Landing = (props) => <div style={style.wrapper}>
   <RaisedButton 
     secondary={true}
     label={<FormattedMessage {...messages.clicky} />}
-    containerElement={<NavLink to="/app/" />}
+    containerElement={<NavLink to="/preview/" />}
   />
 
 </div>;
