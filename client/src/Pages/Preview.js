@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 import logoOkf from "../Graphics/logo-okfn.svg";
 import logoBmbf from "../Graphics/logo-bmbf.svg";
 import {grey500, blue500} from 'material-ui/styles/colors';
+ import RaisedButton from 'material-ui/RaisedButton';
+ import EmailIcon from 'material-ui/svg-icons/communication/email';
 
 import ml1 from "../Graphics/ml1.png";
 import ml2 from "../Graphics/ml2.png";
@@ -48,19 +50,15 @@ const Preview = () => <div style={style.container}>
   ich im Moment nach einem Kooperationspartner, der mir hiermit hilft. Hast du eine Idee, wer das sein könnte? 
   Dann schreibe mir gerne an <a href="mailto:hallo@mietlimbo.de" style={style.link}>hallo@mietlimbo.de</a></p>
 
-  <p>Wenn du (einmalig) von mir hören möchtest, sobald mietlimbo offiziell startet, melde dich hier einfach mit deiner Email-Adresse an:</p>
+  <p>Wenn du (einmalig) von mir hören möchtest, sobald mietlimbo offiziell startet, klick den Button um dich mit deiner Email-Adresse dafür anzumelden:</p>  
 
-  <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css"></link>
-  <div id="mc_embed_signup" style={{clear:"left", font:"14px Helvetica,Arial,sans-serif", width:"100%"}}>
-  <form action="//github.us3.list-manage.com/subscribe/post?u=ccc89b05626e50b935568e6ec&amp;id=090381b944" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank" noValidate>
-      <div id="mc_embed_signup_scroll">
-    
-    <input type="email" value="" name="EMAIL" className="email" id="mce-EMAIL" placeholder="Email-Adresse" required></input>
-      <div style={{position: "absolute", left: -5000}} aria-hidden="true"><input type="text" name="b_ccc89b05626e50b935568e6ec_090381b944" tabIndex="-1" value=""></input></div>
-      <div className="clear"><input type="submit" value="Anmelden" name="subscribe" id="mc-embedded-subscribe" className="button"></input></div>
-      </div>
-  </form>
-  </div>
+  <RaisedButton
+      href="http://github.us3.list-manage.com/subscribe/post?u=ccc89b05626e50b935568e6ec&id=090381b944"
+      target="_blank"
+      label="Sag mir Bescheid"
+      primary={true}
+      icon={<EmailIcon />}
+    />
 
   <h2>Das kann mietlimbo</h2>
 
