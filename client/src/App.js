@@ -17,6 +17,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Assistant from './Assistant/Assistant';
 import Landing from './Pages/Landing';
 import About from './Pages/About';
+import Preview from './Pages/Preview';
 import Theme from './Theme.js'
 import './App.css'; 
 
@@ -33,6 +34,25 @@ type AppProps = {
 };
 
 
+// const App = (props: AppProps) => {
+//   const switchLocaleIcon = props.locale === "de" ? enIcon : deIcon;
+//   const switchLocaleStyle = {position: "absolute", right: "20px"};
+
+//   return (
+//     <BrowserRouter>
+//       <div className="App">
+//         <IconButton onClick={props.changeLocale} children={switchLocaleIcon} style={switchLocaleStyle} />
+//         <div className="App-main">
+//           <Route exact path="/" component={Landing} />
+//           <Route exact path="/app/" component={Assistant} />
+//           <Route path="/app/:stage/" component={Assistant} />
+//           <Route path="/about/" component={About} />
+//         </div>
+//       </div>  
+//     </BrowserRouter>
+//   );
+// };
+
 const App = (props: AppProps) => {
   const switchLocaleIcon = props.locale === "de" ? enIcon : deIcon;
   const switchLocaleStyle = {position: "absolute", right: "20px"};
@@ -43,8 +63,7 @@ const App = (props: AppProps) => {
         <IconButton onClick={props.changeLocale} children={switchLocaleIcon} style={switchLocaleStyle} />
         <div className="App-main">
           <Route exact path="/" component={Landing} />
-          <Route exact path="/app/" component={Assistant} />
-          <Route path="/app/:stage/" component={Assistant} />
+          <Route path="/preview/" component={Preview} />
           <Route path="/about/" component={About} />
         </div>
       </div>  

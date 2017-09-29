@@ -11,7 +11,7 @@ import { blue300, pinkA200, grey400 } from 'material-ui/styles/colors';
 import Paper from "material-ui/Paper";
 
 import { stageNames } from "./Config";
-import { stageNameTranslations } from "./Assistant";
+import { stageNameTranslations } from "./GenericTranslations";
 import {groupBalance} from"./ApartmentFeatureInputs/RangeSelectionGroup";
 
 type ProgressProps = {
