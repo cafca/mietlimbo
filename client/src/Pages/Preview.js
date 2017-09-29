@@ -48,7 +48,7 @@ const Preview = () => <div style={style.container}>
   <p>Obwohl die Software bereits fertig entwickelt ist, kann ich mietlimbo im Moment noch nicht veröffentlichen, da das Rechtsdienstleistungsgesetz
   dies nur zulässt, wenn ich vorher alle Inhalte von einem Anwalt habe prüfen lassen. Daher suche
   ich im Moment nach einem Kooperationspartner, der mir hiermit hilft. Hast du eine Idee, wer das sein könnte? 
-  Dann schreibe mir gerne an <a href="mailto:hallo@mietlimbo.de" style={style.link}>hallo@mietlimbo.de</a></p>
+  Dann schreibe mir gerne an <a href="mailto:hallo@mietlimbo.de" style={style.link}>hallo@mietlimbo.de</a> oder <a href="https://twitter.com/ciex">@ciex</a></p>
 
   <p>Wenn du (einmalig) von mir hören möchtest, sobald mietlimbo offiziell startet, klick den Button um dich mit deiner Email-Adresse dafür anzumelden:</p>  
 
