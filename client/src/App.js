@@ -64,6 +64,9 @@ const App = (props: AppProps) => {
         <div className="App-main">
           <Route exact path="/" component={Landing} />
           <Route path="/preview/" component={Preview} />
+          <Route exact path="/app/" component={Assistant} />
+          <Route path="/app/:stage/" component={Assistant} />
+          <Route path="/preview/" component={Preview} />
           <Route path="/about/" component={About} />
         </div>
       </div>  

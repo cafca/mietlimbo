@@ -534,9 +534,42 @@ class Assistant extends React.Component {
         message={this.state.snackbarMsg}
         autoHideDuration={4000}
         onRequestClose={this.handleSnackbarClose} />
-      {debug}
+      
 		</div>;
 	}
 }
 
-export default injectIntl(Assistant);
+class AssistantWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+    autoBind(this);
+    this.state = {
+      login: false
+    }
+  }
+
+  componentWillMount() {
+    const auth = localStorage.getItem("mietlimboDemo");
+    if (auth === "approved") {
+      this.setState({login: true});
+    }
+  }
+
+  checkPass(event) {
+    if (event.target.value === "arbeitskreis") {
+      localStorage.setItem("mietlimboDemo", "approved");
+      this.setState({login: true});
+    }
+  }
+
+  render() {
+    return this.state.login === true
+      ? <Assistant {...this.props} />
+      : <div>
+        <label>Bitte Passwort eingeben:</label>
+        <input type="password" value={this.password} onChange={this.checkPass} />
+      </div>;
+  }
+}
+
+export default injectIntl(AssistantWrapper);
