@@ -103,6 +103,8 @@ class Assistant extends React.Component {
     }
   };
 
+  stageConditions : Array<Array<string>>;
+
 	constructor(props: AssistantProps) {
 		super(props);
 		autoBind(this);
@@ -113,6 +115,7 @@ class Assistant extends React.Component {
       snackbarMsg: "",
       snackbarOpen: false
     }
+    this.stageConditions = stageConditions;
 	}
 
   /**
@@ -349,7 +352,7 @@ class Assistant extends React.Component {
     } else {
       // A stage is enabled if the conditions for all stages up to
       // it are keys of the inputValid object
-      return stageConditions
+      return this.stageConditions
         .slice(0, stage)
         .reduce((acc, cur) => acc.concat(cur), [])
         .map(condition => this.state.inputValid[condition] === true)
@@ -365,7 +368,7 @@ class Assistant extends React.Component {
    */
   missingFields(stage?: number) {
     if (stage === undefined) stage = this.state.stage + 1;
-    return stageConditions
+    return this.stageConditions
       .slice(0, stage)
       .reduce((acc, cur) => acc.concat(cur), [])
       .reduce((acc, cur) => 
@@ -420,11 +423,17 @@ class Assistant extends React.Component {
         // absence or presence of these base features.
         let optionalInput = "";
         if (["Pre1918", "Pre1949", "Pre1964"].indexOf(this.state.data.constructionDate) >= 0) {
-          stageConditions[2].push("baseFeatures");
+          this.stageConditions[2].push("baseFeatures");
           optionalInput = <BaseFeaturesInput 
             valid={valid} 
             changed={changed} 
             value={this.state.data.baseFeatures} />;
+        } else {
+          // Remove basefeatures component again after construction date was changed again
+          const bfIndex = this.stageConditions[2].indexOf("baseFeatures");
+          if (bfIndex > -1) {
+            this.stageConditions[2].splice(bfIndex, 1);
+          }
         }
 
 				content = <div key="stage2">
