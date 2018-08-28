@@ -565,7 +565,7 @@ class AssistantWrapper extends React.Component {
   }
 
   checkPass(event) {
-    if (event.target.value === "arbeitskreis") {
+    if (event.target.value === "berliner (ver)mieterverein") {
       localStorage.setItem("mietlimboDemo", "approved");
       this.setState({login: true});
     }
