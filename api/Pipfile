@@ -10,9 +10,10 @@ requests = "*"
 prettyprint = "*"
 Flask = "==0.12.3"
 Flask-Cors = "*"
+uwsgi = "*"
 
 [dev-packages]
 pytest = "*"
 
-[requires]
-python_version = "3.7"
+# [requires]
+# python_version = "3.7"
