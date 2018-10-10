@@ -14,35 +14,25 @@ In der Gestaltung des Angebots möchte ich einen Fokus auf Nutzerfreundlichkeit 
 
 Mietlimbo ist eine mit dem React-Framework geschriebene Web App mit einem Python Backend. Hier möchte ich beschreiben, wie ihr alle Komponenten installieren und bauen könnt.
 
-1. Falls noch nicht vorhanden, Python3, PIP, Node.js und Virtualenv mit einem Package Manager installieren. Für Homebrew auf Mac zum Beispiel:
+1. Falls noch nicht vorhanden, Python3, Pipenv, und Node.js mit einem Package Manager installieren. Für Homebrew auf Mac zum Beispiel:
 
-    `$ brew install python3 pip node`
-    
-    `$ pip install virtualenv`
+    `$ brew install python3 pipenv node`
 
-2. Legt ein Virtual Environment für das Backend an. Alle Quelldateien liegen später in dieser Umgebung. 
-
-	`$ virtualenv -p python3 mietlimbo-env`
-
-3. Jetzt können die Quellen in die Umgebung geklont werden.
-
-	`$ cd mietlimbo-env`
+2. Jetzt können die Quellen geladen werden
 	
-	`$ git clone git@github.com:ciex/mietlimbo.git src`
+	`$ git clone git@github.com:ciex/mietlimbo.git`
 
-4. Python Requirements installieren
+3. Legt ein Virtual Environment für das Backend an.
 
-	`$ source bin/activate`
-	
-	`$ cd src`
-	
-	`$ pip install -r requirements.txt`
+	`$ cd mietlimbo/api`
 
-5. Das Backend ist jetzt fertig installiert. Um es zu starten muss auch in Zukunft zunächst mit `source bin/activate` die Umgebung aktiviert werden, bevor der Entwicklungs-Server gestartet wird.
+	`$ pipenv install`
+
+5. Das Backend ist jetzt fertig installiert. Mit `pipenv shell` kann die Umgebung aktiviert werden. Oder direkt den Entwicklungs-Server aus dem `api/`-Verzeichnis heraus starten:
 
 	`$ cd api`
 	
-	`$ python main.py`
+	`$ MIETLIMBO_CONFIG=development_config.py pipenv run python main.py`
 
 Der Entwicklungs-Server ist nun über `http://localhost:8000/` erreichbar und kann im Hintergrund weiterlaufen.
 
@@ -50,11 +40,11 @@ Der Entwicklungs-Server ist nun über `http://localhost:8000/` erreichbar und ka
 
 	`$ cd ../client`
 	
-	`$ npm install`
+	`$ yarn install`
 
 7. Jetzt kann auch der Entwicklungs-Server für das Frontend gestartet werden.
 
-	`$ npm start`
+	`$ yarn start`
 
 Die Entwicklungs-Version von mietlimbo öffnet sich jetzt in eurem Webbrowser.
 
@@ -100,7 +90,7 @@ In diesen Wrapper werden je nach aktueller Stage weitere Eingabe- oder Präsenta
 
 	├── build					Statische Build-Dateien, die 
 	│   └── static 					auf dem Webserver öffentlich gemacht
-	│       ├── css 				werden können => `npm run build`
+	│       ├── css 				werden können => `yarn run build`
 	│       ├── js
 	│       └── media
 	├── public 					Statische Dateien für Entwicklung
