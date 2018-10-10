@@ -98,7 +98,6 @@ class Assistant extends React.Component {
 
   style = {
     container: {
-      paddingLeft: 180,
       marginBottom: 100
     }
   };
@@ -565,7 +564,7 @@ class AssistantWrapper extends React.Component {
   }
 
   checkPass(event) {
-    if (event.target.value === "berliner (ver)mieterverein") {
+    if (event.target.value === "salty-cookie-monster") {
       localStorage.setItem("mietlimboDemo", "approved");
       this.setState({login: true});
     }
