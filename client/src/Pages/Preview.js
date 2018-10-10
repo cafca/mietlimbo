@@ -45,8 +45,18 @@ const Preview = () => <div style={style.container}>
   bestimmte Wohnung den kritischen Wert <em>ortsübliche Vergleichsmiete + 10 Prozent</em> berechnet, 
   auf den die Miete gesenkt werden kann.</p>
 
-  <p>Obwohl die Software bereits fertig entwickelt ist, kann ich mietlimbo im Moment noch nicht veröffentlichen, da das Rechtsdienstleistungsgesetz
-  dies nur zulässt, wenn ich vorher alle Inhalte von einem Anwalt habe prüfen lassen. Daher suche
+  <p>Kommt es, wie so üblich, zu einer Verhandlung mit dem Vermieter über die 
+  Merkmale, welche auf die Wohnung zutreffen, so erlaubt mietlimbo das schnelle
+  durchprobieren verschiedener Konfigurationen. Dadurch kann geprüft werden,
+  ob es sich z.B. lohnt, darum zu kämpfen, dass das Parkett als hochwertig
+  klassifiziert wird - oder ob es letzendlich keinen Unterschied auf die Einordnung
+  der Wohnung im Mietspiegel hat.</p>
+
+  <p>Alle persönlichen Daten werden dabei lokal im Browser gespeichert und 
+  lassen sich einfach mit einem Klick auf der Startseite wieder löschen.</p>
+
+  <p><strong>Obwohl die Software bereits fertig entwickelt ist, kann ich mietlimbo im Moment noch nicht veröffentlichen</strong>, da das Rechtsdienstleistungsgesetz
+  dies nur zulässt, wenn ich vorher alle Inhalte mit einem Anwalt zusammen prüfe. Daher suche
   ich im Moment nach einem Kooperationspartner, der mir hiermit hilft. Hast du eine Idee, wer das sein könnte? 
   Dann schreibe mir gerne an <a href="mailto:hallo@mietlimbo.de" style={style.link}>hallo@mietlimbo.de</a> oder <a href="https://twitter.com/ciex" style={style.link}>@ciex</a></p>
 
