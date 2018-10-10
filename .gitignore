@@ -7,3 +7,4 @@ __pycache__
 *.db
 data/*
 .venv
+api/.env
