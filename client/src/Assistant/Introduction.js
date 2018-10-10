@@ -105,7 +105,7 @@ export const Introduction = (props) => {
 
 export const Title = () => <Paper zDepth={4} style={styles.titleWrapper}><p style={styles.bigtext}><FormattedMessage
   id="Introduction.overview"
-  defaultMessage={`Mit mietlimbo findest du in 30 Minuten heraus, 
+  defaultMessage={`Mit mietlimbo findest du blitzschnell heraus, 
     wieviel Geld du monatlich mit der Mietpreisbremse sparen kannst und was genau 
     der erste Schritt ist, um dahin zu kommen.`}
 /></p></Paper>;
