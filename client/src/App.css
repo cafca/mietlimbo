@@ -1,6 +1,6 @@
 .App {
   text-align: left;
-  width: 960px;
+  max-width: 960px;
   margin: 0 auto;
   min-height: 600px;
 }

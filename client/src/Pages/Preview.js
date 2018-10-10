@@ -55,7 +55,7 @@ const Preview = () => <div style={style.container}>
   <p>Alle persönlichen Daten werden dabei lokal im Browser gespeichert und 
   lassen sich einfach mit einem Klick auf der Startseite wieder löschen.</p>
 
-  <p><strong>Obwohl die Software bereits fertig entwickelt ist, kann ich mietlimbo im Moment noch nicht veröffentlichen</strong>, da das Rechtsdienstleistungsgesetz
+  <p><strong>Obwohl ein Prototyp der Software bereits fertig entwickelt ist, kann ich mietlimbo im Moment noch nicht veröffentlichen</strong>, da das Rechtsdienstleistungsgesetz
   dies nur zulässt, wenn ich vorher alle Inhalte mit einem Anwalt zusammen prüfe. Daher suche
   ich im Moment nach einem Kooperationspartner, der mir hiermit hilft. Hast du eine Idee, wer das sein könnte? 
   Dann schreibe mir gerne an <a href="mailto:hallo@mietlimbo.de" style={style.link}>hallo@mietlimbo.de</a> oder <a href="https://twitter.com/ciex" style={style.link}>@ciex</a></p>
