@@ -1,18 +1,18 @@
 // @flow
 
-import React from 'react';
-import autoBind from 'react-autobind';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import Sticky from "react-stickynode";
+import React from 'react'
+import autoBind from 'react-autobind'
+import { injectIntl, FormattedMessage } from 'react-intl'
+import Sticky from 'react-stickynode'
 import { NavLink } from 'react-router-dom'
 
-import FlatButton from 'material-ui/FlatButton';
-import { blue300, pinkA200, grey400 } from 'material-ui/styles/colors';
-import Paper from "material-ui/Paper";
+import FlatButton from 'material-ui/FlatButton'
+import { blue300, pinkA200, grey400 } from 'material-ui/styles/colors'
+import Paper from 'material-ui/Paper'
 
-import { stageNames } from "./Config";
-import { stageNameTranslations } from "./GenericTranslations";
-import {groupBalance} from"./ApartmentFeatureInputs/RangeSelectionGroup";
+import { stageNames } from './Config'
+import { stageNameTranslations } from './GenericTranslations'
+import {groupBalance} from'./ApartmentFeatureInputs/RangeSelectionGroup'
 
 type ProgressProps = {
   advance: number => any,
@@ -23,18 +23,18 @@ type ProgressProps = {
 class Progress extends React.Component {
   style = {
     main: {
-      marginBottom: "1em"
+      marginBottom: '1em'
     },
     stageButton: {
       borderRadius: 0
     },
     activeStageButton: {
       borderRadius: 0,
-      color: "white"
+      color: 'white'
     },
     anchorStageButton: {
       borderRadius: 0,
-      verticalAlign: "top"
+      verticalAlign: 'top'
     },
     stageGroupLabel: {
       width: 40, 
@@ -50,20 +50,20 @@ class Progress extends React.Component {
   }
 
   constructor(props: ProgressProps) {
-    super(props);
-    autoBind(this);
+    super(props)
+    autoBind(this)
   }
 
   handleClick(i: number) {
-    this.props.requestStage(i);
+    this.props.requestStage(i)
   }
 
   render() { 
     const ButtonLabel = (props: {stageName: string, index: number}) => {
-      const balance = groupBalance(this.props.data[stageNames[props.index]]);
-      const isBadgeEnabled = (3 < props.index) && (props.index < 9) && balance !== 0;
-      const badge = isBadgeEnabled ? (balance < 0 ? balance : <span>+{balance}</span>) : null;
-      return <span><FormattedMessage {...stageNameTranslations[props.stageName]} /> {badge}</span>;
+      const balance = groupBalance(this.props.data[stageNames[props.index]])
+      const isBadgeEnabled = (3 < props.index) && (props.index < 9) && balance !== 0
+      const badge = isBadgeEnabled ? (balance < 0 ? balance : <span>+{balance}</span>) : null
+      return <span><FormattedMessage {...stageNameTranslations[props.stageName]} /> {badge}</span>
     }
 
     const stageButtons = stageNames.map(
@@ -83,15 +83,15 @@ class Progress extends React.Component {
               : grey400  // group is neutral or button is not for a group
           : null // no backgroundcolor if not active
         }
-      />;}
-      );
+      />}
+    )
 
     return <section style={this.style.main} className="navigation">
       <Sticky enabled={this.props.stage <= 3} innerZ={4}>
         <Paper className="featureGroups" zDepth={3}>
           <FlatButton 
             label="Ⅰ" 
-            key={"Stage 1"}
+            key={'Stage 1'}
             disabled={true} 
             style={this.style.stageGroupLabel}
           />
@@ -105,7 +105,7 @@ class Progress extends React.Component {
         <Paper className="featureGroups" zDepth={2}>
           <FlatButton 
             label="Ⅱ" 
-            key={"Stage 2"}
+            key={'Stage 2'}
             disabled={true} 
             style={this.style.stageGroupLabel}
           />
@@ -119,35 +119,35 @@ class Progress extends React.Component {
         <Paper className="featureGroups">
           <FlatButton 
             label="Ⅲ" 
-            key={"Stage 3"}
+            key={'Stage 3'}
             disabled={true} 
             style={this.style.stageGroupLabel}
           />
           {stageButtons.slice(9)}
           <FlatButton 
             label="Blog" 
-            key={"Blog"}
+            key={'Blog'}
             href="https://blog.mietlimbo.de/"
             target="_blank"
             style={this.style.anchorStageButton}
           />
           <FlatButton 
             label="Impressum" 
-            key={"Über"}
+            key={'Über'}
             style={this.style.anchorStageButton}
             containerElement={<NavLink to="/about/" />}
           />
           <FlatButton 
             label="Community" 
-            key={"Community"}
+            key={'Community'}
             style={this.style.anchorStageButton}
             href="https://community.mietlimbo.de/"
             target="_blank"
           />
         </Paper>
       </Sticky>
-    </section>;
+    </section>
   }
 }
 
-export default injectIntl(Progress);
+export default injectIntl(Progress)

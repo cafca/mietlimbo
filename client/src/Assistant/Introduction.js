@@ -1,13 +1,13 @@
 // @flow
 
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
-import { pinkA200 } from 'material-ui/styles/colors';
-import Paper from 'material-ui/Paper';
-import { Card, CardText, CardTitle } from "material-ui/Card";
+import { pinkA200 } from 'material-ui/styles/colors'
+import Paper from 'material-ui/Paper'
+import { Card, CardText, CardTitle } from 'material-ui/Card'
 
-import AutoSave from "./GenericInputs/AutoSave";
+import AutoSave from './GenericInputs/AutoSave'
 
 const styles = {
   bigtext: {
@@ -21,10 +21,10 @@ const styles = {
     fontSize: 18
   },
   titleWrapper: {
-    padding: "1em",
+    padding: '1em',
     marginBottom: 5
   }
-};
+}
 
 export const Introduction = (props) => {
   return <section>
@@ -39,19 +39,19 @@ export const Introduction = (props) => {
       <li>
         <FormattedMessage
           id="Introduction.requirement1"
-          defaultMessage={`Mietvertrag`}
+          defaultMessage={'Mietvertrag'}
         />
       </li>
       <li>
         <FormattedMessage
           id="Introduction.requirement2"
-          defaultMessage={`Heizkostenabrechnung`}
+          defaultMessage={'Heizkostenabrechnung'}
         />
       </li>
       <li>
         <FormattedMessage
           id="Introduction.requirement3"
-          defaultMessage={`Kaltmiete des Vormieters`}
+          defaultMessage={'Kaltmiete des Vormieters'}
         />
       </li>
       <li>
@@ -68,7 +68,7 @@ export const Introduction = (props) => {
         defaultMessage={`Wenn nicht alles zur Hand ist, dann ist das auch nicht schlimm, du kannst auch 
           erstmal schätzen und die Antwort des Vermieters abwarten. Wenn der 
           anderer Meinung ist, kannst du immernoch genauer nachforschen.`}
-        />
+      />
     </p>
     <p style={styles.text}><FormattedMessage
       id="Introduction.nextSteps"
@@ -100,7 +100,7 @@ export const Introduction = (props) => {
       </CardText>
     </Card>
     <AutoSave {...props} />
-  </section>;
+  </section>
 }
 
 export const Title = () => <Paper zDepth={4} style={styles.titleWrapper}><p style={styles.bigtext}><FormattedMessage
@@ -108,4 +108,4 @@ export const Title = () => <Paper zDepth={4} style={styles.titleWrapper}><p styl
   defaultMessage={`Mit mietlimbo findest du blitzschnell heraus, 
     wieviel Geld du monatlich mit der Mietpreisbremse sparen kannst und was genau 
     der erste Schritt ist, um dahin zu kommen.`}
-/></p></Paper>;
+/></p></Paper>

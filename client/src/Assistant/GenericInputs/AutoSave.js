@@ -1,14 +1,14 @@
 // @flow
 
-import React from 'react';
-import autoBind from 'react-autobind';
-import { FormattedMessage } from 'react-intl';
+import React from 'react'
+import autoBind from 'react-autobind'
+import { FormattedMessage } from 'react-intl'
 
-import { pinkA200 } from 'material-ui/styles/colors';
-import { RadioButtonGroup, RadioButton } from "material-ui/RadioButton";
-import { Card, CardText, CardTitle } from "material-ui/Card";
-import RaisedButton from "material-ui/RaisedButton";
-import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import { pinkA200 } from 'material-ui/styles/colors'
+import { RadioButtonGroup, RadioButton } from 'material-ui/RadioButton'
+import { Card, CardText, CardTitle } from 'material-ui/Card'
+import RaisedButton from 'material-ui/RaisedButton'
+import DeleteIcon from 'material-ui/svg-icons/action/delete'
 
 export type AutoSaveProps = {
   autoSave: boolean, 
@@ -18,33 +18,33 @@ export type AutoSaveProps = {
 };
 
 class AutoSave extends React.Component {
-  inputName = "autoSave";
-  state : Object;
+  inputName = 'autoSave';
+  state: Object;
 
   constructor(props: AutoSaveProps) {
-    super(props);
-    autoBind(this);
+    super(props)
+    autoBind(this)
   }
 
   handleChange(ev: SyntheticInputEvent, value: boolean) {
-    this.props.changed({[this.inputName]: value});
-    this.props.valid(this.inputName, true);
+    this.props.changed({[this.inputName]: value})
+    this.props.valid(this.inputName, true)
   }
 
   resetEverything() {
-    localStorage.clear(); 
+    localStorage.clear() 
     this.props.changed({[this.inputName]: null}, () => {
-      this.props.valid(this.inputName, false);
-    });
-  };
+      this.props.valid(this.inputName, false)
+    })
+  }
 
   isLocalStorageAvailable() {
     try {
-      localStorage.setItem("test", "test");
-      localStorage.removeItem("test");
-      return true;
+      localStorage.setItem('test', 'test')
+      localStorage.removeItem('test')
+      return true
     } catch(e) {
-      return false;
+      return false
     }
   }
 
@@ -54,7 +54,7 @@ class AutoSave extends React.Component {
         <FormattedMessage 
           id="Introduction.savingOptionTitle" 
           defaultMessage="Automatisch speichern?" 
-      />} />
+        />} />
       <CardText>
         <p><FormattedMessage
           id="Introduction.savingOption"
@@ -67,7 +67,7 @@ class AutoSave extends React.Component {
           <RadioButton value={true} label={<FormattedMessage 
             id="Introduction.savingOptionTrue"
             defaultMessage="Ja, bitte speichern." />} 
-            disabled={this.isLocalStorageAvailable() === false} />
+          disabled={this.isLocalStorageAvailable() === false} />
           <RadioButton value={false} label={<FormattedMessage 
             id="Introduction.savingOptionFalse"
             defaultMessage="Nein, ich lebe gerne gefährlich." />} />
@@ -104,8 +104,8 @@ class AutoSave extends React.Component {
         </CardText> 
       }
 
-    </Card>;
+    </Card>
   }
 }
 
-export default AutoSave;
+export default AutoSave

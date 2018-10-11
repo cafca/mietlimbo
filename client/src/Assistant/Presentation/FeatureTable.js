@@ -1,8 +1,8 @@
 // @flow
 
-import React from 'react';
-import autoBind from 'react-autobind';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import React from 'react'
+import autoBind from 'react-autobind'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 import {
   Table,
@@ -11,17 +11,17 @@ import {
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
-} from 'material-ui/Table';
-import { blue500, pinkA200 } from 'material-ui/styles/colors';
+} from 'material-ui/Table'
+import { blue500, pinkA200 } from 'material-ui/styles/colors'
 
-import Shortnames from "../ApartmentFeatureInputs/FeatureShortnames";
-import officialNames from "../ApartmentFeatureInputs/FeatureOfficialNames";
-import { groupBalance} from "../ApartmentFeatureInputs/RangeSelectionGroup";
-import type {Data} from "../Assistant";
-import { stageNameTranslations } from "../GenericTranslations";
-import { featureGroupNames } from "../Config";
+import Shortnames from '../ApartmentFeatureInputs/FeatureShortnames'
+import officialNames from '../ApartmentFeatureInputs/FeatureOfficialNames'
+import { groupBalance} from '../ApartmentFeatureInputs/RangeSelectionGroup'
+import type {Data} from '../Assistant'
+import { stageNameTranslations } from '../GenericTranslations'
+import { featureGroupNames } from '../Config'
 
-import "./FeatureTable.css";
+import './FeatureTable.css'
 
 type FeatureTableProps = Data & {
   officialNames: ?boolean
@@ -29,14 +29,14 @@ type FeatureTableProps = Data & {
 
 class FeatureTable extends React.Component {
   constructor(props: FeatureTableProps) {
-    super(props);
-    autoBind(this);
+    super(props)
+    autoBind(this)
   }
 
   renderTableRows() {
     const featureName = n => this.props.officialNames === true
       ? officialNames[n]
-      : <FormattedMessage {...Shortnames[n]} />;
+      : <FormattedMessage {...Shortnames[n]} />
 
     return featureGroupNames.map(group => <TableRow key={group}>
       <TableRowColumn>
@@ -52,14 +52,14 @@ class FeatureTable extends React.Component {
           <p key={n}>{featureName(n)}</p>
         )}
       </TableRowColumn>
-      <TableRowColumn style={{color: (groupBalance(this.props[group]) < 0 ? blue500 : groupBalance(this.props[group]) > 0 ? pinkA200 : "black"), "whiteSpace": "normal"}}>
-         {(groupBalance(this.props[group]) < 0 ? "Überwiegend mietsenkend" : (groupBalance(this.props[group]) === 0 ? "Neutral" : "Überwiegend mietsteigernd"))} ({groupBalance(this.props[group])})
+      <TableRowColumn style={{color: (groupBalance(this.props[group]) < 0 ? blue500 : groupBalance(this.props[group]) > 0 ? pinkA200 : 'black'), 'whiteSpace': 'normal'}}>
+        {(groupBalance(this.props[group]) < 0 ? 'Überwiegend mietsenkend' : (groupBalance(this.props[group]) === 0 ? 'Neutral' : 'Überwiegend mietsteigernd'))} ({groupBalance(this.props[group])})
       </TableRowColumn>
-    </TableRow>);
+    </TableRow>)
   }
 
   render() {
-    return <Table selectable={false} style={{border: "1px solid #eee", tableLayout: "fixed"}} className="featureTable">
+    return <Table selectable={false} style={{border: '1px solid #eee', tableLayout: 'fixed'}} className="featureTable">
       <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
         <TableRow>
           <TableHeaderColumn><FormattedMessage id="FinalResult.tableHeaderFeatures" defaultMessage="Merkmalgruppe" /></TableHeaderColumn>
@@ -70,17 +70,17 @@ class FeatureTable extends React.Component {
       </TableHeader>
       <TableBody displayRowCheckbox={false}>
         {this.renderTableRows()}
-        <TableRow style={{backgroundColor: "#f3f3f3"}}>
+        <TableRow style={{backgroundColor: '#f3f3f3'}}>
           <TableRowColumn>
             <FormattedMessage id="FinalResult.SummaryTotal" defaultMessage="Zusammen" description="Table row label for feature group summary" />
           </TableRowColumn>
           <TableRowColumn></TableRowColumn>
           <TableRowColumn></TableRowColumn>
-          <TableRowColumn>{(this.props.result.featureGroupBalance < 0 ? "-" + Math.abs(this.props.result.featureGroupBalance) + " Gruppen" : (this.props.result.featureGroupBalance > 0 ? "+" + this.props.result.featureGroupBalance + " Gruppen" : "neutral"))}</TableRowColumn>
+          <TableRowColumn>{(this.props.result.featureGroupBalance < 0 ? '-' + Math.abs(this.props.result.featureGroupBalance) + ' Gruppen' : (this.props.result.featureGroupBalance > 0 ? '+' + this.props.result.featureGroupBalance + ' Gruppen' : 'neutral'))}</TableRowColumn>
         </TableRow>
       </TableBody>
     </Table>
   }
 }
 
-export default injectIntl(FeatureTable);
+export default injectIntl(FeatureTable)

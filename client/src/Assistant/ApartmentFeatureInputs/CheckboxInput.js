@@ -1,11 +1,11 @@
 // @flow
 
-import React from 'react';
-import autoBind from 'react-autobind';
-import { defineMessages, injectIntl } from 'react-intl';
-import Checkbox from 'material-ui/Checkbox';
+import React from 'react'
+import autoBind from 'react-autobind'
+import { defineMessages, injectIntl } from 'react-intl'
+import Checkbox from 'material-ui/Checkbox'
 
-import './Styles.css';
+import './Styles.css'
 
 type CheckboxInputProps = {
   changed: (string, string) => mixed, 
@@ -15,13 +15,13 @@ type CheckboxInputProps = {
 };
 
 const messages = defineMessages({
-  "applies": {
-    id: "Rangeinput.FeatureApplies",
-    defaultMessage: "Trifft zu"
+  'applies': {
+    id: 'Rangeinput.FeatureApplies',
+    defaultMessage: 'Trifft zu'
   },
-  "atLeastOne": {
-    id: "Rangeinput.AtleastOneFeatureApplies",
-    defaultMessage: "Mindestens eins trifft zu"
+  'atLeastOne': {
+    id: 'Rangeinput.AtleastOneFeatureApplies',
+    defaultMessage: 'Mindestens eins trifft zu'
   }
 })
 
@@ -32,41 +32,41 @@ class CheckboxInput extends React.Component {
   };
 
   constructor(props: CheckboxInputProps) {
-    super(props);
-    autoBind(this);
+    super(props)
+    autoBind(this)
     this.state = {
       value: this.props.value
-    };
+    }
   }
 
   handleChange(ev: SyntheticInputEvent, checked: boolean) {
     this.setState({value: checked})
-    this.props.changed(this.props.name, this.props.positive, checked);
+    this.props.changed(this.props.name, this.props.positive, checked)
   }
 
   render() {
-    let message;
+    let message
     const style = {
-      width: "-webkit-fill-available -moz-available",
+      width: '-webkit-fill-available -moz-available',
       marginRight: 50,
       marginLeft: undefined,
-      display: "block",
-      fontSize: "initial"
-    };
+      display: 'block',
+      fontSize: 'initial'
+    }
     switch (this.props.message) {
-      case "applies":
-        message = this.props.intl.formatMessage(messages["applies"]);
-        style["marginLeft"] = 13;
-        style["fontSize"] = 40;
-        break;
+    case 'applies':
+      message = this.props.intl.formatMessage(messages['applies'])
+      style['marginLeft'] = 13
+      style['fontSize'] = 40
+      break
 
-      case "atLeastOne":
-        message = this.props.intl.formatMessage(messages["atLeastOne"]);
-        style["marginLeft"] = 13;
-        break
+    case 'atLeastOne':
+      message = this.props.intl.formatMessage(messages['atLeastOne'])
+      style['marginLeft'] = 13
+      break
 
-      default:
-        message = this.props.message;
+    default:
+      message = this.props.message
     }
 
     return <Checkbox
@@ -77,8 +77,8 @@ class CheckboxInput extends React.Component {
       style={style}
       value={this.props.name}
       checked={this.state.value === true}
-      onCheck={this.handleChange} />;
+      onCheck={this.handleChange} />
   }
 }
 
-export default injectIntl(CheckboxInput);
+export default injectIntl(CheckboxInput)
