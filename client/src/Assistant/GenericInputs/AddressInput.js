@@ -27,12 +27,12 @@ type AddressProps = AssistantInputProps & {
   value: ?Address
 }
 
-class AddressInput extends React.Component {
-  state: {
-    query: string,
-    address: ?Address
-  }
+type State = {
+  query: string,
+  address: ?Address
+}
 
+class AddressInput extends React.Component<AddressProps, State> {
   inputName: string = 'address'
 
   constructor(props: AddressProps) {
@@ -49,7 +49,7 @@ class AddressInput extends React.Component {
     if (this.props.value != undefined) this.props.valid(this.inputName, true)
   }
 
-  handleChange(ev: SyntheticInputEvent, value: string) {
+  handleChange(ev: SyntheticInputEvent<HTMLInputElement>, value: string) {
     this.setState({ query: value })
   }
 
@@ -225,7 +225,7 @@ class MietspiegelPlace extends React.Component {
       })
   }
 
-  handleSelection(ev: SyntheticInputEvent, value: Address) {
+  handleSelection(ev: SyntheticInputEvent<HTMLInputElement>, value: Address) {
     this.setState({ state: this.states.FINISHED, selected: value })
     this.props.handleSelection(value)
   }

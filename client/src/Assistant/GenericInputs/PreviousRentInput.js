@@ -32,7 +32,7 @@ class PreviousRentInput extends React.Component {
     if (this.props.value !== undefined) this.props.valid(this.inputName, true)
   }
 
-  handleChange(e: SyntheticInputEvent) {
+  handleChange(e: SyntheticInputEvent<HTMLInputElement>) {
     const fValue = parseFloat(e.target.value)
     const errors = []
 
@@ -58,7 +58,7 @@ class PreviousRentInput extends React.Component {
     this.setState({value: e.target.value, errors})
   }
 
-  handleUnknown(e: SyntheticInputEvent, value: boolean) {
+  handleUnknown(e: SyntheticInputEvent<HTMLInputElement>, value: boolean) {
     this.props.changed({[this.inputName]: value ? -1 : null})
     this.props.valid(this.inputName, value)
     this.setState({value: '', errors: []})

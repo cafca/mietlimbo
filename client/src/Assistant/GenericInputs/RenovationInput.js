@@ -9,7 +9,7 @@ import {RadioButtonGroup, RadioButton} from 'material-ui/RadioButton'
 
 import type { AssistantInputProps } from '../Types'
 
-class RenovationInput extends React.Component {
+class RenovationInput extends React.Component<AssistantInputProps> {
   inputName: string = 'renovation';
 
   constructor(props: AssistantInputProps) {
@@ -25,7 +25,7 @@ class RenovationInput extends React.Component {
     return value !== undefined && value !== 'extended'
   }
 
-  handleChange(e: SyntheticInputEvent, value: string) {
+  handleChange(e: SyntheticInputEvent<HTMLInputElement>, value: string) {
     this.props.changed({[this.inputName]: value})
     this.props.valid(this.inputName, this.isValid(value))
   }

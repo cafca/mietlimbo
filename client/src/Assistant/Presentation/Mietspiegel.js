@@ -80,12 +80,12 @@ const messages = defineMessages({
   }
 })
 
-class Mietspiegel extends React.Component {
-  state: {
-    data: ?RentData,
-    state: string
-  };
+type State = {
+  data: ?RentData,
+  state: string
+}
 
+class Mietspiegel extends React.Component<AssistantInputProps, State> {
   inputName = 'mietspiegel'
   serverURL: string; // set in constructor
 
@@ -152,7 +152,7 @@ class Mietspiegel extends React.Component {
           }
         }
       })
-      .catch(err => {
+      .catch(() => {
         // console.error(err)
         this.setState({state: this.states.ERROR})
       })

@@ -38,7 +38,7 @@ class ConstructionDateInput extends React.Component {
     if (this.props.value !== undefined) this.props.valid(this.inputName, true)
   }
 
-  handleChange(e: SyntheticInputEvent, value: string) {
+  handleChange(e: SyntheticInputEvent<HTMLInputElement>, value: string) {
     this.props.changed({ [this.inputName]: value })
     this.props.valid('constructionDate', true, () =>
       this.props.valid('mietspiegel', false)

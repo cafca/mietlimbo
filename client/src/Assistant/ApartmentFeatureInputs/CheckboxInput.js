@@ -39,7 +39,7 @@ class CheckboxInput extends React.Component {
     }
   }
 
-  handleChange(ev: SyntheticInputEvent, checked: boolean) {
+  handleChange(ev: SyntheticInputEvent<HTMLInputElement>, checked: boolean) {
     this.setState({value: checked})
     this.props.changed(this.props.name, this.props.positive, checked)
   }

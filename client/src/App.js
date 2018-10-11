@@ -28,7 +28,8 @@ const translations = {
 addLocaleData([...de, ...en])
 
 type Props = {
-  locale: string
+  locale: string,
+  changeLocale: () => void
 };
 
 const App = (props: Props) => {
@@ -71,11 +72,11 @@ const AppMaterialUI = (props: Props) => (
   </MuiThemeProvider>
 )
 
-class AppIntl extends Component {
-  state: {
-    locale: string
-  };
+type State = {
+  locale: string
+}
 
+class AppIntl extends Component<Props, State> {
   constructor(props: Object) {
     super(props)
     this.state = {

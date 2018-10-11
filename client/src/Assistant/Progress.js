@@ -17,10 +17,12 @@ import {groupBalance} from'./ApartmentFeatureInputs/RangeSelectionGroup'
 type ProgressProps = {
   advance: number => any,
   stage: number,
-  isStageEnabled: number => any
+  isStageEnabled: number => any,
+  requestStage: number => any,
+  data: Object
 };
 
-class Progress extends React.Component {
+class Progress extends React.Component<ProgressProps> {
   style = {
     main: {
       marginBottom: '1em'

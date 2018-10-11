@@ -8,6 +8,7 @@ import Paper from 'material-ui/Paper'
 import { Card, CardText, CardTitle } from 'material-ui/Card'
 
 import AutoSave from './GenericInputs/AutoSave'
+import type { AutoSaveProps } from './GenericInputs/AutoSave'
 
 const styles = {
   bigtext: {
@@ -26,7 +27,7 @@ const styles = {
   }
 }
 
-export const Introduction = (props) => {
+export const Introduction = (props: AutoSaveProps) => {
   return <section>
     <p style={styles.text}>
       <FormattedMessage

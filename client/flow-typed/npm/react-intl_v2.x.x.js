@@ -6,22 +6,22 @@
  * Copied here based on intention to merge with flow-typed expressed here:
  * https://github.com/marudor/flowInterfaces/issues/6
  */
-import React from "react";
+import React from 'react'
 
 // Mostly from https://github.com/yahoo/react-intl/wiki/API#react-intl-api
 
 type LocaleData = {
   locale: string,
   [key: string]: any
-};
+}
 
 type MessageDescriptor = {
   id: string,
   description?: string,
   defaultMessage?: string
-};
+}
 
-type MessageDescriptorMap = { [key: string]: MessageDescriptor };
+type MessageDescriptorMap = { [key: string]: MessageDescriptor }
 
 type IntlConfig = {
   locale: string,
@@ -30,7 +30,7 @@ type IntlConfig = {
 
   defaultLocale: string,
   defaultFormats: Object
-};
+}
 
 type IntlFormat = {
   formatDate: (value: any, options?: Object) => string,
@@ -46,40 +46,40 @@ type IntlFormat = {
     messageDescriptor: MessageDescriptor,
     values?: Object
   ) => string
-};
+}
 
-type $IntlShape = IntlConfig & IntlFormat & { now: () => number };
+type $IntlShape = IntlConfig & IntlFormat & { now: () => number }
 
 type DateTimeFormatOptions = {
-  localeMatcher?: "best fit" | "lookup",
-  formatMatcher?: "basic" | "best fit",
+  localeMatcher?: 'best fit' | 'lookup',
+  formatMatcher?: 'basic' | 'best fit',
 
   timeZone?: string,
   hour12?: boolean,
 
-  weekday?: "narrow" | "short" | "long",
-  era?: "narrow" | "short" | "long",
-  year?: "numeric" | "2-digit",
-  month?: "numeric" | "2-digit" | "narrow" | "short" | "long",
-  day?: "numeric" | "2-digit",
-  hour?: "numeric" | "2-digit",
-  minute?: "numeric" | "2-digit",
-  second?: "numeric" | "2-digit",
-  timeZoneName?: "short" | "long"
-};
+  weekday?: 'narrow' | 'short' | 'long',
+  era?: 'narrow' | 'short' | 'long',
+  year?: 'numeric' | '2-digit',
+  month?: 'numeric' | '2-digit' | 'narrow' | 'short' | 'long',
+  day?: 'numeric' | '2-digit',
+  hour?: 'numeric' | '2-digit',
+  minute?: 'numeric' | '2-digit',
+  second?: 'numeric' | '2-digit',
+  timeZoneName?: 'short' | 'long'
+}
 
 type RelativeFormatOptions = {
-  style: "best fit" | "numeric",
-  units: "second" | "minute" | "hour" | "day" | "month" | "year"
-};
+  style: 'best fit' | 'numeric',
+  units: 'second' | 'minute' | 'hour' | 'day' | 'month' | 'year'
+}
 
 type NumberFormatOptions = {
-  localeMatcher?: "best fit" | "lookup",
+  localeMatcher?: 'best fit' | 'lookup',
 
-  style?: "decimal" | "currency" | "percent",
+  style?: 'decimal' | 'currency' | 'percent',
 
   currency?: string,
-  currencyDisplay?: "symbol" | "code" | "name",
+  currencyDisplay?: 'symbol' | 'code' | 'name',
 
   useGrouping?: boolean,
 
@@ -88,62 +88,62 @@ type NumberFormatOptions = {
   maximumFractionDigits?: number,
   minimumSignificantDigits?: number,
   maximumSignificantDigits?: number
-};
+}
 
 type PluralFormatOptions = {
-  style: "cardinal" | "ordinal"
-};
+  style: 'cardinal' | 'ordinal'
+}
 
-type PluralCategoryString = "zero" | "one" | "two" | "few" | "many" | "other";
+type PluralCategoryString = 'zero' | 'one' | 'two' | 'few' | 'many' | 'other'
 
-type $DateParseable = number | string | Date;
+type $DateParseable = number | string | Date
 
-declare module "react-intl" {
+declare module 'react-intl' {
   // PropType checker
   declare function intlShape(
     props: Object,
     propName: string,
     componentName: string
-  ): void;
-  declare function addLocaleData(data: LocaleData | Array<LocaleData>): void;
+  ): void
+  declare function addLocaleData(data: LocaleData | Array<LocaleData>): void
   declare function defineMessages<T: { [key: string]: MessageDescriptor }>(
     messageDescriptors: T
-  ): T;
+  ): T
   declare function injectIntl(
     WrappedComponent: ReactClass<*>,
     options?: {
       intlPropName?: string,
       withRef?: boolean
     }
-  ): ReactClass<*>;
+  ): ReactClass<*>
   declare function formatMessage(
     messageDescriptor: MessageDescriptor,
     values?: Object
-  ): string;
+  ): string
   declare function formatHTMLMessage(
     messageDescriptor: MessageDescriptor,
     values?: Object
-  ): string;
+  ): string
   declare function formatDate(
     value: any,
     options?: DateTimeFormatOptions & { format: string }
-  ): string;
+  ): string
   declare function formatTime(
     value: any,
     options?: DateTimeFormatOptions & { format: string }
-  ): string;
+  ): string
   declare function formatRelative(
     value: any,
     options?: RelativeFormatOptions & { format: string, now: any }
-  ): string;
+  ): string
   declare function formatNumber(
     value: any,
     options?: NumberFormatOptions & { format: string }
-  ): string;
+  ): string
   declare function formatPlural(
     value: any,
     options?: PluralFormatOptions
-  ): PluralCategoryString;
+  ): PluralCategoryString
 
   declare class FormattedMessage extends React.Component<
     void,
@@ -216,5 +216,5 @@ declare module "react-intl" {
     },
     void
   > {}
-  declare type IntlShape = $IntlShape;
+  declare type IntlShape = $IntlShape
 }

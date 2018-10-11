@@ -16,12 +16,12 @@ export const ErrorList = (props: {errors: Array<string>}) => {
   return props.errors.length === 0 ? null : <span>{el}</span>
 }
 
-class RentInput extends React.Component {
-  state: {
-    value: string,
-    errors: Array<any>
-  }
+type State = {
+  value: string,
+  errors: Array<any>
+}
 
+class RentInput extends React.Component<AssistantInputProps, State> {
   inputName: string = 'rent';
 
   constructor(props: AssistantInputProps) {
@@ -37,7 +37,7 @@ class RentInput extends React.Component {
     if (this.props.value !== undefined) this.props.valid(this.inputName, true)
   }
 
-  handleChange(e: SyntheticInputEvent) {
+  handleChange(e: SyntheticInputEvent<HTMLInputElement>) {
     const fValue = parseFloat(e.target.value)
     const errors = []
 

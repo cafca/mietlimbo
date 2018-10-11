@@ -99,7 +99,7 @@ const Preview = () => (
 
     <h2>Das kann mietlimbo</h2>
 
-    <ul style={style.list}>
+    <ul>
       <li>
         Mietspiegelabfrage über eine moderne, schnelle und nutzerfreundlich
         gestaltete Webseite

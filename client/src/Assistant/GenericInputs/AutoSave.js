@@ -13,20 +13,18 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete'
 export type AutoSaveProps = {
   autoSave: boolean, 
   changed: Function, 
-  valid: Function ,
-  initializeData: Function
+  valid: Function
 };
 
-class AutoSave extends React.Component {
+class AutoSave extends React.Component<AutoSaveProps> {
   inputName = 'autoSave';
-  state: Object;
 
   constructor(props: AutoSaveProps) {
     super(props)
     autoBind(this)
   }
 
-  handleChange(ev: SyntheticInputEvent, value: boolean) {
+  handleChange(ev: SyntheticInputEvent<HTMLInputElement>, value: boolean) {
     this.props.changed({[this.inputName]: value})
     this.props.valid(this.inputName, true)
   }

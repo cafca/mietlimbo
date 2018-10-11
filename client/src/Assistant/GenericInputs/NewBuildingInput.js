@@ -46,7 +46,7 @@ class NewBuildingInput extends React.Component {
     if (this.props.value !== undefined) this.props.valid(this.inputName, true)
   }
 
-  handleChange(e: SyntheticInputEvent, value: boolean) {
+  handleChange(e: SyntheticInputEvent<HTMLInputElement>, value: boolean) {
     this.props.changed({ [this.inputName]: value })
     this.props.valid(this.inputName, value === false)
     this.setState({ value })

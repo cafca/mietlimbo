@@ -42,10 +42,13 @@ import * as ApartmentFeatures from './ApartmentFeatureInputs/ApartmentFeatures'
 import * as BuildingFeatures from './ApartmentFeatureInputs/BuildingFeatures'
 import * as EnvironmentFeatures from './ApartmentFeatureInputs/EnvironmentFeatures'
 
+import type { ContextRouter } from 'react-router'
+import type ReactIntl from 'react-intl'
+
 import './Assistant.css'
 
 
-type AssistantProps = {
+type AssistantProps = ContextRouter & ReactIntl.IntlProvider & {
   match: {params: {stage: number}},
   location: {},
   intl: {}
@@ -87,15 +90,15 @@ const featureGroupInputs = {
   'Umfeld': EnvironmentFeatures
 }
 
-class Assistant extends React.Component {
-	state: {
-		stage: number,
-    inputValid: {[string]: boolean},
-    data: {[string]: any},
-    snackbarOpen: boolean,
-    snackbarMsg: string
-	}
+type State = {
+  stage: number,
+  inputValid: {[string]: boolean},
+  data: {[string]: any},
+  snackbarOpen: boolean,
+  snackbarMsg: string
+}
 
+class Assistant extends React.Component<AssistantProps, State> {
   style = {
     container: {
       marginBottom: 100
@@ -547,7 +550,11 @@ class Assistant extends React.Component {
   }
 }
 
-class AssistantWrapper extends React.Component {
+type WrapperState = {
+  login: boolean
+}
+
+class AssistantWrapper extends React.Component<AssistantProps, WrapperState> {
   constructor(props) {
     super(props)
     autoBind(this)
@@ -575,7 +582,7 @@ class AssistantWrapper extends React.Component {
       ? <Assistant {...this.props} />
       : <div>
         <label>Bitte Passwort eingeben:</label>
-        <input type="password" value={this.password} onChange={this.checkPass} />
+        <input type="password" onChange={this.checkPass} />
       </div>
   }
 }
