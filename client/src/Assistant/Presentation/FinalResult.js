@@ -1,19 +1,19 @@
 // @flow
 
-import React from 'react';
-import autoBind from 'react-autobind';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import React from 'react'
+import autoBind from 'react-autobind'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
-import type {Data} from "../Assistant";
-import Mietwucher from "./Mietwucher";
-import RenovationCase from "./RenovationCase";
-import FeatureTable from "./FeatureTable";
+import type {Data} from '../Assistant'
+import Mietwucher from './Mietwucher'
+import RenovationCase from './RenovationCase'
+import FeatureTable from './FeatureTable'
 
 import { 
   LocalRentLevel, 
   Mietpreisbremse,
   PreviousRentCase 
-} from "./Calculation";
+} from './Calculation'
 
 type FinalResultProps = {
   data: Data,
@@ -24,8 +24,8 @@ class FinalResult extends React.Component {
   inputName: "FinalResult";
 
   constructor(props: FinalResultProps) {
-    super(props);
-    autoBind(this);
+    super(props)
+    autoBind(this)
   }
 
   render() {
@@ -128,8 +128,8 @@ class FinalResult extends React.Component {
             du noch eine Übersicht aller Daten, die du ausdrucken und zu einer Rechtsberatung mitnehmen kannst." />
         </p>
       </section>
-    </div>;
+    </div>
   }
 }
 
-export default injectIntl(FinalResult);
+export default injectIntl(FinalResult)

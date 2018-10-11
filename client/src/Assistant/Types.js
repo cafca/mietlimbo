@@ -1,9 +1,9 @@
 // @flow
 
-import React from 'react';
+import type ReactIntl from 'react-intl'
 
 // Props as supplied to assistant form input components
-export type AssistantInputProps = {
+export type AssistantInputProps = ReactIntl.IntlProvider & {
   changed: (string, string) => mixed, 
   valid: (string, boolean) => mixed,
   value?: any

@@ -1,21 +1,21 @@
 // @flow
 
-import React from 'react';
-import Impressum from '../Graphics/Impressum.png';
-import { FormattedMessage } from 'react-intl';
-import { NavLink } from 'react-router-dom';
-import RaisedButton from 'material-ui/RaisedButton';
-import logoOkf from "../Graphics/logo-okfn.svg";
-import logoBmbf from "../Graphics/logo-bmbf.svg";
+import React from 'react'
+import Impressum from '../Graphics/Impressum.png'
+import { FormattedMessage } from 'react-intl'
+import { NavLink } from 'react-router-dom'
+import RaisedButton from 'material-ui/RaisedButton'
+import logoOkf from '../Graphics/logo-okfn.svg'
+import logoBmbf from '../Graphics/logo-bmbf.svg'
 
 const style = {
   container: {
     marginTop: 100
   },
   img: {
-    width: "100%"
+    width: '100%'
   }
-};
+}
 
 const Landing = () => <div style={style.container}>
   <RaisedButton 
@@ -34,8 +34,8 @@ const Landing = () => <div style={style.container}>
 
   <p>Realisiert wurde dieses Projekt von Vincent Ahrend mit Förderung und Unterstützung vom <a href="https://prototypefund.de/">Prototype Fund</a>,
   dem <a href="http://www.dlr.de/pt/">Deutschen Zentrum für Luft- und Raumfahrttechnik Projektträger</a> und <a href="https://www.bmbf.de/">Bundesministerium für Bildung und Forschung</a>.</p>
-  <p style={{margin: "4em 0"}}>
-    <img alt="Gefördert vom BMBF" src={logoBmbf} style={{marginRight: "2em"}}/>
+  <p style={{margin: '4em 0'}}>
+    <img alt="Gefördert vom BMBF" src={logoBmbf} style={{marginRight: '2em'}}/>
     <img alt="Gefört von Open Knowledge Foundation Germany" src={logoOkf} />
   </p>
 
@@ -63,6 +63,6 @@ const Landing = () => <div style={style.container}>
   <h3>Google Analytics</h3>
   <p>Diese Website benutzt Google Analytics, einen Webanalysedienst der Google Inc. (''Google''). Google Analytics verwendet sog. ''Cookies'', Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie ermöglicht. Die durch den Cookie erzeugten Informationen über Ihre Benutzung dieser Website (einschließlich Ihrer IP-Adresse) wird an einen Server von Google in den USA übertragen und dort gespeichert. Google wird diese Informationen benutzen, um Ihre Nutzung der Website auszuwerten, um Reports über die Websiteaktivitäten für die Websitebetreiber zusammenzustellen und um weitere mit der Websitenutzung und der Internetnutzung verbundene Dienstleistungen zu erbringen. Auch wird Google diese Informationen gegebenenfalls an Dritte übertragen, sofern dies gesetzlich vorgeschrieben oder soweit Dritte diese Daten im Auftrag von Google verarbeiten. Google wird in keinem Fall Ihre IP-Adresse mit anderen Daten der Google in Verbindung bringen. Sie können die Installation der Cookies durch eine entsprechende Einstellung Ihrer Browser Software verhindern; wir weisen Sie jedoch darauf hin, dass Sie in diesem Fall gegebenenfalls nicht sämtliche Funktionen dieser Website voll umfänglich nutzen können. Durch die Nutzung dieser Website erklären Sie sich mit der Bearbeitung der über Sie erhobenen Daten durch Google in der zuvor beschriebenen Art und Weise und zu dem zuvor benannten Zweck einverstanden.</p>
   <p><em>Website Impressum von <a href="http://www.impressum-generator.de">impressum-generator.de</a></em></p>
-</div>;
+</div>
 
-export default Landing;
+export default Landing

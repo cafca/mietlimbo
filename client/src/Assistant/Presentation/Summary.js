@@ -1,19 +1,19 @@
 // @flow
 
-import React from 'react';
-import { injectIntl, FormattedMessage, defineMessages } from 'react-intl';
+import React from 'react'
+import { injectIntl, FormattedMessage, defineMessages } from 'react-intl'
 
-import { isPreviousRentLimiting } from "./Calculation";
+import { isPreviousRentLimiting } from './Calculation'
 
-import Paper from 'material-ui/Paper';
-import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper'
+import Divider from 'material-ui/Divider'
 
-import FeatureTable from "./FeatureTable";
-import MietspiegelTable from "./MietspiegelTable";
-import type {Data} from "../Assistant";
+import FeatureTable from './FeatureTable'
+import MietspiegelTable from './MietspiegelTable'
+import type {Data} from '../Assistant'
 
 // Hide certain elements when printing
-import './Summary.css';
+import './Summary.css'
 
 type SummaryProps = {
   data: Data,
@@ -22,34 +22,34 @@ type SummaryProps = {
 
 const messages = defineMessages({
   Title: {
-    id: "Summary.title",
-    defaultMessage: "Mietpreisbremse"
+    id: 'Summary.title',
+    defaultMessage: 'Mietpreisbremse'
   },
   Description: {
-    id: "Summary.description",
+    id: 'Summary.description',
     defaultMessage: `Auf dieser Seite sind alle Daten zusammengefasst, die für
       deine Mietpreisbremse relevant sind. Du kannst diese ausdrucken und hiermit 
       zu einem Mieterverein oder Anwalt gehen, um dich zu deiner Situation beraten 
       zu lassen oder selbst eine qualifizierte Mietrüge verfassen und an deinen Vermieter schicken.`
   },
   ExceptionsTitle: {
-    id: "Summary.ExceptionsTitle",
-    defaultMessage: "Hinweise"
+    id: 'Summary.ExceptionsTitle',
+    defaultMessage: 'Hinweise'
   },
   RangeSelectionTitle: {
-    id: "Summary.RangeSelectionTitle",
-    defaultMessage: "Mietspiegel"
+    id: 'Summary.RangeSelectionTitle',
+    defaultMessage: 'Mietspiegel'
   },
   FeatureTableTitle: {
-    id: "Summary.FeatureTableTitle",
-    defaultMessage: "Spanneneinordnung"
+    id: 'Summary.FeatureTableTitle',
+    defaultMessage: 'Spanneneinordnung'
   },
   CalculationTitle: {
-    id: "Summary.CalculationTitle",
-    defaultMessage: "Anwendung nach Mietpreisbremse"
+    id: 'Summary.CalculationTitle',
+    defaultMessage: 'Anwendung nach Mietpreisbremse'
   },
   legalNote: {
-    id: "Summary.LegalNote",
+    id: 'Summary.LegalNote',
     defaultMessage: `Beachte 
         bitte, dass Mietlimbo keine Rechtsberatung ist und eine Rechtsberatung 
         auch nicht ersetzen kann. Ich stelle dir hier kostenfrei nach meinen Möglichkeiten 
@@ -58,54 +58,54 @@ const messages = defineMessages({
         und Aktualität der Informationen. `
   },
   Footer: {
-    id: "Summary.Footer",
-    defaultMessage: "Diese Daten wurden mit mietlimbo.de erfasst - der kostenlose Online-Assistent für die Mietpreisbremse."
+    id: 'Summary.Footer',
+    defaultMessage: 'Diese Daten wurden mit mietlimbo.de erfasst - der kostenlose Online-Assistent für die Mietpreisbremse.'
   },
   Currency: {
-    id: "Summary.GenericCurrency",
-    defaultMessage: "{value, number, currency}"
+    id: 'Summary.GenericCurrency',
+    defaultMessage: '{value, number, currency}'
   }
-});
+})
 
 const styles = {
   mainWrapper: {
     fontSize: 16,
-    padding: "10px 20px",
-    width: "110%",
-    marginLeft: "-5%",
-    marginBottom: "2em"
+    padding: '10px 20px',
+    width: '110%',
+    marginLeft: '-5%',
+    marginBottom: '2em'
   },
   rangeTable1: {
-    textAlign: "center",
-    border: "1px solid #ccc"
+    textAlign: 'center',
+    border: '1px solid #ccc'
   },
   rangeTable: {
-    borderCollapse: "collapse",
-    width: "80%",
-    margin: "4em auto"
+    borderCollapse: 'collapse',
+    width: '80%',
+    margin: '4em auto'
   },
   rangeTableCell1: {
-    width: "33%",
-    float: "left"
+    width: '33%',
+    float: 'left'
   },
   rangeTableCell2: {
-    width: "33%"
+    width: '33%'
   },
   rangeTableCell3: {
-    width: "33%",
-    float: "right"
+    width: '33%',
+    float: 'right'
   },
   rangeTable2: {
-    width: "50%",
-    textAlign: "center",
-    border: "1px solid #ccc"
+    width: '50%',
+    textAlign: 'center',
+    border: '1px solid #ccc'
   }
-};
+}
 
 const Summary = injectIntl((props: SummaryProps) => {
   const values = {
     LeaseCreated: props.intl.formatDate(props.data.leaseCreated)
-  };
+  }
 
   return <Paper className="summary" style={styles.mainWrapper} >
     <h1><FormattedMessage {...messages.Title} /></h1>
@@ -123,35 +123,35 @@ const Summary = injectIntl((props: SummaryProps) => {
       <li>
         { props.data.newBuilding === false
           ? <FormattedMessage
-              id="Summary.NewBuildingTrue"
-              defaultMessage="Kein Erstmieter in Neubau" />
+            id="Summary.NewBuildingTrue"
+            defaultMessage="Kein Erstmieter in Neubau" />
           : <FormattedMessage
-              id="Summary.NewBuildingFalse"
-              defaultMessage="Erstmieter in Neubau" />
+            id="Summary.NewBuildingFalse"
+            defaultMessage="Erstmieter in Neubau" />
         }
       </li>
       <li>
-        { props.data.renovation === "none"
+        { props.data.renovation === 'none'
           ? <FormattedMessage
-              id="Summary.ModernizationFalse"
-              defaultMessage="Keine Umfassende Renovierung oder Sanierung" />
+            id="Summary.ModernizationFalse"
+            defaultMessage="Keine Umfassende Renovierung oder Sanierung" />
           : <FormattedMessage
-              id="Summary.ModernizationTrue"
-              defaultMessage="Renovierung/Sanierung muss berücksichtigt werden" />
+            id="Summary.ModernizationTrue"
+            defaultMessage="Renovierung/Sanierung muss berücksichtigt werden" />
         }
       </li>
       <li>
         { props.data.previousRent === -1 
           ? <FormattedMessage
-                id="Summary.PreviousRentUnknown"
-                defaultMessage="Vorherige Miete unbekannt" />
+            id="Summary.PreviousRentUnknown"
+            defaultMessage="Vorherige Miete unbekannt" />
           : isPreviousRentLimiting(props.data)
             ? <FormattedMessage
-                id="Summary.PreviousRentHigh"
-                defaultMessage="Vorherige Miete liegt über ortsübliche Vergleichsmiete + 10%" />
+              id="Summary.PreviousRentHigh"
+              defaultMessage="Vorherige Miete liegt über ortsübliche Vergleichsmiete + 10%" />
             : <FormattedMessage
-                id="Summary.PreviousRentLow"
-                defaultMessage="Vorherige Miete liegt unter ortsübliche Vergleichsmiete + 10%" />
+              id="Summary.PreviousRentLow"
+              defaultMessage="Vorherige Miete liegt unter ortsübliche Vergleichsmiete + 10%" />
         }
       </li>
     </ul>
@@ -170,19 +170,19 @@ const Summary = injectIntl((props: SummaryProps) => {
     <p><FormattedMessage {...messages.Footer} /></p>
     <p><FormattedMessage {...messages.legalNote} /></p>
   </Paper>
-});
+})
 
 const MietpreisbremseSummary = (props: Data) => {
-  const lowerRange = props.result.mid - props.result.min;
-  const upperRange = props.result.max - props.result.mid;
-  const range = props.result.featureGroupBalance > 0 ? upperRange : lowerRange;
-  const sign = props.result.featureGroupBalance < 0 ? "-" : "+";
+  const lowerRange = props.result.mid - props.result.min
+  const upperRange = props.result.max - props.result.mid
+  const range = props.result.featureGroupBalance > 0 ? upperRange : lowerRange
+  const sign = props.result.featureGroupBalance < 0 ? '-' : '+'
   const correctionPercentage = Math.abs(props.result.featureGroupBalance) * 20
   const correctionAmount = props.result.featureGroupBalance === 0
     ? 0
     : props.result.featureGroupBalance > 0
       ? upperRange * (correctionPercentage / 100.0)
-      : lowerRange * (correctionPercentage / 100.0);
+      : lowerRange * (correctionPercentage / 100.0)
 
   const values={
     lowerRange,
@@ -193,7 +193,7 @@ const MietpreisbremseSummary = (props: Data) => {
     correctionAmount,
     squareMeters: props.squareMeters,
     ...props.result
-  };
+  }
 
   return <div>
     <table style={styles.rangeTable}>
@@ -214,7 +214,7 @@ const MietpreisbremseSummary = (props: Data) => {
           <td><FormattedMessage id="Summary.correction" defaultMessage="Korrektur" />:</td>
           <td>
             {props.result.featureGroupBalance === 0 
-              ? "–"
+              ? '–'
               :<FormattedMessage 
                 id ="Summary.correctionCalc" 
                 defaultMessage="{correctionPercentage, number}% × {range, number, currency} = {correctionAmount, number, longCurrency}" 
@@ -248,4 +248,4 @@ const MietpreisbremseSummary = (props: Data) => {
   </div>
 }
 
-export default injectIntl(Summary);
+export default injectIntl(Summary)

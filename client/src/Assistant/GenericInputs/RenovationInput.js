@@ -1,81 +1,81 @@
 // @flow
 
-import React from 'react';
-import autoBind from 'react-autobind';
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl';
+import React from 'react'
+import autoBind from 'react-autobind'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
-import {Card, CardTitle, CardText} from 'material-ui/Card';
-import {RadioButtonGroup, RadioButton} from 'material-ui/RadioButton';
+import {Card, CardTitle, CardText} from 'material-ui/Card'
+import {RadioButtonGroup, RadioButton} from 'material-ui/RadioButton'
 
-import type { AssistantInputProps } from '../Types';
+import type { AssistantInputProps } from '../Types'
 
-class RenovationInput extends React.Component {
-  inputName: string = "renovation";
+class RenovationInput extends React.Component<AssistantInputProps> {
+  inputName: string = 'renovation';
 
   constructor(props: AssistantInputProps) {
-    super(props);
-    autoBind(this);
+    super(props)
+    autoBind(this)
   }
 
   componentDidMount() {
-    this.props.valid(this.inputName, this.isValid(this.props.value));
+    this.props.valid(this.inputName, this.isValid(this.props.value))
   }
 
   isValid(value) {
-    return value !== undefined && value !== "extended";
+    return value !== undefined && value !== 'extended'
   }
 
-  handleChange(e: SyntheticInputEvent, value: string) {
-    this.props.changed({[this.inputName]: value});
-    this.props.valid(this.inputName, this.isValid(value));
+  handleChange(e: SyntheticInputEvent<HTMLInputElement>, value: string) {
+    this.props.changed({[this.inputName]: value})
+    this.props.valid(this.inputName, this.isValid(value))
   }
 
   render() {
     const messages = defineMessages({
       title: {
-        id: "RenovationInput.title",
-        defaultMessage: "Wurde die Wohnung seit der letzten Vermietung saniert?"
+        id: 'RenovationInput.title',
+        defaultMessage: 'Wurde die Wohnung seit der letzten Vermietung saniert?'
       },
       description: {
-        id: "RenovationInput.description",
+        id: 'RenovationInput.description',
         defaultMessage: `Um zu verhindern, dass Vermieter Kosten sparen, indem sie Wohnungen nicht mehr sanieren,
           dürfen Vermieter einen Teil der Sanierungs- bzw. Modernisierungskosten auf die Miete umlegen. Bei 
           umfassenden Sanierungen wird die Mietpreisbremse sogar komplett ausgeschaltet.`
       },
       noneLabel: {
-        id: "RenovationInput.noneLabel",
-        defaultMessage: "Nicht saniert oder modernisiert."
+        id: 'RenovationInput.noneLabel',
+        defaultMessage: 'Nicht saniert oder modernisiert.'
       },
       simpleLabel: {
-        id: "RenovationInput.simpleLabel",
+        id: 'RenovationInput.simpleLabel',
         defaultMessage: `Wohnung wurde entweder seit der letzten Vermietung saniert/modernisiert, oder während der
           letzten Vermietung saniert, ohne, dass damals eine Mieterhöhung durchgeführt wurde.`
       },
       extendedLabel: {
-        id: "RenovationInput.extendedLabel",
+        id: 'RenovationInput.extendedLabel',
         defaultMessage: `Umfassende Modernisierung seit der letzten Vermietung, deren Kosten mindestens 1/3 der 
           Kosten eines entsprechenden Neubaus umfassen.`
       },
       extendedWarning: {
-        id: "RenovationInput.extendedWarning",
-        defaultMessage: `Leider gilt die Mietpreisbremse nicht nach einer umfassenden Sanierung.`
+        id: 'RenovationInput.extendedWarning',
+        defaultMessage: 'Leider gilt die Mietpreisbremse nicht nach einer umfassenden Sanierung.'
       },
       simpleNotice: {
-        id: "RenovationInput.simpleNotic",
+        id: 'RenovationInput.simpleNotic',
         defaultMessage: `In diesem Fall kannst du die folgenden Fragen so ausfüllen, als wäre die Modernisierung/Sanierung
           nicht durchgeführt worden. Am Ende berechnet Mietlimbo dann die minimalen Sanierungskosten, mit denen deine jetzige
           Miete zu rechtfertigen wäre. Dann kannst du abschätzen, ob du glaubst, dass die Kosten in Wirklichkeit niedriger
           gewesen sind.`
       }
-    });
+    })
 
-    const extendedWarning = this.props.value === "extended" 
+    const extendedWarning = this.props.value === 'extended' 
       ? <p className="errorDesc"><FormattedMessage {...messages.extendedWarning} /></p>
-      : null;
+      : null
 
-    const simpleNotice = this.props.value === "simple" 
+    const simpleNotice = this.props.value === 'simple' 
       ? <p><FormattedMessage {...messages.simpleNotice} /></p>
-      : null;
+      : null
 
     return <Card className="assistantInput" id={this.inputName}>
       <CardTitle title={this.props.intl.formatMessage(messages.title)} />
@@ -92,8 +92,8 @@ class RenovationInput extends React.Component {
         {extendedWarning}
         {simpleNotice}
       </CardText>
-    </Card>;
+    </Card>
   }
 }
 
-export default injectIntl(RenovationInput);
+export default injectIntl(RenovationInput)

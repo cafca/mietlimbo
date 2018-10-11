@@ -1,10 +1,18 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"python.pythonPath": "./api/.venv/bin/python"
-	}
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "python.pythonPath": "./api/.venv/bin/python",
+    "eslint.packageManager": "yarn",
+    "editor.formatOnSave": true,
+    "[javascript]": {
+      "editor.formatOnSave": false
+    },
+    "eslint.autoFixOnSave": true,
+	"prettier.semi": false,
+	"prettier.singleQuote": true"
+  }
 }
