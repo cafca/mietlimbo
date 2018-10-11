@@ -99,7 +99,7 @@ class AddressInput extends React.Component<AddressProps, State> {
     // null and undefined as possible values
     // eslint-disable-next-line
     const inputField =
-      this.state.address == undefined ? (
+      this.state.address == null ? (
         <TextField
           id="addressInput"
           value={this.state.query}
