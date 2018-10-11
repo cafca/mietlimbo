@@ -6,7 +6,7 @@ Die Mietpreisbreme (MPB) soll in Berlin dafür sorgen, dass die Preise für Wohn
 
 Momentan versuche ich selbst, meine überhöhte Miete durch Durchsetzung der MPB zu verringern, und habe nun schon viele Stunden damit verbracht, die rechtliche Grundlage zu verstehen. Ich möchte nun mein neues Wissen weitergeben und eine Webapp entwickeln, die es leichter macht, selbst eine Mietminderung durchzusetzen.
 
-Die mietlimbo-app wird Mieter dabei unterstützen, selbst eine Mietminderung auf Basis der MPB durchzusetzen, indem sie an die bestehenden Online-Angebote der Stadt Berlin anknüpft. Diese Unterstützung besteht aus einer Kombination von Informationsangeboten, sowohl im Allgemeinen, als auch zu Details des Prozesses, einem interaktiven Formular zum Erstellen eines Musterbriefs (“Rüge”), durch welchen der Prozess der Mietminderung in Gang gesetzt wird, sowie einer Frage&Antwort-Plattform auf der sich Mieter zu ihren Erfahrungen bei der Mietminderung austauschen können. 
+Die mietlimbo-app wird Mieter dabei unterstützen, selbst eine Mietminderung auf Basis der MPB durchzusetzen, indem sie an die bestehenden Online-Angebote der Stadt Berlin anknüpft. Diese Unterstützung besteht aus einer Kombination von Informationsangeboten, sowohl im Allgemeinen, als auch zu Details des Prozesses, einem interaktiven Formular zum Erstellen eines Musterbriefs (“Rüge”), durch welchen der Prozess der Mietminderung in Gang gesetzt wird, sowie einer Frage&Antwort-Plattform auf der sich Mieter zu ihren Erfahrungen bei der Mietminderung austauschen können.
 
 In der Gestaltung des Angebots möchte ich einen Fokus auf Nutzerfreundlichkeit setzen, da rechtliche Angelegenheiten an sich auf viele Menschen abschreckend und einschüchternd wirken. Das Angebot wird Nutzern ein Gefühl von Machbarkeit und Ermächtigung vermitteln, ein Faktor, der einer flächendeckenden Wahrnehmung der Möglichkeiten der Mietpreisbremse bisher im Wege steht.
 
@@ -16,35 +16,35 @@ Mietlimbo ist eine mit dem React-Framework geschriebene Web App mit einem Python
 
 1. Falls noch nicht vorhanden, Python3, Pipenv, und Node.js mit einem Package Manager installieren. Für Homebrew auf Mac zum Beispiel:
 
-    `$ brew install python3 pipenv node`
+   `$ brew install python3 pipenv node`
 
 2. Jetzt können die Quellen geladen werden
-	
-	`$ git clone git@github.com:ciex/mietlimbo.git`
+
+   `$ git clone git@github.com:ciex/mietlimbo.git`
 
 3. Legt ein Virtual Environment für das Backend an.
 
-	`$ cd mietlimbo/api`
+   `$ cd mietlimbo/api`
 
-	`$ pipenv install`
+   `$ pipenv install`
 
-5. Das Backend ist jetzt fertig installiert. Mit `pipenv shell` kann die Umgebung aktiviert werden. Oder direkt den Entwicklungs-Server aus dem `api/`-Verzeichnis heraus starten:
+4. Das Backend ist jetzt fertig installiert. Mit `pipenv shell` kann die Umgebung aktiviert werden. Oder direkt den Entwicklungs-Server aus dem `api/`-Verzeichnis heraus starten:
 
-	`$ cd api`
-	
-	`$ MIETLIMBO_CONFIG=development_config.py pipenv run python main.py`
+   `$ cd api`
+
+   `$ MIETLIMBO_CONFIG=development_config.py pipenv run python main.py`
 
 Der Entwicklungs-Server ist nun über `http://localhost:8000/` erreichbar und kann im Hintergrund weiterlaufen.
 
 6. Um jetzt auch die Web App nutzen zu können, zunächst ein neues Terminal öffnen und dort in den `client`-Ordner wechseln.
 
-	`$ cd ../client`
-	
-	`$ yarn install`
+   `$ cd ../client`
+
+   `$ yarn install`
 
 7. Jetzt kann auch der Entwicklungs-Server für das Frontend gestartet werden.
 
-	`$ yarn start`
+   `$ yarn start`
 
 Die Entwicklungs-Version von mietlimbo öffnet sich jetzt in eurem Webbrowser.
 
@@ -71,11 +71,11 @@ mietlimbo ist offen für Verbesserungen, Vorschläge, Pull Requests. Kontaktiert
 
 ### Struktur des Projekts
 
-Wie auch in der Installations-Anleitung oben zu sehen ist das Projekt in Client und Server aufgeteilt. 
+Wie auch in der Installations-Anleitung oben zu sehen ist das Projekt in Client und Server aufgeteilt.
 
 #### Client
 
-In den Dateien [`src/App.js`](https://github.com/ciex/mietlimbo/blob/master/client/src/App.js) und [`src/index.js`](https://github.com/ciex/mietlimbo/blob/master/client/src/index.js) findet ihr das Setup, mit dem sich der Client später im Browser-DOM installiert. 
+In den Dateien [`src/App.js`](https://github.com/ciex/mietlimbo/blob/master/client/src/App.js) und [`src/index.js`](https://github.com/ciex/mietlimbo/blob/master/client/src/index.js) findet ihr das Setup, mit dem sich der Client später im Browser-DOM installiert.
 
 Das zentrale Modul für mietlimbo ist [`src/Assistant/Assistant.js`](https://github.com/ciex/mietlimbo/blob/master/client/src/Assistant/Assistant.js). Hierin findet ihr den Wrapper, der den Zustand des Assistent auf höchster Ebene verwaltet:
 
@@ -88,55 +88,61 @@ Das zentrale Modul für mietlimbo ist [`src/Assistant/Assistant.js`](https://git
 
 In diesen Wrapper werden je nach aktueller Stage weitere Eingabe- oder Präsentationskomponenten gerendert. Diese finden sich in den drei Unter-Verzeichnissen von `src/Assistant/`.
 
-	├── build					Statische Build-Dateien, die 
-	│   └── static 					auf dem Webserver öffentlich gemacht
-	│       ├── css 				werden können => `yarn run build`
-	│       ├── js
-	│       └── media
-	├── public 					Statische Dateien für Entwicklung
-	├── src
-	│   ├── Assistant 				Hauptkomponente Online-Assistent
-	│   │   ├── ApartmentFeatureInputs 		Zur Abfrage von Wohnungs-Merkmalen
-	│   │   ├── GenericInputs 			Zur Abfrage von allgemeinen Fragen
-	│   │   └── Presentation 			Zur Ergebnis-Darstellung
-	│   ├── Graphics 				Illustrationen, etc.
-	│   ├── I18n 					Übersetzungen als JSON-Datei
-	│   └── Pages 					Inhalte, die nicht direkt Teil des
-	│						Assistenten sind.
-	└── translations 				Hilfs-Ordner zur Erstellung der
-	    └── messages 				Übersetzungs-Dateien
-	        └── src
+    ├── build					Statische Build-Dateien, die
+    │   └── static 					auf dem Webserver öffentlich gemacht
+    │       ├── css 				werden können => `yarn run build`
+    │       ├── js
+    │       └── media
+    ├── public 					Statische Dateien für Entwicklung
+    ├── src
+    │   ├── Assistant 				Hauptkomponente Online-Assistent
+    │   │   ├── ApartmentFeatureInputs 		Zur Abfrage von Wohnungs-Merkmalen
+    │   │   ├── GenericInputs 			Zur Abfrage von allgemeinen Fragen
+    │   │   └── Presentation 			Zur Ergebnis-Darstellung
+    │   ├── Graphics 				Illustrationen, etc.
+    │   ├── I18n 					Übersetzungen als JSON-Datei
+    │   └── Pages 					Inhalte, die nicht direkt Teil des
+    │						Assistenten sind.
+    └── translations 				Hilfs-Ordner zur Erstellung der
+        └── messages 				Übersetzungs-Dateien
+            └── src
 
 ### API-Backend
 
-Das API-Backend ist als Flask-Server in [`main.py`](https://github.com/ciex/mietlimbo/blob/master/api/main.py) implementiert, der JSON-codierte Daten über HTTP-Endpunkte anbietet. Die Datei [`model.py`](https://github.com/ciex/mietlimbo/blob/master/api/model.py)  lädt entsprechende Daten aus `data/mietspiegel.json` und `data/strassenverzeichnis.sqlite`. Diese wurden mit den Skripten im Verzeichnis `Crawler` erstellt. 
+Das API-Backend ist als Flask-Server in [`main.py`](https://github.com/ciex/mietlimbo/blob/master/api/main.py) implementiert, der JSON-codierte Daten über HTTP-Endpunkte anbietet. Die Datei [`model.py`](https://github.com/ciex/mietlimbo/blob/master/api/model.py) lädt entsprechende Daten aus `data/mietspiegel.json` und `data/strassenverzeichnis.sqlite`. Diese wurden mit den Skripten im Verzeichnis `Crawler` erstellt.
 
 Kann eine Anfrage an den Server nicht mit den genannten Daten aus dem Model beantwortet werden, geht der Server in ein Fallback über und versucht, über den Crawler ein aktuelles Ergebnis von der Seite der Senatsverwaltung einzuholen.
 
-	├── crawler 			Strassenverzeichnis von Senatsverwaltung laden
-	│   ├── README.md
-	│   ├── crawler.py
-	│   └── parser.py
-	├── data 							
-	│   ├── README.md
-	│   ├── mietspiegel.json 	Mietspiegeltabelle, per Hand erstellt
-	│   └── strassenverzeichnis.sqlite 	Automatisch erstelltes Strassenverzeichnis
-	├── development_config.py
-	├── logger.py
-	├── main.py 			Backend-Server
-	├── model.py 			Datenmodell für Mietspiegel und Strassen
-	├── production_config.py
-	├── tests
-	│   ├── test_flask.py
-	│   └── test_parser.py
-	├── uwsgi.ini 			Konfiguration für uWSGI-Server. Pfade anpassen!
-	└── wsgi.py 			WSGI entry script
+    ├── crawler 			Strassenverzeichnis von Senatsverwaltung laden
+    │   ├── README.md
+    │   ├── crawler.py
+    │   └── parser.py
+    ├── data
+    │   ├── README.md
+    │   ├── mietspiegel.json 	Mietspiegeltabelle, per Hand erstellt
+    │   └── strassenverzeichnis.sqlite 	Automatisch erstelltes Strassenverzeichnis
+    ├── development_config.py
+    ├── logger.py
+    ├── main.py 			Backend-Server
+    ├── model.py 			Datenmodell für Mietspiegel und Strassen
+    ├── production_config.py
+    ├── tests
+    │   ├── test_flask.py
+    │   └── test_parser.py
+    ├── uwsgi.ini 			Konfiguration für uWSGI-Server. Pfade anpassen!
+    └── wsgi.py 			WSGI entry script
+
+# Changelog
+
+| Version | Beschreibung                 |
+| ------- | ---------------------------- |
+| 2.3.0   | Javascript Libraries upgrade |
 
 # Anmerkungen
 
-Zum Erstellen des Straßenverzeichnis-Datensatzes wurde der Datensatz 
-["Straßenverzeichnis"](https://daten.berlin.de/datensaetze/stra%C3%9Fenverzeichnis) 
-verwendet, welcher von Berlin Open Data unter Creative Commons-Lizenz mit 
+Zum Erstellen des Straßenverzeichnis-Datensatzes wurde der Datensatz
+["Straßenverzeichnis"](https://daten.berlin.de/datensaetze/stra%C3%9Fenverzeichnis)
+verwendet, welcher von Berlin Open Data unter Creative Commons-Lizenz mit
 Namensnennung angeboten wird.
 
 Ländericons für Sprachumstellung von:
@@ -144,9 +150,7 @@ Ländericons für Sprachumstellung von:
 - Germany free icon - Icon made by Freepik from flaticon.com
 - United Kingdom free icon - Icon made by Freepik from flaticon.com
 
-
 Gefördert vom Bundesministerium für Bildung und Forschung
 
 ![](https://raw.githubusercontent.com/ciex/mietlimbo/master/client/src/Graphics/logo-bmbf.svg?sanitize=true)
 ![](https://raw.githubusercontent.com/ciex/mietlimbo/master/client/src/Graphics/logo-okfn.svg?sanitize=true)
-
