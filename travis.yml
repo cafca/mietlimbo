@@ -1,0 +1,30 @@
+matrix:
+  include:
+    - language: python
+      python: 3.5
+
+      env: MIETLIMBO_CONFIG=testing_config.py
+      cache: pip
+
+      before_install:
+        - cd api/
+
+      install:
+        - pipenv install
+
+      script: ./travis_tavern.sh
+
+    - language: node_js
+      node_js:
+        - 9
+        - 10
+
+      before_install: cd client/
+
+      script:
+        - yarn run build
+        - yarn test
+
+      cache:
+        directories:
+          - 'node_modules'
