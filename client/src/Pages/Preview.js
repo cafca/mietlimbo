@@ -96,7 +96,7 @@ const Preview = () => (
 
     <ul>
       <li>
-        Mietspiegelabfrage über eine moderne, schnelle und nutzerfreundlich
+        Mietspiegelabfrage für Berlin über eine moderne, schnelle und nutzerfreundlich
         gestaltete Webseite
       </li>
       <li>
