@@ -8,9 +8,9 @@ import { IntlProvider, addLocaleData } from 'react-intl'
 import de from 'react-intl/locale-data/de'
 import en from 'react-intl/locale-data/en'
 import messagesEN from './I18n/en.json'
-import { deIcon, enIcon } from './LocaleIcons'
+// import { deIcon, enIcon } from './LocaleIcons'
 
-import IconButton from 'material-ui/IconButton'
+// import IconButton from 'material-ui/IconButton'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
@@ -33,8 +33,8 @@ type Props = {
 };
 
 const App = (props: Props) => {
-  const switchLocaleIcon = props.locale === 'de' ? enIcon : deIcon
-  const switchLocaleStyle = {position: 'absolute', right: '20px'}
+  // const switchLocaleIcon = props.locale === 'de' ? enIcon : deIcon
+  // const switchLocaleStyle = {position: 'absolute', right: '20px'}
 
   return (
     <BrowserRouter>
