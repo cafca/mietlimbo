@@ -1,0 +1,10 @@
+@media only screen and (max-width: 768px) {
+  .App-main {
+    padding: 20px !important;
+  }
+
+  .App-main h1 {
+    margin: 0.5em auto 0.5em !important;
+    line-height: 1.2em;
+  }
+}
