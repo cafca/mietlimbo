@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom'
 import { defineMessages, FormattedMessage } from 'react-intl'
 import RaisedButton from 'material-ui/RaisedButton'
 
+import './Landing.css'
+
 const style = {
   wrapper: {
     fontFamily: ['Open Sans', 'sans-serif']

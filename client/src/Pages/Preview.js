@@ -38,14 +38,9 @@ const Preview = () => (
   <div style={style.container}>
     <h1>Ein Assistent für eine einfachere Mietpreisbremse</h1>
     <p>
-      Es sollte einfacher sein, mit der Mietpreisbremse auf eigene Faust eine
-      Mietsenkung zu erwirken und dadurch das <em>mietlimbo</em> zu verhindern,
-      bei welchem die Mieten jedes Mal weiter steigen, wenn eine Wohnung
-      weitergegeben wurde, ohne, dass gegen zu hohe Mieten angefochten wurde.
-    </p>
-
-    <p>
-      Hierbei hilft der mietlimbo-Assistent, indem er alle Sonderfälle überprüft
+      Die Mietpreisbremse wäre viel effektiver, wenn jeder in
+      5 Minuten herausfinden könnte, ob sie anwendbar ist und wie viel Miete man damit
+      jeden Monat sparen kann. Hierbei hilft der Online-Assistent mietlimbo, indem er alle Sonderfälle überprüft
       und für eine bestimmte Wohnung den kritischen Wert{' '}
       <em>ortsübliche Vergleichsmiete + 10 Prozent</em> berechnet, auf den die
       Miete gesenkt werden kann.
