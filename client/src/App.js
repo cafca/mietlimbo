@@ -39,7 +39,6 @@ const App = (props: Props) => {
   return (
     <BrowserRouter>
       <div className="App">
-        <IconButton onClick={props.changeLocale} children={switchLocaleIcon} style={switchLocaleStyle} />
         <div className="App-main">
           <Route exact path="/" component={Landing} />
           <Route path="/preview/" component={Preview} />
