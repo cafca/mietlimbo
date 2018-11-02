@@ -1,11 +1,39 @@
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 20px;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 
 .progressBarStep {
-	cursor: pointer;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  h1 {
+    font-size: 1.6em;
+  }
+
+  h2 {
+    font-size: 1.4em;
+  }
+
+  p,
+  li {
+    font-size: 18px;
+  }
+
+  ul {
+    padding-left: 10px;
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
+  .clicky {
+    margin-top: 2em;
+  }
 }

@@ -17,9 +17,6 @@ import ml5 from '../Graphics/ml5.png'
 import ml6 from '../Graphics/ml6.png'
 
 const style = {
-  container: {
-    marginTop: 50
-  },
   img: {
     width: '100%'
   },
@@ -40,34 +37,23 @@ const Preview = () => (
     <p>
       Die Mietpreisbremse wäre viel effektiver, wenn jeder in
       5 Minuten herausfinden könnte, ob sie anwendbar ist und wie viel Miete man damit
-      jeden Monat sparen kann. Hierbei hilft der Online-Assistent mietlimbo, indem er alle Sonderfälle überprüft
+      jeden Monat sparen kann. 
+    </p>
+
+    <p>Hierbei hilft der Online-Assistent mietlimbo, indem er alle Sonderfälle überprüft
       und für eine bestimmte Wohnung den kritischen Wert{' '}
-      <em>ortsübliche Vergleichsmiete + 10 Prozent</em> berechnet, auf den die
+    <em>ortsübliche Vergleichsmiete + 10 Prozent</em> berechnet, auf den die
       Miete gesenkt werden kann.
     </p>
 
     <p>
-      Kommt es, wie so üblich, zu einer Verhandlung mit dem Vermieter über die
-      Merkmale, welche auf die Wohnung zutreffen, so erlaubt mietlimbo das
-      schnelle durchprobieren verschiedener Konfigurationen. Dadurch kann
-      geprüft werden, ob es sich z.B. lohnt, darum zu kämpfen, dass das Parkett
-      als hochwertig klassifiziert wird - oder ob es letzendlich keinen
-      Unterschied auf die Einordnung der Wohnung im Mietspiegel hat.
-    </p>
-
-    <p>
-      Alle persönlichen Daten werden dabei lokal im Browser gespeichert und
-      lassen sich einfach mit einem Klick auf der Startseite wieder löschen.
-    </p>
-
-    <p>
       <strong>
-        Obwohl ein Prototyp der Software bereits fertig entwickelt ist, kann ich
+        Obwohl ein Prototyp bereits fertig entwickelt ist, kann ich
         mietlimbo im Moment noch nicht veröffentlichen
       </strong>
-      , da das Rechtsdienstleistungsgesetz dies nur zulässt, wenn ich vorher
-      alle Inhalte mit einem Anwalt zusammen prüfe. Daher suche ich im Moment
-      nach einem Kooperationspartner, der mir hiermit hilft. Hast du eine Idee,
+      , da das Rechtsdienstleistungsgesetz dies unter Umständen nur zulässt, wenn ich vorher
+      alle Inhalte mit einem Anwalt prüfe. Daher suche ich im Moment
+      nach einem Kooperationspartner, der mir hierbei hilft. Hast du eine Idee,
       wer das sein könnte? Dann schreibe mir gerne an{' '}
       <a href="mailto:hallo@mietlimbo.de" style={style.link}>
         hallo@mietlimbo.de
@@ -80,7 +66,7 @@ const Preview = () => (
 
     <p>
       Wenn du (einmalig) von mir hören möchtest, sobald mietlimbo offiziell
-      startet, klick den Button um dich mit deiner Email-Adresse dafür
+      startet, kannst du dich jetzt
       anzumelden:
     </p>
 
@@ -92,7 +78,7 @@ const Preview = () => (
       icon={<EmailIcon />}
     />
 
-    <h2>Das kann mietlimbo</h2>
+    <h2>Das kann mietlimbo:</h2>
 
     <ul>
       <li>
@@ -111,8 +97,8 @@ const Preview = () => (
         Angaben
       </li>
       <li>
-        Speicherung aller Eingaben, so dass bei Rückkehr zur Seite nicht alles
-        erneut eingegeben werden muss
+        Lokale Speicherung aller Eingaben, so dass bei Rückkehr zur Seite nicht alles
+        erneut eingegeben werden muss. Alles kann mit einem Klick gelöscht werden.
       </li>
       <li>
         Ergebnisübersicht zum Ausdrucken, die zu einer Rechtsberatung bei
@@ -150,6 +136,9 @@ const Preview = () => (
       </a>
       .
     </p>
+    
+    <p>Kontakt: <a href="mailto:hallo@mietlimbo.de">hallo@mietlimbo.de</a></p>
+
     <p style={{ margin: '4em 0' }}>
       <img
         alt="Gefördert vom BMBF"
