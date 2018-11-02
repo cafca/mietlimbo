@@ -13,11 +13,6 @@ const style = {
   },
   title: {
     margin: '3em auto'
-  },
-  okay: {
-    textDecoration: 'none',
-    color: '#212121',
-    marginBottom: -10
   }
 }
 
@@ -35,6 +30,7 @@ const messages = defineMessages({
 const Landing = () => <div style={style.wrapper}>
   <h1 style={style.title} ><FormattedMessage {...messages.title} /></h1>
   <RaisedButton 
+    className='clicky'
     secondary={true}
     label={<FormattedMessage {...messages.clicky} />}
     containerElement={<NavLink to="/preview/" />}
