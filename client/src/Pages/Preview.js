@@ -40,7 +40,7 @@ const Preview = () => (
       jeden Monat sparen kann. 
     </p>
 
-    <p>Hierbei hilft der Online-Assistent mietlimbo, indem er alle Sonderfälle überprüft
+    <p>Hierbei hilft der kostenlose Online-Assistent mietlimbo, indem er alle Sonderfälle überprüft
       und für eine bestimmte Wohnung den kritischen Wert{' '}
     <em>ortsübliche Vergleichsmiete + 10 Prozent</em> berechnet, auf den die
       Miete gesenkt werden kann.
