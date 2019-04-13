@@ -26,7 +26,7 @@ Mietlimbo ist eine mit dem React-Framework geschriebene Web App mit einem Python
 
    `$ cd mietlimbo/api`
 
-   `$ pipenv install`
+   `$ pipenv sync`
 
 4. Das Backend ist jetzt fertig installiert. Mit `pipenv shell` kann die Umgebung aktiviert werden. Oder direkt den Entwicklungs-Server aus dem `api/`-Verzeichnis heraus starten:
 
