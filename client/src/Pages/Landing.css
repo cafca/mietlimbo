@@ -8,3 +8,7 @@
     line-height: 1.2em;
   }
 }
+
+.preview .notification {
+  margin: 3em auto;
+}
