@@ -26,7 +26,7 @@ Mietlimbo ist eine mit dem React-Framework geschriebene Web App mit einem Python
 
    `$ cd mietlimbo/api`
 
-   `$ pipenv install`
+   `$ pipenv sync`
 
 4. Das Backend ist jetzt fertig installiert. Mit `pipenv shell` kann die Umgebung aktiviert werden. Oder direkt den Entwicklungs-Server aus dem `api/`-Verzeichnis heraus starten:
 
@@ -154,3 +154,8 @@ Gefördert vom Bundesministerium für Bildung und Forschung
 
 ![](https://raw.githubusercontent.com/ciex/mietlimbo/master/client/src/Graphics/logo-bmbf.svg?sanitize=true)
 ![](https://raw.githubusercontent.com/ciex/mietlimbo/master/client/src/Graphics/logo-okfn.svg?sanitize=true)
+
+# Lizenz
+
+Copyright 2016-2019 Vincent Ahrend
+Quellen verfügbar unter GNU Affero General Public License v3, siehe LICENSE.

@@ -13,6 +13,9 @@ from flask_cors import CORS
 from logger import setup_logger
 from crawler.parser import MietspiegelParser
 from pprint import pformat
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from requests.exceptions import ConnectionError
 

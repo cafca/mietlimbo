@@ -32,7 +32,7 @@ const style = {
 }
 
 const Preview = () => (
-  <div style={style.container}>
+  <div style={style.container} className='preview'>
     <h1>Ein Assistent für eine einfachere Mietpreisbremse</h1>
     <p>
       Die Mietpreisbremse wäre viel effektiver, wenn jeder in
@@ -64,19 +64,21 @@ const Preview = () => (
       </a>
     </p>
 
-    <p>
-      Wenn du (einmalig) von mir hören möchtest, sobald mietlimbo offiziell
-      startet, kannst du dich jetzt
-      anzumelden:
-    </p>
+    <div className='notification'>
+      <p>
+        Wenn du (einmalig) von mir hören möchtest, sobald mietlimbo offiziell
+        startet, kannst du dich jetzt
+        anzumelden:
+      </p>
 
-    <RaisedButton
-      href="http://github.us3.list-manage.com/subscribe/post?u=ccc89b05626e50b935568e6ec&id=090381b944"
-      target="_blank"
-      label="Sag mir Bescheid"
-      primary={true}
-      icon={<EmailIcon />}
-    />
+      <RaisedButton
+        href="http://github.us3.list-manage.com/subscribe/post?u=ccc89b05626e50b935568e6ec&id=090381b944"
+        target="_blank"
+        label="Sag mir Bescheid"
+        primary={true}
+        icon={<EmailIcon />}
+      />
+    </div>
 
     <h2>Das kann mietlimbo:</h2>
 

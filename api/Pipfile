@@ -8,12 +8,12 @@ flask-sqlalchemy = "*"
 requests = "*"
 "beautifulsoup4" = "*"
 prettyprint = "*"
-Flask = "==0.12.3"
+Flask = "==1.0.2"
 Flask-Cors = "*"
 uwsgi = "*"
+python-dotenv = "*"
 
 [dev-packages]
 pytest = "*"
-
 # [requires]
 # python_version = "3.7"
